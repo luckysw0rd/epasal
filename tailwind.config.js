@@ -16,6 +16,7 @@ module.exports = {
         'Orbitron':['Orbitron','sans-serif'],
         'Cinzel':['Cinzel','sans-serif'],
         'Exo-2':['Exo 2','sans-serif'],
+        'Roboto':["Roboto",'sans-serif']
       },
     },
   },

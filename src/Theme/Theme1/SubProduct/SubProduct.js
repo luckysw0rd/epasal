@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useStore } from '../T1Context';
-import ProductCard from './ProductCard'; // Import the ProductCard component
+import ProductCard from './T1ProductCard'; // Import the ProductCard component
 import AddProduct from './AddProduct'; // Import the AddProduct component
 import { useDraggable } from "react-use-draggable-scroll";
 import CategorySelector from '../T1Category';
@@ -48,8 +48,10 @@ const SubProduct = () => {
 
     const subProductColor = store.color.subProductColor;
 
+
+
     return (
-        <div className=' px-5'>
+        <div className=''>
             <CategorySelector></CategorySelector>
             <div className="px-8 pb-8 font-Cinzel overflow-x-scroll" style={{
                 maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
@@ -57,7 +59,25 @@ const SubProduct = () => {
                 {...events}
                 ref={ref}
             >
-                <div ref={containerRef} className="flex py-4 gap-12 pb-6 overflow-x-scroll scrollbar-thumb-gray-400 scrollbar-track-gray-100" style={{ scrollbarWidth: 'thin', scrollbarColor: '#718096 #CBD5E0' }}>
+                <div ref={containerRef} className="flex py-4 gap-5 pb-6 overflow-x-scroll scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar">
+                    <style>{`
+                        
+                        .scrollbar::-webkit-scrollbar {
+                            height: 12px; /* Height of the scrollbar for horizontal scrolling */
+                        }
+
+                        .scrollbar::-webkit-scrollbar-track {
+                            background: ${subProductColor.scrollbarColor} ; /* Background of the scrollbar track */
+                            border: 5px solid ${subProductColor.categoryColor};
+                        }
+
+                        .scrollbar::-webkit-scrollbar-thumb {
+                            background-color: ${subProductColor.scrollbarColor}; /* Background color of the scrollbar thumb */
+                            border-radius: 10px; /* Round corners of the scrollbar thumb */
+                            /* Optional: Add a border around the thumb */
+                        }
+
+                    `}</style>
                     {filteredProducts.map(product => (
                         <div key={product.id} className="flex-none mr-4">
                             <ProductCard
