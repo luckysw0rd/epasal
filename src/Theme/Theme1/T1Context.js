@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'; // Import useParams
 import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
 import useFetch from '../../Hooks/useFetch';
 import { AuthContext } from '../../Hooks/AuthContext';
+import controller from '../../Assets/controller.png'
 const StoreContext = createContext();
 
 export const useStore = () => {
@@ -36,19 +37,23 @@ export const StoreProvider = ({ children ,passedStore}) => {
             {
                 id: 1,
                 name: 'Watch1',
-                image: 'https://cdn4.ethoswatches.com/the-watch-guide/wp-content/uploads/2020/01/Parmigiani-Fleurier-Toric-Chronometer-Michel-Vintage-Inspired-Watch-Retro-Nostalgic-1-1.jpg?tr=q-70',
+                image: controller,
                 categories: ['Men'],
                 subcategories: ['Watch'],
+                rating:2.5,
                 sizes: ['S', 'M', 'L'],
                 variants: [
                     { type: 'Color', option: 'Black', prices: [50, 60, 70] },
                     { type: 'Color', option: 'White', prices: [55, 65, 75] },
                     { type: 'Color', option: 'Red', prices: [60, 70, 80] }
-                ]
-            }, {
+                ],
+                description: 'A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd  asdad asdnansd adoamds d adoandnald  '
+            },
+            {
                 id: 2,
                 name: 'Watch2',
-                image: 'https://i.etsystatic.com/8887640/r/il/630e09/5842875807/il_fullxfull.5842875807_poyj.jpg',
+                rating:4,
+                image: 'https://s3-alpha-sig.figma.com/img/8a0d/6d87/f42170d618c62d98aee3e5865eb5fdd3?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=mGJNf3-Y-t~JPu99g5ge0k8gvU34-7oEWG8M1-LtO9rloYMZK9PVRDKGOSLmJr4FYiiH0d8Us9CzK~ctg-5atJWbgutaIS6kB1tZ2njjpF2ujl1xRpxrwJsUeb7-HXRcjDDL3VoD~xTmB67CZlPCzXi97~CVIRtBxt8Z7T9GTkWlibwH6gW~54MFTFKy2~2JgecKrjmFDaRQZKUyZCos8RqeWH9smbKwRyRvqdfhikeZL-ItvwnfmNFL1M2zjzHh7PztnSNwvH1MimhfQXzXK9fGRXe-RCNeK41W08rp7F4tCS~bmK10BO9WlL-MyJGtwSbF4~4tZGg9vaEwpekcOw__',
                 categories: ['Men'],
                 subcategories: ['Watch'],
                 sizes: ['S', 'M', 'L'],
@@ -56,7 +61,8 @@ export const StoreProvider = ({ children ,passedStore}) => {
                     { type: 'Color', option: 'Black', prices: [50, 60, 70] },
                     { type: 'Color', option: 'White', prices: [55, 65, 75] },
                     { type: 'Color', option: 'Red', prices: [60, 70, 80] }
-                ]
+                ],
+                description: 'A sleek and modern watch that combines elegance with functionality.'
             },
             {
                 id: 3,
@@ -69,8 +75,10 @@ export const StoreProvider = ({ children ,passedStore}) => {
                     { type: 'Color', option: 'Black', prices: [50, 60, 70] },
                     { type: 'Color', option: 'White', prices: [55, 65, 75] },
                     { type: 'Color', option: 'Red', prices: [60, 70, 80] }
-                ]
-            }, {
+                ],
+                description: 'A timeless classic watch that exudes sophistication and style.'
+            },
+            {
                 id: 4,
                 name: 'Watch4',
                 image: 'https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4538ed94e47b06cb2b5325636236e6a5.jpg?imageView2/2/w/500/q/60/format/webp',
@@ -81,8 +89,10 @@ export const StoreProvider = ({ children ,passedStore}) => {
                     { type: 'Color', option: 'Black', prices: [50, 60, 70] },
                     { type: 'Color', option: 'White', prices: [55, 65, 75] },
                     { type: 'Color', option: 'Red', prices: [60, 70, 80] }
-                ]
-            }, {
+                ],
+                description: 'A sporty watch designed for the active lifestyle, combining durability with style.'
+            },
+            {
                 id: 5,
                 name: 'Watch5',
                 image: 'https://img.chrono24.com/images/uhren/31781576-yxk1zakhh64ioxtbwozl4tqj-ExtraLarge.jpg',
@@ -93,8 +103,10 @@ export const StoreProvider = ({ children ,passedStore}) => {
                     { type: 'Color', option: 'Black', prices: [50, 60, 70] },
                     { type: 'Color', option: 'White', prices: [55, 65, 75] },
                     { type: 'Color', option: 'Red', prices: [60, 70, 80] }
-                ]
-            }, {
+                ],
+                description: 'A luxurious watch that blends classic design with modern technology.'
+            },
+            {
                 id: 6,
                 name: 'Watch6',
                 image: 'https://i.pinimg.com/originals/2f/7a/9f/2f7a9f72f64dfb34a9942cf3f15f6ed4.jpg',
@@ -105,7 +117,8 @@ export const StoreProvider = ({ children ,passedStore}) => {
                     { type: 'Color', option: 'Black', prices: [50, 60, 70] },
                     { type: 'Color', option: 'White', prices: [55, 65, 75] },
                     { type: 'Color', option: 'Red', prices: [60, 70, 80] }
-                ]
+                ],
+                description: 'An elegant watch with a minimalist design, perfect for any occasion.'
             },
             {
                 id: 7,
@@ -118,7 +131,8 @@ export const StoreProvider = ({ children ,passedStore}) => {
                     { type: 'Color', option: 'Blue', prices: [70, 80, 90] },
                     { type: 'Color', option: 'Green', prices: [75, 85, 95] },
                     { type: 'Color', option: 'Yellow', prices: [80, 90, 100] }
-                ]
+                ],
+                description: 'A stylish and comfortable jacket, perfect for everyday wear and outdoor activities.'
             },
             {
                 id: 8,
@@ -131,11 +145,12 @@ export const StoreProvider = ({ children ,passedStore}) => {
                     { type: 'Color', option: 'Black', prices: [40, 45, 50] },
                     { type: 'Color', option: 'Gray', prices: [45, 50, 55] },
                     { type: 'Color', option: 'Navy', prices: [50, 55, 60] }
-                ]
-            },
-
+                ],
+                description: 'Comfortable and versatile pants suitable for both casual and formal occasions.'
+            }
             // Add more products here...
         ]
+        
         ,
         color: {
             backgroundThemeColor: '#B6947D',
@@ -151,15 +166,18 @@ export const StoreProvider = ({ children ,passedStore}) => {
             },
             subcategoryColor: {
                 background: '#ffffff',
-                text: '#333333',
-                border: '#ffffff'
+                text: '#4F3100',
+              
             },
             subProductColor: {
                 categoryColor: "#ffffff",
-                backgroundColor: '#fefbfb',
+                backgroundColor: '#FDF7E6',
                 textColor: '#333333',
-                borderColor: '#cccccc',
-                selectedBackground: '##c8bcbc'
+                borderColor: '#AB8076',
+                priceColor: '#4F3100',
+                priceLetterColor:'#fff',
+                scrollbarColor:'#4F3100',
+                starColor:"#875300"
             },
             productSection: "ffffff",
             productListColor: { // Define productListColor object

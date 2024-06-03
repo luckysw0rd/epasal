@@ -6,7 +6,11 @@ const Category1 = ({ subCategories, previewMode, color,setSelectedSubCategory,re
 
     const [showModal, setShowModal] = useState(false);
 
-    const [selectedSubCategory, setSelectedSubCategoryLocally] = useState('');
+  //   const [inputValue, setInputValue] = useState('');
+  // const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  // const [showSuggestions, setShowSuggestions] = useState(false);
+
+    const [selectedSubCategory, setSelectedSubCategoryLocally] = useState(subCategories[0]);
 
     const handleAddCategory = () => {
         setShowModal(true);
@@ -22,24 +26,77 @@ const Category1 = ({ subCategories, previewMode, color,setSelectedSubCategory,re
             removeSubCategory(index);
         }
     };
-
+    // const handleChangeSuggestion = (e) => {
+    //     const userInput = e.target.value;
+    //     setInputValue(userInput);
+    //     const filtered = subCategories.filter(
+    //       (suggestion) =>
+    //         suggestion.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    //     ).map((suggestion) => suggestion.name);
+       
+    //     setFilteredSuggestions(filtered);
+    //     setShowSuggestions(true);
+    //   };
+    
+      // const handleClickSuggestion = (suggestion) => {
+      //   console.log(suggestion)
+      //   setInputValue(suggestion);
+      //   setFilteredSuggestions([]);
+      //   setShowSuggestions(false);
+      //   setSelectedSubCategory(suggestion);
+      //   setSelectedSubCategoryLocally({name:suggestion}); 
+        
+        
+      // };
     const handleSelectSubCategory = (subcategory) => {
+        console.log(subcategory,"subb")
         setSelectedSubCategoryLocally(subcategory); // Update the local state
         setSelectedSubCategory(subcategory.name); // Update the selectedSubCategory in the store
+        
     };
+
+    const handleChangeCategory=(e)=>{
+      setSelectedSubCategoryLocally(e.target.value); 
+        setSelectedSubCategory(e.target.value);
+    }
+    // const renderSuggestions = () => {
+    //     if (showSuggestions && inputValue) {
+    //       if (filteredSuggestions.length) {
+    //         return (
+    //           <ul className="suggestions absolute top-7 w-full z-10 bg-white">
+    //             {filteredSuggestions.map((suggestion, index) => {
+    //               return (
+    //                 <li className='py-2 px-3' key={index} onClick={() => handleClickSuggestion(suggestion)}>
+    //                   {suggestion}
+    //                 </li>
+    //               );
+    //             })}
+    //           </ul>
+    //         );
+    //       } else {
+    //         return (
+    //           <div className="no-suggestions">
+    //             <em>No suggestions available.</em>
+    //           </div>
+    //         );
+    //       }
+    //     }
+    //     return null;
+    //   };
 
 
     return (
         <div className=' px-0'>
-            <div className="p-4 pb-0  rounded-lg font-Genos text-xl flex justify-center overflow-hidden"
-                style={{ backgroundColor: color.subcategoryColor.background, color: color.subcategoryColor.text, border: `1px solid ${color.subcategoryColor.border}` }}>
-                <div id='scrollbar2' className="whitespace-nowrap overflow-x-auto">
-                    <div className="border-b border-gray-300 mb-4 flex space-x-4 ">
+            <div className="relative p-4 pb-0 font-Roboto flex justify-center"
+                style={{ backgroundColor: color.subcategoryColor.background, color: color.subcategoryColor.text }}>
+                <div id='scrollbar2' className="whitespace-nowrap hidden md:flex overflow-x-auto min-h-14 w-full justify-center">
+                    <div className=" mb-4 flex space-x-4 overflow-scroll">
                         {subCategories.map((subcategory, index) => (
                             <div key={index} className="relative">
                                 <button
                                     onClick={() => handleSelectSubCategory(subcategory)}
-                                    className={`py-2 px-8 hover:bg-gray-100 ${selectedSubCategory === subcategory ? 'border-b border-black' : ''}`}
+                                    className={`py-2 px-8 hover:bg-gray-100 ${selectedSubCategory === subcategory ? 'font-extrabold ' : ''}`}
+                                    style={{borderBottom:`${selectedSubCategory === subcategory?`solid ${color.subcategoryColor.text} 3px`:''}`}}
                                 >
                                     {subcategory.name}
                                 </button>
@@ -58,6 +115,16 @@ const Category1 = ({ subCategories, previewMode, color,setSelectedSubCategory,re
                         {!previewMode && (
                             <button className="py-2 px-8 hover:bg-gray-100" onClick={handleAddCategory}>Add Subcategory</button>
                         )}
+                    </div>
+                </div>
+                <div className='md:hidden flex items-center mb-4'>
+                    <div className='relative'>
+                    {/* <input type='text' placeholder='Search' className='text-center border border-2 border-black rounded' onChange={handleChangeSuggestion} value={inputValue}/>{renderSuggestions()} */}
+                    <select name="category" id="category" className='px-5 py-1' onChange={handleChangeCategory}>
+                          {subCategories.map((n,i)=>(
+                            <option value={n.name}>{n.name}</option>
+                          ))}
+                    </select>
                     </div>
                 </div>
                 {showModal && <AddCategoryModal onClose={handleCloseModal} />}
