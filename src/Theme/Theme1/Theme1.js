@@ -6,7 +6,7 @@ import ColorPicker from './ColorPicker';
 import StoreHeader from './StoreHeader';
 import CategorySelector from './T1Category';
 import { useMediaQuery } from 'react-responsive';
-import SubProduct from './SubProduct/SubProduct';
+
 import SecondaryBanner from './SecondaryBanner';
 import ProductList from './ProductList/ProductList';
 import Footer from './Footer/T1Footer';
@@ -28,6 +28,7 @@ import {
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import T1SubProduct from './SubProduct/T1SubProduct';
 
 const EStore = ({ Passedstore }) => {
     const [tasks, setTasks] = useState([
@@ -35,7 +36,7 @@ const EStore = ({ Passedstore }) => {
         { id: 2, component: <T1Navbar /> },
         { id: 3, component: <AboutPage /> },
         { id: 4, component: <ColorPicker /> },
-        { id: 5, component: <SubProduct /> },
+        { id: 5, component: <T1SubProduct /> },
         { id: 6, component: <SecondaryBanner /> },
         { id: 7, component: <ProductList /> },
         { id: 8, component: <Footer /> },
