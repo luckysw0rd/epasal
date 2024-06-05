@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import SideBar from "./SideBar";
 
-import { HiMenuAlt3 } from "react-icons/hi";
-import { HiChevronRight } from "react-icons/hi";
+
 import SharedNavbar from "./SharedNavbar";
-import { useNavigate } from "react-router-dom";
 
 const DashboardWrapper = ({ children }) => {
 
@@ -16,7 +14,7 @@ const DashboardWrapper = ({ children }) => {
       {/* SideBar handler */}
 
       {/* Main Content */}
-      <div className="flex-1 border">
+      <div className="flex-1 ">
         <SharedNavbar />
         <div>{children}</div>
       </div>

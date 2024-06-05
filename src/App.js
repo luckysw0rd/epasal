@@ -7,6 +7,7 @@ import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
 import Theme from "./Theme/Theme";
+import Dashboard from "./Components/AdminPanel/Dashboard";
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/buildstore" element={<Theme />} />
+        <Route path="/adminpanel" element={<Dashboard />} />
       </React.Fragment>
     );
   } else {

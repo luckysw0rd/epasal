@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { AiFillHome, AiOutlineUser } from "react-icons/ai";
-import { FaCircle, FaUserCircle } from "react-icons/fa";
+import React from "react";
+
 
 import { HiMenuAlt3 } from "react-icons/hi";
-import { useSiderBar } from "../../Context/SiderBarContext";
+import { useSiderBar } from "./SiderBarContext";
 
 const SharedNavbar = () => {
   const { open, setOpen } = useSiderBar();
 
   return (
-    <div className="fixed w-full t-0 bg-white z-10 px-4 flex items-center justify-between h-14 text-black">
+    <div className="fixed w-full t-0 bg-white z-10  px-4 md:px-8 lg:px-[100px] flex items-center justify-between h-14 text-black">
       <div className="flex items-center">
         <h1
           className="text-2xl font-bold cursor-pointer hover:text-[#70d8bd] transition-colors duration-300 "

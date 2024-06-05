@@ -1,21 +1,11 @@
 import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 
-import { FiMessageSquare } from "react-icons/fi";
-import { FiClipboard, FiLogOut } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
-import { RiSettings4Line } from "react-icons/ri";
-import { BsPeopleFill } from "react-icons/bs";
-import { IoAddCircleOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { FaCircleUser } from "react-icons/fa6";
 import { FaUserDoctor } from "react-icons/fa6";
-import { FaUserClock } from "react-icons/fa";
-import { HiUserAdd } from "react-icons/hi";
-import { MdMedicalServices } from "react-icons/md";
-import { FaUsersLine } from "react-icons/fa6";
-import { VscGitPullRequestNewChanges } from "react-icons/vsc";
-import { useSiderBar } from "../../Context/SiderBarContext";
+import { useSiderBar } from "./SiderBarContext";
 const SideBar = () => {
   const navigate = useNavigate();
   const { open, setOpen } = useSiderBar();
@@ -29,8 +19,8 @@ const SideBar = () => {
     }
   };
   const menus = [
-    { name: "dashboard", link: "/dashboard", icon: MdOutlineDashboard },
-    { name: "test", link: "/test", icon: FaUserDoctor },
+    { name: "dashboard", link: "/adminpanel", icon: MdOutlineDashboard },
+    { name: "test", link: "/adminpanel", icon: FaUserDoctor },
   ];
 
   return (
@@ -62,14 +52,14 @@ const SideBar = () => {
           />
           <p className="ml-2 text-lg">Dashboard</p>
         </div>
-        <div className="mt-4 flex flex-col gap-4 relative text-[#70d8bd]">
+        <div className="mt-4 flex flex-col gap-4 relative text-white">
           {menus?.map((menu, i) => (
             <Link
               onClick={(e) => setOpen(false)}
               to={menu?.link}
               key={i}
               className={` ${menu?.margin && "mt-5"
-                } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+                } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md hover:text-[#ade9dc] transition duration-50 ease-in-out`}
             >
               <div>{React.createElement(menu?.icon, { size: "20" })}</div>
               <h2
