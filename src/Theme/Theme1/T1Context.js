@@ -238,11 +238,11 @@ export const StoreProvider = ({ children, passedStore }) => {
         }));
     };
 
-    const addToCart = (productId) => {
-        if (!store.cart.includes(productId)) {
+    const addToCart = (product) => {
+        if (!store.cart.includes(product)) {
             setStore((prevState) => ({
                 ...prevState,
-                cart: [...prevState.cart, productId],
+                cart: [...prevState.cart, product],
                 cartCount: prevState.cartCount + 1
             }));
         }

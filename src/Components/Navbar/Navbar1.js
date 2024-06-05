@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart } from 'react-icons/fa';
 import LeftSidebar from '../LeftSidebar/LeftSidebar';
+import CartDropdown from './CartDropDown';
 
 const Navbar1 = ({
     setNewCategory,
@@ -23,6 +24,7 @@ const Navbar1 = ({
     cartCount
 }) => {
     const [scrolling, setScrolling] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -83,6 +85,7 @@ const Navbar1 = ({
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCartClick = () => {
+        setCartOpen(!cartOpen)
         console.log(cart)
         console.log('Cart clicked');
     };
@@ -117,6 +120,7 @@ const Navbar1 = ({
 
                 </div>
                 <button className="px-4 ml-0 py-2 border border-[#948979] rounded hover:bg-white hover:text-brown-700">Sign up</button>
+                {cartOpen && <CartDropdown items={cart} />}
                 <button onClick={handleCartClick}>
                     <FaShoppingCart className="text-2xl" />
                     <span className="ml-2">{cartCount}</span> {/* Display cart count */}
