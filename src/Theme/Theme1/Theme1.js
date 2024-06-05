@@ -29,16 +29,17 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import T1SubProduct from "./SubProduct/T1SubProduct";
+import Editor from "../../Components/Editor/Editor";
 
 const EStore = ({ Passedstore }) => {
   const [tasks, setTasks] = useState([
     // { id: 1, component: <StoreHeader /> },
     { id: 2, component: <T1Navbar /> },
     { id: 3, component: <AboutPage /> },
-    { id: 4, component: <ColorPicker /> },
+    { id: 4, component: <Editor /> },
     { id: 5, component: <T1SubProduct /> },
     { id: 6, component: <SecondaryBanner /> },
-    { id: 7, component: <ProductList /> },
+    // { id: 7, component: <ProductList /> },
     { id: 8, component: <Footer /> },
   ]);
 
