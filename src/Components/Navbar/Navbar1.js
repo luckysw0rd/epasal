@@ -21,7 +21,8 @@ const Navbar1 = ({
     setSearchInput,
     setLogoFile,
     cart,
-    cartCount
+    cartCount,
+    deleteFromCart
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const [cartOpen, setCartOpen] = useState(false);
@@ -85,8 +86,8 @@ const Navbar1 = ({
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCartClick = () => {
+
         setCartOpen(!cartOpen)
-        console.log(cart)
         console.log('Cart clicked');
     };
 
@@ -120,7 +121,7 @@ const Navbar1 = ({
 
                 </div>
                 <button className="px-4 ml-0 py-2 border border-[#948979] rounded hover:bg-white hover:text-brown-700">Sign up</button>
-                {cartOpen && <CartDropdown items={cart} />}
+                {cartOpen && <CartDropdown items={cart} deleteFromCart={deleteFromCart} />}
                 <button onClick={handleCartClick}>
                     <FaShoppingCart className="text-2xl" />
                     <span className="ml-2">{cartCount}</span> {/* Display cart count */}

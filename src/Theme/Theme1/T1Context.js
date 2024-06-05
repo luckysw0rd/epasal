@@ -248,6 +248,16 @@ export const StoreProvider = ({ children, passedStore }) => {
         }
     };
 
+    const deleteFromCart = (product) => {
+        if (store.cart.includes(product)) {
+            setStore((prevState) => ({
+                ...prevState,
+                cart: prevState.cart.filter(item => item !== product),
+                cartCount: prevState.cartCount - 1
+            }));
+        }
+    };
+
 
     const setSelectedSubCategory = (subcategoryName) => {
         setStore((prevState) => ({
@@ -333,9 +343,10 @@ export const StoreProvider = ({ children, passedStore }) => {
                     removeCategory,
                     removeSubCategory,
                     setSelectedSubCategory,
-                    addToCart,
                     updateSecondaryBanner,
                     addProduct,
+                    addToCart,
+                    deleteFromCart
                 }}
             >
                 {children}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useStore } from './T1Context';
 import Navbar from "../../Components/Navbar/Navbar";
 const EStoreNavbar = () => {
-    const { store, setStore, addCategory, removeCategory } = useStore();
+    const { store, setStore, addCategory, removeCategory, deleteFromCart } = useStore();
     const { color, previewMode, cartCount, cart } = store;
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [newCategory, setNewCategory] = useState('');
@@ -24,7 +24,8 @@ const EStoreNavbar = () => {
         setSearchInput,
         setLogoFile,
         cart,
-        cartCount
+        cartCount,
+        deleteFromCart
     };
 
     return (
