@@ -7,7 +7,7 @@ const SubProduct1 = ({
     const containerRef = useRef(null);
     const { events } = useDraggable(ref);
 
-    const selectedSubCategory = store.selectedSubCategory || subCategories[0].name;
+    const selectedSubCategory = "Watch"
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedStyles, setSelectedStyles] = useState({});
     const [showAddProduct, setShowAddProduct] = useState(false);
@@ -95,3 +95,4 @@ const SubProduct1 = ({
 };
 
 export default SubProduct1;
+

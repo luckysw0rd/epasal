@@ -8,7 +8,6 @@ import CategorySelector from "./T1Category";
 import { useMediaQuery } from "react-responsive";
 
 import SecondaryBanner from "./T1SecondaryBanner";
-import ProductList from "./ProductList/ProductList";
 import Footer from "./Footer/T1Footer";
 import SaveStoreButton from "./SaveButton/SaveStoreButton";
 import Loading from "./Loading/Loading";

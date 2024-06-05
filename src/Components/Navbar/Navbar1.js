@@ -19,6 +19,7 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
+    cartCount
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const location = useLocation();
@@ -117,6 +118,8 @@ const Navbar1 = ({
                 <button className="px-4 ml-0 py-2 border border-[#948979] rounded hover:bg-white hover:text-brown-700">Sign up</button>
                 <button onClick={handleCartClick}>
                     <FaShoppingCart className="text-2xl" />
+                    <span className="ml-2">{cartCount}</span> {/* Display cart count */}
+
                 </button>
                 <div className="md:hidden box-border">
                     <button

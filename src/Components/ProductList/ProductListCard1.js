@@ -6,6 +6,7 @@ import { FaTimes } from 'react-icons/fa';
 
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
     const { productColor, previewMode } = productListProps;
+    const { backgroundColor, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor
 
     const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
     const [addedToCart, setAddedToCart] = useState(false);
@@ -29,8 +30,6 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
     const selectedVariant = variant[selectedVariantIndex];
     const price = selectedVariant.options[0]?.price || 0;
     const variantImage = selectedVariant.options[0]?.image?.imageUrl || '';
-    // console.log(selectedVariant, price, variantImage)
-    console.log(variant)
 
     return (
         // <h1>HEllo</h1>
@@ -54,10 +53,10 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                             <img src={variantImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
                         </div>
                         <div className="px-5 w-full">
-                            <hr className="border-t-2" style={{ borderColor: productColor.borderColor }} />
+                            <hr className="border-t-2" style={{ borderColor: borderColor }} />
                             <div className="prod-title mt-2 flex justify-between items-center">
-                                <p className="text-2xl font-bold" style={{ color: productColor.textColor }}>{name}</p>
-                                <p className="font-bold text-lg" style={{ color: productColor.priceColor }}>Rs {price}</p>
+                                <p className="text-2xl font-bold" style={{ color: textColor }}>{name}</p>
+                                <p className="font-bold text-lg" style={{ color: priceColor }}>Rs {price}</p>
                             </div>
                             <div className="grid gap-2 relative w-full">
                                 <div className="flex mt-5">
@@ -72,17 +71,17 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                     ))}
                                 </div>
                                 <div className='absolute right-1 top-1'>
-                                    <FaHeart style={{ color: productColor.heartColor }} size={15} />
+                                    <FaHeart style={{ color: heartColor }} size={15} />
                                 </div>
                                 <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
                                     <button className="py-2 transition ease-in duration-200 border-nore focus:outline-none">
-                                        <div style={{ color: productColor.priceColor }} className="flex gap-1 text-xs items-center">
+                                        <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
                                             Learn More <IoIosArrowForward />
                                         </div>
                                     </button>
-                                    <button style={{ color: productColor.buttonTextColor, borderColor: productColor.textColor, backgroundColor: productColor.buttonBgColor }} className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
-                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = productColor.buttonBgColorOnHover}
-                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = productColor.buttonBgColor}
+                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
+                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                         onClick={handleAddToCart}>
                                         Add to cart
                                     </button>

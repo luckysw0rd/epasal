@@ -3,7 +3,7 @@ import { useStore } from './T1Context';
 import Navbar from "../../Components/Navbar/Navbar";
 const EStoreNavbar = () => {
     const { store, setStore, addCategory, removeCategory } = useStore();
-    const { color, previewMode } = store;
+    const { color, previewMode, cartCount } = store;
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [newCategory, setNewCategory] = useState('');
     const [searchInput, setSearchInput] = useState('');
@@ -23,6 +23,7 @@ const EStoreNavbar = () => {
         setIsSidebarOpen,
         setSearchInput,
         setLogoFile,
+        cartCount
     };
 
     return (
