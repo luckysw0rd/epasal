@@ -107,3 +107,4 @@ const ProductCard = ({ product, handleStyleSelect, handleRemoveProduct }) => { /
 };
 
 export default ProductCard;
+
