@@ -86,7 +86,6 @@ const EStore = ({ Passedstore }) => {
     setShowColorPicker(!showColorPicker);
   };
 
-  console.log(store);
   if (
     window.location.pathname.includes("/store/") &&
     !store.fetchedFromBackend

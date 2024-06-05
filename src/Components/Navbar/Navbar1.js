@@ -19,6 +19,7 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
+    cart,
     cartCount
 }) => {
     const [scrolling, setScrolling] = useState(false);
@@ -82,7 +83,7 @@ const Navbar1 = ({
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCartClick = () => {
-        // Add your cart click functionality here
+        console.log(cart)
         console.log('Cart clicked');
     };
 

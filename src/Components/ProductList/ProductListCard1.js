@@ -5,7 +5,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode } = productListProps;
+    const { productColor, previewMode, addToCart } = productListProps;
     const { backgroundColor, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor
 
     const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
@@ -82,7 +82,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                     <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
-                                        onClick={handleAddToCart}>
+                                        onClick={() => addToCart(id)}>
                                         Add to cart
                                     </button>
                                 </div>

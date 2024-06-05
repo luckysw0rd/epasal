@@ -15,7 +15,6 @@ export const StoreProvider = ({ children, passedStore }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
     const { storeID } = useParams(); // Extract storeID using useParams
-    console.log(storeID);
 
     const defaultStoreData = {
         name: "Store Name",
@@ -68,7 +67,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                     "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd  asdad asdnansd adoamds d adoandnald  ",
             },
             {
-                id: 1,
+                id: 2,
                 name: "Watch1",
                 image: controller,
                 categories: ["Men"],
@@ -156,6 +155,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 buttonBgColor: "#ffffff",
                 buttonBorderColor: "#4F3100",
                 buttonBgColorOnHover: "#4F3100",
+                header: "#000000"
             },
             footerColor: {
                 background: "#333333",
@@ -247,6 +247,7 @@ export const StoreProvider = ({ children, passedStore }) => {
             }));
         }
     };
+
 
     const setSelectedSubCategory = (subcategoryName) => {
         setStore((prevState) => ({
