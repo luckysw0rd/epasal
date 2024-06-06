@@ -22,7 +22,6 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/buildstore" element={<Theme />} />
-
         <Route path="/adminpanel" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
