@@ -63,60 +63,66 @@ const Editor = () => {
     };
   return (
    <>
-    {!store.previewMode?<div className='fixed top-0 right-0 w-80 h-screen overflow-scroll bg-white z-20 border-2 border-black px-4'>
-        <h1 className=' mt-10 text-[#6A6A6A] text-xl font-bold'>Design your Website</h1>
+    {!store.previewMode?<div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
+        <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
         
-        <div className='flex justify-between  mt-5 font-semibold text-[#6A6A6A]'>
+        <div className='flex justify-between  mt-10 font-semibold text-[#6A6A6A] px-4'>
           <button className={`flex-1 text-left ${!openType?'text-black':''}`} onClick={e=>{e.preventDefault();setOpenType(false)}}>Content</button>
           <button className={`flex-1 text-left ${openType?'text-black':''}`} onClick={e=>{e.preventDefault();setOpenType(true)}}>Design</button>
         </div>
+        <div className='text-red-600 absolute top-[22px] right-10' onClick={(e)=>{e.preventDefault();setStore(n=>({...n,previewMode:true}))}}>X</div>
         {!openType && <div>
-          <ul className='flex flex-col mt-10 gap-10'>
-            <li className='text-sm text-semibold'>
+          <ul className='flex flex-col mt-10 gap-2 px-4'>
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Navbar:<br/>
-              <div>
+              <div className='font-normal'>
               <label className='text-[10px]'>Shop Name</label><br/>
               <input type='text' className='border border-[#6A6A6A] h-[24px] rounded px-2' value={store.name} onChange={e=>setStore(n=>({...n,name:e.target.value}))}></input>
               </div>
-              <div>
-              <label className='text-[10px]'>Logo:</label><br/>
+              <div className='font-normal mt-2'>
+              <label className='text-[10px]'>Logo:</label>
               <ImageDrop setStore={setStore} imageData='logo' imageFile='logofile'/>
               </div>
             </li>
-            <li className='text-sm text-semibold'>
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Hero Section:<br/>
-              <div>
+              <div className='font-normal'>
               <label className='text-[10px]'>Title</label><br/>
-              <input type='text' className='border border-[#6A6A6A] rounded' value={store.name} onChange={e=>setStore(n=>({...n,name:e.target.value}))}></input>
+              <input type='text' className='border border-[#6A6A6A] rounded px-2' value={store.name} onChange={e=>setStore(n=>({...n,name:e.target.value}))}></input>
               </div>
               <div>
-              <div className="w-1/2">
+              <div className="font-normal mt-2">
+              <label className='text-[10px]'>Background:</label>
                         <ImageDrop setStore={setStore} imageData='banner' imageFile='bannerfile'/>
                     </div>
               </div>
             </li >
-            <li className='text-sm text-semibold'>
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Categories:<br/>
-              <div>
+              <div className='font-normal'>
               <label className='text-[10px]'>Title</label><br/>
-              <input type='text' className='border border-[#6A6A6A] rounded mr-2' value={categoryData} onChange={e=>setCategoryData(e.target.value)} ></input>
-              <button className='px-2 border border-black' onClick={handleAddCategory}>Add +</button>
+              <div className='flex'>
+              <input type='text' className='border border-[#6A6A6A] rounded mr-2 px-2' value={categoryData} onChange={e=>setCategoryData(e.target.value)} ></input>
+              <button className='px-2 text-[10px] border border-black rounded' onClick={handleAddCategory}>Add +</button>
               </div>
-              <ul>
+              </div>
+              <ul className='font-normal list-disc ml-10 mt-2'>
                 {store.subCategories.map(item=>(<li key={item.name}>{item.name}</li>))}
               </ul>
             </li>
-            <li className='text-sm text-semibold'>
-              Banner Design:  This is pending
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+              Banner Design<br/>
+              <label className='text-[10px]'>Title</label><br/>
+              <input type='text' className='border border-[#6A6A6A] rounded px-2' ></input>
             </li>
-            <li className='text-sm text-semibold'>
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Add Products<br/>
-              <div>
-              <button className='px-2 border border-black' onClick={handleAddProduct}>Add +</button>
+              <div className='mt-2'>
+              <button className='px-2 text-[10px] border border-black' onClick={handleAddProduct}>Add +</button>
               </div>
              
             </li>
-            <li className='text-sm text-semibold'>
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Footer:This is pending
             </li>
           </ul>
@@ -124,7 +130,7 @@ const Editor = () => {
         </div>}
 
 
-        {openType && <div className="mt-5">
+        {openType && <div className="mt-5 px-4 capitalize">
                     <div className="flex flex-col gap-4">
                         {Object.entries(color).map(([colorKey, colorValue], index) => {
                             if (typeof colorValue === 'object') {

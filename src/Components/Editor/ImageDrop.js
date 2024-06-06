@@ -20,9 +20,9 @@ const ImageDrop = ({setStore,imageData,imageFile}) => {
         multiple: false,
       });
   return (
-    <div {...getRootProps()} className=" border-2 w-10 h-10 bg-gray-700 flex justify-center items-center border-dashed rounded-md p-6 mb-2">
+    <div {...getRootProps()} className="px-2 py-1 border border-gray-400 w-20 text-center rounded">
         <input {...getInputProps()}/>
-        <p className="text-sm text-white">Upload</p>
+        <p className="text-sm font-normal">Upload</p>
     </div>
   )
 }

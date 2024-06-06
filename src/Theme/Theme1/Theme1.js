@@ -6,7 +6,6 @@ import ColorPicker from "./ColorPicker";
 import StoreHeader from "./StoreHeader";
 import CategorySelector from "./T1Category";
 import { useMediaQuery } from "react-responsive";
-
 import SecondaryBanner from "./T1SecondaryBanner";
 import ProductList from "./ProductList/ProductList";
 import Footer from "./Footer/T1Footer";
@@ -101,7 +100,7 @@ const EStore = ({ Passedstore }) => {
     return (
       store && (
         <div
-          className=" h-full"
+          className=" h-full overflow-auto"
           style={{ backgroundColor: store.color.backgroundThemeColor }}
         >
           <DndContext
