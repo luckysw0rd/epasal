@@ -6,7 +6,7 @@ import ColorPicker from './ColorPicker';
 import StoreHeader from './StoreHeader';
 import CategorySelector from './T1Category';
 import { useMediaQuery } from 'react-responsive';
-
+import StoreManager from './StoreManager';
 import SecondaryBanner from './SecondaryBanner';
 import ProductList from './ProductList/ProductList';
 import Footer from './Footer/T1Footer';
@@ -40,6 +40,8 @@ const EStore = ({ Passedstore }) => {
         { id: 6, component: <SecondaryBanner /> },
         { id: 7, component: <ProductList /> },
         { id: 8, component: <Footer /> },
+        { id: 9, component: <StoreManager /> },
+
     ]);
 
     const addTask = (component) => {

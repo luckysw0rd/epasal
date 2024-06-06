@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -160,11 +159,11 @@
 
 ::-webkit-scrollbar {
     background-color: transparent;
-    scrollbar-width: none;  /* Firefox */
+    scrollbar-width: none;
+    /* Firefox */
 
 }
 
 ::-webkit-scrollbar-thumb {
     @apply bg-gray-500 dark:bg-green-400;
 }
-

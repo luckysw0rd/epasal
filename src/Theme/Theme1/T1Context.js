@@ -10,13 +10,11 @@ export const useStore = () => {
     return useContext(StoreContext);
 };
 
-export const StoreProvider = ({ children ,passedStore}) => {
+export const StoreProvider = ({ children, passedStore }) => {
     const auth = useContext(AuthContext);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
-
     const { storeID } = useParams(); // Extract storeID using useParams
     console.log(storeID);
-    
     const defaultStoreData = {
         name: 'Store Name',
         location: 'Your Store Location',
@@ -40,7 +38,7 @@ export const StoreProvider = ({ children ,passedStore}) => {
                 image: controller,
                 categories: ['Men'],
                 subcategories: ['Watch'],
-                rating:2.5,
+                rating: 2.5,
                 sizes: ['S', 'M', 'L'],
                 variants: [
                     { type: 'Color', option: 'Black', prices: [50, 60, 70] },
@@ -52,7 +50,7 @@ export const StoreProvider = ({ children ,passedStore}) => {
             {
                 id: 2,
                 name: 'Watch2',
-                rating:4,
+                rating: 4,
                 image: 'https://s3-alpha-sig.figma.com/img/8a0d/6d87/f42170d618c62d98aee3e5865eb5fdd3?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=mGJNf3-Y-t~JPu99g5ge0k8gvU34-7oEWG8M1-LtO9rloYMZK9PVRDKGOSLmJr4FYiiH0d8Us9CzK~ctg-5atJWbgutaIS6kB1tZ2njjpF2ujl1xRpxrwJsUeb7-HXRcjDDL3VoD~xTmB67CZlPCzXi97~CVIRtBxt8Z7T9GTkWlibwH6gW~54MFTFKy2~2JgecKrjmFDaRQZKUyZCos8RqeWH9smbKwRyRvqdfhikeZL-ItvwnfmNFL1M2zjzHh7PztnSNwvH1MimhfQXzXK9fGRXe-RCNeK41W08rp7F4tCS~bmK10BO9WlL-MyJGtwSbF4~4tZGg9vaEwpekcOw__',
                 categories: ['Men'],
                 subcategories: ['Watch'],
@@ -150,7 +148,7 @@ export const StoreProvider = ({ children ,passedStore}) => {
             }
             // Add more products here...
         ]
-        
+
         ,
         color: {
             backgroundThemeColor: '#B6947D',
@@ -167,7 +165,6 @@ export const StoreProvider = ({ children ,passedStore}) => {
             subcategoryColor: {
                 background: '#ffffff',
                 text: '#4F3100',
-              
             },
             subProductColor: {
                 categoryColor: "#ffffff",
@@ -175,9 +172,9 @@ export const StoreProvider = ({ children ,passedStore}) => {
                 textColor: '#333333',
                 borderColor: '#AB8076',
                 priceColor: '#4F3100',
-                priceLetterColor:'#fff',
-                scrollbarColor:'#4F3100',
-                starColor:"#875300"
+                priceLetterColor: '#fff',
+                scrollbarColor: '#4F3100',
+                starColor: "#875300"
             },
             productSection: "ffffff",
             productListColor: { // Define productListColor object
@@ -210,9 +207,9 @@ export const StoreProvider = ({ children ,passedStore}) => {
         // Rest of the default store data...
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(passedStore)
-    },[passedStore]);
+    }, [passedStore]);
     const [store, setStore] = useState(defaultStoreData); // Start with null while fetching
 
     useEffect(() => {
