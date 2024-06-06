@@ -1,0 +1,46 @@
+/* 
+.scrollbar
+{
+	overflow-x: scroll;
+	scrollbar-color: #fff #000;
+	scrollbar-width: 1px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+
+.cute_scroll::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #f8bbd0  ;
+
+}
+
+.cute_scroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px #f06292 ;
+	border-radius: 10px;
+	background-color: #f8bbd0  ;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+
+}
+
+.cute_scroll::-webkit-scrollbar-thumb
+{
+	border-radius: 20px;
+	-webkit-box-shadow: inset 0 0 px #ad1457 ;
+	background-color: #e91e63   ;
+
+} */
+
+
+
+
+        /* Styling for the div to show the scrollbar */
+       
+
+   

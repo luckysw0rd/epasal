@@ -7,16 +7,26 @@ import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
 import Theme from "./Theme/Theme";
+
+import Dashboard from "./Components/AdminPanel/Dashboard";
+import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
+import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
+
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if (token) {
+  if (true) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/buildstore" element={<Theme />} />
+
+        <Route path="/adminpanel" element={<Dashboard />} />
+        <Route path="/googleoauth" element={<GoogleOAuth />} />
+        <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
+
       </React.Fragment>
     );
   } else {
