@@ -39,7 +39,7 @@ const EStore = ({ Passedstore }) => {
     { id: 4, component: <Editor /> },
     { id: 5, component: <T1SubProduct /> },
     { id: 6, component: <SecondaryBanner /> },
-    { id: 7, component: <ProductList /> },
+    // { id: 7, component: <ProductList /> },
     { id: 8, component: <OfferBanner /> },
     { id: 9, component: <Footer /> },
   ]);

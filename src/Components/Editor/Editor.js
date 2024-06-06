@@ -8,7 +8,12 @@ const Editor = () => {
   const {store,setStore}=useStore();
   const [openType,setOpenType]=useState(false)
   const [categoryData,setCategoryData]=useState('')
-  const [logo,setLogo]=useState();
+  const { color } = store;
+  const {fetchedFromBackend} = store;
+  const { previewMode } = store;
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [changeFlow,setChangeFlow]=useState(false)
+  const [navHide,setNavHide]=useState(true)
 
   const [addProductForm,setAddProductForm]=useState(false)
   const handleAddCategory=(e)=>{
@@ -21,11 +26,7 @@ const Editor = () => {
 
 
 
-  const { color } = store;
-    const {fetchedFromBackend} = store;
-    const { previewMode } = store;
-    const [showColorPicker, setShowColorPicker] = useState(false);
-    const [changeFlow,setChangeFlow]=useState(false)
+
     console.log(color);
     const handleColorChange = (value, field, colorValueObject) => {
         setStore((prevState) => ({
@@ -63,14 +64,15 @@ const Editor = () => {
     };
   return (
    <>
-    {!store.previewMode?<div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
+    {!store.previewMode? navHide ? <div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
         <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
         
         <div className='flex justify-between  mt-10 font-semibold text-[#6A6A6A] px-4'>
           <button className={`flex-1 text-left ${!openType?'text-black':''}`} onClick={e=>{e.preventDefault();setOpenType(false)}}>Content</button>
           <button className={`flex-1 text-left ${openType?'text-black':''}`} onClick={e=>{e.preventDefault();setOpenType(true)}}>Design</button>
         </div>
-        <div className='text-red-600 absolute top-[22px] right-10' onClick={(e)=>{e.preventDefault();setStore(n=>({...n,previewMode:true}))}}>X</div>
+        <div className='text-red-600 absolute top-[22px] right-2' onClick={(e)=>{e.preventDefault();setStore(n=>({...n,previewMode:true}))}}>X</div>
+        <div className='text-red-600 absolute top-[22px] right-10' onClick={(e)=>{e.preventDefault();setNavHide(false)}}>Hide</div>
         {!openType && <div>
           <ul className='flex flex-col mt-10 gap-2 px-4'>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
@@ -113,7 +115,10 @@ const Editor = () => {
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Banner Design<br/>
               <label className='text-[10px]'>Title</label><br/>
-              <input type='text' className='border border-[#6A6A6A] rounded px-2' ></input>
+              <input type='text' className='border border-[#6A6A6A] rounded px-2' ></input><br/>
+              <label className='text-[10px]'>Description</label><br/>
+              <textarea type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' ></textarea><br/>
+              <label className='text-[10px]'>Image:</label> <ImageDrop/>
             </li>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Add Products<br/>
@@ -177,8 +182,10 @@ const Editor = () => {
                     </div>
                     
                 </div>}
-                
-    </div>:<button className='fixed top-0 right-10 mt-20' onClick={(e)=>{e.preventDefault();setStore(n=>({...n,previewMode:false}))}}>Preview</button>}
+              <div className='flex justify-center my-3'>
+                <button className='px-4 py-1 bg-green-600 text-white rounded'>Submit</button> 
+              </div> 
+    </div>:<button className='fixed top-0 right-10 mt-24 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e)=>{e.preventDefault();setNavHide(true)}}>Show</button>:<button className='fixed top-0 right-10 mt-20 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e)=>{e.preventDefault();setStore(n=>({...n,previewMode:false}))}}>Preview</button>}
     </>
   )
 }
