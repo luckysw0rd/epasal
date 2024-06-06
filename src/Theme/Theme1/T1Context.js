@@ -216,6 +216,13 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonColor: "#AB8076",
         buttonText: "#ffffff",
       },
+      offerBannerColor: {
+        backgroundBoxThemeColor1: "#ffffff",
+        backgroundThemeColor: "#C9BCAC",
+        textColor: "#4E3E34",
+        buttonColor: "#AB8076",
+        buttonText: "#ffffff",
+      },
       navColor: {
         backgroundnavColor: "#B6947D",
         storeNameTextColor: "#000000",
@@ -255,7 +262,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         linkColor: "#59CE8F",
       },
     },
-
+    offerBanner: "../Assets/secondarybanner.jpg",
     secondaryBanner: "../Assets/secondarybanner.jpg",
     previewMode: true,
     selectedSubCategory: "Watch",
@@ -264,6 +271,11 @@ export const StoreProvider = ({ children, passedStore }) => {
     secondaryBannerText: {
       heading: "",
       paragraph: "",
+    },
+    offerBannerText: {
+      para1: "",
+      Para2: "",
+      para3: "",
     },
     socialMediaLinks: {
       facebook: "",

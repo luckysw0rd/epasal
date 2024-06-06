@@ -7,6 +7,7 @@ import StoreHeader from "./StoreHeader";
 import CategorySelector from "./T1Category";
 import { useMediaQuery } from "react-responsive";
 import SecondaryBanner from "./T1SecondaryBanner";
+import OfferBanner from "./T1OfferBanner";
 import ProductList from "./ProductList/ProductList";
 import Footer from "./Footer/T1Footer";
 import SaveStoreButton from "./SaveButton/SaveStoreButton";
@@ -38,8 +39,9 @@ const EStore = ({ Passedstore }) => {
     { id: 4, component: <Editor /> },
     { id: 5, component: <T1SubProduct /> },
     { id: 6, component: <SecondaryBanner /> },
-    // { id: 7, component: <ProductList /> },
-    { id: 8, component: <Footer /> },
+    { id: 7, component: <ProductList /> },
+    { id: 8, component: <OfferBanner /> },
+    { id: 9, component: <Footer /> },
   ]);
 
   const addTask = (component) => {
