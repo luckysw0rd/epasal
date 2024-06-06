@@ -22,6 +22,7 @@ const Navbar1 = ({
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const location = useLocation();
+    
 
     useEffect(() => {
         const handleScroll = () => {
@@ -102,7 +103,7 @@ const Navbar1 = ({
                         className="h-8 mr-4"
                     />
                 </div>
-                <span className="text-xl font-bold">Ecom Template-2</span>
+                <span className="text-xl font-bold">{store.name}</span>
             </div>
 
             <div className="flex items-center space-x-28">
