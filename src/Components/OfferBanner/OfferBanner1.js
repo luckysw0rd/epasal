@@ -6,7 +6,7 @@ import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as n
 const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
   const { store, setStore } = useStore();
   const { color, offerBannerText } = store;
-  const [bgImage, setBgImage] = useState(defaultBgImage);
+  const [bgImage, setBgImage] = useState(store.offerBanner.offerBannerUrl);
 
   const onDropBackground = (acceptedFiles) => {
     const backgroundImage = acceptedFiles[0];
@@ -15,7 +15,11 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
       setBgImage(reader.result);
       setStore((prevState) => ({
         ...prevState,
-        offerBanner: reader.result,
+        offerBanner:  {
+          ...prevState.offerBanner,
+          offerBannerUrl: reader.result
+      }
+,
       }));
     };
     reader.readAsDataURL(backgroundImage);
@@ -121,7 +125,7 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
         <input {...getInputPropsBackground()} />
         <div className="w-full sm:w-full md:w-3/4 lg:w-4/5 sm:pl-10">
           <img
-            src={bgImage}
+            src={store.offerBanner.offerBannerUrl}
             alt="Product"
             className="w-full  sm:mb-0 sm:h-[300px] md:h-auto lg:h-[360px] lg:w-[740px] lg:pr-12 object-fit"
           />

@@ -10,6 +10,7 @@ const SaveStoreButton = () => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
     const saveStore = async () => {
+        console.log(store,"store is this")
         try {
             const responseData = await sendRequest(
                 'store/create', // Replace 'your-api-endpoint' with your actual API endpoint

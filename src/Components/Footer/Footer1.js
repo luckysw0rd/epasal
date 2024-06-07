@@ -58,7 +58,7 @@ const Footer1 = ({
             <footer style={{ backgroundColor: color.footerColor.background, color: color.footerColor.textColor }} className="py-8">
                 <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
                     <div className="text-center md:text-left mb-4 md:mb-0">
-                        {logo && <img src={logo} alt="Store Logo" className="h-12 w-auto mb-2" />}
+                        {logo.logoUrl && <img src={logo.logoUrl} alt="Store logo" className="h-12 w-auto mb-2" />}
                         <p className="mt-2 text-center">Contact us:</p>
                         <div className="flex flex-col">
                             <input
@@ -135,7 +135,7 @@ const Footer1 = ({
                 <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
                     <div className="md:w-1/3 mb-4 md:mb-0">
                         {store.name}
-                        {logo && <img src={logo} alt="Store Logo" className="h-12 w-auto mb-2 mx-auto md:mx-0" />}
+                        {logo.logoUrl && <img src={logo.logoUrl} alt="Store logo.logoUrl" className="h-12 w-auto mb-2 mx-auto md:mx-0" />}
                         <p className="mt-2 text-center md:text-left">Contact us:</p>
                         <div className="mt-2 text-center md:text-left">
                             <p className="text-sm"><strong>Location:</strong> {location}</p>

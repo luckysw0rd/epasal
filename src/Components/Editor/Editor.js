@@ -82,8 +82,8 @@ const Editor = () => {
               <input type='text' className='border border-[#6A6A6A] h-[24px] rounded px-2' value={store.name} onChange={e=>setStore(n=>({...n,name:e.target.value}))}></input>
               </div>
               <div className='font-normal mt-2'>
-              <label className='text-[10px]'>Logo:</label>
-              <ImageDrop setStore={setStore} imageData='logo' imageFile='logofile'/>
+              <label className='text-[10px]'>logo:</label>
+              <ImageDrop setStore={setStore} imageData='logo.logoUrl'/>
               </div>
             </li>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
@@ -95,7 +95,7 @@ const Editor = () => {
               <div>
               <div className="font-normal mt-2">
               <label className='text-[10px]'>Background:</label>
-                        <ImageDrop setStore={setStore} imageData='banner' imageFile='bannerfile'/>
+                        <ImageDrop setStore={setStore} imageData='banner'/>
                     </div>
               </div>
             </li >

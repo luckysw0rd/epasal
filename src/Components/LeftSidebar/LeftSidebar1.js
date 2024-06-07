@@ -45,7 +45,7 @@ const LeftSidebar1 = ({ isOpen, onClose, store, setStore }) => {
                 animate={{ x: isOpen ? 0 : '-100%' }}
                 transition={{ duration: 0.3 }}>
                 <div className="flex items-center justify-center p-4 cursor-pointer" onClick={handleLogoClick}>
-                    <motion.img src={logo} alt="Logo" className="h-8 mr-2"
+                    <motion.img src={logo.logoUrl} alt="logo" className="h-8 mr-2"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }} />
