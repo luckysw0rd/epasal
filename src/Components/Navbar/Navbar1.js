@@ -23,7 +23,6 @@ const Navbar1 = ({
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const [editableText, setEditableText] = useState("Ecom Template-2");
-    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [isSearchClicked, setIsSearchClicked] = useState(false);
     const location = useLocation();
 
@@ -73,7 +72,10 @@ const Navbar1 = ({
                 reader.onload = () => {
                     setStore(prevState => ({
                         ...prevState,
-                        logo: reader.result,
+                        logo: {
+                            ...prevState.logo,
+                            logoUrl: reader.result
+                        }
                     }));
                 };
                 reader.readAsDataURL(file);
@@ -89,10 +91,6 @@ const Navbar1 = ({
 
     const handleEditableTextChange = (e) => {
         setEditableText(e.target.value);
-    };
-
-    const toggleDropdown = () => {
-        setIsDropdownVisible(!isDropdownVisible);
     };
 
     const handleSearchIconClick = () => {
@@ -120,58 +118,43 @@ const Navbar1 = ({
                     )}
                 </button>
                 <div {...getRootProps()} className="cursor-pointer flex items-center">
-    {!previewMode ? (
-        <>
-            <input {...getInputProps()} />
-            <img
-                src={store.logo || 'https://via.placeholder.com/50'}
-                alt="Logo"
-                className="h-8 mr-4"
-            />
-        </>
-    ) : (
-        <>
-            {store.logo && (
-                <img
-                    src={store.logo}
-                    alt="Logo"
-                    className="h-8 mr-4"
-                />
-            )}
-        </>
-    )}
-</div>
-<div className="hidden md:block">
-    {!previewMode ? (
-        <input 
-            type="text" 
-            value={editableText} 
-            onChange={handleEditableTextChange} 
-            className="bg-transparent border-b border-white focus:outline-none text-xl font-bold"
-        />
-    ) : (
-        <span className="text-xl font-bold">{editableText}</span>
-    )}
-</div>
-
+                    {!previewMode ? (
+                        <>
+                            <input {...getInputProps()} />
+                            <img
+                                src={store.logo || 'https://via.placeholder.com/50'}
+                                alt="Logo"
+                                className="h-8 mr-4"
+                            />
+                        </>
+                    ) : (
+                        <>
+                            {store.logo && (
+                                <img
+                                    src={store.logo}
+                                    alt="Logo"
+                                    className="h-8 mr-4"
+                                />
+                            )}
+                        </>
+                    )}
+                </div>
+                <div className="hidden md:block">
+                    {!previewMode ? (
+                        <input 
+                            type="text" 
+                            value={editableText} 
+                            onChange={handleEditableTextChange} 
+                            className="bg-transparent border-b border-white focus:outline-none text-xl font-bold"
+                        />
+                    ) : (
+                        <span className="text-xl font-bold">{editableText}</span>
+                    )}
+                </div>
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
-                <div className="relative">
-                    <a href="#" className="hover:underline" onClick={toggleDropdown}>All Products ▼</a>
-                    {isDropdownVisible && (
-                        <div
-                            className="absolute left-0 mt-2 w-48 shadow-lg"
-                            style={{ backgroundColor: color.navColor.backgroundnavColor }}
-                        >
-                            {store.categories.map((category, index) => (
-                                <a key={index} href="#" className="block px-4 py-2 text-white hover:bg-gray-200 hover:text-black">
-                                    {category.name}
-                                </a>
-                            ))}
-                        </div>
-                    )}
-                </div>
+                <a href="#" className="hover:underline">All Products</a>
                 <a href="#" className="hover:underline">Featured</a>
                 <a href="#" className="hover:underline">Offers</a>
             </div>
@@ -190,42 +173,41 @@ const Navbar1 = ({
                 <button onClick={handleCartClick}>
                     <FaShoppingCart className="text-2xl" />
                 </button>
-                <button className="px-4 py-2 border border-[#948979] rounded hover:bg-white hover:text-brown-700">Sign up</button>
             </div>
 
             {isSidebarOpen && (
-                <div
-                    className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
-                    style={{ backgroundColor: color.navColor.backgroundnavColor }}
-                >
-                    <div className="flex flex-col items-start space-y-4 p-4">
-                        {store.categories.length > 0 && (
-                            <div className="relative">
-                                <a href="#" className="hover:underline">All Products</a>
-                                <div className="mt-2 w-full">
-                                    {store.categories.map((category, index) => (
-                                        <a key={index} href="#" className="block px-4 py-2 text-white hover:bg-gray-200 hover:text-black">
-                                            {category.name}
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                        <a href="#" className="hover:underline">Featured</a>
-                        <a href="#" className="hover:underline">Offers</a>
-                        <div className="relative flex items-center w-full">
-                            <input
-                                type="text"
-                                value={searchInput}
-                                onChange={handleSearchInputChange}
-                                placeholder="Search"
-                                className="bg-transparent border-b border-white focus:outline-none text-xl font-bold w-full"
-                            />
-                            <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
-                        </div>
-                    </div>
-                </div>
-            )}
+    <div
+        className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
+        style={{ backgroundColor: color.navColor.backgroundnavColor }}
+    >
+        <div className="flex flex-col items-start space-y-4 p-4">
+            <div className="flex items-center mb-4">
+                {store.logo && (
+                    <img
+                        src={store.logo}
+                        alt="Logo"
+                        className="h-8 mr-4"
+                    />
+                )}
+                <span className="text-xl font-bold">{editableText}</span>
+            </div>
+            <a href="#" className="hover:underline">All Products</a>
+            <a href="#" className="hover:underline">Featured</a>
+            <a href="#" className="hover:underline">Offers</a>
+            <div className="relative flex items-center w-full">
+                <input
+                    type="text"
+                    value={searchInput}
+                    onChange={handleSearchInputChange}
+                    placeholder="Search"
+                    className="bg-transparent border-b border-white focus:outline-none text-xl font-bold w-full"
+                />
+                <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+            </div>
+        </div>
+    </div>
+)}
+
         </motion.nav>
     );
 };
