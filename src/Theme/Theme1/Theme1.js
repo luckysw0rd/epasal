@@ -6,10 +6,8 @@ import ColorPicker from "./ColorPicker";
 import StoreHeader from "./StoreHeader";
 import CategorySelector from "./T1Category";
 import { useMediaQuery } from "react-responsive";
-
 import SecondaryBanner from "./T1SecondaryBanner";
 import OfferBanner from "./T1OfferBanner";
-import ProductList from "./ProductList/ProductList";
 import Footer from "./Footer/T1Footer";
 import SaveStoreButton from "./SaveButton/SaveStoreButton";
 import Loading from "./Loading/Loading";
@@ -30,18 +28,20 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import T1SubProduct from "./SubProduct/T1SubProduct";
+import T1ProductList from './T1ProductList';
+import Editor from "../../Components/Editor/Editor";
 
 const EStore = ({ Passedstore }) => {
   const [tasks, setTasks] = useState([
     // { id: 1, component: <StoreHeader /> },
     { id: 2, component: <T1Navbar /> },
     { id: 3, component: <AboutPage /> },
-    { id: 4, component: <ColorPicker /> },
+    { id: 4, component: <Editor /> },
     { id: 5, component: <T1SubProduct /> },
     { id: 6, component: <SecondaryBanner /> },
-    { id: 7, component: <ProductList /> },
+    { id: 7, component: <T1ProductList /> },
     { id: 8, component: <OfferBanner /> },
-    // { id: 9, component: <Footer /> },
+    { id: 9, component: <Footer /> },
   ]);
 
   const addTask = (component) => {
@@ -88,7 +88,6 @@ const EStore = ({ Passedstore }) => {
     setShowColorPicker(!showColorPicker);
   };
 
-  console.log(store);
   if (
     window.location.pathname.includes("/store/") &&
     !store.fetchedFromBackend
@@ -102,7 +101,7 @@ const EStore = ({ Passedstore }) => {
     return (
       store && (
         <div
-          className=" h-full"
+          className=" h-full overflow-auto"
           style={{ backgroundColor: store.color.backgroundThemeColor }}
         >
           <DndContext
