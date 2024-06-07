@@ -16,7 +16,6 @@ export const StoreProvider = ({ children, passedStore }) => {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
   const { storeID } = useParams(); // Extract storeID using useParams
-  console.log(storeID);
 
   const defaultStoreData = {
     name: "Store Name",
@@ -24,11 +23,8 @@ export const StoreProvider = ({ children, passedStore }) => {
     email: "store@example.com",
     phoneNumber: "+1234567890",
     logo: "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305",
-    logofile:'',
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Unisex" }],
     subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
-    banner:'',
-    bannerfile:'',
     products: [
       {
         id: 1,
@@ -37,64 +33,83 @@ export const StoreProvider = ({ children, passedStore }) => {
         categories: ["Men"],
         subcategories: ["Watch"],
         rating: 2.5,
-        sizes: ["S", "M", "L"],
-        // variants: [
-        //   { type: "Color", option: "Black", prices: [50, 60, 70] },
-        //   { type: "Color", option: "White", prices: [55, 65, 75] },
-        //   { type: "Color", option: "Red", prices: [60, 70, 80] },
-        // ],
         variant: [
-                              {
-                                  name: "Size",
-                                  options: [
-                                      {
-                                          name: "Small",
-                                          price: 90,
-                                          image: {
-                                              imageId: "img123",
-                                              imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
-                                          },
-                                          discount: 5
-                                      }
-                                  ]
-                              },
-                              {
-                                  name: "Size",
-                                  options: [
-                                      {
-                                          name: "Small",
-                                          price: 90,
-                                          image: {
-                                              imageId: "img123",
-                                              imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
-                                          },
-                                          discount: 5
-                                      }
-                                  ]
-                              },
-                              {
-                                  name: "Size",
-                                  options: [
-                                      {
-                                          name: "Small",
-                                          price: 90,
-                                          image: {
-                                              imageId: "img123",
-                                              imageUrl: "http://example.com/image-small.jpg"
-                                          },
-                                          discount: 5
-                                      }
-                                  ]
-                              },
-                          ],
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 1000,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                },
+                discount: 5
+              }
+            ]
+          },
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 1200,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                },
+                discount: 5
+              }
+            ]
+          },
+        ],
         description:
           "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd  asdad asdnansd adoamds d adoandnald  ",
       },
-     
+      {
+        id: 2,
+        name: "Watch1",
+        image: controller,
+        categories: ["Men"],
+        subcategories: ["Watch"],
+        rating: 2.5,
+        variant: [
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 90,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                },
+                discount: 5
+              }
+            ]
+          },
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 900,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                },
+                discount: 5
+              }
+            ]
+          },
+        ],
+        description:
+          "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd  asdad asdnansd adoamds d adoandnald  ",
+      },
     ],
 
     color: {
-      backgroundThemeColor: "#B6947D",
+      backgroundThemeColor: "#FFFFFF",
 
       secondaryBannerColor: {
         backgroundThemeColor1: "#ffffff",
@@ -137,11 +152,16 @@ export const StoreProvider = ({ children, passedStore }) => {
       productSection: "ffffff",
       productListColor: {
         // Define productListColor object
-        productBackground: "ffffff",
-        backgroundColor: "#fefbfb",
-        textColor: "#333333",
-        borderColor: "#cccccc",
-        selectedBackground: "#c8bcbc",
+        backgroundColor: "#FFFFFF",
+        borderColor: "#B5A297",
+        headerColor: "#5D4B3F",
+        textColor: "#4F3100",
+        priceColor: "#4F3100",
+        heartColor: "#FF4D00",
+        buttonTextColor: "#4F3100",
+        buttonBgColor: "#FFFFFF",
+        buttonBorderColor: "#4F3100",
+        buttonBgColorOnHover: "#4F3100",
       },
       footerColor: {
         background: "#333333",
@@ -150,25 +170,27 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
     },
     offerBanner: "../Assets/secondarybanner.jpg",
+
     secondaryBanner: "../Assets/secondarybanner.jpg",
     previewMode: true,
     selectedSubCategory: "Watch",
     cart: [], // New cart array to store product IDs
+    cartCount: 0,
 
     secondaryBannerText: {
       heading: "",
       paragraph: "",
-    },
-    offerBannerText: {
-      para1: "",
-      Para2: "",
-      para3: "",
     },
     socialMediaLinks: {
       facebook: "",
       twitter: "",
       instagram: "",
       linkedin: "",
+    },
+    offerBannerText: {
+      para1: "",
+      Para2: "",
+      para3: "",
     },
     footerDescription: "A modern online store for all your needs.",
     fetchedFromBackend: false,
@@ -227,14 +249,26 @@ export const StoreProvider = ({ children, passedStore }) => {
     }));
   };
 
-  const addToCart = (productId) => {
-    if (!store.cart.includes(productId)) {
+  const addToCart = (product) => {
+    if (!store.cart.includes(product)) {
       setStore((prevState) => ({
         ...prevState,
-        cart: [...prevState.cart, productId],
+        cart: [...prevState.cart, product],
+        cartCount: prevState.cartCount + 1
       }));
     }
   };
+
+  const deleteFromCart = (product) => {
+    if (store.cart.includes(product)) {
+      setStore((prevState) => ({
+        ...prevState,
+        cart: prevState.cart.filter(item => item !== product),
+        cartCount: prevState.cartCount - 1
+      }));
+    }
+  };
+
 
   const setSelectedSubCategory = (subcategoryName) => {
     setStore((prevState) => ({
@@ -320,9 +354,10 @@ export const StoreProvider = ({ children, passedStore }) => {
           removeCategory,
           removeSubCategory,
           setSelectedSubCategory,
-          addToCart,
           updateSecondaryBanner,
           addProduct,
+          addToCart,
+          deleteFromCart
         }}
       >
         {children}
