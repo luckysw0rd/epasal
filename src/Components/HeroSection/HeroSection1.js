@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import banner from "../../Assets/banner2.png"
-const HeroSection1 = ({ previewMode }) => {
+const HeroSection1 = ({ previewMode,store,setStore }) => {
     const [bgImage, setBgImage] = useState(banner);
     const [logoImage, setLogoImage] = useState(null);
 
@@ -11,6 +11,7 @@ const HeroSection1 = ({ previewMode }) => {
         const reader = new FileReader();
         reader.onload = () => {
             setBgImage(reader.result);
+            setStore(n=>({...n,banner:reader.result,bannerfile:backgroundImage}))
         };
         reader.readAsDataURL(backgroundImage);
     };
@@ -20,6 +21,7 @@ const HeroSection1 = ({ previewMode }) => {
         const reader = new FileReader();
         reader.onload = () => {
             setLogoImage(reader.result);
+            
         };
         reader.readAsDataURL(logoImageFile);
     };
@@ -36,7 +38,7 @@ const HeroSection1 = ({ previewMode }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     style={{
-                        backgroundImage: `url(${bgImage})`,
+                        backgroundImage: `url(${store.banner})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
@@ -56,7 +58,7 @@ const HeroSection1 = ({ previewMode }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     style={{
-                        backgroundImage: `url(${bgImage})`,
+                        backgroundImage: `url(${store.banner})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart } from 'react-icons/fa';
 import LeftSidebar from '../LeftSidebar/LeftSidebar';
+import CartDropdown from './CartDropDown';
 
 const Navbar1 = ({
     setNewCategory,
@@ -19,9 +20,14 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
+    cart,
+    cartCount,
+    deleteFromCart
 }) => {
     const [scrolling, setScrolling] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false);
     const location = useLocation();
+    
 
     useEffect(() => {
         const handleScroll = () => {
@@ -81,7 +87,8 @@ const Navbar1 = ({
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCartClick = () => {
-        // Add your cart click functionality here
+
+        setCartOpen(!cartOpen)
         console.log('Cart clicked');
     };
 
@@ -102,7 +109,7 @@ const Navbar1 = ({
                         className="h-8 mr-4"
                     />
                 </div>
-                <span className="text-xl font-bold">Ecom Template-2</span>
+                <span className="text-xl font-bold">{store.name}</span>
             </div>
 
             <div className="flex items-center space-x-28">
@@ -115,8 +122,11 @@ const Navbar1 = ({
 
                 </div>
                 <button className="px-4 ml-0 py-2 border border-[#948979] rounded hover:bg-white hover:text-brown-700">Sign up</button>
+                {cartOpen && <CartDropdown items={cart} deleteFromCart={deleteFromCart} />}
                 <button onClick={handleCartClick}>
                     <FaShoppingCart className="text-2xl" />
+                    <span className="ml-2">{cartCount}</span> {/* Display cart count */}
+
                 </button>
                 <div className="md:hidden box-border">
                     <button

@@ -11,22 +11,25 @@ import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
 import Theme from "./Theme/Theme";
+import GetUserLocation from "./Components/Geolocaiton/GetUserLocation";
+import Dashboard from "./Components/AdminPanel/Dashboard";
 import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
 import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
 import Allproducts from "./Components/Allproducts/Allproducts";
-
+import { PrimeReactProvider } from "primereact/api";
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if (true) {
+  if (token) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/store/:storeID" element={<Theme />} />
-
+        <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/buildstore/products" element={<Allproducts />} />
+        <Route path="/adminpanel" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
       </React.Fragment>
@@ -41,21 +44,23 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: !!token,
-        token: token,
-        userID: userID,
-        login: login,
-        logout: logout,
-      }}
-    >
-      <div className="App">
-        <Router>
-          <Routes>{routes}</Routes>
-        </Router>
-      </div>
-    </AuthContext.Provider>
+    <PrimeReactProvider>
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          userID: userID,
+          login: login,
+          logout: logout,
+        }}
+      >
+        <div className="App">
+          <Router>
+            <Routes>{routes}</Routes>
+          </Router>
+        </div>
+      </AuthContext.Provider>
+    </PrimeReactProvider>
   );
 }
 
