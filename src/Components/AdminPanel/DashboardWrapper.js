@@ -16,7 +16,7 @@ const DashboardWrapper = ({ children, store }) => {
       {/* SideBar handler */}
 
       {/* Main Content */}
-      <div className="flex-1 ">
+      <div className="flex-1 overflow-auto">
         <SharedNavbar storeName={store.name} open={open} setOpen={setOpen} />
         <div>{children}</div>
       </div>

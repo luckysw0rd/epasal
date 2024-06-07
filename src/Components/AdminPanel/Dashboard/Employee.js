@@ -133,7 +133,7 @@ const Example = ({ store }) => {
     const openDeleteConfirmModal = (row) => {
         console.log(row);
         if (window.confirm('Are you sure you want to delete this user?')) {
-            
+
             deleteUser(row.id); // Pass the id directly to deleteUser
         }
     };
@@ -218,11 +218,7 @@ const Example = ({ store }) => {
     });
 
     return (
-        <Box className="custom-scrollbar overflow-x-scroll"> {/* Apply the custom scrollbar class */}
-            <div className="table-container"> {/* Wrap the table in a scrollable div */}
-                <MaterialReactTable table={table} />
-            </div>
-        </Box>
+        <MaterialReactTable table={table} />
     );
 };
 
