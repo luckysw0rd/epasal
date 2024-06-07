@@ -78,7 +78,7 @@ const Navbar1 = ({
                         ...prevState,
                         logo: {
                             ...prevState.logo,
-                            logoUrl: reader.result
+                         
                         }
                     }));
                 };

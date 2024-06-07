@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { useDropzone } from 'react-dropzone';
 
-const ImageDrop = ({setStore,imageData,imageFile}) => {
+const ImageDrop = ({setStore,imageData}) => {
     const [image, setImage] = useState();
     var urldata;
     if(imageData)
@@ -20,7 +20,7 @@ const ImageDrop = ({setStore,imageData,imageFile}) => {
                     }
                 }))
             else
-                setStore(n=>({...n,[imageData]:reader.result,[imageFile]:file}))
+                setStore(n=>({...n,[imageData]:reader.result}))
         };
         reader.readAsDataURL(file);
     };

@@ -83,7 +83,7 @@ const Editor = () => {
               </div>
               <div className='font-normal mt-2'>
               <label className='text-[10px]'>logo:</label>
-              <ImageDrop setStore={setStore} imageData='logo.logoUrl' imageFile='logofile'/>
+              <ImageDrop setStore={setStore} imageData='logo.logoUrl'/>
               </div>
             </li>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
@@ -95,7 +95,7 @@ const Editor = () => {
               <div>
               <div className="font-normal mt-2">
               <label className='text-[10px]'>Background:</label>
-                        <ImageDrop setStore={setStore} imageData='banner' imageFile='bannerfile'/>
+                        <ImageDrop setStore={setStore} imageData='banner'/>
                     </div>
               </div>
             </li >
