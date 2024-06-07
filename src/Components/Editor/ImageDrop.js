@@ -3,13 +3,24 @@ import { useDropzone } from 'react-dropzone';
 
 const ImageDrop = ({setStore,imageData,imageFile}) => {
     const [image, setImage] = useState();
+    var urldata;
+    if(imageData)
+        urldata=imageData.split('.')
     const onDrop = acceptedFiles => {
         const file = acceptedFiles[0];
         const reader = new FileReader();
         reader.onload = () => {
             setImage(reader.result);
-            
-            setStore(n=>({...n,[imageData]:reader.result,[imageFile]:file}))
+            if(urldata.length===2)
+                setStore(prevState => ({
+                    ...prevState,
+                    [urldata[0]]: {
+                        ...prevState.logo,
+                        [urldata[1]]: reader.result
+                    }
+                }))
+            else
+                setStore(n=>({...n,[imageData]:reader.result,[imageFile]:file}))
         };
         reader.readAsDataURL(file);
     };
