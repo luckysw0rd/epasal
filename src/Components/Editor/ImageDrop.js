@@ -1,0 +1,30 @@
+import React,{useState} from 'react'
+import { useDropzone } from 'react-dropzone';
+
+const ImageDrop = ({setStore,imageData,imageFile}) => {
+    const [image, setImage] = useState();
+    const onDrop = acceptedFiles => {
+        const file = acceptedFiles[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            setImage(reader.result);
+            
+            setStore(n=>({...n,[imageData]:reader.result,[imageFile]:file}))
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        accept: 'image/*',
+        multiple: false,
+      });
+  return (
+    <div {...getRootProps()} className="px-2 py-1 border border-gray-400 w-20 text-center rounded">
+        <input {...getInputProps()}/>
+        <p className="text-sm font-normal">Upload</p>
+    </div>
+  )
+}
+
+export default ImageDrop

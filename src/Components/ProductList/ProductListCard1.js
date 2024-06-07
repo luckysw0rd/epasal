@@ -9,7 +9,6 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
     const { backgroundColor, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor
 
     const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
-    const [addedToCart, setAddedToCart] = useState(false);
 
     if (!product) return null;
 
@@ -20,11 +19,6 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
         setSelectedVariantIndex(index);
     };
 
-    const handleAddToCart = () => {
-        // This function should handle adding the product to the cart
-        // For demonstration purposes, it just sets the addedToCart state to true
-        setAddedToCart(true);
-    };
 
 
     const selectedVariant = variant[selectedVariantIndex];
@@ -34,8 +28,8 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
     return (
         // <h1>HEllo</h1>
         <motion.div
-            className="font-roboto rounded-lg overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[372px] mx-auto"
-            style={{ borderColor: productColor.borderColor }}
+            className="font-roboto rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[372px] mx-auto"
+            style={{ borderColor }}
             whileTap={{ scale: 0.98 }}
         >
             <div className="w-full">

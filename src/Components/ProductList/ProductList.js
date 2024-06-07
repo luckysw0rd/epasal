@@ -28,7 +28,7 @@ const ProductList = ({ productListProps, productListType }) => {
                 return (
                     <div className='space-y-10 flex items-center relative flex-col'>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
-                        <div style={{ backgroundColor: productColor.productBackground }}>
+                        <div style={{ backgroundColor: productColor.backgroundColor }}>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
                                 {filteredProducts.map(product => (
                                     <ProductListCard1
