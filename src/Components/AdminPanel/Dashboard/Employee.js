@@ -133,7 +133,7 @@ const Example = ({ store }) => {
     const openDeleteConfirmModal = (row) => {
         console.log(row);
         if (window.confirm('Are you sure you want to delete this user?')) {
-            
+
             deleteUser(row.id); // Pass the id directly to deleteUser
         }
     };
