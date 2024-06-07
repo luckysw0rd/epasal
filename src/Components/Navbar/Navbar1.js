@@ -76,7 +76,10 @@ const Navbar1 = ({
                 reader.onload = () => {
                     setStore(prevState => ({
                         ...prevState,
-                        logo: reader.result,
+                        logo: {
+                            ...prevState.logo,
+                         
+                        }
                     }));
                 };
                 reader.readAsDataURL(file);
@@ -104,8 +107,8 @@ const Navbar1 = ({
                 <div {...getRootProps()} className="cursor-pointer flex items-center">
                     <input {...getInputProps()} />
                     <img
-                        src={store.logo || 'https://via.placeholder.com/50'}
-                        alt="Logo"
+                        src={store.logo.logoUrl || 'https://via.placeholder.com/50'}
+                        alt="logo"
                         className="h-8 mr-4"
                     />
                 </div>

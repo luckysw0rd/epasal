@@ -101,25 +101,30 @@
 
 // export default SecondaryBanner1;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useDropzone } from "react-dropzone";
 import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as necessary
-
+import { useImage } from "../../Hooks/useImage";
 const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
   const { store, setStore } = useStore();
   const { color, secondaryBannerText } = store;
-  const [bgImage, setBgImage] = useState(defaultBgImage);
+  const { uploadImage } = useImage();
 
   const onDropBackground = (acceptedFiles) => {
     const backgroundImage = acceptedFiles[0];
     const reader = new FileReader();
-    reader.onload = () => {
-      setBgImage(reader.result);
+    reader.onload = async() => {
+   
       setStore((prevState) => ({
         ...prevState,
-        secondaryBanner: reader.result,
+        secondaryBanner: {
+          ...prevState.secondaryBanner,
+          secondaryBannerUrl: reader.result
+      },
+      
       }));
+
     };
     reader.readAsDataURL(backgroundImage);
   };
@@ -133,7 +138,8 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
         ...prevState.secondaryBannerText,
         [name]: value,
       },
-    }));
+    })
+  );
   };
 
   const {
@@ -141,6 +147,9 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
     getInputProps: getInputPropsBackground,
   } = useDropzone({ onDrop: onDropBackground });
 
+  useEffect(()=>{
+    console.log(store.secondaryBanner)
+  },[store])
   return (
     <div className="box-border py-8">
       <motion.div
@@ -159,7 +168,7 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
         <input {...getInputPropsBackground()} />
         <div className="w-full sm:w-full md:w-1/2 lg:w-1/2">
           <img
-            src={bgImage}
+            src={store.secondaryBanner.secondaryBannerUrl}
             alt="Product"
             className="w-full h-60 sm:h-[350px] md:h-[400px] lg:h-[400px] object-cover"
           />

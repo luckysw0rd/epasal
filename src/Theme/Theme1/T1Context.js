@@ -1,10 +1,12 @@
-
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
 import { BrowserRouter } from "react-router-dom"; // Import BrowserRouter
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
 import controller from "../../Assets/controller.png";
+import offerBannerImg from '../../Assets/offerbanner.webp' 
+import secondaryBannerImg from '../../Assets/ImageGroup.png'
+
 const StoreContext = createContext();
 
 export const useStore = () => {
@@ -14,7 +16,6 @@ export const useStore = () => {
 export const StoreProvider = ({ children, passedStore }) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
-
   const { storeID } = useParams(); // Extract storeID using useParams
 
   const defaultStoreData = {
@@ -22,17 +23,22 @@ export const StoreProvider = ({ children, passedStore }) => {
     location: "Your Store Location",
     email: "store@example.com",
     phoneNumber: "+1234567890",
-    logo: "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305",
+    logo: {
+      logoUrl: "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305",
+      logoID: ''
+    },
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Unisex" }],
     subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
+    banner: { bannerUrl: '', bannerID: '' },
     products: [
       {
         id: 1,
         name: "Watch1",
-        image: controller,
+        image: { imageUrl: controller, imageID: '' },
         categories: ["Men"],
         subcategories: ["Watch"],
         rating: 2.5,
+        count: 0,
         variant: [
           {
             name: "Size",
@@ -41,7 +47,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 name: "Small",
                 price: 1000,
                 image: {
-                  imageId: "img123",
+                  imageID: "img123",
                   imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
                 },
                 discount: 5
@@ -55,7 +61,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 name: "Small",
                 price: 1200,
                 image: {
-                  imageId: "img123",
+                  imageID: "img123",
                   imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
                 },
                 discount: 5
@@ -63,13 +69,13 @@ export const StoreProvider = ({ children, passedStore }) => {
             ]
           },
         ],
-        description:
-          "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd  asdad asdnansd adoamds d adoandnald  ",
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       },
       {
         id: 2,
         name: "Watch1",
         image: controller,
+        count: 0,
         categories: ["Men"],
         subcategories: ["Watch"],
         rating: 2.5,
@@ -103,14 +109,11 @@ export const StoreProvider = ({ children, passedStore }) => {
             ]
           },
         ],
-        description:
-          "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd  asdad asdnansd adoamds d adoandnald  ",
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       },
     ],
-
     color: {
       backgroundThemeColor: "#FFFFFF",
-
       secondaryBannerColor: {
         backgroundThemeColor1: "#ffffff",
         backgroundThemeColor2: "#fcf3f3",
@@ -169,14 +172,17 @@ export const StoreProvider = ({ children, passedStore }) => {
         linkColor: "#59CE8F",
       },
     },
-    offerBanner: "../Assets/secondarybanner.jpg",
-
-    secondaryBanner: "../Assets/secondarybanner.jpg",
+    offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },
+    offerBannerText: {
+      para1: "",
+      para2: "",
+      para3: "",
+    },
+    secondaryBanner: { secondaryBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
     previewMode: true,
     selectedSubCategory: "Watch",
-    cart: [], // New cart array to store product IDs
+    cart: [],
     cartCount: 0,
-
     secondaryBannerText: {
       heading: "",
       paragraph: "",
@@ -187,11 +193,6 @@ export const StoreProvider = ({ children, passedStore }) => {
       instagram: "",
       linkedin: "",
     },
-    offerBannerText: {
-      para1: "",
-      Para2: "",
-      para3: "",
-    },
     footerDescription: "A modern online store for all your needs.",
     fetchedFromBackend: false,
     // Rest of the default store data...
@@ -200,6 +201,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   useEffect(() => {
     console.log(passedStore);
   }, [passedStore]);
+
   const [store, setStore] = useState(defaultStoreData); // Start with null while fetching
 
   useEffect(() => {
@@ -219,7 +221,10 @@ export const StoreProvider = ({ children, passedStore }) => {
         console.log(response);
         setStore({
           ...response.store,
-          fetchedFromBackend: true, // Set fetchedFromBackend to true when data is fetched
+          fetchedFromBackend: true,
+          selectedSubCategory: response.store.subCategories[0].name,
+          previewMode: true,
+          cart: [], // Set fetchedFromBackend to true when data is fetched
         });
       } catch (error) {
         // If an error occurs during fetch, set default store data
@@ -250,25 +255,49 @@ export const StoreProvider = ({ children, passedStore }) => {
   };
 
   const addToCart = (product) => {
-    if (!store.cart.includes(product)) {
+    console.log(store, "asdnaisdad ")
+    const existingCartItem = store.cart.find(item => item.product.id === product.id);
+    if (existingCartItem) {
       setStore((prevState) => ({
         ...prevState,
-        cart: [...prevState.cart, product],
+        cart: prevState.cart.map(item =>
+          item.product.id === product.id
+            ? { ...item, count: item.count + 1 }
+            : item
+        ),
+        cartCount: prevState.cartCount + 1
+      }));
+    } else {
+      setStore((prevState) => ({
+        ...prevState,
+        cart: [...prevState.cart, { product, count: 1 }],
         cartCount: prevState.cartCount + 1
       }));
     }
   };
 
   const deleteFromCart = (product) => {
-    if (store.cart.includes(product)) {
-      setStore((prevState) => ({
-        ...prevState,
-        cart: prevState.cart.filter(item => item !== product),
-        cartCount: prevState.cartCount - 1
-      }));
+    const existingCartItem = store.cart.find(item => item.product.id === product.id);
+    if (existingCartItem) {
+      if (existingCartItem.count === 1) {
+        setStore((prevState) => ({
+          ...prevState,
+          cart: prevState.cart.filter(item => item.product.id !== product.id),
+          cartCount: prevState.cartCount - 1
+        }));
+      } else {
+        setStore((prevState) => ({
+          ...prevState,
+          cart: prevState.cart.map(item =>
+            item.product.id === product.id
+              ? { ...item, count: item.count - 1 }
+              : item
+          ),
+          cartCount: prevState.cartCount - 1
+        }));
+      }
     }
   };
-
 
   const setSelectedSubCategory = (subcategoryName) => {
     setStore((prevState) => ({
