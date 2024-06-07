@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useStore } from '../T1Context';
-import {  FaTimes } from 'react-icons/fa'; // Import FaTimes for the remove icon
+import { FaTimes } from 'react-icons/fa'; // Import FaTimes for the remove icon
 
 const ProductListCard = ({ product, handleDeleteProduct }) => {
     const [addedToCart, setAddedToCart] = useState(false);
@@ -39,8 +39,8 @@ const ProductListCard = ({ product, handleDeleteProduct }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
         >
-               {/* Add remove button/icon */}
-               {!previewMode && (
+            {/* Add remove button/icon */}
+            {!previewMode && (
                 <button
                     className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center" // Added flex and justify-center
                     onClick={() => handleDeleteProduct(product.id)} // Call handleRemoveProduct on click
