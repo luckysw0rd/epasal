@@ -4,8 +4,7 @@ import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiMenu } from 'react-icons/fi'; // Import the hamburger icon
-import LeftSidebar from '../LeftSidebar/LeftSidebar';
-import CartDropdown from './CartDropDown';
+
 
 const Navbar1 = ({
     setNewCategory,
@@ -21,14 +20,11 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
-    cart,
-    cartCount,
-    deleteFromCart
 }) => {
     const [scrolling, setScrolling] = useState(false);
-    const [cartOpen, setCartOpen] = useState(false);
+    const [editableText, setEditableText] = useState("Ecom Template-2");
+    const [isSearchClicked, setIsSearchClicked] = useState(false);
     const location = useLocation();
-    
 
     useEffect(() => {
         const handleScroll = () => {
@@ -90,8 +86,6 @@ const Navbar1 = ({
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCartClick = () => {
-
-        setCartOpen(!cartOpen)
         console.log('Cart clicked');
     };
 
@@ -157,7 +151,6 @@ const Navbar1 = ({
                         <span className="text-xl font-bold">{editableText}</span>
                     )}
                 </div>
-                <span className="text-xl font-bold">{store.name}</span>
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
@@ -177,12 +170,8 @@ const Navbar1 = ({
                     />
                     <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
                 </div>
-                <button className="px-4 ml-0 py-2 border border-[#948979] rounded hover:bg-white hover:text-brown-700">Sign up</button>
-                {cartOpen && <CartDropdown items={cart} deleteFromCart={deleteFromCart} />}
                 <button onClick={handleCartClick}>
                     <FaShoppingCart className="text-2xl" />
-                    <span className="ml-2">{cartCount}</span> {/* Display cart count */}
-
                 </button>
             </div>
 
