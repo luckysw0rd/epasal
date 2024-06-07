@@ -10,7 +10,7 @@ const T1SecondaryBanner = () => {
   const { previewMode } = store;
 
   return (
-    <SecondaryBanner1 previewMode={previewMode} defaultBgImage={secondary} />
+    <SecondaryBanner1 previewMode={previewMode} defaultBgImage={secondary} /> 
   );
 };
 

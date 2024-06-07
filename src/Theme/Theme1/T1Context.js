@@ -109,7 +109,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     ],
 
     color: {
-      backgroundThemeColor: "#B6947D",
+      backgroundThemeColor: "#FFFFFF",
 
       secondaryBannerColor: {
         backgroundThemeColor1: "#ffffff",
@@ -152,14 +152,14 @@ export const StoreProvider = ({ children, passedStore }) => {
       productSection: "ffffff",
       productListColor: {
         // Define productListColor object
-        backgroundColor: "#B6947D",
+        backgroundColor: "#FFFFFF",
         borderColor: "#B5A297",
-        headerColor: "#ffffff",
+        headerColor: "#5D4B3F",
         textColor: "#4F3100",
-        priceColor: "#000000",
-        heartColor: "#8B0000",
+        priceColor: "#4F3100",
+        heartColor: "#FF4D00",
         buttonTextColor: "#4F3100",
-        buttonBgColor: "#ffffff",
+        buttonBgColor: "#FFFFFF",
         buttonBorderColor: "#4F3100",
         buttonBgColorOnHover: "#4F3100",
       },
