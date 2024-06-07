@@ -1,8 +1,12 @@
-
 import React, { Suspense, useContext } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
-import Navbar from "./HomePage/Navbar"
+import Navbar from "./HomePage/Navbar";
 import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
@@ -11,6 +15,7 @@ import GetUserLocation from "./Components/Geolocaiton/GetUserLocation";
 import Dashboard from "./Components/AdminPanel/Dashboard";
 import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
 import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
+import Allproducts from "./Components/Allproducts/Allproducts";
 import { PrimeReactProvider } from 'primereact/api';
 import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
 function App() {
@@ -24,6 +29,7 @@ function App() {
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
+        <Route path="/buildstore/products" element={<Allproducts />} />
         <Route path="/adminpanel" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/productform" element={<ProductForm />} />
@@ -37,7 +43,6 @@ function App() {
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignInPage />}></Route>
-
       </React.Fragment>
     );
   }
