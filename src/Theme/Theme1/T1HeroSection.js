@@ -2,11 +2,13 @@ import React from 'react';
 import { useStore } from './T1Context';
 import HeroSection from '../../Components/HeroSection/HeroSection';
 const AboutPage = () => {
-    const { store } = useStore();
+    const { store,setStore } = useStore();
     const { previewMode } = store;
 
     const heroSectionProps = {
         previewMode,
+        store,
+        setStore
     };
 
     return (
