@@ -114,15 +114,15 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
   const onDropBackground = (acceptedFiles) => {
     const backgroundImage = acceptedFiles[0];
     const reader = new FileReader();
-    reader.onload = async() => {
-   
+    reader.onload = async () => {
+
       setStore((prevState) => ({
         ...prevState,
         secondaryBanner: {
           ...prevState.secondaryBanner,
           secondaryBannerUrl: reader.result
-      },
-      
+        },
+
       }));
 
     };
@@ -139,7 +139,7 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
         [name]: value,
       },
     })
-  );
+    );
   };
 
   const {
@@ -147,9 +147,9 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
     getInputProps: getInputPropsBackground,
   } = useDropzone({ onDrop: onDropBackground });
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(store.secondaryBanner)
-  },[store])
+  }, [store])
   return (
     <div className="box-border py-8">
       <motion.div
@@ -173,9 +173,9 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
             className="w-full h-60 sm:h-[350px] md:h-[400px] lg:h-[400px] object-cover"
           />
         </div>
-        <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 flex flex-col justify-center items-start p-4 sm:py-1 md:py-1 lg:py-1 h-full font-Roboto">
+        <div className="w-full gap-y-5 pl-20 sm:w-full ml-4 md:w-1/2  lg:w-1/2 flex flex-col justify-center items-start p-4 sm:py-5 md:py-1 lg:py-1 h-full font-Roboto">
           {previewMode ? (
-            <>
+            < >
               <h2
                 className="text-3xl lg:text-5xl xl:text-6xl font-bold"
                 style={{ color: color.secondaryBannerColor.textColor }}
@@ -212,7 +212,7 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
             </>
           )}
           <button
-            className="mt-4 md:mt-4 lg:mt-12 inline-block h-12 rounded-lg border-2 border-success px-6 py-auto text-xs md:text-xs lg:text-base font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:border-2"
+            className="mt-4 md:mt-2 lg:mt-8 inline-block h-12 rounded-lg border-2 border-success px-6 py-auto text-xs md:text-xs lg:text-base font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:border-2"
             style={{
               color: color.secondaryBannerColor.buttonText,
               backgroundColor: color.secondaryBannerColor.buttonColor,
