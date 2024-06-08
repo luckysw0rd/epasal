@@ -15,11 +15,11 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
       setBgImage(reader.result);
       setStore((prevState) => ({
         ...prevState,
-        offerBanner:  {
+        offerBanner: {
           ...prevState.offerBanner,
           offerBannerUrl: reader.result
-      }
-,
+        }
+        ,
       }));
     };
     reader.readAsDataURL(backgroundImage);
@@ -43,9 +43,9 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
   } = useDropzone({ onDrop: onDropBackground });
 
   return (
-    <div className="box-border py-8 ">
+    <div className="box-border py-8 mt-10 ">
       <motion.div
-        className="box-border font-roboto relative shadow-lg min-h-[300px] sm:h-[350px] md:h-[350px] lg:min-h-[450px] flex flex-col sm:flex-col md:flex-row lg:flex-row justify-around items-center px-10 py-10 text-black  "
+        className="box-border      font-roboto relative shadow-lg min-h-[300px] sm:h-[600px] md:h-[800px] lg:h-[400px] lg:min-h-[450px] flex flex-col sm:flex-col sm:space-y-10 lg:space-y-0  lg:flex-row md:justify-center items-center  space-x-0 lg:space-x-20 px-10  py-10 text-black  "
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -57,16 +57,16 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
           opacity: previewMode ? 0.4 : 1,
         }}
       >
-        <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 flex flex-col justify-between     sm:py-1 md:py-1 lg:py-1 font-Roboto ">
+        <div className="     text-center  md:w-full lg:w-[500px] xl:w-[800px]     flex flex-col justify-between     sm:py-1 md:py-1 lg:py-1 font-Roboto ">
           <div
-            className=" mx-auto mb-8 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0 md:mx-auto  "
+            className=" mx-auto w-[300px]   sm:w-[500px] md:w-[500px] lg:w-[450px] xl:w-[400px]  mb-8 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0 md:mx-auto  "
             style={{
               backgroundColor: color.offerBannerColor.backgroundBoxThemeColor1,
             }}
           >
             {" "}
             <div
-              className=" border-2   mx-4 my-4 p-4  py-4 text-center"
+              className=" border-2 md:h-[270px]   flex flex-col justify-center items-center   mx-4 my-4 p-4  py-4 text-center"
               style={{ borderColor: color.offerBannerColor.textColor }}
             >
               {previewMode ? (
@@ -122,13 +122,15 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
           </div>
         </div>
 
-        <input {...getInputPropsBackground()} />
-        <div className="w-full sm:w-full md:w-3/4 lg:w-4/5 sm:pl-10">
-          <img
-            src={store.offerBanner.offerBannerUrl}
-            alt="Product"
-            className="w-full  sm:mb-0 sm:h-[300px] md:h-auto lg:h-[360px] lg:w-[740px] lg:pr-12 object-fit"
-          />
+        <div>
+          <input {...getInputPropsBackground()} />
+          <div className=" w-[400px]   md:w-[800px] lg:w-[600px] xl:w-[700px] xl:pr-10 2xl:w-[700px] relative ml-0     ">
+            <img
+              src={store.offerBanner.offerBannerUrl}
+              alt="Product"
+              className="w-full"
+            />
+          </div>
         </div>
 
         {!previewMode && (

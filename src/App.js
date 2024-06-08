@@ -41,16 +41,16 @@ function App() {
 
   return (
     <PrimeReactProvider>
-    <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
-      <div className="App">
-        <Router>
-          <Routes>
-            {routes}
-          </Routes>
-        </Router>
+      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
+        <div className="App">
+          <Router>
+            <Routes>
+              {routes}
+            </Routes>
+          </Router>
 
-      </div>
-    </AuthContext.Provider>
+        </div>
+      </AuthContext.Provider>
     </PrimeReactProvider>
 
   );

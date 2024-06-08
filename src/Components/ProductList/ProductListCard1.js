@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa';
 
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
     const { productColor, previewMode, addToCart } = productListProps;
-    const { backgroundColor, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor
+    const { backgroundColor, cardBackground ,textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor
 
     const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
 
@@ -42,7 +42,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                             <FaTimes />
                         </button>
                     )}
-                    <div className="card cursor-pointer flex flex-col gap-2 justify-center bg-white rounded-xl shadow-2xl w-full">
+                    <div className="card cursor-pointer flex flex-col gap-2 justify-center  rounded-xl shadow-2xl w-full" style={{backgroundColor:cardBackground}}>
                         <div>
                             <img src={variantImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
                         </div>

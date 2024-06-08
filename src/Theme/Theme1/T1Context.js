@@ -29,7 +29,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     },
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Unisex" }],
     subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
-    banner: { bannerUrl: '', bannerID: '' },
+    banner: { bannerUrl: 'https://media1.giphy.com/media/eGO0mMkPkfchPZuBo3/giphy.gif?cid=6c09b952hn0da92mi1ikjwxzjyoo8bf18s4e5xfziwoge1xu&ep=v1_gifs_search&rid=giphy.gif&ct=g', bannerID: '' },
     products: [
       {
         id: 1,
@@ -152,10 +152,11 @@ export const StoreProvider = ({ children, passedStore }) => {
         scrollbarColor: "#4F3100",
         starColor: "#875300",
       },
-      productSection: "ffffff",
+      productSection: "#ffffff",
       productListColor: {
         // Define productListColor object
         backgroundColor: "#FFFFFF",
+        cardBackground:"#FFFFFF",
         borderColor: "#B5A297",
         headerColor: "#5D4B3F",
         textColor: "#4F3100",
