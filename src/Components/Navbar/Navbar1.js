@@ -5,7 +5,6 @@ import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiMenu } from 'react-icons/fi'; // Import the hamburger icon
 
-
 const Navbar1 = ({
     setNewCategory,
     store,
@@ -99,11 +98,16 @@ const Navbar1 = ({
 
     return (
         <motion.nav
-            className="flex items-center justify-between px-6 py-4 bg-brown-700 text-white shadow-md fixed w-full z-20"
+            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${
+                scrolling ? 'bg-brown-700' : 'bg-transparent'
+            }`}
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }}
-            style={{ backgroundColor: color.navColor.backgroundnavColor }}
+            style={{
+                backgroundColor: scrolling ? color.navColor.backgroundnavColor : 'transparent',
+                color: color.navColor.storeNameTextColor,
+            }}
         >
             <div className="flex items-center">
                 <button
@@ -117,38 +121,36 @@ const Navbar1 = ({
                         <FiMenu className="h-6 w-6 fill-current" />
                     )}
                 </button>
-                <div {...getRootProps()} className="cursor-pointer flex items-center">
-                    {!previewMode ? (
-                        <>
+                <div className="flex items-center">
+                    {previewMode ? (
+                        store.logo && (
+                            <img
+                                src={store.logo}
+                                alt="Logo"
+                                className="h-8 mr-4"
+                            />
+                        )
+                    ) : (
+                        <div {...getRootProps()} className="cursor-pointer flex items-center">
                             <input {...getInputProps()} />
                             <img
                                 src={store.logo || 'https://via.placeholder.com/50'}
                                 alt="Logo"
                                 className="h-8 mr-4"
                             />
-                        </>
-                    ) : (
-                        <>
-                            {store.logo && (
-                                <img
-                                    src={store.logo}
-                                    alt="Logo"
-                                    className="h-8 mr-4"
-                                />
-                            )}
-                        </>
+                        </div>
                     )}
                 </div>
                 <div className="hidden md:block">
                     {!previewMode ? (
                         <input 
                             type="text" 
-                            value={editableText} 
+                            value={store.name} 
                             onChange={handleEditableTextChange} 
                             className="bg-transparent border-b border-white focus:outline-none text-xl font-bold"
                         />
                     ) : (
-                        <span className="text-xl font-bold">{editableText}</span>
+                        <span className="text-xl font-bold">{store.name}</span>
                     )}
                 </div>
             </div>
@@ -176,38 +178,37 @@ const Navbar1 = ({
             </div>
 
             {isSidebarOpen && (
-    <div
-        className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
-        style={{ backgroundColor: color.navColor.backgroundnavColor }}
-    >
-        <div className="flex flex-col items-start space-y-4 p-4">
-            <div className="flex items-center mb-4">
-                {store.logo && (
-                    <img
-                        src={store.logo}
-                        alt="Logo"
-                        className="h-8 mr-4"
-                    />
-                )}
-                <span className="text-xl font-bold">{editableText}</span>
-            </div>
-            <a href="#" className="hover:underline">All Products</a>
-            <a href="#" className="hover:underline">Featured</a>
-            <a href="#" className="hover:underline">Offers</a>
-            <div className="relative flex items-center w-full">
-                <input
-                    type="text"
-                    value={searchInput}
-                    onChange={handleSearchInputChange}
-                    placeholder="Search"
-                    className="bg-transparent border-b border-white focus:outline-none text-xl font-bold w-full"
-                />
-                <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
-            </div>
-        </div>
-    </div>
-)}
-
+                <div
+                    className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
+                    style={{ backgroundColor: color.navColor.backgroundnavColor }}
+                >
+                    <div className="flex flex-col items-start space-y-4 p-4">
+                        <div className="flex items-center mb-4">
+                            {store.logo && (
+                                <img
+                                    src={store.logo}
+                                    alt="Logo"
+                                    className="h-8 mr-4"
+                                />
+                            )}
+                            <span className="text-xl font-bold">{store.name}</span>
+                        </div>
+                        <a href="#" className="hover:underline">All Products</a>
+                        <a href="#" className="hover:underline">Featured</a>
+                        <a href="#" className="hover:underline">Offers</a>
+                        <div className="relative flex items-center w-full">
+                            <input
+                                type="text"
+                                value={searchInput}
+                                onChange={handleSearchInputChange}
+                                placeholder="Search"
+                                className="bg-transparent border-b border-white focus:outline-none text-xl font-bold w-full"
+                            />
+                            <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+                        </div>
+                    </div>
+                </div>
+            )}
         </motion.nav>
     );
 };

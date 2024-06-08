@@ -44,7 +44,7 @@ const HeroSection1 = ({ previewMode,store,setStore }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{
-                    backgroundImage: `url(${store.banner})`,
+                    backgroundImage: `url(${banner})`,  //Currently using the imported banner cause of the missing context otherwise use store.banner
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
@@ -56,7 +56,7 @@ const HeroSection1 = ({ previewMode,store,setStore }) => {
                 {!previewMode && <input {...getInputPropsBackground()} />}
                 <div className='absolute left-8 top-1/4'>
                     {previewMode ? (
-                        <h1 className="text-4xl font-bold text-white">{heroText}</h1>
+                        <h1 className="text-4xl font-bold text-white">{heroText}</h1>  //After updating the context use store.desc or the update store description text
                     ) : (
                         <input
                             type="text"

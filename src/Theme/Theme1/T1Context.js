@@ -18,7 +18,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   const { storeID } = useParams(); // Extract storeID using useParams
 
   const defaultStoreData = {
-    name: "Store Name",
+    name: "StoreName",
     location: "Your Store Location",
     email: "store@example.com",
     phoneNumber: "+1234567890",
