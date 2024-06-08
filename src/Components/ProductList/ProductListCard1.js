@@ -6,27 +6,29 @@ import { FaTimes } from 'react-icons/fa';
 
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
     const { productColor, previewMode, addToCart } = productListProps;
-    const { backgroundColor, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor
+    const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
-    const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+    const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
+    const [displayedImage, setDisplayedImage] = useState(product.image.imageUrl);
 
     if (!product) return null;
 
-    const { id, image, name, variant } = product;
+    const { id, name, image, variant } = product;
+    const firstVariant = variant[0]; // Considering only the first variant
+    const selectedOption = selectedOptionIndex === -1 ? null : firstVariant.options[selectedOptionIndex];
+    const price = selectedOption ? selectedOption.price : product.price || 0;
 
-    const handleVariantSelect = (index) => {
-        console.log("Selected Variant Index:", index);
-        setSelectedVariantIndex(index);
+    const handleOptionSelect = (index) => {
+        setSelectedOptionIndex(index);
+        setDisplayedImage(firstVariant.options[index].image.imageUrl);
     };
 
-
-
-    const selectedVariant = variant[selectedVariantIndex];
-    const price = selectedVariant.options[0]?.price || 0;
-    const variantImage = selectedVariant.options[0]?.image?.imageUrl || '';
+    const handleDefaultImage = () => {
+        setSelectedOptionIndex(-1);
+        setDisplayedImage(product.image.imageUrl);
+    };
 
     return (
-        // <h1>HEllo</h1>
         <motion.div
             className="font-roboto rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[372px] mx-auto"
             style={{ borderColor }}
@@ -42,9 +44,9 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                             <FaTimes />
                         </button>
                     )}
-                    <div className="card cursor-pointer flex flex-col gap-2 justify-center bg-white rounded-xl shadow-2xl w-full">
+                    <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <div>
-                            <img src={variantImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
+                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
                         </div>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
@@ -54,21 +56,27 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                             </div>
                             <div className="grid gap-2 relative w-full">
                                 <div className="flex mt-5">
-                                    {variant.map((v, index) => (
-                                        < div
+                                    <div
+                                        className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
+                                        onClick={handleDefaultImage}
+                                    >
+                                        <img src={image.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2' />
+                                    </div>
+                                    {firstVariant.options.map((option, index) => (
+                                        <div
                                             key={index}
-                                            className={`cursor-pointer text-sm sm:text-base ${selectedVariantIndex === index ? 'font-bold' : ''} rounded-md`}
-                                            onClick={() => handleVariantSelect(index)}
+                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
+                                            onClick={() => handleOptionSelect(index)}
                                         >
-                                            <img src={v.options[0].image.imageUrl} alt={v.options[0].image.imageUrl} style={{ height: "48px", width: "48px" }} className='me-2' />
-                                        </div >
+                                            <img src={option.image.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                                        </div>
                                     ))}
                                 </div>
                                 <div className='absolute right-1 top-1'>
                                     <FaHeart style={{ color: heartColor }} size={15} />
                                 </div>
                                 <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
-                                    <button className="py-2 transition ease-in duration-200 border-nore focus:outline-none">
+                                    <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
                                         <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
                                             Learn More <IoIosArrowForward />
                                         </div>
@@ -85,7 +93,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                     </div>
                 </div>
             </div>
-        </motion.div >
+        </motion.div>
     );
 };
 

@@ -89,9 +89,10 @@ const Example = ({ store }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
+
             console.log(responseData); // Handle response data as needed
-            await createUser(values);
-            table.setCreatingRow(values); //exit creating mode
+            window.location.reload();
+            table.setCreatingRow(null);; //exit creating mode
         } catch (error) {
             // Handle error if needed
         }
@@ -100,41 +101,75 @@ const Example = ({ store }) => {
     //CREATE action
     const handleCreateUser = async ({ values, table }) => {
         console.log(values);
-        await addUser(values);
+        await addUser(values, table);
+        table.setCreatingRow(null); //exit editing mode
     };
 
+
+    const editEmployee = async (values, table) => {
+        try {
+            const responseData = await sendRequest(
+                'users/ownerUpdate',
+                'PUT',
+                JSON.stringify({
+                    userId: values.id,
+                    storeId: store._id,
+                    newRole: values.role,
+                }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            console.log(responseData); // Handle response data as needed
+            table.setEditingRow(null); //exit editing mode
+
+            // table.setCreatingRow(null); ; //exit creating mode
+        } catch (error) {
+            // Handle error if needed
+        }
+    }
     //UPDATE action
     const handleSaveUserRole = async ({ values, table }) => {
-        await updateUserRole(values);
+        console.log(values);
+        await editEmployee(values, table);
         table.setEditingRow(null); //exit editing mode
+
     };
 
-    const deleteEmployee = async () => {
-        // Add your delete logic here
-        // try {
-        //     const responseData = await sendRequest(
-        //         'users/addEmployee',
-        //         'POST',
-        //         JSON.stringify({
 
-        //         }),
-        //         {
-        //             'Content-Type': 'application/json',
-        //             Authorization: 'Bearer ' + auth.token,
-        //         }
-        //     );
-        //     console.log(responseData); // Handle response data as needed
-        // } catch (error) {
-        //     // Handle error if needed
-        // }
+
+    const deleteEmployee = async (value) => {
+        try {
+            const responseData = await sendRequest(
+                'users/deleteEmployee',
+                'DELETE',
+                JSON.stringify({
+                    userId: value.id,
+                    storeId: store._id,
+                }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+
+            console.log(responseData); // Handle response data as needed
+
+            // Refresh the page
+            window.location.reload();
+        } catch (error) {
+            // Handle error if needed
+            console.error(error); // Optionally log the error
+        }
     };
 
     //DELETE action
     const openDeleteConfirmModal = (row) => {
-        console.log(row);
+        console.log(row.original);
         if (window.confirm('Are you sure you want to delete this user?')) {
-            
-            deleteUser(row.id); // Pass the id directly to deleteUser
+            deleteEmployee(row.original)
+            // deleteUser(row.id); // Pass the id directly to deleteUser
         }
     };
 
@@ -218,11 +253,7 @@ const Example = ({ store }) => {
     });
 
     return (
-        <Box className="custom-scrollbar overflow-x-scroll"> {/* Apply the custom scrollbar class */}
-            <div className="table-container"> {/* Wrap the table in a scrollable div */}
-                <MaterialReactTable table={table} />
-            </div>
-        </Box>
+        <MaterialReactTable table={table} />
     );
 };
 
@@ -258,6 +289,7 @@ function useGetUsers() {
         refetchOnWindowFocus: false,
     });
 }
+
 
 //UPDATE hook (update user role in api)
 function useUpdateUserRole() {

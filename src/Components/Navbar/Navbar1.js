@@ -109,23 +109,11 @@ const Navbar1 = ({
                 color: color.navColor.storeNameTextColor,
             }}
         >
-            <div className="flex items-center">
-                <button
-                    style={{ color: color.navColor.storeNameTextColor }}
-                    className={`block focus:outline-none md:hidden ${isSidebarOpen ? 'fixed right-4' : 'mr-2'}`}
-                    onClick={toggleSidebar}
-                >
-                    {isSidebarOpen ? (
-                        <FaTimes className="h-6 w-6 fill-current" />
-                    ) : (
-                        <FiMenu className="h-6 w-6 fill-current" />
-                    )}
-                </button>
-                <div className="flex items-center">
+             <div className="flex items-center">
                     {previewMode ? (
                         store.logo && (
                             <img
-                                src={store.logo}
+                                src={store.logo.logoUrl}
                                 alt="Logo"
                                 className="h-8 mr-4"
                             />
@@ -134,25 +122,13 @@ const Navbar1 = ({
                         <div {...getRootProps()} className="cursor-pointer flex items-center">
                             <input {...getInputProps()} />
                             <img
-                                src={store.logo || 'https://via.placeholder.com/50'}
+                                src={store.logo.logoUrl || 'https://via.placeholder.com/50'}
                                 alt="Logo"
                                 className="h-8 mr-4"
                             />
                         </div>
                     )}
-                </div>
-                <div className="hidden md:block">
-                    {!previewMode ? (
-                        <input 
-                            type="text" 
-                            value={store.name} 
-                            onChange={handleEditableTextChange} 
-                            className="bg-transparent border-b border-white focus:outline-none text-xl font-bold"
-                        />
-                    ) : (
-                        <span className="text-xl font-bold">{store.name}</span>
-                    )}
-                </div>
+                <span className="text-xl font-bold">{store.name}</span>
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
@@ -186,7 +162,7 @@ const Navbar1 = ({
                         <div className="flex items-center mb-4">
                             {store.logo && (
                                 <img
-                                    src={store.logo}
+                                    src={store.logo.logoUrl}
                                     alt="Logo"
                                     className="h-8 mr-4"
                                 />

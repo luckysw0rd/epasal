@@ -44,15 +44,15 @@ const SubProduct1 = ({
     const subProductColor = store.color.subProductColor;
 
     return (
-        <div className=''>
+        <div className='  h-[400px]'>
             <CategorySelector />
-            <div className="px-8 pb-8 font-Cinzel overflow-x-scroll" style={{
+            <div className="px-20  pb-8 font-Cinzel overflow-x-scroll" style={{
                 maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
             }}
                 {...events}
                 ref={ref}
             >
-                <div ref={containerRef} className="flex py-4 gap-5 pb-6 overflow-x-scroll scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar">
+                <div ref={containerRef} className="  flex py-4 gap-5 pb-6 overflow-x-scroll scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar">
                     <style>{`
                         .scrollbar::-webkit-scrollbar {
                             height: 12px;
@@ -67,7 +67,7 @@ const SubProduct1 = ({
                         }
                     `}</style>
                     {filteredProducts.map(product => (
-                        <div key={product.id} className="flex-none mr-4">
+                        <div key={product.id} className="flex-none mr-4 ml-2">
                             <ProductCard
                                 product={product}
                                 selectedStyle={selectedStyles[product.id]}

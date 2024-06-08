@@ -52,7 +52,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct }) =>
             <div className="relative w-[160px] h-[139px] flex ml-2 mt-5 md:mt-0">
                 <motion.img
                     className="w-full object-contain"
-                    src={product.image}
+                    src={product.image.imageUrl}
                     alt={product.name}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -74,7 +74,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct }) =>
                 <div className='h-[56px] py-1 text-xs overflow-hidden'>{product.description}</div>
                 <div className="mt-1">
                     <div className="text-sm font-bold flex items-center gap-1 justify-between " >
-                        <div className=' h-10 text-base flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.variant[selectedStyle].options[selectedOption].price}</div>
+                        <div className=' h-10 text-base flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</div>
                         {!addedToCart && (
                             <button
                                 className="text-xs h-8 w-[80px] rounded mr-1"

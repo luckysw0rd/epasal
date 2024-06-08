@@ -13,7 +13,7 @@ const HeroSection1 = ({ previewMode,store,setStore }) => {
         const reader = new FileReader();
         reader.onload = () => {
             setBgImage(reader.result);
-            setStore(n=>({...n,banner:reader.result,bannerfile:backgroundImage}))
+            setStore(n=>({...n,banner:reader.result}))
         };
         reader.readAsDataURL(backgroundImage);
     };
