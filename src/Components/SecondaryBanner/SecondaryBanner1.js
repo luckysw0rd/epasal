@@ -151,7 +151,7 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
     console.log(store.secondaryBanner)
   }, [store])
   return (
-    <div className="box-border py-8">
+    <div className="box-border  py-8">
       <motion.div
         className="box-border font-roboto relative shadow-lg min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[400px] flex flex-col sm:flex-col md:flex-row lg:flex-row justify-between items-center text-black"
         initial={{ opacity: 0, y: -50 }}
@@ -170,7 +170,7 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
           <img
             src={store.secondaryBanner.secondaryBannerUrl}
             alt="Product"
-            className="w-full h-60 sm:h-[350px] md:h-[400px] lg:h-[400px] object-cover"
+            className="w-full px-0  h-60 sm:h-[350px] md:h-[400px] lg:h-[400px] object-cover"
           />
         </div>
         <div className="w-full gap-y-5 pl-20 sm:w-full ml-4 md:w-1/2  lg:w-1/2 flex flex-col justify-center items-start p-4 sm:py-5 md:py-1 lg:py-1 h-full font-Roboto">
