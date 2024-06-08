@@ -41,8 +41,8 @@ export default function Theme() {
 
 
   return (
-    <div>
-      <Theme1/>
+    <div className=' overflow-x-hidden'>
+      <Theme1 />
     </div>
   );
 }
