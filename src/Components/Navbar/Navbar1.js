@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
-import { FaShoppingCart } from 'react-icons/fa';
-import LeftSidebar from '../LeftSidebar/LeftSidebar';
-import CartDropdown from './CartDropDown';
+import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
+import { FiMenu } from 'react-icons/fi'; // Import the hamburger icon
 
 const Navbar1 = ({
     setNewCategory,
@@ -20,14 +19,11 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
-    cart,
-    cartCount,
-    deleteFromCart
 }) => {
     const [scrolling, setScrolling] = useState(false);
-    const [cartOpen, setCartOpen] = useState(false);
+    const [editableText, setEditableText] = useState("Ecom Template-2");
+    const [isSearchClicked, setIsSearchClicked] = useState(false);
     const location = useLocation();
-    
 
     useEffect(() => {
         const handleScroll = () => {
@@ -54,7 +50,6 @@ const Navbar1 = ({
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-        console.log(isSidebarOpen);
     };
 
     const handleInputChange = (e) => {
@@ -78,7 +73,7 @@ const Navbar1 = ({
                         ...prevState,
                         logo: {
                             ...prevState.logo,
-                         
+                            logoUrl: reader.result
                         }
                     }));
                 };
@@ -90,69 +85,106 @@ const Navbar1 = ({
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCartClick = () => {
-
-        setCartOpen(!cartOpen)
         console.log('Cart clicked');
+    };
+
+    const handleEditableTextChange = (e) => {
+        setEditableText(e.target.value);
+    };
+
+    const handleSearchIconClick = () => {
+        setIsSearchClicked(!isSearchClicked);
     };
 
     return (
         <motion.nav
-            className="flex items-center justify-between px-6 py-4 bg-brown-700 text-white shadow-md fixed w-full z-20"
+            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${
+                scrolling ? 'bg-brown-700' : 'bg-transparent'
+            }`}
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }}
-            style={{ backgroundColor: color.navColor.backgroundnavColor }}
+            style={{
+                backgroundColor: scrolling ? color.navColor.backgroundnavColor : 'transparent',
+                color: color.navColor.storeNameTextColor,
+            }}
         >
-            <div className="flex items-center">
-                <div {...getRootProps()} className="cursor-pointer flex items-center">
-                    <input {...getInputProps()} />
-                    <img
-                        src={store.logo.logoUrl || 'https://via.placeholder.com/50'}
-                        alt="logo"
-                        className="h-8 mr-4"
-                    />
-                </div>
+             <div className="flex items-center">
+                    {previewMode ? (
+                        store.logo && (
+                            <img
+                                src={store.logo.logoUrl}
+                                alt="Logo"
+                                className="h-8 mr-4"
+                            />
+                        )
+                    ) : (
+                        <div {...getRootProps()} className="cursor-pointer flex items-center">
+                            <input {...getInputProps()} />
+                            <img
+                                src={store.logo.logoUrl || 'https://via.placeholder.com/50'}
+                                alt="Logo"
+                                className="h-8 mr-4"
+                            />
+                        </div>
+                    )}
                 <span className="text-xl font-bold">{store.name}</span>
             </div>
 
-            <div className="flex items-center space-x-28">
-                <div className="flex items-center space-x-8">
-                    <a href="#" className="hover:underline">All Products</a>
-                    <a href="#" className="hover:underline">Featured</a>
-                    <a href="#" className="hover:underline">Offers</a>
-                    <a href="#" className="hover:underline">Offers</a>
-                    <a href="#" className="hover:underline">Offers</a>
-
-                </div>
-                <button className="px-4 ml-0 py-2 border border-[#948979] rounded hover:bg-white hover:text-brown-700">Sign up</button>
-                {cartOpen && <CartDropdown items={cart} deleteFromCart={deleteFromCart} />}
-                <button onClick={handleCartClick}>
-                    <FaShoppingCart className="text-2xl" />
-                    <span className="ml-2">{cartCount}</span> {/* Display cart count */}
-
-                </button>
-                <div className="md:hidden box-border">
-                    <button
-                        style={{ color: color.navColor.storeNameTextColor }}
-                        className="block focus:outline-none py-2"
-                        onClick={toggleSidebar}
-                    >
-                        <svg
-                            className="h-6 w-6 fill-current"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M3 5h18a1 1 0 010 2H3a1 1 0 110-2zm0 6h18a1 1 0 010 2H3a1 1 0 110-2zm0 6h18a1 1 0 010 2H3a1 1 0 110-2z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </button>
-                </div>
+            <div className="hidden md:flex items-center space-x-4">
+                <a href="#" className="hover:underline">All Products</a>
+                <a href="#" className="hover:underline">Featured</a>
+                <a href="#" className="hover:underline">Offers</a>
             </div>
 
-            {isSidebarOpen && <LeftSidebar leftSidebarProps={leftSidebarProps} leftSidebarType="LeftSidebar1" />}
+            <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-12' : ''}`}>
+                <div className="relative flex items-center hidden md:flex">
+                    <input
+                        type="text"
+                        value={searchInput}
+                        onChange={handleSearchInputChange}
+                        placeholder="Search"
+                        className={`bg-transparent border-b border-white focus:outline-none text-xl font-bold ${isSearchClicked ? 'block' : 'hidden'}`}
+                    />
+                    <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+                </div>
+                <button onClick={handleCartClick}>
+                    <FaShoppingCart className="text-2xl" />
+                </button>
+            </div>
+
+            {isSidebarOpen && (
+                <div
+                    className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
+                    style={{ backgroundColor: color.navColor.backgroundnavColor }}
+                >
+                    <div className="flex flex-col items-start space-y-4 p-4">
+                        <div className="flex items-center mb-4">
+                            {store.logo && (
+                                <img
+                                    src={store.logo.logoUrl}
+                                    alt="Logo"
+                                    className="h-8 mr-4"
+                                />
+                            )}
+                            <span className="text-xl font-bold">{store.name}</span>
+                        </div>
+                        <a href="#" className="hover:underline">All Products</a>
+                        <a href="#" className="hover:underline">Featured</a>
+                        <a href="#" className="hover:underline">Offers</a>
+                        <div className="relative flex items-center w-full">
+                            <input
+                                type="text"
+                                value={searchInput}
+                                onChange={handleSearchInputChange}
+                                placeholder="Search"
+                                className="bg-transparent border-b border-white focus:outline-none text-xl font-bold w-full"
+                            />
+                            <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+                        </div>
+                    </div>
+                </div>
+            )}
         </motion.nav>
     );
 };

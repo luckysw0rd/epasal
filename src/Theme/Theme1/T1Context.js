@@ -6,7 +6,7 @@
   import controller from "../../Assets/controller.png";
   import offerBannerImg from '../../Assets/offerbanner.webp'
   import secondaryBannerImg from '../../Assets/ImageGroup.png'
-
+  import herobanner from '../../Assets/firstbanner.webp'
   const StoreContext = createContext();
 
   export const useStore = () => {
@@ -30,7 +30,7 @@
       categories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
 
       subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
-      banner: { bannerUrl: 'https://media1.giphy.com/media/eGO0mMkPkfchPZuBo3/giphy.gif?cid=6c09b952hn0da92mi1ikjwxzjyoo8bf18s4e5xfziwoge1xu&ep=v1_gifs_search&rid=giphy.gif&ct=g', bannerID: '' },
+      banner: { bannerUrl: `${herobanner}`, bannerID: '' },
       products: [
         {
           id: 1,
