@@ -27,7 +27,8 @@
         logoUrl: "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305",
         logoID: ''
       },
-      categories: [{ name: "Men" }, { name: "Women" }, { name: "Unisex" }],
+      categories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
+
       subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
       banner: { bannerUrl: 'https://media1.giphy.com/media/eGO0mMkPkfchPZuBo3/giphy.gif?cid=6c09b952hn0da92mi1ikjwxzjyoo8bf18s4e5xfziwoge1xu&ep=v1_gifs_search&rid=giphy.gif&ct=g', bannerID: '' },
       products: [
