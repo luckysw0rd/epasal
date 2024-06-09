@@ -5,7 +5,7 @@ import ProductListCard1 from './ProductListCard1';
 
 
 const ProductList = ({ productListProps, productListType }) => {
-    const { products, productColor, setStore } = productListProps
+    const { products, productColor, setStore , store } = productListProps
 
     // Filtered products state
     const [filteredProducts, setFilteredProducts] = useState(products);
@@ -36,6 +36,7 @@ const ProductList = ({ productListProps, productListType }) => {
                                         product={product}
                                         productListProps={productListProps}
                                         handleDeleteProduct={handleDeleteProduct}
+                                        store={store}
                                     />
                                 ))}
                             </div>
