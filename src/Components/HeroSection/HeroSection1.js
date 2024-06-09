@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import banner from "../../Assets/banner2.png"
-const HeroSection1 = ({ previewMode,store,setStore }) => {
+const HeroSection1 = ({ previewMode, store, setStore }) => {
 
     const [bgImage, setBgImage] = useState(banner);
     const [logoImage, setLogoImage] = useState(null);
@@ -13,7 +13,14 @@ const HeroSection1 = ({ previewMode,store,setStore }) => {
         const reader = new FileReader();
         reader.onload = () => {
             setBgImage(reader.result);
-            setStore(n=>({...n,banner:reader.result}))
+            setStore((prevState) => ({
+                ...prevState,
+                banner: {
+                    ...prevState.offerBanner,
+                    bannerUrl: reader.result
+                }
+                ,
+            }));
         };
         reader.readAsDataURL(backgroundImage);
     };
@@ -23,7 +30,7 @@ const HeroSection1 = ({ previewMode,store,setStore }) => {
         const reader = new FileReader();
         reader.onload = () => {
             setLogoImage(reader.result);
-            
+
         };
         reader.readAsDataURL(logoImageFile);
     };
@@ -39,33 +46,23 @@ const HeroSection1 = ({ previewMode,store,setStore }) => {
     return (
         <div className='box-border py-19'>
             <motion.div
-                className="bg-white h-full box-border font-kode-mono relative shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] min-h-[600px] flex flex-col justify-center items-start text-black"
+                className="bg-white mt-0  box-border font-kode-mono relative shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] min-h-[600px] flex flex-col justify-center items-start text-black"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{
-                    backgroundImage: `url(${banner})`,  //Currently using the imported banner cause of the missing context otherwise use store.banner
+                    backgroundImage: `url(${store.banner.bannerUrl})`,  //Currently using the imported banner cause of the missing context otherwise use store.banner
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     opacity: 0.4,
                     width: '100%',
+                    height: '740px',
                 }}
                 {...(!previewMode && getRootPropsBackground())}
             >
                 {!previewMode && <input {...getInputPropsBackground()} />}
-                <div className='absolute left-8 top-1/4'>
-                    {previewMode ? (
-                        <h1 className="text-4xl font-bold text-white">{heroText}</h1>  //After updating the context use store.desc or the update store description text
-                    ) : (
-                        <input
-                            type="text"
-                            value={heroText}
-                            onChange={handleTextChange}
-                            className="bg-transparent border-b border-white focus:outline-none text-4xl font-bold text-white"
-                        />
-                    )}
-                </div>
+
                 {!previewMode && (
 
                     <div className='flex justify-center items-center w-full h-full'>
