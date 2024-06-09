@@ -14,15 +14,15 @@ const SubProduct1 = ({
 
     useEffect(() => {
         const filtered = products.filter(product =>
-            product.subcategories.includes(selectedSubCategory)
+            product.subcategories && product.subcategories.includes(selectedSubCategory)
         );
         setFilteredProducts(filtered);
-
+    
         if (containerRef.current) {
             containerRef.current.scrollLeft = 0;
         }
     }, [products, selectedSubCategory]);
-
+    
     const handleStyleSelect = (productId, styleIndex) => {
         setSelectedStyles(prevStyles => ({
             ...prevStyles,

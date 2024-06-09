@@ -1,19 +1,23 @@
-import React from 'react'
-import ProductList from '../../Components/ProductList/ProductList'
+import React from 'react';
+import ProductList from '../../Components/ProductList/ProductList';
 import { useStore } from './T1Context';
 
 const T1ProductList = () => {
     const { store, setStore, addToCart } = useStore();
-    const { products, previewMode } = store;
+    const { previewMode, featuredProducts, products } = store;
     const { productListColor } = store.color;
-    const productColor = { ...productListColor }
+    const productColor = { ...productListColor };
 
-    const productListProps = { productColor, products, previewMode, setStore, addToCart }
+    // Map featured product indices to their actual product objects
+    const featuredProductList = featuredProducts.map(index => products[index]);
+
+    const productListProps = { store, productColor, products: featuredProductList, previewMode, setStore, addToCart };
+
     return (
         <div className='px-8 md:px-10'>
             <ProductList productListProps={productListProps} productListType="ProductList1" />
         </div>
-    )
+    );
 }
 
-export default T1ProductList
+export default T1ProductList;
