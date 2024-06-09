@@ -12,6 +12,7 @@ import Dashboard from "./Components/AdminPanel/Dashboard";
 import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
 import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
 import { PrimeReactProvider } from 'primereact/api';
+import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
@@ -25,6 +26,8 @@ function App() {
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/adminpanel" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
+        <Route path="/productform" element={<ProductForm />} />
+
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
 
       </React.Fragment>

@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
-import { useStore } from '../T1Context';
 import jeans from '../../../Assets/jeans.jpg';
+import 'tailwindcss/tailwind.css';
 
 const AddProduct = ({ onClose }) => {
-    const { addProduct } = useStore();
-    const { categories, subCategories } = useStore().store;
     const [image, setImage] = useState(jeans);
-    const [name, setName] = useState('Product Name');
+    const [name, setName] = useState('');
     const [category, setCategory] = useState('');
-    const [subcategory, setSubcategory] = useState('');
-    const [sizes, setSizes] = useState(['']); // Array to store sizes
-    const [variants, setVariants] = useState([{ option: '', prices: [''] }]); // Array to store variants
+    const [productDescription, setProductDescription] = useState('');
+    const [price, setPrice] = useState('');
+    const [discountedPrice, setDiscountedPrice] = useState('');
+    const [costPerUnit, setCostPerUnit] = useState('');
+    const [sku, setSku] = useState('');
+    const [manufacturer, setManufacturer] = useState('');
+    const [brand, setBrand] = useState('');
+    const [stockQuantity, setStockQuantity] = useState('');
+    const [remainingQuantity, setRemainingQuantity] = useState('');
+    const [variantOptions, setVariantOptions] = useState([{ type: '', sub: '', price: '' }]);
 
     const onDrop = acceptedFiles => {
         const file = acceptedFiles[0];
@@ -29,46 +33,26 @@ const AddProduct = ({ onClose }) => {
         multiple: false,
     });
 
-    const handleSizeChange = (index, value) => {
-        const updatedSizes = [...sizes];
-        updatedSizes[index] = value;
-        setSizes(updatedSizes);
-    };
-
     const handleVariantChange = (index, field, value) => {
-        const updatedVariants = [...variants];
-        if (field === 'option') {
-            updatedVariants[index][field] = value;
-        } else if (field === 'price') {
-            updatedVariants[index].prices[0] = value; // Assuming only one price for each variant
-        }
-        setVariants(updatedVariants);
-    };
-
-    const handleAddSize = () => {
-        setSizes([...sizes, '']);
-    };
-
-    const handleRemoveSize = (index) => {
-        const updatedSizes = [...sizes];
-        updatedSizes.splice(index, 1);
-        setSizes(updatedSizes);
+        const updatedVariants = [...variantOptions];
+        updatedVariants[index][field] = value;
+        setVariantOptions(updatedVariants);
     };
 
     const handleAddVariant = () => {
-        setVariants([...variants, { option: '', prices: [''] }]);
+        setVariantOptions([...variantOptions, { type: '', sub: '', price: '' }]);
     };
 
     const handleRemoveVariant = (index) => {
-        const updatedVariants = [...variants];
+        const updatedVariants = [...variantOptions];
         updatedVariants.splice(index, 1);
-        setVariants(updatedVariants);
+        setVariantOptions(updatedVariants);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Validate inputs
-        if (!image || !name || !category || !subcategory || sizes.length === 0 || variants.length === 0) {
+        if (!image || !name || !category || !productDescription || !price || !costPerUnit || !sku || !manufacturer || !brand || !stockQuantity || !remainingQuantity) {
             alert('Please fill in all fields.');
             return;
         }
@@ -77,101 +61,125 @@ const AddProduct = ({ onClose }) => {
             id: Math.floor(Math.random() * 1000), // Generate a random ID
             name,
             image,
-            categories: [category],
-            subcategories: [subcategory],
-            sizes,
-            variants: variants.map(({ option, prices }) => ({
-                type: 'Variant',
-                option,
-                prices: prices.map(price => parseFloat(price) || 0),
-            })),
+            category,
+            productDescription,
+            price: parseFloat(price),
+            discountedPrice: parseFloat(discountedPrice),
+            costPerUnit: parseFloat(costPerUnit),
+            sku,
+            manufacturer,
+            brand,
+            stockQuantity: parseInt(stockQuantity, 10),
+            remainingQuantity: parseInt(remainingQuantity, 10),
+            variantOptions,
         };
-        addProduct(newProduct);
+
+        // Add product logic here
+        console.log(newProduct);
+
         // Close the AddProduct overlay
         onClose();
     };
 
     return (
-        <div>
-            <div className="fixed  pt-0 text-black inset-0 flex  items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div className="flex p-10 items-center bg-white w-3/5 h-3/5">
-                    <div className="w-1/2">
-                        <div {...getRootProps()} className="fixed border-2 w-40 h-10 bg-gray-700 flex justify-center items-center border-dashed rounded-md p-6 mb-2">
-                            <input {...getInputProps()} />
-                            <p className="text-sm text-white">Upload</p>
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+            <div className="bg-white rounded-lg shadow-lg w-3/4 max-h-full overflow-auto p-6">
+                <h2 className="text-2xl font-bold mb-4">Add Product</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="grid grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Product Name</label>
+                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                         </div>
-                        <img src={image} alt="Product" className="w-full rounded-lg" />
-                    </div>
-                    
-                    <div className="w-1/2 pl-10 h-4/5 overflow-y-auto justify-start">
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-2xl font-semibold mb-2"></input>
-                        <div className="mb-4 py-2 space-y-2">
-                            <select className="shadow border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline" value={category} onChange={(e) => setCategory(e.target.value)}>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Category</label>
+                            <select value={category} onChange={(e) => setCategory(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                 <option value="">Select a category</option>
-                                {categories.map(cat => (
-                                    <option key={cat.name} value={cat.name}>{cat.name}</option>
-                                ))}
-                            </select>
-                            <select className="shadow border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline" value={subcategory} onChange={(e) => setSubcategory(e.target.value)}>
-                                <option value="">Select a subcategory</option>
-                                {subCategories.map(subcat => (
-                                    <option key={subcat.name} value={subcat.name}>{subcat.name}</option>
-                                ))}
+                                {/* Populate options dynamically */}
                             </select>
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="sizes" className="block text-sm font-medium text-gray-800">Sizes</label>
-                            {sizes.map((size, index) => (
-                                <div key={index} className="flex items-center mb-2">
-                                    <input
-                                        type="text"
-                                        value={size}
-                                        onChange={(e) => handleSizeChange(index, e.target.value)}
-                                        placeholder={`Size ${index + 1}`}
-                                        className="w-full mb-2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
-                                    />
-                                    <button type="button" className="text-red-500 ml-2 text-4xl" onClick={() => handleRemoveSize(index)}> - </button>
-                                </div>
-                            ))}
-                            <button
-                                type="button"
-                                className="text-sm text-blue-500 underline bg-transparent border-none focus:outline-none hover:text-blue-700"
-                                onClick={handleAddSize}
-                            >
-                                Add
-                            </button>
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="variants" className="block text-sm font-medium text-gray-800">Variants</label>
-                            {variants.map((variant, index) => (
-                                <div key={index} className="flex items-center mb-2">
-                                    <input
-                                        type="text"
-                                        value={variant.option}
-                                        onChange={(e) => handleVariantChange(index, 'option', e.target.value)}
-                                        placeholder={` Brown , 10 gms etc .. `}
-                                        className="w-1/2 mr-2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
-                                    />
-                                    <input
-                                        type="number"
-                                        value={variant.prices[0]}
-                                        onChange={(e) => handleVariantChange(index, 'price', e.target.value)}
-                                        placeholder="Price"
-                                        className="w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
-                                    />
-                                    <button type="button" className="text-red-500 ml-2 text-4xl" onClick={() => handleRemoveVariant(index)}> - </button>
-                                </div>
-                            ))}
-                            <button type="button" className="text-sm text-blue-500 underline" onClick={handleAddVariant}>Add Variant</button>
-                        </div>
-
                     </div>
-                    <div className=" absolute bottom-1/4 right-1/4 flex justify-end">
-                        <button type="button" className="mr-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-800 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onClick={onClose}>Cancel</button>
-                        <button type="button" className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onClick={handleSubmit}>Add Product</button>
+                    <div className="mt-4">
+                        <label className="block text-sm font-medium text-gray-700">Product Description</label>
+                        <textarea value={productDescription} onChange={(e) => setProductDescription(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
                     </div>
-                </div>
-               
+                    <div className="mt-4">
+                        <label className="block text-sm font-medium text-gray-700">Upload Image</label>
+                        <div {...getRootProps()} className="border-2 border-dashed rounded-md p-6 mt-1 flex justify-center items-center">
+                            <input {...getInputProps()} />
+                            <p className="text-gray-500">Drag 'n' drop some files here, or click to select files</p>
+                        </div>
+                        {image && <img src={image} alt="Product" className="mt-4 w-full h-48 object-cover rounded-md" />}
+                    </div>
+                    <div className="grid grid-cols-3 gap-6 mt-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Price</label>
+                            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Discounted Price</label>
+                            <input type="number" value={discountedPrice} onChange={(e) => setDiscountedPrice(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Cost per Unit</label>
+                            <input type="number" value={costPerUnit} onChange={(e) => setCostPerUnit(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-6 mt-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">SKU (Stock Keeping Unit)</label>
+                            <input type="text" value={sku} onChange={(e) => setSku(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Manufacturer</label>
+                            <input type="text" value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Brand</label>
+                            <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6 mt-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Stock Quantity</label>
+                            <input type="number" value={stockQuantity} onChange={(e) => setStockQuantity(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Remaining Quantity</label>
+                            <input type="number" value={remainingQuantity} onChange={(e) => setRemainingQuantity(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                    </div>
+                    <div className="mt-6">
+                        <h3 className="text-lg font-medium text-gray-900">Variant Options</h3>
+                        {variantOptions.map((variant, index) => (
+                            <div key={index} className="grid grid-cols-3 gap-6 mt-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Variant Type</label>
+                                    <input type="text" value={variant.type} onChange={(e) => handleVariantChange(index, 'type', e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Sub Variant</label>
+                                    <input type="text" value={variant.sub} onChange={(e) => handleVariantChange(index, 'sub', e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Price</label>
+                                    <input type="number" value={variant.price} onChange={(e) => handleVariantChange(index, 'price', e.target.value)} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                                </div>
+                                <div className="col-span-3">
+                                    <button type="button" onClick={() => handleRemoveVariant(index)} className="mt-2 text-sm text-red-500 hover:text-red-700 focus:outline-none">Remove</button>
+                                </div>
+                            </div>
+                        ))}
+                        <button type="button" onClick={handleAddVariant} className="mt-4 text-sm text-indigo-600 hover:text-indigo-800 focus:outline-none">Add Variant</button>
+                    </div>
+                    <div className="mt-6">
+                        <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">Add Product</button>
+                    </div>
+                </form>
+                <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+                    <span className="sr-only">Close</span>
+                    &#10005;
+                </button>
             </div>
         </div>
     );
