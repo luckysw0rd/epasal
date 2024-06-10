@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { FaLocationDot } from "react-icons/fa6";
+import { FaPhoneAlt } from "react-icons/fa";
+import { IoMail } from "react-icons/io5";
+
+
 import { motion } from "framer-motion"
 const Footer1 = ({
     logo,
@@ -57,94 +62,118 @@ const Footer1 = ({
     console.log(previewMode);
     if (!previewMode) {
         return (
-            <footer style={{ backgroundColor: bgColor }} className="px-10 py-10 mt-20">
-                <div className='flex'>
-                    <div className='w-1/3'>
-                        <div className="container mx-auto flex flex-col md:flex-row gap-16">
-                            <div style={{ color: textColor }} className="mb-4 md:mb-0">
-                                <span className='font-bold text-xl'>{store.name}</span>
-                                {logo && <img src={logo.logoUrl} alt="Store Logo" className="h-12 w-auto my-4 mx-auto md:mx-0" />}
+            <footer style={{ backgroundColor: bgColor, color: textColor }} className="px-10 lg:px-16 py-10 mt-20">
+                <div className='flex flex-col md:flex-row gap-7 justify-between'>
+                    <div className='flex flex-col justify-center gap-3 lg:w-1/3'>
+                        <div className="flex flex-col">
+                            <div style={{ color: textColor }} className="flex flex-row md:flex-col">
+                                <div className='font-bold text-xl'>{store.name}</div>
+                                {logo && <img src={logo.logoUrl} alt="Store Logo" className="hidden md:block h-12 w-12 my-4 mx-auto md:mx-0" />}
                             </div>
                         </div>
-                        <div style={{ color: textColor }} className="flex flex-col text-sm md:text-base">
+                        <div style={{ color: textColor }} className="flex flex-col text-base">
                             <p className="">{location}</p>
                             <p className=""> {email}</p>
                             <p className="">{phoneNumber}</p>
                         </div>
                     </div>
                     <div>
-                        <div className="flex flex-col md:flex-row gap-10">
+                        <div className="flex flex-col md:flex-row gap-5 lg:gap-10">
                             <div className="flex flex-col">
-                                <p style={{ color: linkHeaderColor }} className="mb-2 font-bold text-lg text-center">Edit Contact:</p>
-                                <input
-                                    type="text"
-                                    placeholder='Location'
-                                    value={location}
-                                    onChange={handleLocationChange}
-                                    className="py-1 px-2 mb-2 border border-gray-300 text-black rounded"
-                                />
-                                <input
-                                    type="email"
-                                    placeholder='Email Address'
-                                    value={email}
-                                    onChange={handleEmailChange}
-                                    className="py-1 px-2 mb-2 border border-gray-300 text-black rounded"
-                                />
-                                <input
-                                    type="tel"
-                                    placeholder='Phone Number'
-                                    value={phoneNumber}
-                                    onChange={handlePhoneNumberChange}
-                                    className="py-1 px-2 mb-2 border border-gray-300 text-black rounded"
-                                />
+                                <p style={{ color: linkHeaderColor }} className="mb-2 font-bold text-base lg:text-lg text-center">Edit Contact:</p>
+
+                                <div className='flex gap-4 items-center'>
+                                    <FaLocationDot className="text-lg md:text-xl hover:text-red-500" />
+                                    <input
+                                        type="text"
+                                        placeholder='Location'
+                                        value={location}
+                                        onChange={handleLocationChange}
+                                        className="w-full py-1 px-2 mb-2 border border-gray-300 text-black rounded text-sm lg:text-base"
+                                    />
+                                </div>
+
+                                <div className='flex gap-4 items-center'>
+                                    <IoMail className="text-lg md:text-xl hover:text-orange-500" />
+                                    <input
+                                        type="email"
+                                        placeholder='Email Address'
+                                        value={email}
+                                        onChange={handleEmailChange}
+                                        className="w-full py-1 px-2 mb-2 border border-gray-300 text-black rounded text-sm lg:text-base"
+                                    />
+                                </div>
+
+                                <div className='flex gap-4 items-center'>
+                                    <FaPhoneAlt className="text-lg md:text-xl hover:text-blue-500" />
+                                    <input
+                                        type="tel"
+                                        placeholder='Phone Number'
+                                        value={phoneNumber}
+                                        onChange={handlePhoneNumberChange}
+                                        className="w-full py-1 px-2 mb-2 border border-gray-300 text-black rounded text-sm lg:text-base"
+                                    />
+                                </div>
+
                             </div>
                             <div className="flex flex-col justify-center mb-4 md:mb-0">
-                                <p style={{ color: linkHeaderColor }} className="mb-2 font-bold text-lg text-center">Edit Social Links:</p>
-                                <>
-                                    <input
-                                        type="text"
-                                        placeholder='Facebook'
-                                        value={socialMediaLinks.facebook}
-                                        onChange={handleFacebookChange}
-                                        className="py-1 px-2 mb-2 border border-gray-300 text-black rounded mr-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder='Facebook'
-                                        value={socialMediaLinks.twitter}
-                                        onChange={handleTwitterChange}
-                                        className="py-1 px-2 mb-2 border border-gray-300 text-black rounded mr-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder='Facebook'
-                                        value={socialMediaLinks.instagram}
-                                        onChange={handleInstagramChange}
-                                        className="py-1 px-2 mb-2 border border-gray-300 text-black rounded mr-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder='Facebook'
-                                        value={socialMediaLinks.linkedin}
-                                        onChange={handleLinkedInChange}
-                                        className="py-1 px-2 mb-2 border border-gray-300 text-black rounded mr-2"
-                                    />
-
-                                </>
+                                <p style={{ color: linkHeaderColor }} className="mb-2 font-bold text-base lg:text-lg text-center">Edit Social Links:</p>
+                                <div>
+                                    <div className='flex gap-4 items-center'>
+                                        <FaFacebook className="text-lg md:text-xl hover:text-blue-500" />
+                                        <input
+                                            type="text"
+                                            placeholder='Facebook'
+                                            value={socialMediaLinks.facebook}
+                                            onChange={handleFacebookChange}
+                                            className="py-1 px-2 w-full mb-2 border border-gray-300 text-black rounded text-sm lg:text-base mr-2"
+                                        />
+                                    </div>
+                                    <div className='flex gap-4 items-center'>
+                                        <FaTwitter className="text-lg md:text-xl hover:text-blue-400" />
+                                        <input
+                                            type="text"
+                                            placeholder='Facebook'
+                                            value={socialMediaLinks.twitter}
+                                            onChange={handleTwitterChange}
+                                            className="w-full py-1 px-2 mb-2 border border-gray-300 text-black rounded text-sm lg:text-base mr-2"
+                                        />
+                                    </div>
+                                    <div className='flex gap-4 items-center'>
+                                        <FaInstagram className="text-lg md:text-xl hover:text-pink-500" />
+                                        <input
+                                            type="text"
+                                            placeholder='Facebook'
+                                            value={socialMediaLinks.instagram}
+                                            onChange={handleInstagramChange}
+                                            className="w-full py-1 px-2 mb-2 border border-gray-300 text-black rounded text-sm lg:text-base mr-2"
+                                        />
+                                    </div>
+                                    <div className='flex gap-4 items-center'>
+                                        <FaLinkedin className="text-lg md:text-xl hover:text-blue-600" />
+                                        <input
+                                            type="text"
+                                            placeholder='Facebook'
+                                            value={socialMediaLinks.linkedin}
+                                            onChange={handleLinkedInChange}
+                                            className="w-full py-1 px-2 mb-2 border border-gray-300 text-black rounded text-sm lg:text-base mr-2"
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </footer>
+                    </div >
+                </div >
+            </footer >
         );
     } else {
         return (
-            <footer style={{ backgroundColor: bgColor, color: textColor }} className="md:px-16 px-1 pt-14 pb-4 mt-20">
+            <footer style={{ backgroundColor: bgColor, color: textColor }} className="lg:px-16 md:px-8  px-1 pt-14 pb-4 mt-20">
                 <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 justify-center px-4 gap-10 md:gap-14 lg:gap-32 ">
                     <div className="mb-4">
-                        <span className='font-bold text-lg md:text-xl'>{store.name}</span>
-                        {logo && <img src={logo.logoUrl} alt="Store Logo" className="h-12 w-auto my-4" />}
-                        <div className="flex my-5 gap-2 md:gap-4">
+                        <span className='font-bold text-lg lg:text-xl'>{store.name}</span>
+                        {logo && <img src={logo.logoUrl} alt="Store Logo" className="h-12 w-auto my-2 lg:my-4" />}
+                        <div className="flex my-5 gap-2 lg:gap-4">
                             <>
                                 <a href={newSocialMediaLinks.facebook}>
                                     <FaFacebook className="text-lg md:text-xl hover:text-blue-500" />
@@ -160,7 +189,7 @@ const Footer1 = ({
                                 </a>
                             </>
                         </div>
-                        <div style={{ color: textColor }} className="flex flex-col text-sm md:text-base">
+                        <div style={{ color: textColor }} className="flex gap-1 flex-col text-xs lg:text-base">
                             <p className="">{location}</p>
                             <p className=""> {email}</p>
                             <p className="">{phoneNumber}</p>
@@ -169,8 +198,8 @@ const Footer1 = ({
 
 
                     {/* QUICK LINKS  */}
-                    <div className='text-sm flex flex-col gap-3 '>
-                        <p style={{ color: linkHeaderColor }} className="font-bold text-sm md:text-lg">Products</p>
+                    <div className='text-xs lg:text-sm flex flex-col gap-3 '>
+                        <p style={{ color: linkHeaderColor }} className="font-bold text-sm lg:text-lg">Products</p>
                         <div style={{ color: linkColor }} className="flex flex-col items-start gap-2">
                             <Link to="/" className=" sm:transition-colors duration-300">All Products</Link>
                             <Link to="/" className=" transition-colors duration-300">Featured</Link>
@@ -179,16 +208,16 @@ const Footer1 = ({
                             <Link to="/" className=" transition-colors duration-300">Others</Link>
                         </div>
                     </div>
-                    <div className='text-sm flex flex-col gap-3 '>
-                        <p style={{ color: linkHeaderColor }} className="font-bold text-sm md:text-lg">Support</p>
+                    <div className='text-xs lg:text-sm flex flex-col gap-3 '>
+                        <p style={{ color: linkHeaderColor }} className="font-bold text-sm lg:text-lg">Support</p>
                         <div style={{ color: linkColor }} className="flex flex-col items-start gap-2">
                             <Link to="/" className=" sm:transition-colors duration-300">Contact Us</Link>
                             <Link to="/" className=" transition-colors duration-300">FAQs</Link>
                             <Link to="/" className=" transition-colors duration-300">Downloads</Link>
                         </div>
                     </div>
-                    <div className='text-sm flex flex-col gap-3 '>
-                        <p style={{ color: linkHeaderColor }} className="font-bold text-sm md:text-lg">Quick Links</p>
+                    <div className='text-xs lg:text-sm flex flex-col gap-3 '>
+                        <p style={{ color: linkHeaderColor }} className="font-bold text-sm lg:text-lg">Quick Links</p>
                         <div style={{ color: linkColor }} className="flex flex-col items-start gap-2">
                             <Link to="/" className=" sm:transition-colors duration-300">Cookie Policy</Link>
                             <Link to="/" className=" transition-colors duration-300">Private Policy</Link>
