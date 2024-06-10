@@ -16,7 +16,7 @@ const Dashboard = () => {
   const fetchStore = async () => {
     try {
       const responseData = await sendRequest(
-        'store/getStore/'+storeName,
+        'store/getStore/' + storeName,
         'GET',
         null,
         {
@@ -59,7 +59,7 @@ const Dashboard = () => {
               </div>
             </DashboardWrapper>
           </SiderBarProvider>
-        </div>
+        </div >
       )}
     </>
   );
