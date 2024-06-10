@@ -2,14 +2,14 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 import data from "./data";
-
+import "./side.css"
 const Sidebar = ({ isOpen, toggleSidebar, className }) => {
   const textColor = data.color.text;
   const borderColor = data.color.text;
 
   return (
     <aside
-      className={`${className} p-4 bg-white shadow-md border-r`}
+      className={`${className} p-2 lg:p-4 bg-white shadow-md border-r ` }
       style={{ borderColor }}
     >
       {/* Close button for mobile */}
@@ -22,18 +22,20 @@ const Sidebar = ({ isOpen, toggleSidebar, className }) => {
 
       <div className="mb-4">
         <h3 className="font-bold mb-2" style={{ color: textColor }}>
-          Price Range
+          Price Range 
         </h3>
         <input
           type="range"
           min="24"
           max="80"
-          className="w-full"
-          style={{ textColor }}
+          className="w-full bg-white text-red-600"
+          style={{ color:textColor }}
         />
+      <input type="range" 
+    class="appearance-none bg-transparent slider"></input>
         <div
           className="flex justify-between text-sm mt-2"
-          style={{ color: textColor }}
+          // style={{ color: textColor }}
         >
           <span>$24</span>
           <span>$80</span>
