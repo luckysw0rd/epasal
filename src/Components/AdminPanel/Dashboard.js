@@ -5,17 +5,18 @@ import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
 import Home from "./Dashboard/Home";
 import Employee from "./Dashboard/Employee";
+import { useParams } from "react-router-dom";
 
 const Dashboard = () => {
   const auth = useContext(AuthContext);
   const [dashboardState, setDashboardState] = useState('Employee');
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [store, setStore] = useState(null); // Initialize store as null
-
+  const { storeName } = useParams();
   const fetchStore = async () => {
     try {
       const responseData = await sendRequest(
-        'store/get/66620c69711bb3e701a0bb45',
+        'store/getStore/'+storeName,
         'GET',
         null,
         {
