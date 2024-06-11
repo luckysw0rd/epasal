@@ -123,7 +123,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       },
     ],
-    featuredProducts: [0],
+    featuredProducts: [],
     color: {
       backgroundThemeColor: "#FFFFFF",
       secondaryBannerColor: {
@@ -391,6 +391,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         value={{
           store,
           setStore,
+          storeID,
           addCategory,
           addSubCategory,
           removeCategory,

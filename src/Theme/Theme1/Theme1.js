@@ -44,6 +44,8 @@ const EStore = ({ Passedstore }) => {
     { id: 9, component: <Footer /> },
   ]);
 
+
+
   const addTask = (component) => {
     setTasks((tasks) => [...tasks, { id: tasks.length + 1, component }]);
   };
@@ -80,6 +82,7 @@ const EStore = ({ Passedstore }) => {
   const { store } = useStore();
   const { previewMode } = store;
   const { fetchedFromBackend } = store;
+
   // Ensure useState and useMediaQuery are called unconditionally
   const [showColorPicker, setShowColorPicker] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: 768 });

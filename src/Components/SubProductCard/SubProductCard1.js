@@ -52,7 +52,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
             <div className="relative w-1/2  md:w-[160px] h-[139px] flex ml-2 mt-5 md:mt-0">
                 <motion.img
                     className="w-full object-contain"
-                    src={product.image.imageUrl}
+                    src={product?.image?.imageUrl}
                     alt={product.name}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}

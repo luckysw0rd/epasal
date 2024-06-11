@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useStore } from '../../Theme/Theme1/T1Context'
-import AddProduct from '../../Theme/Theme1/SubProduct/AddProduct';
+// import AddProduct from '../../Theme/Theme1/SubProduct/AddProduct';
+import ProductForm from '../../Theme/Theme1/SubProduct/ProductForm';
 
 import ImageDrop from './ImageDrop';
 
@@ -14,7 +15,7 @@ const Editor = () => {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [changeFlow, setChangeFlow] = useState(false)
   const [navHide, setNavHide] = useState(true)
-
+  const [featuredProducts,setFeaturedProducts]=useState(0)
   const [addProductForm, setAddProductForm] = useState(false)
   const handleAddCategory = (e) => {
     e.preventDefault();
@@ -62,9 +63,27 @@ const Editor = () => {
       },
     }));
   };
+  const handleFeaturedChange=(e)=>{
+    e.preventDefault();
+    setFeaturedProducts(e.target.value)
+  }
+  const handleAddFeaturedProduct=(e)=>{
+    e.preventDefault();
+    if (!store.featuredProducts.includes(parseInt(featuredProducts, 10))) {
+  
+      setStore((prev) => ({
+        ...prev,
+        featuredProducts: [...prev.featuredProducts, parseInt(featuredProducts, 10)]
+      }));
+      alert("Item added Successfully!!");
+    }else{
+      alert("Item already Added to Featured ")
+    } 
+   
+  }
   return (
     <>
-      {!store.previewMode ? navHide ? <div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
+      {!store.fetchedFromBackend && !store.previewMode ? navHide ? <div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
         <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
 
         <div className='flex justify-between  mt-10 font-semibold text-[#6A6A6A] px-4'>
@@ -128,10 +147,20 @@ const Editor = () => {
 
             </li>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+              Featured Products<br />
+              <div className='mt-2 flex '>
+                <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
+                  {store.products.map((n,i)=>(<option value={i}>{n.name}</option>))}
+                </select>
+                <button className='px-2 text-[10px] border border-black' onClick={handleAddFeaturedProduct}>Add +</button>
+              </div>
+
+            </li>
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Footer:This is pending
             </li>
           </ul>
-          {addProductForm && <AddProduct onClose={() => setAddProductForm(!AddProduct)} />}
+          {addProductForm && <ProductForm onClose={() => setAddProductForm(!addProductForm)} />}
         </div>}
 
 
