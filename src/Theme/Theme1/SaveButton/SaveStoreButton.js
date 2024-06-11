@@ -8,6 +8,7 @@ const SaveStoreButton = () => {
     const auth = useContext(AuthContext);
     const [storeNew,setStoreNew]=useState(false);
     const { store,setStore } = useStore();
+    var storeNewImage={};
     const {previewMode} = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const {uploadImage}=useImage();
@@ -20,24 +21,26 @@ const SaveStoreButton = () => {
                     logoID:ImageData.id
                 }}
             ))
+            storeNewImage=store;
+            PostData(storeNewImage)
             console.log(ImageData,"image Data")
             setStoreNew(true)
         }catch(err){
             console.log(err,"error uploading image")
         }
     }
-    useEffect(()=>{
-        if(storeNew){
-            PostData();
-        }
-    },[storeNew])
-    const PostData=async()=>{
+    // useEffect(()=>{
+    //     if(storeNew){
+    //         PostData();
+    //     }
+    // },[storeNew])
+    const PostData=async(storeNewImage)=>{
         try{
             console.log(store,"store my")
             const responseData = await sendRequest(
                 'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
                 'POST',
-                JSON.stringify({ store }),
+                JSON.stringify({ storeNewImage }),
                 {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + auth.token,
