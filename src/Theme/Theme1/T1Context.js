@@ -7,6 +7,8 @@ import controller from "../../Assets/controller.png";
 import offerBannerImg from '../../Assets/offerbanner.webp'
 import secondaryBannerImg from '../../Assets/ImageGroup.png'
 import herobanner from '../../Assets/firstbanner.webp'
+import Shirt from '../../Assets/shirt.webp'
+
 const StoreContext = createContext();
 
 export const useStore = () => {
@@ -83,9 +85,12 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 2,
-        name: "Watch1",
+        name: "Watch12",
         price: '200',
-        image: controller,
+        image: {
+          imageID: "img123",
+          imageUrl: `${Shirt}`
+        },
         count: 0,
         categories: ["Men"],
         subcategories: ["Watch"],
