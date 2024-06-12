@@ -30,6 +30,8 @@ import {
 import T1SubProduct from "./SubProduct/T1SubProduct";
 import T1ProductList from './T1ProductList';
 import Editor from "../../Components/Editor/Editor";
+import T1ThirdBanner from "./T1ThirdBanner";
+import T1NewProducts from "./T1NewProducts";
 
 const EStore = ({ Passedstore }) => {
   const [tasks, setTasks] = useState([
@@ -38,10 +40,13 @@ const EStore = ({ Passedstore }) => {
     { id: 3, component: <AboutPage /> },
     { id: 4, component: <Editor /> },
     { id: 5, component: <T1SubProduct /> },
-    { id: 6, component: <SecondaryBanner /> },
-    { id: 7, component: <T1ProductList /> },
-    { id: 8, component: <OfferBanner /> },
-    { id: 9, component: <Footer /> },
+    {id:6,component:<T1ThirdBanner/>},
+    { id: 7, component: <T1NewProducts /> },
+
+    { id: 8, component: <SecondaryBanner /> },
+    { id: 9, component: <T1ProductList /> },
+    { id: 10, component: <OfferBanner /> },
+    { id: 11, component: <Footer /> },
   ]);
 
 

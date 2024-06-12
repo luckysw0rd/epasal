@@ -5,6 +5,10 @@ import ProductForm from '../../Theme/Theme1/SubProduct/ProductForm';
 
 import ImageDrop from './ImageDrop';
 
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 const Editor = () => {
   const { store, setStore } = useStore();
   const [openType, setOpenType] = useState(false)
@@ -222,7 +226,7 @@ const Editor = () => {
 
         </div>}
         <div className='flex justify-center my-3'>
-          <button className='px-4 py-1 bg-green-600 text-white rounded'>Submit</button>
+          <button className='px-4 py-1 bg-green-600 text-white rounded' onClick={()=>{toast("helllo")}}>Submit</button>
         </div>
       </div> : <button className='fixed top-0 right-10 mt-24 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setNavHide(true) }}>Show</button> : !store.fetchedFromBackend && <button className='fixed top-0 right-10 mt-20 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: false })) }}>Preview</button>}
     </>

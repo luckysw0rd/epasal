@@ -4,6 +4,7 @@ import { AuthContext } from '../../../Hooks/AuthContext';
 import Loading from '../Loading/Loading';
 import useFetch from "../../../Hooks/useFetch";
 import { useImage } from '../../../Hooks/useImage';
+import { toast } from 'react-toastify';
 const SaveStoreButton = () => {
     const auth = useContext(AuthContext);
     const [storeNew,setStoreNew]=useState(false);
@@ -18,6 +19,7 @@ const SaveStoreButton = () => {
             const BannerData=await uploadImage(store.banner.bannerUrl)
             const secondaryBannerData=await uploadImage(store.secondaryBanner.secondaryBannerUrl)
             const offerBannerData=await uploadImage(store.offerBanner.offerBannerUrl)
+            const thirdBannerData=await uploadImage(store.thirdBanner.thirdBannerUrl)
             for (let i = 0; i < store.products.length; i++) {
                 const product = store.products[i];
                 const productImg = await uploadImage(product.image.imageUrl);
@@ -83,6 +85,9 @@ const SaveStoreButton = () => {
                 },offerBanner:{
                     offerBannerUrl:offerBannerData.img,
                     offerBannerID:offerBannerData.id
+                },thirdBanner:{
+                    thirdBannerUrl:thirdBannerData.img,
+                    thirdBannerID:thirdBannerData.id
                 }}
             ))
             // storeNewImage=store;
@@ -111,9 +116,11 @@ const SaveStoreButton = () => {
                 }
             );
             setStoreNew(false)
-            console.log(responseData); // Handle response data as needed
+            toast(responseData.message); // Handle response data as needed
         } catch (error) {
             console.error('Error saving store data:', error);
+            toast(error.message); // Handle response data as needed
+
         }
     }
     const saveStore = async () => {

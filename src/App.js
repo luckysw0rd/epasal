@@ -13,6 +13,8 @@ import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
 import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
 import { PrimeReactProvider } from 'primereact/api';
 import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
@@ -51,7 +53,7 @@ function App() {
               {routes}
             </Routes>
           </Router>
-
+          <ToastContainer />
         </div>
       </AuthContext.Provider>
     </PrimeReactProvider>
