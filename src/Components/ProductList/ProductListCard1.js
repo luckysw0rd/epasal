@@ -15,12 +15,12 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) =
 
     const { id, name, image, variant } = product;
     const firstVariant = variant[0]; // Considering only the first variant
-    const selectedOption = selectedOptionIndex === -1 ? null : firstVariant.options[selectedOptionIndex];
+    const selectedOption = selectedOptionIndex === -1 ? null : firstVariant?.options[selectedOptionIndex];
     const price = selectedOption ? selectedOption.price : product.price || 0;
 
     const handleOptionSelect = (index) => {
         setSelectedOptionIndex(index);
-        setDisplayedImage(firstVariant.options[index].image.imageUrl);
+        setDisplayedImage(firstVariant?.options[index].image.imageUrl);
     };
 
     const handleDefaultImage = () => {
@@ -62,7 +62,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) =
                                     >
                                         <img src={image.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2' />
                                     </div>
-                                    {firstVariant.options.map((option, index) => (
+                                    {firstVariant?.options.map((option, index) => (
                                         <div
                                             key={index}
                                             className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}

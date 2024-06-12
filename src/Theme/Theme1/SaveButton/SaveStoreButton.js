@@ -8,39 +8,103 @@ const SaveStoreButton = () => {
     const auth = useContext(AuthContext);
     const [storeNew,setStoreNew]=useState(false);
     const { store,setStore } = useStore();
-    var storeNewImage={};
+    // var storeNewImage={};
     const {previewMode} = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const {uploadImage}=useImage();
     const ImageUpload=async()=>{
         try {
             const ImageData=await uploadImage(store.logo.logoUrl)
+            const BannerData=await uploadImage(store.banner.bannerUrl)
+            const secondaryBannerData=await uploadImage(store.secondaryBanner.secondaryBannerUrl)
+            const offerBannerData=await uploadImage(store.offerBanner.offerBannerUrl)
+            for (let i = 0; i < store.products.length; i++) {
+                const product = store.products[i];
+                const productImg = await uploadImage(product.image.imageUrl);
+                
+                // Update product image
+                setStore(prev => {
+                    const updatedProducts = [...prev.products];
+                    updatedProducts[i] = {
+                        ...updatedProducts[i],
+                        image: {
+                            imageUrl: productImg.img,
+                            imageID: productImg.id
+                        }
+                    };
+                    return {
+                        ...prev,
+                        products: updatedProducts
+                    };
+                });
+            
+                // Update variant images
+                for (let j = 0; j < product.variant[0].options.length; j++) {
+                    const variantOption = product.variant[0].options[j];
+                    const variantImg = await uploadImage(variantOption.image.imageUrl);
+            
+                    setStore(prev => {
+                        const updatedProducts = [...prev.products];
+                        const updatedOptions = [...updatedProducts[i].variant[0].options];
+                        updatedOptions[j] = {
+                            ...updatedOptions[j],
+                            image: {
+                                imageID: variantImg.id,
+                                imageUrl: variantImg.img
+                            }
+                        };
+            
+                        updatedProducts[i] = {
+                            ...updatedProducts[i],
+                            variant: [{
+                                ...updatedProducts[i].variant[0],
+                                options: updatedOptions
+                            }]
+                        };
+            
+                        return {
+                            ...prev,
+                            products: updatedProducts
+                        };
+                    });
+                }
+            }
+            
             setStore(prev=>(
                 {...prev,logo:{
                     logoUrl:ImageData.img,
                     logoID:ImageData.id
+                },banner:{
+                    bannerUrl:BannerData.img,
+                    bannerID:BannerData.id
+                },secondaryBanner:{
+                    secondaryBannerUrl:secondaryBannerData.img,
+                    secondaryBannerID:secondaryBannerData.id
+                },offerBanner:{
+                    offerBannerUrl:offerBannerData.img,
+                    offerBannerID:offerBannerData.id
                 }}
             ))
-            storeNewImage=store;
-            PostData(storeNewImage)
+            // storeNewImage=store;
+            // PostData(storeNewImage)
             console.log(ImageData,"image Data")
             setStoreNew(true)
         }catch(err){
             console.log(err,"error uploading image")
         }
     }
-    // useEffect(()=>{
-    //     if(storeNew){
-    //         PostData();
-    //     }
-    // },[storeNew])
-    const PostData=async(storeNewImage)=>{
+    useEffect(()=>{
+        if(storeNew){
+            PostData();
+        }
+    },[storeNew])
+    const PostData=async()=>{
         try{
             console.log(store,"store my")
             const responseData = await sendRequest(
                 'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
                 'POST',
-                JSON.stringify({ storeNewImage }),
+                JSON.stringify({ store }),
                 {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + auth.token,
