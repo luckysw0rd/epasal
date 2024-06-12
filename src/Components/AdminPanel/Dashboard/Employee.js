@@ -105,7 +105,6 @@ const Example = ({ store }) => {
         table.setCreatingRow(null); //exit editing mode
     };
 
-
     const editEmployee = async (values, table) => {
         try {
             const responseData = await sendRequest(
@@ -134,10 +133,7 @@ const Example = ({ store }) => {
         console.log(values);
         await editEmployee(values, table);
         table.setEditingRow(null); //exit editing mode
-
     };
-
-
 
     const deleteEmployee = async (value) => {
         try {
@@ -173,7 +169,6 @@ const Example = ({ store }) => {
         }
     };
 
-
     const table = useMaterialReactTable({
         columns,
         data: fetchedUsers,
@@ -183,8 +178,8 @@ const Example = ({ store }) => {
         getRowId: (row) => row.id,
         muiToolbarAlertBannerProps: isLoadingUsersError
             ? {
-                color: '',
-                children: '',
+                color: 'error',
+                children: 'Error loading users',
             }
             : undefined,
         muiTableContainerProps: {
@@ -196,7 +191,6 @@ const Example = ({ store }) => {
         onCreatingRowCancel: () => setValidationErrors({}),
         onCreatingRowSave: handleCreateUser,
         onEditingRowSave: handleSaveUserRole,
-        openDeleteConfirmModal: deleteEmployee(),
         renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => (
             <>
                 <DialogTitle variant="h3">Create New User</DialogTitle>
@@ -289,7 +283,6 @@ function useGetUsers() {
         refetchOnWindowFocus: false,
     });
 }
-
 
 //UPDATE hook (update user role in api)
 function useUpdateUserRole() {
