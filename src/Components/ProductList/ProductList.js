@@ -32,7 +32,7 @@ const ProductList = ({ productListProps, productListType }) => {
                         <div style={{ backgroundColor: productColor.backgroundColor }}>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
                                 {filteredProducts.map((product,i) => (
-                                    product?.id && <ProductListCard1
+                                    (product?.id || product?._id) && <ProductListCard1
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
