@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import {
     MRT_EditActionButtons,
@@ -14,6 +14,15 @@ import {
     IconButton,
     Tooltip,
 } from '@mui/material';
+
+import {
+    TextField,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+} from '@mui/material';
+
 import {
     QueryClient,
     QueryClientProvider,
@@ -32,6 +41,16 @@ const Example = ({ store }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
     console.log(store);
+
+    /* Custom Handle Updating User */
+    const [editingRow, setEditingRow] = useState(null);
+    const [updateUser, setUpdateUser] = useState({
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+    });
+
 
     // Get fake data from the staff array using the store ID
     const staffFakeData = useMemo(() => fakeDataFromStaffArray(store.staff, store._id), [store.staff, store._id]);
@@ -105,6 +124,9 @@ const Example = ({ store }) => {
         table.setCreatingRow(null); //exit editing mode
     };
 
+
+
+
     const editEmployee = async (values, table) => {
         try {
             const responseData = await sendRequest(
@@ -127,13 +149,53 @@ const Example = ({ store }) => {
         } catch (error) {
             // Handle error if needed
         }
-    }
+    };
+
+    const editEmployeeV1 = async (values, table) => {
+        try {
+            const responseData = await sendRequest(
+                'users/ownerUpdate',
+                'PUT',
+                JSON.stringify({
+                    userId: values.id,
+                    storeId: store._id,
+                    newRole: values.role,
+                }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            console.log(responseData); // Handle response data as needed
+            table.setEditingRow(null); //exit editing mode
+
+            // table.setCreatingRow(null); ; //exit creating mode
+        } catch (error) {
+            // Handle error if needed
+        }
+    };
     //UPDATE action
     const handleSaveUserRole = async ({ values, table }) => {
         console.log(values);
+        return;
         await editEmployee(values, table);
         table.setEditingRow(null); //exit editing mode
     };
+    // Custom Update Action no default MRT
+    const handleCustomSave = async () => {
+        console.log(updateUser);
+        // Here you can add the logic to update the user in the backend
+        setEditingRow(null); // Exit editing mode
+    };
+
+    const handleInputChange = (field, value) => {
+        setUpdateUser((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+    };
+
+
 
     const deleteEmployee = async (value) => {
         try {
@@ -164,10 +226,11 @@ const Example = ({ store }) => {
     const openDeleteConfirmModal = (row) => {
         console.log(row.original);
         if (window.confirm('Are you sure you want to delete this user?')) {
-            deleteEmployee(row.original)
+            deleteEmployee(row.original);
             // deleteUser(row.id); // Pass the id directly to deleteUser
         }
     };
+
 
     const table = useMaterialReactTable({
         columns,
@@ -178,8 +241,8 @@ const Example = ({ store }) => {
         getRowId: (row) => row.id,
         muiToolbarAlertBannerProps: isLoadingUsersError
             ? {
-                color: 'error',
-                children: 'Error loading users',
+                color: '',
+                children: '',
             }
             : undefined,
         muiTableContainerProps: {
@@ -191,6 +254,7 @@ const Example = ({ store }) => {
         onCreatingRowCancel: () => setValidationErrors({}),
         onCreatingRowSave: handleCreateUser,
         onEditingRowSave: handleSaveUserRole,
+        openDeleteConfirmModal: deleteEmployee(),
         renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => (
             <>
                 <DialogTitle variant="h3">Create New User</DialogTitle>
@@ -202,17 +266,84 @@ const Example = ({ store }) => {
                 </DialogActions>
             </>
         ),
-        renderEditRowDialogContent: ({ table, row, internalEditComponents }) => (
-            <>
-                <DialogTitle variant="h3">Edit User Role</DialogTitle>
-                <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    {internalEditComponents}
-                </DialogContent>
-                <DialogActions>
-                    <MRT_EditActionButtons variant="text" table={table} row={row} />
-                </DialogActions>
-            </>
-        ),
+        renderEditRowDialogContent: ({ table, row, internalEditComponents }) => {
+            let userData = row.original;
+            /* This is under testing */
+            return (
+                <>
+                    <div><h1 className='px-7 font-bold text-xl py-2'>Edit User Role</h1></div>
+                    {/* <DialogTitle variant="h6">Edit User Role</DialogTitle> */}
+                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', margin: '5px' }}>
+                        <TextField
+                            label="Name"
+                            defaultValue={userData.name}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                            fullWidth
+                            disabled={true}
+                        />
+                        {/* <TextField
+                            label="Email"
+                            defaultValue={userData.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            fullWidth
+                        /> */}
+                        <FormControl fullWidth>
+                            <InputLabel>Role</InputLabel>
+                            <Select
+                                defaultValue={userData.role}
+                                onChange={(e) => handleInputChange('role', e.target.value)}
+                            >
+                                {/* <MenuItem value="Owner">Owner</MenuItem> */}
+                                <MenuItem value="Admin">Admin</MenuItem>
+                                <MenuItem value="Staff">Staff</MenuItem>
+                                <MenuItem value="Delivery">Delivery</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => table.setEditingRow(null)} color="secondary">
+                            Cancel
+                        </Button>
+                        <Button onClick={async () => {
+                            try {
+                                console.log(updateUser.role === '');
+                                if (updateUser.role === '')
+                                    return alert('No Role Specified');
+                                userData.role = updateUser.role;
+                                console.log({ updateUser, userData });
+                                /* Todo user check */
+                                const responseData = await sendRequest(
+                                    'users/ownerUpdate',
+                                    'PUT',
+                                    JSON.stringify({
+                                        userId: userData.id,
+                                        storeId: store._id,
+                                        newRole: userData.role,
+                                    }),
+                                    {
+                                        'Content-Type': 'application/json',
+                                        Authorization: 'Bearer ' + auth.token,
+                                    }
+                                );
+                                console.log(responseData); // Handle response data as needed
+                            } catch (error) {
+                                console.log({ error });
+                            }
+
+                        }} color="primary">
+                            Save
+                        </Button>
+                    </DialogActions>
+                    {/* <DialogTitle variant="h3">Edit User Role</DialogTitle>
+                    <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {internalEditComponents}
+                    </DialogContent>
+                    <DialogActions>
+                        <MRT_EditActionButtons variant="text" table={table} row={row} />
+                    </DialogActions> */}
+                </>
+            );
+        },
         renderRowActions: ({ row, table }) => (
             <Box sx={{ display: 'flex', gap: '4px' }}>
                 <Tooltip title="Edit">
@@ -283,6 +414,7 @@ function useGetUsers() {
         refetchOnWindowFocus: false,
     });
 }
+
 
 //UPDATE hook (update user role in api)
 function useUpdateUserRole() {

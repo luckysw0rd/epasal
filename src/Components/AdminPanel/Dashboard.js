@@ -40,7 +40,7 @@ const Dashboard = () => {
     switch (dashboardState) {
       case 'Home':
         return <Home />;
-      case 'Employee':
+      case 'Employee' /* && ('user.role==='admin' ||'user.role==='owner') */:
         console.log(store)
         return <Employee store={store} />;
       default:
