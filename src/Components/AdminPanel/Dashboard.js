@@ -6,7 +6,7 @@ import { AuthContext } from "../../Hooks/AuthContext";
 import Home from "./Dashboard/Home";
 import Employee from "./Dashboard/Employee";
 import { useParams } from "react-router-dom";
-import EditStore from './EditStore/EditStore.js'
+import EditStore from './EditStore/EditStore.js';
 
 const Dashboard = () => {
   const auth = useContext(AuthContext);
@@ -65,19 +65,14 @@ const Dashboard = () => {
       case 'Home':
         return <Home />;
       case 'Employee':
-<<<<<<< HEAD
         if (role === 'Admin' || role === 'Owner') {
           console.log('Store:', store);
           return <Employee store={store} />;
         } else {
           return <Home />;
         }
-=======
-        console.log(store)
-        return <Employee store={store} />;
       case 'Edit Store':
-        return <EditStore store={store}/>
->>>>>>> 803d17d898f596f8d61df0a493cea43b26c431c4
+        return <EditStore store={store} />;
       default:
         return <Home />;
     }
