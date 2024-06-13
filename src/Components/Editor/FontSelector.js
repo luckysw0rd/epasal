@@ -18,7 +18,7 @@ const FontSelector = ({ section }) => {
             <label htmlFor={`${section}-font`}>{section} Font:</label>
             <select
                 id={`${section}-font`}
-                value={store.fonts[section] || ""}
+                value={store?.fonts[section] || ""}
                 onChange={handleFontChange}
             >
                 {fonts.map((font, index) => (

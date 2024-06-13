@@ -379,7 +379,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   const [store, setStore] = useState(defaultStoreData); // Start with null while fetching
 
   useEffect(() => {
-    const fetchStoreData = async () => {
+    const fetchStoreData = async (isEdit) => {
       try {
         console.log("inside fetching");
         // Fetch store data from the server using the provided store ID
@@ -398,7 +398,9 @@ export const StoreProvider = ({ children, passedStore }) => {
           fetchedFromBackend: true,
           selectedSubCategory: response.store.subCategories[0].name,
           previewMode: true,
-          cart: [], // Set fetchedFromBackend to true when data is fetched
+          isEdit,
+          cart: [],
+          fonts:{} // Set fetchedFromBackend to true when data is fetched
         });
       } catch (error) {
         // If an error occurs during fetch, set default store data
@@ -406,9 +408,14 @@ export const StoreProvider = ({ children, passedStore }) => {
         console.error("Error fetching store data:", error);
       }
     };
-
-    if (window.location.pathname.includes("/store/")) {
-      fetchStoreData();
+    if(window.location.pathname.includes("/store/edit/")){
+      fetchStoreData(true);
+      setStore(prev=>({...prev,previewMode:false,fetchedFromBackend:false}))
+      console.log("I reached here")
+    } 
+    else if (window.location.pathname.includes("/store/")) {
+      fetchStoreData(false);
+    
     } else {
       setStore(defaultStoreData);
     }
@@ -432,7 +439,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     setStore((prevState) => ({
       ...prevState,
       fonts: {
-        ...prevState.fonts,
+        ...prevState?.fonts,
         [section]: font,
       },
     }));

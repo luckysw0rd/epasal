@@ -29,7 +29,7 @@ function App() {
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/productform" element={<ProductForm />} />
-
+        <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
 
       </React.Fragment>

@@ -66,7 +66,7 @@ const ThirdBanner1 = ({ previewMode, defaultBgImage }) => {
         <input {...getInputPropsBackground()} />
         <div className="w-full sm:w-full md:w-1/2 lg:w-1/2">
           <img
-            src={store.thirdBanner.thirdBannerUrl}
+            src={store?.thirdBanner?.thirdBannerUrl}
             alt="Product"
             className="w-full px-0  h-60 sm:h-[350px] md:h-[400px] lg:h-[400px] object-cover"
           />

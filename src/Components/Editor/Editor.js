@@ -5,6 +5,7 @@ import ImageDrop from './ImageDrop';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FontSelector from './FontSelector';
+import SaveStoreButton from '../../Theme/Theme1/SaveButton/SaveStoreButton';
 // List of fonts from your Tailwind configuration
 const fonts = [
   "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
@@ -91,7 +92,7 @@ const Editor = () => {
 
   return (
     <>
-      {!store.fetchedFromBackend && !store.previewMode ? navHide ? (
+      {(!store.fetchedFromBackend && !store.previewMode)||store?.isEdit ? navHide ? (
         <div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
 
@@ -108,8 +109,9 @@ const Editor = () => {
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Navbar:<br />
                   <div>
-                    <FontSelector section="Navbar" />
-                  </div>
+                <FontSelector section="Navbar" />
+              </div> 
+                  
                   <div className='font-normal'>
                     <label className='text-[10px]'>Shop Name</label><br />
                     <input type='text' className='border border-[#6A6A6A] h-[24px] rounded px-2' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
@@ -206,6 +208,9 @@ const Editor = () => {
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Footer<br/>
+                  <div>
+                    <FontSelector section="Footer" />
+                  </div>
                   <label className='text-[10px]'>Location</label><br />
               <input value={store.location} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, location: e.target.value }));console.log(store.location)}} ></input><br />
               <label className='text-[10px]'>Email</label><br />
@@ -275,7 +280,8 @@ const Editor = () => {
             </div>
           )}
           <div className='flex justify-center my-3'>
-            <button className='px-4 py-1 bg-green-600 text-white rounded' onClick={() => { toast("helllo") }}>Submit</button>
+            {/* <button className='px-4 py-1 bg-green-600 text-white rounded' onClick={() => { toast("helllo") }}>Submit</button> */}
+            <SaveStoreButton/>
           </div>
         </div>
       ) : (
