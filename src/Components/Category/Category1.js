@@ -85,7 +85,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
 
     return (
         <div className=' px-0'>
-            <div className="relative p-4 pb-0 font-Roboto flex justify-center"
+            <div className="relative p-4 pb-0 flex justify-center"
                 style={{ backgroundColor: color.subcategoryColor.background, color: color.subcategoryColor.text }}>
                 <div id='scrollbar2' className="whitespace-nowrap hidden md:flex overflow-x-auto min-h-14 w-full justify-center">
                     <div className=" mb-4 flex space-x-4 overflow-scroll">

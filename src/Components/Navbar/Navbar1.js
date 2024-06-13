@@ -118,7 +118,8 @@ const Navbar1 = ({
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }}
             style={{
-                backgroundColor: scrolling ? color.navColor.backgroundnavColor : 'transparent',
+                fontFamily:store?.fonts?.Navbar,
+                backgroundColor: scrolling ? color?.navColor?.backgroundnavColor : 'transparent',
                 color: color.navColor.storeNameTextColor,
             }}
         >

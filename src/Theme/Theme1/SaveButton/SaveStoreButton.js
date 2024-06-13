@@ -41,6 +41,7 @@ const SaveStoreButton = () => {
                 });
 
                 // Update variant images
+                if(!store.isEdit){
                 for (let j = 0; j < product.variant[0].options.length; j++) {
                     const variantOption = product.variant[0].options[j];
                     const variantImg = await uploadImage(variantOption.image.imageUrl);
@@ -70,6 +71,7 @@ const SaveStoreButton = () => {
                         };
                     });
                 }
+            }
             }
             
             setStore(prev=>(
@@ -106,6 +108,7 @@ const SaveStoreButton = () => {
     const PostData = async () => {
         try {
             console.log(store, "store my")
+            if(!store.isEdit){
             const responseData = await sendRequest(
                 'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
                 'POST',
@@ -117,6 +120,19 @@ const SaveStoreButton = () => {
             );
             setStoreNew(false)
             toast(responseData.message); // Handle response data as needed
+        }else{
+            const responseData = await sendRequest(
+                `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
+                'PATCH',
+            JSON.stringify({ store }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            setStoreNew(false)
+            toast(responseData.message); // Handle response data as needed
+        }
         } catch (error) {
             console.error('Error saving store data:', error);
             toast(error.message); // Handle response data as needed
@@ -126,12 +142,11 @@ const SaveStoreButton = () => {
     const saveStore = async () => {
         console.log(store, "store is this")
         await ImageUpload()
-
         // await PostData()
 
     };
 
-    if (!store.fetchedFromBackend) {
+    if (!store.fetchedFromBackend || store.isEdit) {
         return (
             <div className='mt-4 h-20 flex justify-center'>
                 {isLoading ? (

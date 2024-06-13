@@ -16,13 +16,13 @@ const NewProductList = ({ productListProps, productListType }) => {
         setFilteredProducts(products.slice(0, 12));
     }, [products]);
 
-    const handleDeleteProduct = (productId) => {
-        const productIndex=store.products.findIndex(data=>data.id==productId)
-        setStore(prevStore => ({
-            ...prevStore,
-            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
-        }));
-    };
+    // const handleDeleteProduct = (productId) => {
+    //     const productIndex=store.products.findIndex(data=>data.id==productId)
+    //     setStore(prevStore => ({
+    //         ...prevStore,
+    //         featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
+    //     }));
+    // };
 
     const renderProductList = () => {
         switch (productListType) {
@@ -37,7 +37,7 @@ const NewProductList = ({ productListProps, productListType }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        handleDeleteProduct={handleDeleteProduct}
+                                        // handleDeleteProduct={handleDeleteProduct}
                                         store={store}
                                        
                                     />
@@ -53,7 +53,7 @@ const NewProductList = ({ productListProps, productListType }) => {
     };
     return (
 
-        <div className=''>
+        <div className='' style={{fontFamily:store?.fonts?.NewProduct}}>
             {renderProductList()}
             <Link>
                 <button className="flex items-center absolute right-10 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none">

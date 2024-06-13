@@ -10,13 +10,34 @@ export const useImage = () => {
 
             let data;
 
-            // Check if the input is a base64 string or a File object
-            if (typeof image === 'string' && image.startsWith('data:image/')) {
-                // If image is a base64 string
-                data = new FormData();
-                data.append("file", image);
-                data.append('upload_preset', "cgb0zdwq");
-                data.append("cloud_name", "dcrcc9b4h");
+            // Helper function to check if a string is a Cloudinary URL
+            const isCloudinaryUrl = (url) => {
+                const cloudinaryUrlPattern = /^https:\/\/res\.cloudinary\.com\/dcrcc9b4h\/image\/upload\/v\d+\/.+/;
+                return cloudinaryUrlPattern.test(url);
+            };
+
+            // If the image is a Cloudinary URL or ID, return it directly
+            if (typeof image === 'string') {
+                if (isCloudinaryUrl(image)) {
+                    const urlParts = image.split('/');
+                    const id = urlParts[urlParts.length - 1].split('.')[0];
+                    return {
+                        img: image,
+                        id: id,
+                    };
+                } else if (image.startsWith('data:image/')) {
+                    // If image is a base64 string
+                    data = new FormData();
+                    data.append("file", image);
+                    data.append('upload_preset', "cgb0zdwq");
+                    data.append("cloud_name", "dcrcc9b4h");
+                } else {
+                    // Invalid string format
+                    return {
+                        img: "",
+                        id: "",
+                    };
+                }
             } else if (image instanceof File && (image.type === 'image/jpeg' || image.type === 'image/png')) {
                 // If image is a File object
                 data = new FormData();

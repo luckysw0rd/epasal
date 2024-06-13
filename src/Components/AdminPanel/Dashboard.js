@@ -6,6 +6,7 @@ import { AuthContext } from "../../Hooks/AuthContext";
 import Home from "./Dashboard/Home";
 import Employee from "./Dashboard/Employee";
 import { useParams } from "react-router-dom";
+import EditStore from './EditStore/EditStore.js'
 
 const Dashboard = () => {
   const auth = useContext(AuthContext);
@@ -43,6 +44,8 @@ const Dashboard = () => {
       case 'Employee':
         console.log(store)
         return <Employee store={store} />;
+      case 'Edit Store':
+        return <EditStore store={store}/>
       default:
         return <Home />;
     }
@@ -53,7 +56,7 @@ const Dashboard = () => {
       {store && (
         <div className=""> {/* Apply overflow styling here */}
           <SiderBarProvider className="overflow-hidden">
-            <DashboardWrapper store={store}>
+            <DashboardWrapper setDashboardState={setDashboardState} store={store}>
               <div className="text-black p-2 py-4 mt-8 overflow-hidden">
                 {renderDashboardContent(store)}
               </div>
