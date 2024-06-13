@@ -7,6 +7,8 @@ import controller from "../../Assets/controller.png";
 import offerBannerImg from '../../Assets/offerbanner.webp'
 import secondaryBannerImg from '../../Assets/ImageGroup.png'
 import herobanner from '../../Assets/firstbanner.webp'
+import Shirt from '../../Assets/shirt.webp'
+
 const StoreContext = createContext();
 
 export const useStore = () => {
@@ -270,7 +272,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       //   description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       // },
     ],
-    featuredProducts: [0,1,4],
+    featuredProducts: [0, 1, 4],
     color: {
       backgroundThemeColor: "#FFFFFF",
       secondaryBannerColor: {
@@ -343,7 +345,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       para3: "",
     },
     secondaryBanner: { secondaryBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
-    thirdBanner:{thirdBannerUrl:`${secondaryBannerImg}`,secondaryBannerID:''},
+    thirdBanner: { thirdBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
     thirdBannerText: {
       heading: "",
       paragraph: "",
@@ -364,6 +366,9 @@ export const StoreProvider = ({ children, passedStore }) => {
     },
     footerDescription: "A modern online store for all your needs.",
     fetchedFromBackend: false,
+    fonts: {
+
+    }
     // Rest of the default store data...
   };
 
@@ -420,6 +425,16 @@ export const StoreProvider = ({ children, passedStore }) => {
     setStore((prevState) => ({
       ...prevState,
       secondaryBanner: newBannerUrl,
+    }));
+  };
+
+  const updateFont = (section, font) => {
+    setStore((prevState) => ({
+      ...prevState,
+      fonts: {
+        ...prevState.fonts,
+        [section]: font,
+      },
     }));
   };
 
@@ -556,7 +571,8 @@ export const StoreProvider = ({ children, passedStore }) => {
           updateSecondaryBanner,
           addProduct,
           addToCart,
-          deleteFromCart
+          deleteFromCart,
+          updateFont
         }}
       >
         {children}
