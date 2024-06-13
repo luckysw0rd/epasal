@@ -44,9 +44,9 @@
         const subProductColor = store.color.subProductColor;
 
         return (
-            <div className='  h-[400px]'>
+            <div className='  h-[400px]' style={{fontFamily:store?.fonts?.Categories}}>
                 <CategorySelector />
-                <div className="px-20  pb-8 font-Cinzel overflow-x-scroll" style={{
+                <div className="px-20  pb-8 overflow-x-scroll" style={{
                     maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
                 }}
                     {...events}

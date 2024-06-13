@@ -14,7 +14,7 @@ const FontSelector = ({ section }) => {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col my-3">
             <label htmlFor={`${section}-font`}>{section} Font:</label>
             <select
                 id={`${section}-font`}

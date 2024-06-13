@@ -150,6 +150,9 @@ const Editor = () => {
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Banner #1<br />
+              <div>
+                <FontSelector section="Banner1" />
+              </div>  
               <label className='text-[10px]'>Title</label><br />
               <input value={store.thirdBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,thirdBannerText:{...prev.thirdBannerText,heading:e.target.value}}))}} ></input><br />
               <label className='text-[10px]'>Description</label><br />
@@ -158,6 +161,9 @@ const Editor = () => {
             </li>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Banner #2<br />
+              <div>
+                <FontSelector section="Banner2" />
+              </div> 
               <label className='text-[10px]'>Title</label><br />
               <input value={store.secondaryBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,secondaryBannerText:{...prev.secondaryBannerText,heading:e.target.value}}))}} ></input><br />
               <label className='text-[10px]'>Description</label><br />
@@ -166,6 +172,9 @@ const Editor = () => {
             </li>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Banner #3<br />
+              <div>
+                <FontSelector section="Banner3" />
+              </div> 
               <label className='text-[10px]'>Title</label><br />
               <input value={store.offerBannerText.para1} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,offerBannerText:{...prev.offerBannerText,para1:e.target.value}}))}} ></input><br />
               <label className='text-[10px]'>Description</label><br />
@@ -182,6 +191,12 @@ const Editor = () => {
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Featured Products<br />
+                  <div>
+                <FontSelector section="Featured" />
+              </div> 
+              <div>
+                <FontSelector section="NewProduct" />
+              </div> 
                   <div className='mt-2 flex '>
                     <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
                       {store.products.map((n, i) => (<option value={i} key={i}>{n.name}</option>))}
@@ -190,7 +205,23 @@ const Editor = () => {
                   </div>
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-                  Footer:This is pending
+                  Footer<br/>
+                  <label className='text-[10px]'>Location</label><br />
+              <input value={store.location} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, location: e.target.value }));console.log(store.location)}} ></input><br />
+              <label className='text-[10px]'>Email</label><br />
+              <input value={store.email} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,email:e.target.value}))}} ></input><br />
+              <label className='text-[10px]'>Phone Number</label><br />
+              <input value={store.phoneNumber} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,phoneNumber:e.target.value}))}} ></input><br />
+              <div className='mt-3'>Social Media Links</div>
+              <label className='text-[10px]'>Facebook</label><br />
+              <input value={store.socialMediaLinks.facebook} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } }));}} ></input><br />
+              <label className='text-[10px]'>Twitter</label><br />
+              <input value={store.socialMediaLinks.twitter} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } }));}} ></input><br />
+              <label className='text-[10px]'>Instagram</label><br />
+              <input value={store.socialMediaLinks.instagram} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } }));}} ></input><br />
+              <label className='text-[10px]'>linkedIn</label><br />
+              <input value={store.socialMediaLinks.linkedin} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } }));}} ></input><br />
+              
                 </li>
               </ul>
               {addProductForm && <ProductForm onClose={() => setAddProductForm(!addProductForm)} />}
