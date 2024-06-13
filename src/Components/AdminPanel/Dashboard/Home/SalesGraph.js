@@ -1,11 +1,27 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const SalesGraph = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('week');
-    const chartWidth = window.innerWidth < 768 ? 330 : 800;
-    // const chartHeight = window.innerWidth > 768 ? 280 : 400;
-
+    const [chartDimensions, setChartDimensions] = useState({
+        width: window.innerWidth < 768 ? 380 : 750,
+        height: window.innerWidth < 768 ? 300 : 400,
+      });
+    
+      const handleResize = () => {
+        setChartDimensions({
+          width: window.innerWidth < 768 ? 380 : 750,
+          height: window.innerWidth < 768 ? 300 : 400,
+        });
+      };
+    
+      useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
+      
     const handleChange = (event) => {
         setSelectedPeriod(event.target.value);
     };
@@ -42,7 +58,7 @@ const SalesGraph = () => {
 
     return (
         <div className=''>
-            <div className="flex items-center justify-between">
+            <div className="flex px-6 pb-6 items-center justify-between">
                 <h3 className="text-lg font-semibold text-[#888888] sm:ml-10">Sales Overview</h3>
                 <div className='flex gap-10'>
 
@@ -76,7 +92,7 @@ const SalesGraph = () => {
 
 
             {/* GRAPH  */}
-            <LineChart width={300} height={300} data={data[selectedPeriod]} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <LineChart width={chartDimensions.width} height={chartDimensions.height} data={data[selectedPeriod]} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                 <Line type="monotone" dataKey="sales" stroke="#000000" strokeWidth={2} />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <XAxis dataKey={dataKey} />

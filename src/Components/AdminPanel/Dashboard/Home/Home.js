@@ -13,7 +13,7 @@ const Home = () => {
   const { revenueGenerated, salesChange, orders, dueAmount, pendingAmount, customers, balance, mostSold } = store;
   return (
     <div className="grid gap-8 bg-white w-full p-6 rounded-lg">
-      <div className="grid grid-cols-1 sm:grid-cols-3 justify-between gap-6">
+      <div className="grid grid-cols-1 w-full sm:grid-cols-3 justify-between gap-6">
 
         {/* ROW SECTION  */}
         <div className="w-full">
@@ -65,8 +65,8 @@ const Home = () => {
 
 
       {/* Column Section  */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 justify-between gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 mb-5 justify-between gap-6">
           <div className="w-full bg-white rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
             <div className="flex justify-between px-4">
               <h3 className="text-lg font-semibold text-[#888888]">Due Amount</h3>
@@ -113,7 +113,7 @@ const Home = () => {
           </div>
         </div>
 {/* Graph Section  */}
-        <div className='md:col-span-2'>
+        <div className='-mx-6 sm:mx-0 md:col-span-2'>
           <div className="bg-white rounded-lg">
             <SalesGraph />
           </div>
