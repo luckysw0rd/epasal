@@ -1,20 +1,72 @@
-// SortDropdown.js
-import React from "react";
+// // SortDropdown.js
+// // import React from "react";
 
-const SortDropdown = () => {
-  return (
-    <div className="flex items-center  text-[#4F3100] bg-white">
-      <label htmlFor="sort" className="font-bold"></label>
-      <select
-        id="sort"
-        className="border-2 border-[#4F3100] w-[100%]  sm:w-[144px] rounded px-2 py-1 text-[#4F3100] bg-white"
-      >
-        <option value="default" className="hover:bg-white">Sort by</option>
-        <option value="price"className="hover:bg-white">Price</option>
-        <option value="rating"className="hover:bg-white">Rating</option>
-      </select>
-    </div>
-  );
-};
+// // const SortDropdown = () => {
+// //   return (
+// //     <div className="flex justify-end  text-[#4F3100] bg-white h-[24px] sm:h-[36px] w-full text-[14px] ">
+    
+// //       <div
+// //         id="sort"
+// //         className=" flex   sm:gap-8 border-2 border-[#4F3100] w-auto  rounded  px-1 sm:px-2 sm:py-1 text-[#4F3100] bg-white "
+// //       > Sort{"\t"}By:  <select className="px-2 outline-none border-none bg-white">
+// //  <option value="default" className="bg-white ">Latest</option>
+// //         <option value="price"className="bg-white">Price</option>
+// //         <option value="rating"className="bg-white">Rating</option>
+// //       </select>
+       
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default SortDropdown;
+// // SortDropdown.js
+// // import React from "react";
+
+// // const SortDropdown = ({ handleSortChange }) => {
+// //   return (
+// //     <div className="flex justify-end text-[#4F3100] bg-white h-[24px] sm:h-[36px] w-full text-[14px]">
+// //       <div
+// //         id="sort"
+// //         className="flex sm:gap-8 border-2 border-[#4F3100] w-auto rounded px-1 sm:px-2 sm:py-1 text-[#4F3100] bg-white"
+// //       >
+// //         Sort{"\t"}By:{" "}
+// //         <select className="px-2 outline-none border-none bg-white" onChange={handleSortChange}>
+// //           <option value="default" className="bg-white">
+// //             Latest
+// //           </option>
+// //           <option value="price" className="bg-white">
+// //             Price
+// //           </option>
+// //           <option value="rating" className="bg-white">
+// //             Rating
+// //           </option>
+// //           <option value="az" className="bg-white">
+// //             A-Z
+// //           </option>
+// //         </select>
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default SortDropdown;
+// import React from "react";
+
+// const SortDropdown = ({ handleSortChange }) => {
+//   return (
+//     <div className="flex justify-end text-[#4F3100] bg-white h-[24px] sm:h-[36px] w-full text-[14px]">
+//       <div id="sort" className="flex sm:gap-8 border-2 border-[#4F3100] w-auto rounded px-1 sm:px-2 sm:py-1 text-[#4F3100] bg-white">
+//         Sort By: 
+//         <select className="px-2 outline-none border-none bg-white" onChange={handleSortChange}>
+//           <option value="default" className="bg-white">Latest</option>
+//           <option value="price" className="bg-white">Price</option>
+//           <option value="rating" className="bg-white">Rating</option>
+//           <option value="az" className="bg-white">A-Z</option>
+//         </select>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default SortDropdown;
