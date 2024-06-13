@@ -4,6 +4,7 @@ import { AuthContext } from '../../../Hooks/AuthContext';
 import Loading from '../Loading/Loading';
 import useFetch from "../../../Hooks/useFetch";
 import { useImage } from '../../../Hooks/useImage';
+import { toast } from 'react-toastify';
 const SaveStoreButton = () => {
     const { uploadImage } = useImage();
     const auth = useContext(AuthContext);
@@ -14,10 +15,11 @@ const SaveStoreButton = () => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
         try {
-            const ImageData = await uploadImage(store.logo.logoUrl)
-            const BannerData = await uploadImage(store.banner.bannerUrl)
-            const secondaryBannerData = await uploadImage(store.secondaryBanner.secondaryBannerUrl)
-            const offerBannerData = await uploadImage(store.offerBanner.offerBannerUrl)
+            const ImageData=await uploadImage(store.logo.logoUrl)
+            const BannerData=await uploadImage(store.banner.bannerUrl)
+            const secondaryBannerData=await uploadImage(store.secondaryBanner.secondaryBannerUrl)
+            const offerBannerData=await uploadImage(store.offerBanner.offerBannerUrl)
+            const thirdBannerData=await uploadImage(store.thirdBanner.thirdBannerUrl)
             for (let i = 0; i < store.products.length; i++) {
                 const product = store.products[i];
                 const productImg = await uploadImage(product.image.imageUrl);
@@ -69,23 +71,24 @@ const SaveStoreButton = () => {
                     });
                 }
             }
-
-            setStore(prev => (
-                {
-                    ...prev, logo: {
-                        logoUrl: ImageData.img,
-                        logoID: ImageData.id
-                    }, banner: {
-                        bannerUrl: BannerData.img,
-                        bannerID: BannerData.id
-                    }, secondaryBanner: {
-                        secondaryBannerUrl: secondaryBannerData.img,
-                        secondaryBannerID: secondaryBannerData.id
-                    }, offerBanner: {
-                        offerBannerUrl: offerBannerData.img,
-                        offerBannerID: offerBannerData.id
-                    }
-                }
+            
+            setStore(prev=>(
+                {...prev,logo:{
+                    logoUrl:ImageData.img,
+                    logoID:ImageData.id
+                },banner:{
+                    bannerUrl:BannerData.img,
+                    bannerID:BannerData.id
+                },secondaryBanner:{
+                    secondaryBannerUrl:secondaryBannerData.img,
+                    secondaryBannerID:secondaryBannerData.id
+                },offerBanner:{
+                    offerBannerUrl:offerBannerData.img,
+                    offerBannerID:offerBannerData.id
+                },thirdBanner:{
+                    thirdBannerUrl:thirdBannerData.img,
+                    thirdBannerID:thirdBannerData.id
+                }}
             ))
             // storeNewImage=store;
             // PostData(storeNewImage)
@@ -113,9 +116,11 @@ const SaveStoreButton = () => {
                 }
             );
             setStoreNew(false)
-            console.log(responseData); // Handle response data as needed
+            toast(responseData.message); // Handle response data as needed
         } catch (error) {
             console.error('Error saving store data:', error);
+            toast(error.message); // Handle response data as needed
+
         }
     }
     const saveStore = async () => {

@@ -34,99 +34,243 @@ export const StoreProvider = ({ children, passedStore }) => {
     subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
     banner: { bannerUrl: `${herobanner}`, bannerID: '' },
     products: [
-      {
-        id: 1,
-        name: "Watch1",
-        price: '100',
-        image: { imageUrl: controller, imageID: '' },
-        categories: ["Men"],
-        subcategories: ["Watch"],
-        rating: 2.5,
-        count: 0,
-        variant: [
-          {
-            name: "Color",
-            options: [
-              {
-                name: "Blue",
-                price: 1200,
-                image: {
-                  imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
-                },
-                discount: 5
-              }, {
-                name: "Gray",
-                price: 2000,
-                image: {
-                  imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
-                },
-                discount: 6
-              }
-            ]
-          },
-          {
-            name: "Color",
-            options: [
-              {
-                name: "blue",
-                price: 1200,
-                image: {
-                  imageID: "img123",
-                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
-                },
-                discount: 10
-              }
-            ]
-          },
-        ],
-        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
-      },
-      {
-        id: 2,
-        name: "Watch12",
-        price: '200',
-        image: {
-          imageID: "img123",
-          imageUrl: `${Shirt}`
-        },
-        count: 0,
-        categories: ["Men"],
-        subcategories: ["Watch"],
-        rating: 2.5,
-        variant: [
-          {
-            name: "Size",
-            options: [
-              {
-                name: "Small",
-                price: 90,
-                image: {
-                  imageId: "img123",
-                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
-                },
-                discount: 5
-              }
-            ]
-          },
-          {
-            name: "Size",
-            options: [
-              {
-                name: "Small",
-                price: 900,
-                image: {
-                  imageId: "img123",
-                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
-                },
-                discount: 5
-              }
-            ]
-          },
-        ],
-        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
-      },
+      // {
+      //   id: 1,
+      //   name: "Watch1",
+      //   price: '100',
+      //   image: { imageUrl: controller, imageID: '' },
+      //   categories: ["Men"],
+      //   subcategories: ["Watch"],
+      //   rating: 2.5,
+      //   count: 0,
+      //   variant: [
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "Blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+      //           },
+      //           discount: 5
+      //         }, {
+      //           name: "Gray",
+      //           price: 2000,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+      //           },
+      //           discount: 6
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+      //           },
+      //           discount: 10
+      //         }
+      //       ]
+      //     },
+      //   ],
+      //   description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      // },
+      // {
+      //   id: 2,
+      //   name: "Watch1",
+      //   price: '200',
+      //   image: controller,
+      //   count: 0,
+      //   categories: ["Men"],
+      //   subcategories: ["Watch"],
+      //   rating: 2.5,
+      //   variant: [
+      //     {
+      //       name: "Size",
+      //       options: [
+      //         {
+      //           name: "Small",
+      //           price: 90,
+      //           image: {
+      //             imageId: "img123",
+      //             imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+      //           },
+      //           discount: 5
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       name: "Size",
+      //       options: [
+      //         {
+      //           name: "Small",
+      //           price: 900,
+      //           image: {
+      //             imageId: "img123",
+      //             imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+      //           },
+      //           discount: 5
+      //         }
+      //       ]
+      //     },
+      //   ],
+      //   description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      // },
+      // {
+      //   id: 3,
+      //   name: "Watch1",
+      //   price: '100',
+      //   image: { imageUrl: controller, imageID: '' },
+      //   categories: ["Men"],
+      //   subcategories: ["Watch"],
+      //   rating: 2.5,
+      //   count: 0,
+      //   variant: [
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "Blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+      //           },
+      //           discount: 5
+      //         }, {
+      //           name: "Gray",
+      //           price: 2000,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+      //           },
+      //           discount: 6
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+      //           },
+      //           discount: 10
+      //         }
+      //       ]
+      //     },
+      //   ],
+      //   description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      // },
+      // {
+      //   id: 4,
+      //   name: "Watch1",
+      //   price: '100',
+      //   image: { imageUrl: controller, imageID: '' },
+      //   categories: ["Men"],
+      //   subcategories: ["Watch"],
+      //   rating: 2.5,
+      //   count: 0,
+      //   variant: [
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "Blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+      //           },
+      //           discount: 5
+      //         }, {
+      //           name: "Gray",
+      //           price: 2000,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+      //           },
+      //           discount: 6
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+      //           },
+      //           discount: 10
+      //         }
+      //       ]
+      //     },
+      //   ],
+      //   description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      // },
+      // {
+      //   id: 1,
+      //   name: "Watch1",
+      //   price: '100',
+      //   image: { imageUrl: controller, imageID: '' },
+      //   categories: ["Men"],
+      //   subcategories: ["Watch"],
+      //   rating: 2.5,
+      //   count: 0,
+      //   variant: [
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "Blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+      //           },
+      //           discount: 5
+      //         }, {
+      //           name: "Gray",
+      //           price: 2000,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+      //           },
+      //           discount: 6
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       name: "Color",
+      //       options: [
+      //         {
+      //           name: "blue",
+      //           price: 1200,
+      //           image: {
+      //             imageID: "img123",
+      //             imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+      //           },
+      //           discount: 10
+      //         }
+      //       ]
+      //     },
+      //   ],
+      //   description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      // },
     ],
     featuredProducts: [0,1,4],
     color: {
@@ -201,6 +345,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       para3: "",
     },
     secondaryBanner: { secondaryBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
+    thirdBanner:{thirdBannerUrl:`${secondaryBannerImg}`,secondaryBannerID:''},
+    thirdBannerText: {
+      heading: "",
+      paragraph: "",
+    },
     previewMode: true,
     selectedSubCategory: "Watch",
     cart: [],
