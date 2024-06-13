@@ -16,9 +16,10 @@ const ProductList = ({ productListProps, productListType }) => {
     }, [products]);
 
     const handleDeleteProduct = (productId) => {
+        const productIndex=store.products.findIndex(data=>data.id==productId)
         setStore(prevStore => ({
             ...prevStore,
-            products: prevStore.products.filter(product => product.id !== productId)
+            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
         }));
     };
 
@@ -30,13 +31,14 @@ const ProductList = ({ productListProps, productListType }) => {
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
                         <div style={{ backgroundColor: productColor.backgroundColor }}>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
-                                {filteredProducts.map(product => (
-                                    <ProductListCard1
+                                {filteredProducts.map((product,i) => (
+                                    (product?.id || product?._id) && <ProductListCard1
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
                                         handleDeleteProduct={handleDeleteProduct}
                                         store={store}
+                                       
                                     />
                                 ))}
                             </div>

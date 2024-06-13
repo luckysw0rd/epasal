@@ -128,7 +128,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       },
     ],
-    featuredProducts: [0],
+    featuredProducts: [0,1,4],
     color: {
       backgroundThemeColor: "#FFFFFF",
       secondaryBannerColor: {
@@ -185,9 +185,13 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonBgColorOnHover: "#4F3100",
       },
       footerColor: {
-        background: "#333333",
+        bgColor: "#736860",
         textColor: "#ffffff",
-        linkColor: "#59CE8F",
+        linkHeaderColor: "#ffffff",
+        linkColor: "#ffffff",
+        btnBgColor: "#736860",
+        btnText: "#ffffff",
+        btnBgColorOnHover: "#4F3100"
       },
     },
     offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },
@@ -206,10 +210,10 @@ export const StoreProvider = ({ children, passedStore }) => {
       paragraph: "",
     },
     socialMediaLinks: {
-      facebook: "",
-      twitter: "",
-      instagram: "",
-      linkedin: "",
+      facebook: "facebook.com",
+      twitter: "twitter.com",
+      instagram: "instagram.com",
+      linkedin: "linkedin.com",
     },
     footerDescription: "A modern online store for all your needs.",
     fetchedFromBackend: false,
@@ -396,6 +400,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         value={{
           store,
           setStore,
+          storeID,
           addCategory,
           addSubCategory,
           removeCategory,
