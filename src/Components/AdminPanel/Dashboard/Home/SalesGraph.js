@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 const SalesGraph = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('week');
+    const chartWidth = window.innerWidth < 768 ? 330 : 800;
+    // const chartHeight = window.innerWidth > 768 ? 280 : 400;
 
     const handleChange = (event) => {
         setSelectedPeriod(event.target.value);
@@ -39,17 +41,17 @@ const SalesGraph = () => {
     const dataKey = selectedPeriod === 'year' ? 'month' : selectedPeriod === 'month' ? 'week' : 'day';
 
     return (
-        <div>
-            <div className="p-4 flex gap-16 items-center justify-between">
-                <h3 className="text-lg font-semibold text-[#888888] ml-10">Sales Overview</h3>
-                <div className='flex gap-10 relative'>
+        <div className=''>
+            <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-[#888888] sm:ml-10">Sales Overview</h3>
+                <div className='flex gap-10'>
 
-                    <div className='flex items-center gap-5'>
+                    <div className='hidden sm:flex items-center gap-5'>
                         <div className='w-4 h-4 rounded-full bg-blue-400'></div>
                         <h4 className="text-md font-semibold text-[#888888]">Earning</h4>
                     </div>
 
-                    <div className='flex items-center gap-5'>
+                    <div className='hidden sm:flex items-center gap-5'>
                         <div className='w-4 h-4 rounded-full bg-green-400'></div>
                         <h3 className="text-md font-semibold text-[#888888]">Profit</h3>
                     </div>
@@ -74,7 +76,7 @@ const SalesGraph = () => {
 
 
             {/* GRAPH  */}
-            <LineChart width={800} height={400} data={data[selectedPeriod]} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <LineChart width={300} height={300} data={data[selectedPeriod]} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                 <Line type="monotone" dataKey="sales" stroke="#000000" strokeWidth={2} />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <XAxis dataKey={dataKey} />
