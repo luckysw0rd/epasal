@@ -13,11 +13,13 @@ import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
 import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
 import { PrimeReactProvider } from 'primereact/api';
 import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
+import CheckoutPage from "./Components/CheckoutPage/CheckOutPage";
+import T1Navbar from './Theme/Theme1/T1Navbar';
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if (token) {
+  if (true) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -27,8 +29,9 @@ function App() {
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/productform" element={<ProductForm />} />
-
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
+        <Route path="/test" element={<T1Navbar />} />
 
       </React.Fragment>
     );
