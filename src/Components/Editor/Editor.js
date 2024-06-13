@@ -138,13 +138,21 @@ const Editor = () => {
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
               Banner #1<br />
               <label className='text-[10px]'>Title</label><br />
+              <input value={store.thirdBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,thirdBannerText:{...prev.thirdBannerText,heading:e.target.value}}))}} ></input><br />
+              <label className='text-[10px]'>Description</label><br />
+              <textarea value={store.thirdBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e)=>{setStore(prev=>({...prev,thirdBannerText:{...prev.thirdBannerText,paragraph:e.target.value}}))}} ></textarea><br />
+              <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
+            </li>
+            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+              Banner #2<br />
+              <label className='text-[10px]'>Title</label><br />
               <input value={store.secondaryBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,secondaryBannerText:{...prev.secondaryBannerText,heading:e.target.value}}))}} ></input><br />
               <label className='text-[10px]'>Description</label><br />
               <textarea value={store.secondaryBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e)=>{setStore(prev=>({...prev,secondaryBannerText:{...prev.secondaryBannerText,paragraph:e.target.value}}))}} ></textarea><br />
               <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
             </li>
             <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-              Banner #2<br />
+              Banner #3<br />
               <label className='text-[10px]'>Title</label><br />
               <input value={store.offerBannerText.para1} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,offerBannerText:{...prev.offerBannerText,para1:e.target.value}}))}} ></input><br />
               <label className='text-[10px]'>Description</label><br />

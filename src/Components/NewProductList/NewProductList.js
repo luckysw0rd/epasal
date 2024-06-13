@@ -16,13 +16,13 @@ const NewProductList = ({ productListProps, productListType }) => {
         setFilteredProducts(products.slice(0, 12));
     }, [products]);
 
-    const handleDeleteProduct = (productId) => {
-        const productIndex=store.products.findIndex(data=>data.id==productId)
-        setStore(prevStore => ({
-            ...prevStore,
-            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
-        }));
-    };
+    // const handleDeleteProduct = (productId) => {
+    //     const productIndex=store.products.findIndex(data=>data.id==productId)
+    //     setStore(prevStore => ({
+    //         ...prevStore,
+    //         featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
+    //     }));
+    // };
 
     const renderProductList = () => {
         switch (productListType) {
@@ -37,7 +37,7 @@ const NewProductList = ({ productListProps, productListType }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        handleDeleteProduct={handleDeleteProduct}
+                                        // handleDeleteProduct={handleDeleteProduct}
                                         store={store}
                                        
                                     />

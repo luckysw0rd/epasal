@@ -34,7 +34,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     products: [
       // {
       //   id: 1,
-      //   name: "Watch1",
+      //   name: "Controller",
       //   price: '100',
       //   image: { imageUrl: controller, imageID: '' },
       //   categories: ["Men"],
@@ -83,9 +83,9 @@ export const StoreProvider = ({ children, passedStore }) => {
       // },
       // {
       //   id: 2,
-      //   name: "Watch1",
+      //   name: "Goggles",
       //   price: '200',
-      //   image: controller,
+      //   image: { imageUrl: 'https://cdn.pixabay.com/photo/2014/03/24/17/14/eye-295173_960_720.png', imageID: '' },
       //   count: 0,
       //   categories: ["Men"],
       //   subcategories: ["Watch"],
@@ -124,9 +124,9 @@ export const StoreProvider = ({ children, passedStore }) => {
       // },
       // {
       //   id: 3,
-      //   name: "Watch1",
+      //   name: "Watch",
       //   price: '100',
-      //   image: { imageUrl: controller, imageID: '' },
+      //   image: { imageUrl: "https://cdn.pixabay.com/photo/2013/07/12/14/44/watch-148700_1280.png", imageID: '' },
       //   categories: ["Men"],
       //   subcategories: ["Watch"],
       //   rating: 2.5,
