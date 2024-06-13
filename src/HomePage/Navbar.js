@@ -66,7 +66,6 @@ const SideBar = () => {
 
     const handleBuildStoreClick = () => {
         window.location.href = "/buildstore";
-
         console.log('Build Store clicked');
         setIsHovered(false);
         setIsOpen(false);

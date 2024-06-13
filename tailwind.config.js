@@ -16,6 +16,7 @@ module.exports = {
         "Exo-2": ["Exo 2", "sans-serif"],
         Roboto: ["Roboto", "sans-serif"],
         Sanchez: ["Sanchez", "serif"],
+        "DM-Serif-Text" :["DM Serif Text","serif"],
       },
     },
   },
