@@ -11,6 +11,7 @@ export default function Theme() {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
+
   useEffect(() => {
     const fetchStoreData = async () => {
       try {
@@ -25,6 +26,7 @@ export default function Theme() {
             Authorization: 'Bearer ' + auth.token,
           }
         ); // Use storeID from useParams
+      
         console.log(response);
 
       } catch (error) {
@@ -42,7 +44,7 @@ export default function Theme() {
 
   return (
     <div className=' overflow-x-hidden'>
-      <Theme1 />
+      <Theme1/>
     </div>
   );
 }

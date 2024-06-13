@@ -7,6 +7,8 @@ import controller from "../../Assets/controller.png";
 import offerBannerImg from '../../Assets/offerbanner.webp'
 import secondaryBannerImg from '../../Assets/ImageGroup.png'
 import herobanner from '../../Assets/firstbanner.webp'
+import Shirt from '../../Assets/shirt.webp'
+
 const StoreContext = createContext();
 
 export const useStore = () => {
@@ -34,7 +36,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     products: [
       {
         id: 1,
-        name: "Watch1",
+        name: "Controller",
         price: '100',
         image: { imageUrl: controller, imageID: '' },
         categories: ["Men"],
@@ -83,9 +85,9 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 2,
-        name: "Watch1",
+        name: "Goggles",
         price: '200',
-        image: controller,
+        image: { imageUrl: 'https://cdn.pixabay.com/photo/2014/03/24/17/14/eye-295173_960_720.png', imageID: '' },
         count: 0,
         categories: ["Men"],
         subcategories: ["Watch"],
@@ -122,8 +124,155 @@ export const StoreProvider = ({ children, passedStore }) => {
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       },
+      {
+        id: 3,
+        name: "Watch",
+        price: '100',
+        image: { imageUrl: "https://cdn.pixabay.com/photo/2013/07/12/14/44/watch-148700_1280.png", imageID: '' },
+        categories: ["Men"],
+        subcategories: ["Watch"],
+        rating: 2.5,
+        count: 0,
+        variant: [
+          {
+            name: "Color",
+            options: [
+              {
+                name: "Blue",
+                price: 1200,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                },
+                discount: 5
+              }, {
+                name: "Gray",
+                price: 2000,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+                },
+                discount: 6
+              }
+            ]
+          },
+          {
+            name: "Color",
+            options: [
+              {
+                name: "blue",
+                price: 1200,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                },
+                discount: 10
+              }
+            ]
+          },
+        ],
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      },
+      {
+        id: 4,
+        name: "Watch1",
+        price: '100',
+        image: { imageUrl: controller, imageID: '' },
+        categories: ["Men"],
+        subcategories: ["Watch"],
+        rating: 2.5,
+        count: 0,
+        variant: [
+          {
+            name: "Color",
+            options: [
+              {
+                name: "Blue",
+                price: 1200,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                },
+                discount: 5
+              }, {
+                name: "Gray",
+                price: 2000,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+                },
+                discount: 6
+              }
+            ]
+          },
+          {
+            name: "Color",
+            options: [
+              {
+                name: "blue",
+                price: 1200,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                },
+                discount: 10
+              }
+            ]
+          },
+        ],
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      },
+      {
+        id: 5,
+        name: "Watch1",
+        price: '100',
+        image: { imageUrl: controller, imageID: '' },
+        categories: ["Men"],
+        subcategories: ["Watch"],
+        rating: 2.5,
+        count: 0,
+        variant: [
+          {
+            name: "Color",
+            options: [
+              {
+                name: "Blue",
+                price: 1200,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                },
+                discount: 5
+              }, {
+                name: "Gray",
+                price: 2000,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+                },
+                discount: 6
+              }
+            ]
+          },
+          {
+            name: "Color",
+            options: [
+              {
+                name: "blue",
+                price: 1200,
+                image: {
+                  imageID: "img123",
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                },
+                discount: 10
+              }
+            ]
+          },
+        ],
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+      },
     ],
-    featuredProducts: [0],
+    featuredProducts: [0, 1, 4],
     color: {
       backgroundThemeColor: "#FFFFFF",
       secondaryBannerColor: {
@@ -180,9 +329,13 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonBgColorOnHover: "#4F3100",
       },
       footerColor: {
-        background: "#333333",
+        bgColor: "#736860",
         textColor: "#ffffff",
-        linkColor: "#59CE8F",
+        linkHeaderColor: "#ffffff",
+        linkColor: "#ffffff",
+        btnBgColor: "#736860",
+        btnText: "#ffffff",
+        btnBgColorOnHover: "#4F3100"
       },
     },
     offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },
@@ -192,6 +345,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       para3: "",
     },
     secondaryBanner: { secondaryBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
+    thirdBanner: { thirdBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
+    thirdBannerText: {
+      heading: "",
+      paragraph: "",
+    },
     previewMode: true,
     selectedSubCategory: "Watch",
     cart: [],
@@ -201,13 +359,16 @@ export const StoreProvider = ({ children, passedStore }) => {
       paragraph: "",
     },
     socialMediaLinks: {
-      facebook: "",
-      twitter: "",
-      instagram: "",
-      linkedin: "",
+      facebook: "facebook.com",
+      twitter: "twitter.com",
+      instagram: "instagram.com",
+      linkedin: "linkedin.com",
     },
     footerDescription: "A modern online store for all your needs.",
     fetchedFromBackend: false,
+    fonts: {
+
+    }
     // Rest of the default store data...
   };
 
@@ -218,7 +379,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   const [store, setStore] = useState(defaultStoreData); // Start with null while fetching
 
   useEffect(() => {
-    const fetchStoreData = async () => {
+    const fetchStoreData = async (isEdit) => {
       try {
         console.log("inside fetching");
         // Fetch store data from the server using the provided store ID
@@ -237,7 +398,9 @@ export const StoreProvider = ({ children, passedStore }) => {
           fetchedFromBackend: true,
           selectedSubCategory: response.store.subCategories[0].name,
           previewMode: true,
-          cart: [], // Set fetchedFromBackend to true when data is fetched
+          isEdit,
+          cart: [],
+          fonts:{} // Set fetchedFromBackend to true when data is fetched
         });
       } catch (error) {
         // If an error occurs during fetch, set default store data
@@ -245,9 +408,14 @@ export const StoreProvider = ({ children, passedStore }) => {
         console.error("Error fetching store data:", error);
       }
     };
-
-    if (window.location.pathname.includes("/store/")) {
-      fetchStoreData();
+    if(window.location.pathname.includes("/store/edit/")){
+      fetchStoreData(true);
+      setStore(prev=>({...prev,previewMode:false,fetchedFromBackend:false}))
+      console.log("I reached here")
+    } 
+    else if (window.location.pathname.includes("/store/")) {
+      fetchStoreData(false);
+    
     } else {
       setStore(defaultStoreData);
     }
@@ -264,6 +432,16 @@ export const StoreProvider = ({ children, passedStore }) => {
     setStore((prevState) => ({
       ...prevState,
       secondaryBanner: newBannerUrl,
+    }));
+  };
+
+  const updateFont = (section, font) => {
+    setStore((prevState) => ({
+      ...prevState,
+      fonts: {
+        ...prevState?.fonts,
+        [section]: font,
+      },
     }));
   };
 
@@ -391,6 +569,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         value={{
           store,
           setStore,
+          storeID,
           addCategory,
           addSubCategory,
           removeCategory,
@@ -399,7 +578,8 @@ export const StoreProvider = ({ children, passedStore }) => {
           updateSecondaryBanner,
           addProduct,
           addToCart,
-          deleteFromCart
+          deleteFromCart,
+          updateFont
         }}
       >
         {children}

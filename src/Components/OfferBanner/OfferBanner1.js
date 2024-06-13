@@ -45,19 +45,20 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
   return (
     <div className="box-border py-8 mt-10 ">
       <motion.div
-        className="box-border      font-roboto relative shadow-lg min-h-[300px] sm:h-[600px] md:h-[800px] lg:h-[400px] lg:min-h-[450px] flex flex-col sm:flex-col sm:space-y-5 lg:space-y-0  lg:flex-row md:justify-center items-center  space-x-0 lg:space-x-20 px-10  py-10 text-black  "
+        className="box-border relative shadow-lg min-h-[300px] sm:h-[600px] md:h-[800px] lg:h-[400px] lg:min-h-[450px] flex flex-col sm:flex-col sm:space-y-5 lg:space-y-0  lg:flex-row md:justify-center items-center  space-x-0 lg:space-x-20 px-10  py-10 text-black  "
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
           backgroundColor: color.offerBannerColor.backgroundThemeColor,
+          fontFamily:store?.fonts?.Banner3,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           opacity: previewMode ? 0.4 : 1,
         }}
       >
-        <div className="     text-center  md:w-full lg:w-[500px] xl:w-[800px]    flex flex-col justify-between       sm:py-1 md:py-1 lg:py-1 font-Roboto ">
+        <div className="     text-center  md:w-full lg:w-[500px] xl:w-[800px]    flex flex-col justify-between       sm:py-1 md:py-1 lg:py-1 ">
           <div
             className=" mx-auto w-[300px] sm:w-[500px] md:w-[500px] lg:w-[450px]   xl:w-[500px] 2xl:w-[650px]    mb-8 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0 md:mx-auto  "
             style={{

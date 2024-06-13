@@ -33,7 +33,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
 
     return (
         <motion.div
-            className="flex flex-col md:flex-row items-center text-center md:text-left   w-[200px] h-[280px]  md:w-[402px] md:h-[216px] rounded overflow-hidden shadow-md cursor-pointer relative font-Roboto" // Add relative class
+            className="  flex flex-col md:flex-row items-center text-center md:text-left   w-[200px] h-[280px]  md:w-[402px] md:h-[216px] rounded overflow-hidden shadow-md cursor-pointer relative " // Add relative class
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.subProductColor.backgroundColor, color: store.color.subProductColor.textColor, border: `2px solid ${store.color.subProductColor.borderColor}` }}
@@ -52,7 +52,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
             <div className="relative w-1/2  md:w-[160px] h-[139px] flex ml-2 mt-5 md:mt-0">
                 <motion.img
                     className="w-full object-contain"
-                    src={product.image.imageUrl}
+                    src={product?.image?.imageUrl}
                     alt={product.name}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
