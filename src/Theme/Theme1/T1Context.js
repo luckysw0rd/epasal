@@ -400,7 +400,7 @@ export const StoreProvider = ({ children, passedStore }) => {
           previewMode: true,
           isEdit,
           cart: [],
-          fonts:{} // Set fetchedFromBackend to true when data is fetched
+          fonts :response.store.fonts|| {} // Set fetchedFromBackend to true when data is fetched
         });
       } catch (error) {
         // If an error occurs during fetch, set default store data
