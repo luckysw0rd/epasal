@@ -196,11 +196,11 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
               <input
                 type="text"
                 name="heading"
-                value={secondaryBannerText?.heading || ""}
+                value={secondaryBannerText?.heading || "Rekindle with class"}
                 onChange={handleTextChange}
                 className="text-3xl lg:text-5xl xl:text-6xl font-bold mb-2 w-[90%] border border-gray-500"
                 style={{ color: color.secondaryBannerColor.textColor }}
-                placeholder="Rekindle with class"
+                
               />
               <textarea
                 name="paragraph"
