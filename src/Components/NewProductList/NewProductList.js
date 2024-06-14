@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
-import ProductListCard1 from './ProductListCard1';
+
+import NewProductListCard from './NewProductListCard';
 
 
-const ProductList = ({ productListProps, productListType }) => {
+const NewProductList = ({ productListProps, productListType }) => {
     const { products, productColor, setStore , store } = productListProps
 
     // Filtered products state
@@ -12,31 +13,31 @@ const ProductList = ({ productListProps, productListType }) => {
 
     // Delayed filtering function
     useEffect(() => {
-        setFilteredProducts(products.slice(0, 4));
+        setFilteredProducts(products.slice(0, 12));
     }, [products]);
 
-    const handleDeleteProduct = (productId) => {
-        const productIndex=store.products.findIndex(data=>data.id==productId)
-        setStore(prevStore => ({
-            ...prevStore,
-            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
-        }));
-    };
+    // const handleDeleteProduct = (productId) => {
+    //     const productIndex=store.products.findIndex(data=>data.id==productId)
+    //     setStore(prevStore => ({
+    //         ...prevStore,
+    //         featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
+    //     }));
+    // };
 
     const renderProductList = () => {
         switch (productListType) {
             case 'ProductList1':
                 return (
                     <div className='space-y-10 flex items-center relative flex-col'>
-                        <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
+                        <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">New Products</h1>
                         <div style={{ backgroundColor: productColor.backgroundColor }}>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
                                 {filteredProducts.map((product,i) => (
-                                    (product?.id || product?._id) && <ProductListCard1
+                                    (product?.id || product?._id) && <NewProductListCard
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        handleDeleteProduct={handleDeleteProduct}
+                                        // handleDeleteProduct={handleDeleteProduct}
                                         store={store}
                                        
                                     />
@@ -52,7 +53,7 @@ const ProductList = ({ productListProps, productListType }) => {
     };
     return (
 
-        <div className='' style={{fontFamily:store?.fonts?.Featured}}>
+        <div className='' style={{fontFamily:store?.fonts?.NewProduct}}>
             {renderProductList()}
             <Link>
                 <button className="flex items-center absolute right-10 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none">
@@ -64,4 +65,4 @@ const ProductList = ({ productListProps, productListType }) => {
     );
 };
 
-export default ProductList;
+export default NewProductList;

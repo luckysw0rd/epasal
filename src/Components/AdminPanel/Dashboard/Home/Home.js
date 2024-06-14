@@ -77,7 +77,7 @@ const Home = () => {
               <div className='flex flex-col gap-5'>
                 <div className="text-2xl font-semibold">Rs. {dueAmount}</div>
                 <div className="text-sm text-[#888888]">Amount you need to pay to Banau </div>
-                <button className='w-[60%] border border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-xl py-2 text-green-600'>
+                <button className='w-[60%] border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-xl py-2 text-green-600'>
                   <div className="flex items-center text-bold justify-center gap-2">
                     Pay Now <LuWallet size={20} />
                   </div>

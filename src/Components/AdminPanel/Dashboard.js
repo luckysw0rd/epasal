@@ -6,6 +6,7 @@ import { AuthContext } from "../../Hooks/AuthContext";
 import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
 import { useParams } from "react-router-dom";
+import EditStore from './EditStore/EditStore.js';
 
 const Dashboard = () => {
   const auth = useContext(AuthContext);
@@ -13,6 +14,10 @@ const Dashboard = () => {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [store, setStore] = useState(null); // Initialize store as null
   const { storeName } = useParams();
+  const [role, setRole] = useState(null);
+
+
+
   const fetchStore = async () => {
     try {
       const responseData = await sendRequest(
@@ -36,13 +41,38 @@ const Dashboard = () => {
     fetchStore();
   }, []);
 
-  const renderDashboardContent = (Store) => {
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const userResponse = await sendRequest('users/getLoggedInUser', 'GET', null, {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + auth.token,
+        });
+        const userRole = userResponse.user.roles[0].role;
+        setRole(userRole);
+      } catch (error) {
+        console.error('Error fetching user role:', error);
+      }
+    };
+
+    fetchUserRole();
+  }, [auth.token]);
+
+
+  const renderDashboardContent = (store) => {
     switch (dashboardState) {
       case 'Home':
         return <Home />;
       case 'Employee':
-        console.log(store)
-        return <Employee store={store} />;
+        if (role === 'Admin' || role === 'Owner') {
+          console.log('Store:', store);
+          return <Employee store={store} />;
+        } else {
+          return <Home />;
+        }
+      case 'Edit Store':
+        return <EditStore store={store} />;
       default:
         return <Home />;
     }
@@ -53,7 +83,7 @@ const Dashboard = () => {
       {store && (
         <div className=""> {/* Apply overflow styling here */}
           <SiderBarProvider className="overflow-hidden">
-            <DashboardWrapper store={store}>
+            <DashboardWrapper setDashboardState={setDashboardState} store={store}>
               <div className="text-black p-2 py-4 mt-8 overflow-hidden">
                 {renderDashboardContent(store)}
               </div>
@@ -63,6 +93,6 @@ const Dashboard = () => {
       )}
     </>
   );
-}
+};
 
 export default Dashboard;

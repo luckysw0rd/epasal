@@ -4,7 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 
-const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) => {
+const NewProductListCard = ({ productListProps, handleDeleteProduct, product  }) => {
     const { productColor, previewMode, addToCart } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
@@ -36,14 +36,14 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) =
         >
             <div className="w-full">
                 <div className="relative w-full">
-                    {!previewMode && (
+                    {/* {!previewMode && (
                         <button
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
                             onClick={() => handleDeleteProduct(product.id)}
                         >
                             <FaTimes />
                         </button>
-                    )}
+                    )} */}
                     <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <div>
                             <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
@@ -97,4 +97,4 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) =
     );
 };
 
-export default ProductListCard1;
+export default NewProductListCard;
