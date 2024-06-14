@@ -22,7 +22,7 @@ export default function ProductForm({ onClose }) {
             }
         ],
         category: [], // Change to array
-        subcategories: [] // Change to array
+        subcategories: [store?.subCategories[0]?.name] // Change to array
     };
 
 
@@ -30,11 +30,12 @@ export default function ProductForm({ onClose }) {
 
 
     const handleCategoryChange = (e) => {
-        const { options } = e.target;
-        const selectedCategories = Array.from(options)
-            .filter(option => option.selected)
-            .map(option => option.value);
-        setFormState({ ...formState, subcategories: selectedCategories });
+        const { value } = e.target;
+        console.log(e.target.value,"options")
+        // const selectedCategories = Array.from(value)
+        //     .filter(option => option.selected)
+        //     .map(option => option.value);
+        setFormState({ ...formState, subcategories: [value] });
     };
 
 
