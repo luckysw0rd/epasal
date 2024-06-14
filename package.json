@@ -43,6 +43,7 @@
     "react-toastify": "^10.0.5",
     "react-typed": "^2.0.12",
     "react-use-draggable-scroll": "^0.4.7",
+    "recharts": "^2.12.7",
     "swiper": "^11.0.7",
     "tailwind-merge": "^2.2.2",
     "web-vitals": "^2.1.4"
