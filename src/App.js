@@ -13,13 +13,14 @@ import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
 import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
 import { PrimeReactProvider } from 'primereact/api';
 import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
+import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if (token) {
+  if ( true) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -31,6 +32,10 @@ function App() {
         <Route path="/productform" element={<ProductForm />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
+
+        {/* Delete this route later */}
+        <Route path="/adminhome" element={<Home />} />
+
 
       </React.Fragment>
     );

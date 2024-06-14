@@ -3,7 +3,7 @@ import DashboardWrapper from "./DashboardWrapper";
 import { SiderBarProvider } from "./SiderBarContext";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
-import Home from "./Dashboard/Home";
+import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
 import { useParams } from "react-router-dom";
 import EditStore from './EditStore/EditStore.js';
@@ -89,7 +89,7 @@ const Dashboard = () => {
               </div>
             </DashboardWrapper>
           </SiderBarProvider>
-        </div>
+        </div >
       )}
     </>
   );
