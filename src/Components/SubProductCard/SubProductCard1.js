@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Import FaTimes for the remove icon
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
-const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,store2 }) => {
+const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store2 }) => {
     // Component state
     const [selectedStyle, setSelectedStyle] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0)
@@ -58,7 +58,6 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5 }}
                 />
-
             </div>
 
             <div className="px-10 py-4 w-[280px]">
