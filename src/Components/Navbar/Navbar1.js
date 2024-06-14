@@ -108,9 +108,9 @@ const Navbar1 = ({
     const deleteFromCart = (itemToDelete) => {
         setCartItems(cartItems.filter(item => item.id !== itemToDelete.id));
     };
-
+   
     return (
-        <motion.nav
+         <motion.nav
             className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${
                 scrolling ? 'bg-brown-700' : 'bg-transparent'
             }`}
@@ -136,7 +136,7 @@ const Navbar1 = ({
                 {previewMode ? (
                     store.logo && (
                         <img
-                            src={store.logo.logoUrl}
+                            src={store?.logo?.logoUrl}
                             alt="Logo"
                             className="h-8 mr-4"
                         />
@@ -145,7 +145,7 @@ const Navbar1 = ({
                     <div {...getRootProps()} className="cursor-pointer flex items-center">
                         <input {...getInputProps()} />
                         <img
-                            src={store.logo.logoUrl || 'https://via.placeholder.com/50'}
+                            src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
                             alt="Logo"
                             className="h-8 mr-4"
                         />
@@ -206,7 +206,7 @@ const Navbar1 = ({
                         <div className="flex items-center mb-4">
                             {store.logo && (
                                 <img
-                                    src={store.logo.logoUrl}
+                                    src={store?.logo?.logoUrl}
                                     alt="Logo"
                                     className="h-8 mr-4"
                                 />

@@ -10,7 +10,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
     const [selectedOption, setSelectedOption] = useState(0)
     const [addedToCart, setAddedToCart] = useState(false);
     const { store } = useStore(); // Access the store context
-    const { previewMode } = store;
+    const { previewMode,isEdit } = store;
     useEffect(() => {
         // Check if the product is in the cart when the component mounts
         // This logic should be replaced with your actual implementation for checking the cart
@@ -39,7 +39,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
             style={{ backgroundColor: store.color.subProductColor.backgroundColor, color: store.color.subProductColor.textColor, border: `2px solid ${store.color.subProductColor.borderColor}` }}
         >
             {/* Add remove button/icon */}
-            {!previewMode && (
+            {(!previewMode||isEdit) && (
                 <button
                     className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center" // Added flex and justify-center
                     onClick={() => handleRemoveProduct(product.id)} // Call handleRemoveProduct on click
