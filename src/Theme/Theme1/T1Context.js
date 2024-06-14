@@ -282,6 +282,13 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonColor: "#AB8076",
         buttonText: "#ffffff",
       },
+      firstBannerColor: {
+        backgroundThemeColor1: "#ffffff",
+        backgroundThemeColor2: "#fcf3f3",
+        textColor: "#5D4B3F",
+        buttonColor: "#AB8076",
+        buttonText: "#ffffff",
+      },
       offerBannerColor: {
         backgroundBoxThemeColor1: "#ffffff",
         backgroundThemeColor: "#C9BCAC",
@@ -315,6 +322,20 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       productSection: "#ffffff",
       productListColor: {
+        // Define productListColor object
+        backgroundColor: "#FFFFFF",
+        cardBackground: "#FFFFFF",
+        borderColor: "#B5A297",
+        headerColor: "#5D4B3F",
+        textColor: "#4F3100",
+        priceColor: "#4F3100",
+        heartColor: "#FF4D00",
+        buttonTextColor: "#4F3100",
+        buttonBgColor: "#FFFFFF",
+        buttonBorderColor: "#4F3100",
+        buttonBgColorOnHover: "#4F3100",
+      },
+      newProductColor: {
         // Define productListColor object
         backgroundColor: "#FFFFFF",
         cardBackground: "#FFFFFF",

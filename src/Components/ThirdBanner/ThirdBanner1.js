@@ -55,7 +55,7 @@ const ThirdBanner1 = ({ previewMode, defaultBgImage }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          backgroundColor: color.secondaryBannerColor.backgroundThemeColor1,
+          backgroundColor: color.firstBannerColor.backgroundThemeColor1,
           fontFamily:store?.fonts?.Banner1,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -76,13 +76,13 @@ const ThirdBanner1 = ({ previewMode, defaultBgImage }) => {
             < >
               <h2
                 className="text-3xl lg:text-5xl xl:text-6xl font-bold"
-                style={{ color: color.secondaryBannerColor.textColor }}
+                style={{ color: color.firstBannerColor.textColor }}
               >
-                {secondaryBannerText.heading || "Rekindle with class"}
+                {thirdBannerText?.heading  || "Rekindle with class"}
               </h2>
               <p
                 className="mt-2 text-base md:text-2xl font-normal"
-                style={{ color: color.secondaryBannerColor.textColor }}
+                style={{ color: color.firstBannerColor.textColor }}
               >
                 {thirdBannerText.paragraph ||
                   "Step into a realm of refined allure with the latest masterpiece in beauty."}
@@ -96,7 +96,7 @@ const ThirdBanner1 = ({ previewMode, defaultBgImage }) => {
                 value={thirdBannerText?.heading || ""}
                 onChange={handleTextChange}
                 className="text-3xl lg:text-5xl xl:text-6xl font-bold mb-2 w-[90%] border border-gray-500"
-                style={{ color: color.secondaryBannerColor.textColor }}
+                style={{ color: color.firstBannerColor.textColor }}
                 placeholder="Rekindle with class"
               />
               <textarea
@@ -104,7 +104,7 @@ const ThirdBanner1 = ({ previewMode, defaultBgImage }) => {
                 value={thirdBannerText?.paragraph || ""}
                 onChange={handleTextChange}
                 className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
-                style={{ color: color.secondaryBannerColor.textColor }}
+                style={{ color: color.firstBannerColor.textColor }}
                 placeholder="Step into a realm of refined allure with the latest masterpiece in beauty."
               />
             </>
@@ -112,8 +112,8 @@ const ThirdBanner1 = ({ previewMode, defaultBgImage }) => {
           <button
             className="mt-4 md:mt-2 lg:mt-8 inline-block h-12 rounded-lg border-2 border-success px-6 py-auto text-xs md:text-xs lg:text-base font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:border-2"
             style={{
-              color: color.secondaryBannerColor.buttonText,
-              backgroundColor: color.secondaryBannerColor.buttonColor,
+              color: color.firstBannerColor.buttonText,
+              backgroundColor: color.firstBannerColor.buttonColor,
             }}
           >
             Explore More
