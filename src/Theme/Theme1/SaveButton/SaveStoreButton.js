@@ -10,19 +10,19 @@ const SaveStoreButton = () => {
     const auth = useContext(AuthContext);
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
-    var storeNewImage={};
+    // var storeNewImage={};
     const { previewMode } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
         try {
-            const ImageData = await uploadImage(store.logo.logoUrl)
-            const BannerData = await uploadImage(store.banner.bannerUrl)
-            const secondaryBannerData = await uploadImage(store.secondaryBanner.secondaryBannerUrl)
-            const offerBannerData = await uploadImage(store.offerBanner.offerBannerUrl)
-            const thirdBannerData = await uploadImage(store.thirdBanner.thirdBannerUrl)
+            const ImageData=await uploadImage(store?.logo?.logoUrl)
+            const BannerData=await uploadImage(store?.banner?.bannerUrl)
+            const secondaryBannerData=await uploadImage(store?.secondaryBanner?.secondaryBannerUrl)
+            const offerBannerData=await uploadImage(store?.offerBanner?.offerBannerUrl)
+            const thirdBannerData=await uploadImage(store?.thirdBanner?.thirdBannerUrl)
             for (let i = 0; i < store.products.length; i++) {
                 const product = store.products[i];
-                const productImg = await uploadImage(product.image.imageUrl);
+                const productImg = await uploadImage(product?.image?.imageUrl);
 
                 // Update product image
                 setStore(prev => {
@@ -41,61 +41,59 @@ const SaveStoreButton = () => {
                 });
 
                 // Update variant images
-                if (!store.isEdit) {
-                    for (let j = 0; j < product.variant[0].options.length; j++) {
-                        const variantOption = product.variant[0].options[j];
-                        const variantImg = await uploadImage(variantOption.image.imageUrl);
+                if(!store.isEdit){
+                for (let j = 0; j < product.variant[0].options.length; j++) {
+                    const variantOption = product.variant[0].options[j];
+                    const variantImg = await uploadImage(variantOption?.image?.imageUrl);
 
-                        setStore(prev => {
-                            const updatedProducts = [...prev.products];
-                            const updatedOptions = [...updatedProducts[i].variant[0].options];
-                            updatedOptions[j] = {
-                                ...updatedOptions[j],
-                                image: {
-                                    imageID: variantImg.id,
-                                    imageUrl: variantImg.img
-                                }
-                            };
+                    setStore(prev => {
+                        const updatedProducts = [...prev.products];
+                        const updatedOptions = [...updatedProducts[i].variant[0].options];
+                        updatedOptions[j] = {
+                            ...updatedOptions[j],
+                            image: {
+                                imageID: variantImg.id,
+                                imageUrl: variantImg.img
+                            }
+                        };
 
-                            updatedProducts[i] = {
-                                ...updatedProducts[i],
-                                variant: [{
-                                    ...updatedProducts[i].variant[0],
-                                    options: updatedOptions
-                                }]
-                            };
+                        updatedProducts[i] = {
+                            ...updatedProducts[i],
+                            variant: [{
+                                ...updatedProducts[i].variant[0],
+                                options: updatedOptions
+                            }]
+                        };
 
-                            return {
-                                ...prev,
-                                products: updatedProducts
-                            };
-                        });
-                    }
+                        return {
+                            ...prev,
+                            products: updatedProducts
+                        };
+                    });
                 }
             }
-
-            setStore(prev => (
-                {
-                    ...prev, logo: {
-                        logoUrl: ImageData.img,
-                        logoID: ImageData.id
-                    }, banner: {
-                        bannerUrl: BannerData.img,
-                        bannerID: BannerData.id
-                    }, secondaryBanner: {
-                        secondaryBannerUrl: secondaryBannerData.img,
-                        secondaryBannerID: secondaryBannerData.id
-                    }, offerBanner: {
-                        offerBannerUrl: offerBannerData.img,
-                        offerBannerID: offerBannerData.id
-                    }, thirdBanner: {
-                        thirdBannerUrl: thirdBannerData.img,
-                        thirdBannerID: thirdBannerData.id
-                    }
-                }
+            }
+            
+            setStore(prev=>(
+                {...prev,logo:{
+                    logoUrl:ImageData.img,
+                    logoID:ImageData.id
+                },banner:{
+                    bannerUrl:BannerData.img,
+                    bannerID:BannerData.id
+                },secondaryBanner:{
+                    secondaryBannerUrl:secondaryBannerData.img,
+                    secondaryBannerID:secondaryBannerData.id
+                },offerBanner:{
+                    offerBannerUrl:offerBannerData.img,
+                    offerBannerID:offerBannerData.id
+                },thirdBanner:{
+                    thirdBannerUrl:thirdBannerData.img,
+                    thirdBannerID:thirdBannerData.id
+                }}
             ))
-            storeNewImage=store;
-            PostData(storeNewImage)
+            // storeNewImage=store;
+            // PostData(storeNewImage)
             console.log(ImageData, "image Data")
             setStoreNew(true)
         } catch (err) {
@@ -110,31 +108,31 @@ const SaveStoreButton = () => {
     const PostData = async () => {
         try {
             console.log(store, "store my")
-            if (!store.isEdit) {
-                const responseData = await sendRequest(
-                    'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
-                    'POST',
-                    JSON.stringify({ store }),
-                    {
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer ' + auth.token,
-                    }
-                );
-                setStoreNew(false)
-                toast(responseData.message); // Handle response data as needed
-            } else {
-                const responseData = await sendRequest(
-                    `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
-                    'PATCH',
-                    JSON.stringify({ store }),
-                    {
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer ' + auth.token,
-                    }
-                );
-                setStoreNew(false)
-                toast(responseData.message); // Handle response data as needed
-            }
+            if(!store.isEdit){
+            const responseData = await sendRequest(
+                'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
+                'POST',
+                JSON.stringify({ store }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            setStoreNew(false)
+            toast(responseData.message); // Handle response data as needed
+        }else{
+            const responseData = await sendRequest(
+                `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
+                'PATCH',
+            JSON.stringify({ store }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            setStoreNew(false)
+            toast(responseData.message); // Handle response data as needed
+        }
         } catch (error) {
             console.error('Error saving store data:', error);
             toast(error.message); // Handle response data as needed

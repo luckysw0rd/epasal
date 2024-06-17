@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useDropzone } from "react-dropzone";
 import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as necessary
 
-const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
+const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
   const { store, setStore } = useStore();
   const { color, offerBannerText } = store;
   const [bgImage, setBgImage] = useState(store.offerBanner.offerBannerUrl);
@@ -70,7 +70,7 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
               className=" border-2 md:h-[270px] lg:h-[200px] 2xl:h-[300px] flex flex-col justify-center items-center   mx-4 my-4 p-4  py-4 text-center"
               style={{ borderColor: color.offerBannerColor.textColor }}
             >
-              {previewMode ? (
+              {previewMode && !isEdit ? (
                 <>
                   <p
                     className="my-2 lg:my-4 text-base md:text-base lg:text-2xl font-normal"
@@ -134,7 +134,7 @@ const OfferBanner1 = ({ previewMode, defaultBgImage }) => {
           </div>
         </div>
 
-        {!previewMode && (
+        {(!previewMode||isEdit) && (
           <div className="absolute top-0 right-0 mt-2 mr-2">
             <div
               className="inline-block bg-gray-100 h-10 rounded border-2 border-success px-6 pb-[6px] pt-2 p-auto text-xs font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:bg-slate-400"
