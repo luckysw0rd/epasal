@@ -14,7 +14,8 @@ const T1Footer = () => {
         location: store.location,
         email: store.email,
         phoneNumber: store.phoneNumber,
-        setStore
+        setStore,
+        isEdit:store.isEdit
     };
 
     return (

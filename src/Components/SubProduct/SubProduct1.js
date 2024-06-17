@@ -77,7 +77,7 @@
                                 />
                             </div>
                         ))}
-                        {!previewMode && (
+                        {(!previewMode||store.isEdit) && (
                             <div className="flex-none mr-4">
                                 <button onClick={toggleAddProduct} className="flex flex-col items-center justify-center w-32 h-40 border border-dashed border-gray-300 rounded-md hover:bg-gray-50/50 focus:outline-none">
                                     <svg className="w-12 h-12 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

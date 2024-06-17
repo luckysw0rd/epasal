@@ -1,4 +1,11 @@
+import { toast } from "react-toastify";
+
 export const useImage = () => {
+     // Helper function to check if a string is a Cloudinary URL
+    const isCloudinaryUrl = (url) => {
+        const cloudinaryUrlPattern = /^https:\/\/res\.cloudinary\.com\/dcrcc9b4h\/image\/upload\/v\d+\/.+/;
+        return cloudinaryUrlPattern.test(url);
+    };
     const uploadImage = async (image) => {
         try {
             if (!image) {
@@ -9,12 +16,6 @@ export const useImage = () => {
             }
 
             let data;
-
-            // Helper function to check if a string is a Cloudinary URL
-            const isCloudinaryUrl = (url) => {
-                const cloudinaryUrlPattern = /^https:\/\/res\.cloudinary\.com\/dcrcc9b4h\/image\/upload\/v\d+\/.+/;
-                return cloudinaryUrlPattern.test(url);
-            };
 
             // If the image is a Cloudinary URL or ID, return it directly
             if (typeof image === 'string') {
@@ -70,6 +71,8 @@ export const useImage = () => {
             };
         }
     };
+
+
 
     return { uploadImage };
 };

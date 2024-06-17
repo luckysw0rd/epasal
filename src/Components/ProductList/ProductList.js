@@ -5,7 +5,7 @@ import ProductListCard1 from './ProductListCard1';
 
 
 const ProductList = ({ productListProps, productListType }) => {
-    const { products, productColor, setStore , store } = productListProps
+    const { products,isEdit, productColor, setStore , store } = productListProps
 
     // Filtered products state
     const [filteredProducts, setFilteredProducts] = useState(products);

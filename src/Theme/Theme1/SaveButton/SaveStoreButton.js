@@ -15,14 +15,14 @@ const SaveStoreButton = () => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
         try {
-            const ImageData=await uploadImage(store.logo.logoUrl)
-            const BannerData=await uploadImage(store.banner.bannerUrl)
-            const secondaryBannerData=await uploadImage(store.secondaryBanner.secondaryBannerUrl)
-            const offerBannerData=await uploadImage(store.offerBanner.offerBannerUrl)
-            const thirdBannerData=await uploadImage(store.thirdBanner.thirdBannerUrl)
+            const ImageData=await uploadImage(store?.logo?.logoUrl)
+            const BannerData=await uploadImage(store?.banner?.bannerUrl)
+            const secondaryBannerData=await uploadImage(store?.secondaryBanner?.secondaryBannerUrl)
+            const offerBannerData=await uploadImage(store?.offerBanner?.offerBannerUrl)
+            const thirdBannerData=await uploadImage(store?.thirdBanner?.thirdBannerUrl)
             for (let i = 0; i < store.products.length; i++) {
                 const product = store.products[i];
-                const productImg = await uploadImage(product.image.imageUrl);
+                const productImg = await uploadImage(product?.image?.imageUrl);
 
                 // Update product image
                 setStore(prev => {
@@ -44,7 +44,7 @@ const SaveStoreButton = () => {
                 if(!store.isEdit){
                 for (let j = 0; j < product.variant[0].options.length; j++) {
                     const variantOption = product.variant[0].options[j];
-                    const variantImg = await uploadImage(variantOption.image.imageUrl);
+                    const variantImg = await uploadImage(variantOption?.image?.imageUrl);
 
                     setStore(prev => {
                         const updatedProducts = [...prev.products];
