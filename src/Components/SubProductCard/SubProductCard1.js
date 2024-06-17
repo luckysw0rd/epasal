@@ -77,7 +77,6 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5 }}
                 />
-
             </div>
 
             <div className="px-10 py-4 w-[280px]">

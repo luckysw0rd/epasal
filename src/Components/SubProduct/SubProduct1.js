@@ -1,59 +1,59 @@
-    import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
-    const SubProduct1 = ({
-        products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
-    }) => {
-        const ref = useRef();
-        const containerRef = useRef(null);
-        const { events } = useDraggable(ref);
+const SubProduct1 = ({
+    products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
+}) => {
+    const ref = useRef();
+    const containerRef = useRef(null);
+    const { events } = useDraggable(ref);
 
-        const selectedSubCategory = store.selectedSubCategory || subCategories[0].name;
-        const [filteredProducts, setFilteredProducts] = useState([]);
-        const [selectedStyles, setSelectedStyles] = useState({});
-        const [showAddProduct, setShowAddProduct] = useState(false);
+    const selectedSubCategory = store.selectedSubCategory || subCategories[0].name;
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [selectedStyles, setSelectedStyles] = useState({});
+    const [showAddProduct, setShowAddProduct] = useState(false);
 
-        useEffect(() => {
-            const filtered = products.filter(product =>
-                product.subcategories && product.subcategories.includes(selectedSubCategory)
-            );
-            setFilteredProducts(filtered);
-        
-            if (containerRef.current) {
-                containerRef.current.scrollLeft = 0;
-            }
-        }, [products, selectedSubCategory]);
-        
-        const handleStyleSelect = (productId, styleIndex) => {
-            setSelectedStyles(prevStyles => ({
-                ...prevStyles,
-                [productId]: prevStyles[productId] === styleIndex ? null : styleIndex,
-            }));
-        };
+    useEffect(() => {
+        const filtered = products.filter(product =>
+            product.subcategories && product.subcategories.includes(selectedSubCategory)
+        );
+        setFilteredProducts(filtered);
 
-        const handleRemoveProduct = (productId) => {
-            setStore(prevStore => ({
-                ...prevStore,
-                products: prevStore.products.filter(product => product.id !== productId)
-            }));
-        };
+        if (containerRef.current) {
+            containerRef.current.scrollLeft = 0;
+        }
+    }, [products, selectedSubCategory]);
 
-        const toggleAddProduct = () => {
-            setShowAddProduct(prev => !prev);
-        };
+    const handleStyleSelect = (productId, styleIndex) => {
+        setSelectedStyles(prevStyles => ({
+            ...prevStyles,
+            [productId]: prevStyles[productId] === styleIndex ? null : styleIndex,
+        }));
+    };
 
-        const subProductColor = store.color.subProductColor;
+    const handleRemoveProduct = (productId) => {
+        setStore(prevStore => ({
+            ...prevStore,
+            products: prevStore.products.filter(product => product.id !== productId)
+        }));
+    };
 
-        return (
-            <div className='  h-[400px]' style={{fontFamily:store?.fonts?.Categories}}>
-                <CategorySelector />
-                <div className="px-20  pb-8 overflow-x-scroll" style={{
-                    maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
-                }}
-                    {...events}
-                    ref={ref}
-                >
-                    <div ref={containerRef} className="  flex py-4 gap-5 pb-6 overflow-x-scroll scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar">
-                        <style>{`
+    const toggleAddProduct = () => {
+        setShowAddProduct(prev => !prev);
+    };
+
+    const subProductColor = store.color.subProductColor;
+
+    return (
+        <div className=' mt-20  h-[400px]' style={{ fontFamily: store?.fonts?.Categories }}>
+            <CategorySelector />
+            <div className="px-20  pb-8 overflow-x-scroll" style={{
+                maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
+            }}
+                {...events}
+                ref={ref}
+            >
+                <div ref={containerRef} className="  flex py-4 gap-5 pb-6 overflow-x-scroll scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar">
+                    <style>{`
                             .scrollbar::-webkit-scrollbar {
                                 height: 12px;
                             }
@@ -90,8 +90,10 @@
                     </div>
                     {showAddProduct && <AddProduct onClose={toggleAddProduct} />}
                 </div>
+                {showAddProduct && <AddProduct onClose={toggleAddProduct} />}
             </div>
-        );
-    };
+       
+    );
+};
 
-    export default SubProduct1;
+export default SubProduct1;
