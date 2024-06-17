@@ -54,7 +54,7 @@ function App() {
               {routes}
             </Routes>
           </Router>
-          <ToastContainer />
+          
         </div>
       </AuthContext.Provider>
     </PrimeReactProvider>
