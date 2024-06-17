@@ -16,7 +16,6 @@ const Navbar = ({ navbarProps, navbarType }) => {
                 return null;
         }
     };
-
     return <>{renderNavbar()}</>;
 };
 
