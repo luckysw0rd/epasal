@@ -25,6 +25,7 @@ const Order = ({ store }) => {
                     'Content-Type': 'application/json'
                 }
             );
+            console.log(responseData);
             if (responseData.orders.length === 0) {
                 setHasMore(false);
             } else {
@@ -82,18 +83,6 @@ const Order = ({ store }) => {
             ...prevOrder,
             [name]: value
         }));
-    };
-
-    const handleProductChange = (productIndex, field, value) => {
-        setEditOrder((prevOrder) => {
-            const updatedCart = prevOrder.cart.map((item, index) =>
-                index === productIndex ? { ...item, [field]: value } : item
-            );
-            return {
-                ...prevOrder,
-                cart: updatedCart
-            };
-        });
     };
 
     const handleEditSubmit = async (orderId) => {
@@ -195,16 +184,26 @@ const Order = ({ store }) => {
                                 </div>
                             )}
                         </div>
-                        <div>
-                            <div className="text-gray-500 ml-4 mb-2 text-2xl" onClick={() => toggleExpand(order._id)}>
+                        <div className=' flex justify-end flex-col space-y-2'>
+                            <div className="text-gray-500 flex justify-end mr-1  mb-2 text-2xl" onClick={() => toggleExpand(order._id)}>
                                 {expandedId === order._id ? <FaChevronUp /> : <FaChevronDown />}
                             </div>
                             <button
                                 onClick={() => toggleEdit(order)}
-                                className="text-sm p-4 py-2 bg-green-300 text-black rounded"
+                                className="text-sm p-4 py-2 bg-gray-600 text-white rounded"
                             >
                                 {editId === order._id ? 'Cancel' : 'Edit'}
                             </button>
+                            {editId === order._id && (
+
+                                <button
+                                    onClick={() => handleEditSubmit(order._id)}
+                                    className="px-4 py-2 bg-blue-500 text-white rounded"
+                                >
+                                    Submit
+                                </button>
+
+                            )}
                         </div>
                     </div>
                     {expandedId === order._id && (
@@ -214,100 +213,32 @@ const Order = ({ store }) => {
                                 <h3 className="text-md font-semibold">Order Details</h3>
                             </div>
                             <div>
-                                {editId === order._id ? (
-                                    order.cart.map((item, index) => (
-                                        <div key={item.product._id} className="mb-4">
-                                            <input
-                                                type="text"
-                                                name="productName"
-                                                value={item.productName}
-                                                onChange={(e) => handleProductChange(index, 'productName', e.target.value)}
-                                                className="w-full p-2 border rounded"
-                                            />
-                                            <input
-                                                type="number"
-                                                name="count"
-                                                value={item.count}
-                                                onChange={(e) => handleProductChange(index, 'count', e.target.value)}
-                                                className="w-full p-2 border rounded"
-                                            />
-                                            <input
-                                                type="number"
-                                                name="price"
-                                                value={item.price}
-                                                onChange={(e) => handleProductChange(index, 'price', e.target.value)}
-                                                className="w-full p-2 border rounded"
-                                            />
-                                        </div>
-                                    ))
-                                ) : (
-                                    order.cart.map((item, index) => (
-                                        <div key={item.product._id} className="mb-4">
-                                            <p className="font-medium">{`Product: ${item.productName} `}</p>
-                                            <p className="text-gray-600">{`Product ID: ${item.product._id}`}</p>
-                                            <p className="text-gray-600">{`Quantity: ${item.count}`}</p>
-                                            {item.selectedVariant.map((variant, idx) => (
-                                                <div key={idx} className="text-gray-600">
-                                                    <p>{`${variant.name}: ${variant.options.name}`}</p>
-                                                </div>
-                                            ))}
-                                            <p className="text-gray-600">{`Price After Discount: Nrs ${item.price} per unit`}</p>
-                                            <hr className="w-full border-gray-300 mt-2" />
-                                        </div>
-                                    ))
-                                )}
+                                {order.cart.map((item, index) => (
+                                    <div key={item.product._id} className="mb-4">
+                                        <p className="font-medium">{`Product: ${item.productName} `}</p>
+                                        <p className="text-gray-600">{`Product ID: ${item.product._id}`}</p>
+                                        <p className="text-gray-600">{`Quantity: ${item.count}`}</p>
+                                        {item.selectedVariant.map((variant, idx) => (
+                                            <div key={idx} className="text-gray-600">
+                                                <p>{`${variant.name}: ${variant.options.name}`}</p>
+                                            </div>
+                                        ))}
+                                        <p className="text-gray-600">{`Price After Discount: Nrs ${item.price} per unit`}</p>
+                                        <hr className="w-full border-gray-300 mt-2" />
+                                    </div>
+                                ))}
                             </div>
                             <div className="mt-4">
-                                {editId === order._id ? (
-                                    <div>
-                                        <input
-                                            type="text"
-                                            name="paymentMethod"
-                                            value={editOrder.paymentMethod}
-                                            onChange={handleEditChange}
-                                            className="w-full p-2 border rounded"
-                                        />
-                                        <input
-                                            type="number"
-                                            name="promoDiscount"
-                                            value={editOrder.promoDiscount}
-                                            onChange={handleEditChange}
-                                            className="w-full p-2 border rounded"
-                                        />
-                                        <input
-                                            type="number"
-                                            name="deliveryCharge"
-                                            value={editOrder.deliveryCharge}
-                                            onChange={handleEditChange}
-                                            className="w-full p-2 border rounded"
-                                        />
-                                        <input
-                                            type="number"
-                                            name="totalPrice"
-                                            value={editOrder.totalPrice}
-                                            onChange={handleEditChange}
-                                            className="w-full p-2 border rounded"
-                                        />
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
-                                        <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
-                                        <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
-                                        <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>
-                                    </div>
-                                )}
-                            </div>
-                            {editId === order._id && (
-                                <div className="p-4 border-t flex justify-end">
-                                    <button
-                                        onClick={() => handleEditSubmit(order._id)}
-                                        className="px-4 py-2 bg-blue-500 text-white rounded"
-                                    >
-                                        Submit
-                                    </button>
+
+                                <div>
+                                    <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
+                                    <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
+                                    <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
+                                    <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>
                                 </div>
-                            )}
+
+                            </div>
+
                         </div>
                     )}
                 </div>
