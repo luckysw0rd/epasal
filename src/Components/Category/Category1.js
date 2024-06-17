@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AddCategoryModal from "../../Theme/Theme1/AddCategoryModal";
 
 
-const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, removeSubCategory }) => {
+const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, removeSubCategory,isEdit }) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -85,7 +85,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
 
     return (
         <div className=' px-0'>
-            <div className="relative p-4 pb-0 font-Roboto flex justify-center"
+            <div className="relative p-4 pb-0 flex justify-center"
                 style={{ backgroundColor: color.subcategoryColor.background, color: color.subcategoryColor.text }}>
                 <div id='scrollbar2' className="whitespace-nowrap hidden md:flex overflow-x-auto min-h-14 w-full justify-center">
                     <div className=" mb-4 flex space-x-4 overflow-scroll">
@@ -98,7 +98,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                                 >
                                     {subcategory.name}
                                 </button>
-                                {!previewMode && (
+                                {(!previewMode||isEdit) && (
                                     <button
                                         className="absolute top-0 right-0  focus:outline-none"
                                         onClick={() => handleRemoveSubCategory(index)}
@@ -110,7 +110,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                                 )}
                             </div>
                         ))}
-                        {!previewMode && (
+                        {(!previewMode||isEdit) && (
                             <button className="py-2 px-8 hover:bg-gray-100" onClick={handleAddCategory}>Add Subcategory</button>
                         )}
                     </div>

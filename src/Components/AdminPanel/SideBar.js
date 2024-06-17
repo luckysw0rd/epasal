@@ -6,7 +6,7 @@ import { FaUserAlt, FaClipboardList, FaBox } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
 
-const SideBar = () => {
+const SideBar = ({setDashboardState}) => {
   const navigate = useNavigate();
   const { open, setOpen } = useSiderBar();
 
@@ -53,15 +53,18 @@ const SideBar = () => {
             </div>
             <div className="mt-4 flex flex-col justify-center gap-4 text-gray-700">
               {menus.map((menu, i) => (
-                <Link
-                  // onClick={() => setOpen(false)}
-                  to={menu.link}
-                  key={i}
-                  className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}
-                >
-                  {React.createElement(menu.icon, { size: 20 })}
-                  <span className="pl-2">{menu.name}</span>
-                </Link>
+                // <Link
+                //   // onClick={() => setOpen(false)}
+                //   to={menu.link}
+                //   key={i}
+                //   className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}
+                // >
+                //   {React.createElement(menu.icon, { size: 20 })}
+                //   <span className="pl-2">{menu.name}</span>
+                // </Link>
+                <div className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}>
+                <button onClick={(e)=>{e.preventDefault();setDashboardState(menu.name)}}>{menu.name}</button>
+                </div>
               ))}
             </div>
           </div>

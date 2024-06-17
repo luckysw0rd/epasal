@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
+import { FaImage } from "react-icons/fa6";
 import { useStore } from '../T1Context';
-export default function ProductForm() {
+import ImageDrop from '../../../Components/Editor/ImageDrop';
+export default function ProductForm({ onClose }) {
 
     const { setStore, store } = useStore();
     const initialState = {
@@ -20,20 +22,22 @@ export default function ProductForm() {
             }
         ],
         category: [], // Change to array
-        subcategories: [] // Change to array
+        subcategories: [store?.subCategories[0]?.name] // Change to array
     };
 
 
     const [formState, setFormState] = useState(initialState);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     const handleCategoryChange = (e) => {
-        const { options } = e.target;
-        const selectedCategories = Array.from(options)
-            .filter(option => option.selected)
-            .map(option => option.value);
-        setFormState({ ...formState, category: selectedCategories });
+        const { value } = e.target;
+        console.log(e.target.value,"options")
+        // const selectedCategories = Array.from(value)
+        //     .filter(option => option.selected)
+        //     .map(option => option.value);
+        setFormState({ ...formState, subcategories: [value] });
     };
+
 
     const handleSubcategoryChange = (e) => {
         const { options } = e.target;
@@ -124,103 +128,125 @@ export default function ProductForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        console.log("sdsadasdas");
         const newProduct = {
             ...formState,
             id: Math.random().toString(36).substr(2, 9), // Generates a random id
         };
 
-        console.log("product is " , newProduct);
+        console.log("product is ", newProduct);
         console.log("strore is ", store);
 
         setStore(prevStore => ({
             ...prevStore,
             products: [...prevStore.products, newProduct]
         }));
-
+        console.log(store);
         setFormState(initialState);
-        closeModal();
+        onClose();
     };
 
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
 
 
 
     return (
         <div>
-            <button
+            {/* <button
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 onClick={openModal}
             >
                 Open Product Form
-            </button>
+            </button> */}
 
-            {isModalOpen && (
-                <div className="fixed inset-0 flex h-3/4  mt-20 items-center justify-center z-50 overflow-y-scroll">
-                    <div className="fixed inset-0 bg-black opacity-50"></div>
-                    <div className="bg-white p-8 rounded-lg shadow-lg relative z-10 w-full max-w-3xl mx-auto">
-                        <button
-                            className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
-                            onClick={closeModal}
-                        >
-                            &#x2715;
-                        </button>
-                        <h2 className="text-xl font-semibold mb-1">Product Information</h2>
-                        <hr className='mb-3' style={{ borderWidth: '1px', borderColor: '#DDDDDD' }} />
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto">
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                                    Name
-                                </label>
-                                <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    placeholder="Product Name"
-                                    value={formState.name}
-                                    onChange={handleInputChange}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-                                    Description
-                                </label>
-                                <textarea
-                                    id="description"
-                                    name="description"
-                                    placeholder="Product Description"
-                                    value={formState.description}
-                                    onChange={handleInputChange}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
-                                    Category
-                                </label>
-                                <select
-                                    id="category"
-                                    name="category"
-                                    value={formState.category}
-                                    onChange={handleCategoryChange}
-                                    multiple // Allow multiple selections
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+            <div className="fixed inset-0 flex h-3/4 items-center justify-center z-50 ">
+                <div className="fixed inset-0 bg-black opacity-50" onClick={() => onClose()}></div>
+                <div className=" h-full bg-white p-8 rounded-lg mt-[200px] py-10 shadow-lg relative z-10 w-full max-w-3xl mx-auto overflow-y-scroll">
+                    <button
+                        className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+                        onClick={() => onClose()}
+                    >
+                        &#x2715;
+                    </button>
+                    <h2 className="text-xl font-semibold mb-1">Product Information</h2>
+                    <hr className='mb-3' style={{ borderWidth: '1px', borderColor: '#DDDDDD' }} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto">
+                        <div className=''>
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                                Name
+                            </label>
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                placeholder="Product Name"
+                                value={formState.name}
+                                onChange={handleInputChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+                        <div className=''>
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
+                                Category
+                            </label>
+                            <select
+                                id="subcategory"
+                                name="category"
+                                value={formState.subcategories}
+                                onChange={handleCategoryChange}
+                                // multiple // Allow multiple selections
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            >
+                                {store.subCategories.map(subcategory => (
+                                    <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className=''>
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                                Description
+                            </label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                placeholder="Product Description"
+                                value={formState.description}
+                                onChange={handleInputChange}
+                                className="shadow appearance-none border rounded w-full h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+                        <div className="relative">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Product Image</label>
+                            <input
+                                id="product-image"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleProductImageUpload(e.target.files)}
+                                className="hidden"
+                            />
+                            <div className="flex items-center justify-center mb-2">
+                                <button
+                                    type="button"
+                                    // bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
+                                    className="h-40 w-full px-2  flex justify-center items-center text-4xl shadow appearance-none border rounded"
+                                    onClick={handleUploadProductImageClick}
                                 >
-                                    {store.categories.map(category => (
-                                        <option key={category.id} value={category.id}>{category.name}</option>
-                                    ))}
-                                </select>
+                                    <FaImage />
+                                </button>
+
                             </div>
-                            <div>
+                            {formState.image.imageUrl && (
+                                <div className="absolute top-7 w-full left-0 z-0 pointer-events-none">
+                                    <img className="rounded w-full h-40" src={formState.image.imageUrl} alt="Product" />
+                                </div>
+                            )}
+                        </div>
+
+
+                        {/* <div>
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
                                     Subcategory
                                 </label>
@@ -236,242 +262,220 @@ export default function ProductForm() {
                                         <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                                     ))}
                                 </select>
-                            </div>
+                            </div> */}
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div>
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
+                                Price
+                            </label>
+                            <input
+                                id="price"
+                                name="price"
+                                type="number"
+                                placeholder="Price"
+                                value={formState.price}
+                                onChange={handleInputChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
-                                    Price
-                                </label>
+                        <div>
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="discount">
+                                Discount
+                            </label>
+                            <input
+                                id="discount"
+                                name="discount"
+                                type="number"
+                                placeholder="Discount"
+                                value={formState.discount}
+                                onChange={handleInputChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="inventory">
+                                Inventory
+                            </label>
+                            <input
+                                id="inventory"
+                                name="inventory"
+                                type="number"
+                                placeholder="Inventory"
+                                value={formState.inventory}
+                                onChange={handleInputChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+
+                    </div>
+
+                    <div className="bg-white p-8 rounded-lg shadow-lg mt-4">
+                        <h2 className="text-xl font-semibold mb-1">Variants</h2>
+                        <hr className='mb-3' style={{ borderWidth: '1px', borderColor: '#DDDDDD' }} />
+                        {formState.variant.map((variant, variantIndex) => (
+                            <div key={variantIndex} className="mb-4 border p-4 rounded-lg">
+                                <div className="flex justify-between items-center mb-2">
+                                    <label className="block text-gray-700 text-sm font-bold" htmlFor={`variant-name-${variantIndex}`}>
+                                        Variant Name
+                                    </label>
+                                    <button type="button" className="text-red-500" onClick={() => handleRemoveVariant(variantIndex)}>
+                                        <FaTrash />
+                                    </button>
+                                </div>
                                 <input
-                                    id="price"
-                                    name="price"
-                                    type="number"
-                                    placeholder="Price"
-                                    value={formState.price}
-                                    onChange={handleInputChange}
+                                    id={`variant-name-${variantIndex}`}
+                                    name="name"
+                                    type="text"
+                                    placeholder="Eg: Size"
+                                    value={variant.name}
+                                    onChange={(e) => handleVariantChange(variantIndex, e)}
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     required
                                 />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="discount">
-                                    Discount
-                                </label>
-                                <input
-                                    id="discount"
-                                    name="discount"
-                                    type="number"
-                                    placeholder="Discount"
-                                    value={formState.discount}
-                                    onChange={handleInputChange}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="inventory">
-                                    Inventory
-                                </label>
-                                <input
-                                    id="inventory"
-                                    name="inventory"
-                                    type="number"
-                                    placeholder="Inventory"
-                                    value={formState.inventory}
-                                    onChange={handleInputChange}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                />
-                            </div>
-                            <div className="mt-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2">Product Image</label>
-                                <input
-                                    id="product-image"
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => handleProductImageUpload(e.target.files)}
-                                    className="hidden"
-                                />
-                                <div className="flex items-center justify-center mb-2">
+                                {variant.options.map((option, optionIndex) => (
+                                    <div key={optionIndex} className="my-4 border p-4 rounded-lg">
+                                        <div className="flex justify-between items-center">
+                                            <h3 className="text-md font-semibold mb-1">Option {optionIndex + 1}</h3>
+                                            <button type="button" className="text-red-500" onClick={() => handleRemoveOption(variantIndex, optionIndex)}>
+                                                <FaTrash />
+                                            </button>
+                                        </div>
+                                        <div className="mb-2">
+                                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-name-${variantIndex}-${optionIndex}`}>
+                                                Option Name
+                                            </label>
+                                            <input
+                                                id={`option-name-${variantIndex}-${optionIndex}`}
+                                                name="name"
+                                                type="text"
+                                                placeholder="Eg: Large"
+                                                value={option.name}
+                                                onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
+                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                required
+                                            />
+                                        </div>
+                                        {variantIndex === 0 && (
+                                            <>
+                                                <div className="mb-2">
+                                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-price-${variantIndex}-${optionIndex}`}>
+                                                        Option Price
+                                                    </label>
+                                                    <input
+                                                        id={`option-price-${variantIndex}-${optionIndex}`}
+                                                        name="price"
+                                                        type="number"
+                                                        placeholder="Option Price"
+                                                        value={option.price}
+                                                        onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
+                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="mb-2">
+                                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-discount-${variantIndex}-${optionIndex}`}>
+                                                        Option Discount
+                                                    </label>
+                                                    <input
+                                                        id={`option-discount-${variantIndex}-${optionIndex}`}
+                                                        name="discount"
+                                                        type="number"
+                                                        placeholder="Option Discount"
+                                                        value={option.discount}
+                                                        onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
+                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
+                                        {variantIndex === 0 && (
+                                            <>
+                                                <div className="mb-2">
+                                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-count-${variantIndex}-${optionIndex}`}>
+                                                        Option Count
+                                                    </label>
+                                                    <input
+                                                        id={`option-count-${variantIndex}-${optionIndex}`}
+                                                        name="count"
+                                                        type="number"
+                                                        placeholder="Option Count"
+                                                        value={option.count}
+                                                        onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
+                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
+                                        {variantIndex === 0 && (
+                                            <>
+                                                <div>
+                                                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                                                        Option Image
+                                                    </label>
+                                                    <input
+                                                        id={`option-image-${variantIndex}-${optionIndex}`}
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={(e) => handleOptionImageUpload(variantIndex, optionIndex, e.target.files)}
+                                                        className="hidden"
+                                                    />
+                                                    {option.image.imageUrl && (
+                                                        <div className="border mt-2 p-2">
+                                                            <img className="object-contain w-full h-48" src={option.image.imageUrl} alt="Option" />
+                                                        </div>
+                                                    )}
+                                                    <div className="flex items-center justify-center mb-2">
+                                                        <button
+                                                            type="button"
+                                                            className="bg-yellow-500 w-[170px] hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                            onClick={() => handleUploadImageClick(variantIndex, optionIndex)}
+                                                        >
+                                                            Upload image
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                ))}
+                                <div className="flex justify-center md:justify-end">
                                     <button
                                         type="button"
-                                        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                        onClick={handleUploadProductImageClick}
+                                        className="bg-blue-500 w-[170px] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                        onClick={() => handleAddOption(variantIndex)}
                                     >
-                                        Upload image
+                                        Add Option <FaPlus className="inline-block ml-2" />
                                     </button>
                                 </div>
-                                {formState.image.imageUrl && (
-                                    <div className="border mt-2 p-2">
-                                        <img className="object-contain w-full h-48" src={formState.image.imageUrl} alt="Product" />
-                                    </div>
-                                )}
                             </div>
+                        ))}
+                        <div className="flex justify-center md:justify-end mt-4">
+                            <button
+                                type="button"
+                                className="bg-green-500 hover:bg-green-600 w-[170px] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                onClick={handleAddVariant}
+                            >
+                                Add Variant <FaPlus className="inline-block ml-2" />
+                            </button>
                         </div>
-
-                        <div className="bg-white p-8 rounded-lg shadow-lg mt-4">
-                            <h2 className="text-xl font-semibold mb-1">Variants</h2>
-                            <hr className='mb-3' style={{ borderWidth: '1px', borderColor: '#DDDDDD' }} />
-                            {formState.variant.map((variant, variantIndex) => (
-                                <div key={variantIndex} className="mb-4 border p-4 rounded-lg">
-                                    <div className="flex justify-between items-center mb-2">
-                                        <label className="block text-gray-700 text-sm font-bold" htmlFor={`variant-name-${variantIndex}`}>
-                                            Variant Name
-                                        </label>
-                                        <button type="button" className="text-red-500" onClick={() => handleRemoveVariant(variantIndex)}>
-                                            <FaTrash />
-                                        </button>
-                                    </div>
-                                    <input
-                                        id={`variant-name-${variantIndex}`}
-                                        name="name"
-                                        type="text"
-                                        placeholder="Variant Name"
-                                        value={variant.name}
-                                        onChange={(e) => handleVariantChange(variantIndex, e)}
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        required
-                                    />
-                                    {variant.options.map((option, optionIndex) => (
-                                        <div key={optionIndex} className="mb-4 border p-4 rounded-lg">
-                                            <div className="flex justify-between items-center">
-                                                <h3 className="text-md font-semibold mb-1">Option {optionIndex + 1}</h3>
-                                                <button type="button" className="text-red-500" onClick={() => handleRemoveOption(variantIndex, optionIndex)}>
-                                                    <FaTrash />
-                                                </button>
-                                            </div>
-                                            <div className="mb-2">
-                                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-name-${variantIndex}-${optionIndex}`}>
-                                                    Option Name
-                                                </label>
-                                                <input
-                                                    id={`option-name-${variantIndex}-${optionIndex}`}
-                                                    name="name"
-                                                    type="text"
-                                                    placeholder="Option Name"
-                                                    value={option.name}
-                                                    onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    required
-                                                />
-                                            </div>
-                                            {variantIndex === 0 && (
-                                                <>
-                                                    <div className="mb-2">
-                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-price-${variantIndex}-${optionIndex}`}>
-                                                            Option Price
-                                                        </label>
-                                                        <input
-                                                            id={`option-price-${variantIndex}-${optionIndex}`}
-                                                            name="price"
-                                                            type="number"
-                                                            placeholder="Option Price"
-                                                            value={option.price}
-                                                            onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                            required
-                                                        />
-                                                    </div>
-                                                    <div className="mb-2">
-                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-discount-${variantIndex}-${optionIndex}`}>
-                                                            Option Discount
-                                                        </label>
-                                                        <input
-                                                            id={`option-discount-${variantIndex}-${optionIndex}`}
-                                                            name="discount"
-                                                            type="number"
-                                                            placeholder="Option Discount"
-                                                            value={option.discount}
-                                                            onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                        />
-                                                    </div>
-                                                </>
-                                            )}
-                                            {variantIndex === 0 && (
-                                                <>
-                                                    <div className="mb-2">
-                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-count-${variantIndex}-${optionIndex}`}>
-                                                            Option Count
-                                                        </label>
-                                                        <input
-                                                            id={`option-count-${variantIndex}-${optionIndex}`}
-                                                            name="count"
-                                                            type="number"
-                                                            placeholder="Option Count"
-                                                            value={option.count}
-                                                            onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                        />
-                                                    </div>
-                                                </>
-                                            )}
-                                            {variantIndex === 0 && (
-                                                <>
-                                                    <div>
-                                                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                                                            Option Image
-                                                        </label>
-                                                        <input
-                                                            id={`option-image-${variantIndex}-${optionIndex}`}
-                                                            type="file"
-                                                            accept="image/*"
-                                                            onChange={(e) => handleOptionImageUpload(variantIndex, optionIndex, e.target.files)}
-                                                            className="hidden"
-                                                        />
-                                                        <div className="flex items-center justify-center mb-2">
-                                                            <button
-                                                                type="button"
-                                                                className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                                                onClick={() => handleUploadImageClick(variantIndex, optionIndex)}
-                                                            >
-                                                                Upload image
-                                                            </button>
-                                                        </div>
-                                                        {option.image.imageUrl && (
-                                                            <div className="border mt-2 p-2">
-                                                                <img className="object-contain w-full h-48" src={option.image.imageUrl} alt="Option" />
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </>
-                                            )}
-                                        </div>
-                                    ))}
-                                    <div className="flex justify-end">
-                                        <button
-                                            type="button"
-                                            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                            onClick={() => handleAddOption(variantIndex)}
-                                        >
-                                            Add Option <FaPlus className="inline-block ml-2" />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                            <div className="flex justify-end mt-4">
-                                <button
-                                    type="button"
-                                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    onClick={handleAddVariant}
-                                >
-                                    Add Variant <FaPlus className="inline-block ml-2" />
-                                </button>
-                            </div>
-                            <div className="mt-6">
-                                <button
-                                    type="submit"
-                                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    onClick={handleSubmit}
-                                >
-                                    Add product
-                                </button>
-                            </div>
+                        <div className="mt-6 flex justify-center md:justify-end">
+                            <button
+                                type="submit"
+                                className="bg-green-500 w-[170px] hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                onClick={handleSubmit}
+                            >
+                                Add product
+                            </button>
                         </div>
                     </div>
-
                 </div>
 
-            )}
+            </div>
+
+
 
         </div>
     );

@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
-import { FiMenu } from 'react-icons/fi'; // Import the hamburger icon
+import { FiMenu } from 'react-icons/fi';
+import CartDropdown from './CartDropDown';
 
 const Navbar1 = ({
     setNewCategory,
@@ -19,11 +20,25 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
+    setPreviewMode,
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const [editableText, setEditableText] = useState("Ecom Template-2");
     const [isSearchClicked, setIsSearchClicked] = useState(false);
     const location = useLocation();
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([
+        {
+            id: 1,
+            name: 'Item 1',
+            variant: [{ options: [{ price: 10, image: { imageUrl: 'https://via.placeholder.com/50' } }] }]
+        },
+        {
+            id: 2,
+            name: 'Item 2',
+            variant: [{ options: [{ price: 20, image: { imageUrl: 'https://via.placeholder.com/50' } }] }]
+        }
+    ]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -40,13 +55,6 @@ const Navbar1 = ({
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
-    const leftSidebarProps = {
-        isOpen: isSidebarOpen,
-        onClose: () => setIsSidebarOpen(false),
-        store,
-        setStore,
-    };
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -67,7 +75,7 @@ const Navbar1 = ({
             const file = acceptedFiles[0];
             if (file) {
                 setLogoFile(file);
-                const reader = new FileReader();
+                const reader = new FileReader
                 reader.onload = () => {
                     setStore(prevState => ({
                         ...prevState,
@@ -85,7 +93,8 @@ const Navbar1 = ({
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCartClick = () => {
-        console.log('Cart clicked');
+        setIsCartOpen(!isCartOpen);
+        console.log(store.cart);  // Log the cart items to the console
     };
 
     const handleEditableTextChange = (e) => {
@@ -96,8 +105,12 @@ const Navbar1 = ({
         setIsSearchClicked(!isSearchClicked);
     };
 
+    const deleteFromCart = (itemToDelete) => {
+        setCartItems(cartItems.filter(item => item.id !== itemToDelete.id));
+    };
+   
     return (
-        <motion.nav
+         <motion.nav
             className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${
                 scrolling ? 'bg-brown-700' : 'bg-transparent'
             }`}
@@ -105,53 +118,84 @@ const Navbar1 = ({
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }}
             style={{
-                backgroundColor: scrolling ? color.navColor.backgroundnavColor : 'transparent',
+                fontFamily:store?.fonts?.Navbar,
+                backgroundColor: scrolling ? color?.navColor?.backgroundnavColor : 'transparent',
                 color: color.navColor.storeNameTextColor,
             }}
         >
-             <div className="flex items-center">
-                    {previewMode ? (
-                        store.logo && (
-                            <img
-                                src={store.logo.logoUrl}
-                                alt="Logo"
-                                className="h-8 mr-4"
-                            />
-                        )
-                    ) : (
-                        <div {...getRootProps()} className="cursor-pointer flex items-center">
-                            <input {...getInputProps()} />
-                            <img
-                                src={store.logo.logoUrl || 'https://via.placeholder.com/50'}
-                                alt="Logo"
-                                className="h-8 mr-4"
-                            />
-                        </div>
-                    )}
+            <div className="flex items-center">
+                {!isSidebarOpen && (
+                    <button
+                        style={{ color: color.navColor.storeNameTextColor }}
+                        className="block focus:outline-none md:hidden mr-2"
+                        onClick={toggleSidebar}
+                    >
+                        <FiMenu className="h-6 w-6 fill-current" />
+                    </button>
+                )}
+                {previewMode ? (
+                    store.logo && (
+                        <img
+                            src={store?.logo?.logoUrl}
+                            alt="Logo"
+                            className="h-8 mr-4"
+                        />
+                    )
+                ) : (
+                    <div {...getRootProps()} className="cursor-pointer flex items-center">
+                        <input {...getInputProps()} />
+                        <img
+                            src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
+                            alt="Logo"
+                            className="h-8 mr-4"
+                        />
+                    </div>
+                )}
                 <span className="text-xl font-bold">{store.name}</span>
             </div>
 
-            <div className="hidden md:flex items-center space-x-4">
-                <a href="#" className="hover:underline">All Products</a>
-                <a href="#" className="hover:underline">Featured</a>
-                <a href="#" className="hover:underline">Offers</a>
-            </div>
-
-            <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-12' : ''}`}>
+            <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
+                <div className="hidden md:flex space-x-4 mr-8">
+                    <a href="#" className="hover:underline">All Products</a>
+                    <a href="#" className="hover:underline">Featured</a>
+                    <a href="#" className="hover:underline">Offers</a>
+                </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input
                         type="text"
                         value={searchInput}
                         onChange={handleSearchInputChange}
                         placeholder="Search"
-                        className={`bg-transparent border-b border-white focus:outline-none text-xl font-bold ${isSearchClicked ? 'block' : 'hidden'}`}
+                        className={`bg-transparent border-b border-black focus:outline-none placeholder-black placeholder:text-sm text-xl ${isSearchClicked ? 'block' : 'hidden'}`}
                     />
                     <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
                 </div>
-                <button onClick={handleCartClick}>
+                <button onClick={handleCartClick} className="relative">
                     <FaShoppingCart className="text-2xl" />
+                    {cartItems.length > 0 && (
+                        <span className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 bg-red-500 rounded-full text-white px-1 py-0.5 text-xs">
+                            {cartItems.length}
+                        </span>
+                    )}
+                </button>
+                {isCartOpen && <CartDropdown items={cartItems} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} />} {/* Conditionally render the CartDropdown */}
+                <button
+                    onClick={null}
+                    className="bg-transparent border border-black px-2 py-1 rounded text-black"
+                >
+                    Preview
                 </button>
             </div>
+
+            {isSidebarOpen && (
+                <button
+                    style={{ color: color.navColor.storeNameTextColor }}
+                    className="block focus:outline-none md:hidden absolute right-6"
+                    onClick={toggleSidebar}
+                >
+                    <FaTimes className="h-6 w-6 fill-current" />
+                </button>
+            )}
 
             {isSidebarOpen && (
                 <div
@@ -162,7 +206,7 @@ const Navbar1 = ({
                         <div className="flex items-center mb-4">
                             {store.logo && (
                                 <img
-                                    src={store.logo.logoUrl}
+                                    src={store?.logo?.logoUrl}
                                     alt="Logo"
                                     className="h-8 mr-4"
                                 />
@@ -178,7 +222,7 @@ const Navbar1 = ({
                                 value={searchInput}
                                 onChange={handleSearchInputChange}
                                 placeholder="Search"
-                                className="bg-transparent border-b border-white focus:outline-none text-xl font-bold w-full"
+                                className="bg-transparent border-b border-white focus:outline-none placeholder-white text-xl w-full placeholder:text-sm"
                             />
                             <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
                         </div>

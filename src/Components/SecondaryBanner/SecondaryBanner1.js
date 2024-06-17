@@ -159,6 +159,7 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
         transition={{ duration: 0.5 }}
         style={{
           backgroundColor: color.secondaryBannerColor.backgroundThemeColor1,
+          fontFamily:store?.fonts?.Banner2,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -173,7 +174,7 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
             className="w-full px-0  h-60 sm:h-[350px] md:h-[400px] lg:h-[400px] object-cover"
           />
         </div>
-        <div className="w-full gap-y-5  pl-16  sm:w-full ml-4 md:w-1/2  lg:w-1/2 flex flex-col justify-center items-start md:py-4 py-4 sm:py-5  h-full font-Roboto">
+        <div className="w-full gap-y-5  pl-16  sm:w-full ml-4 md:w-1/2  lg:w-1/2 flex flex-col justify-center items-start md:py-4 py-4 sm:py-5  h-full ">
           {previewMode ? (
             < >
               <h2
@@ -195,11 +196,11 @@ const SecondaryBanner1 = ({ previewMode, defaultBgImage }) => {
               <input
                 type="text"
                 name="heading"
-                value={secondaryBannerText?.heading || ""}
+                value={secondaryBannerText?.heading || "Rekindle with class"}
                 onChange={handleTextChange}
                 className="text-3xl lg:text-5xl xl:text-6xl font-bold mb-2 w-[90%] border border-gray-500"
                 style={{ color: color.secondaryBannerColor.textColor }}
-                placeholder="Rekindle with class"
+                
               />
               <textarea
                 name="paragraph"

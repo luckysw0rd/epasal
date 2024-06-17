@@ -17,12 +17,12 @@ const SubProduct1 = ({
             product.subcategories && product.subcategories.includes(selectedSubCategory)
         );
         setFilteredProducts(filtered);
-    
+
         if (containerRef.current) {
             containerRef.current.scrollLeft = 0;
         }
     }, [products, selectedSubCategory]);
-    
+
     const handleStyleSelect = (productId, styleIndex) => {
         setSelectedStyles(prevStyles => ({
             ...prevStyles,
@@ -44,9 +44,9 @@ const SubProduct1 = ({
     const subProductColor = store.color.subProductColor;
 
     return (
-        <div className='  h-[400px]'>
+        <div className=' mt-20  h-[400px]' style={{ fontFamily: store?.fonts?.Categories }}>
             <CategorySelector />
-            <div className="px-20  pb-8 font-Cinzel overflow-x-scroll" style={{
+            <div className="px-20  pb-8 overflow-x-scroll" style={{
                 maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
             }}
                 {...events}
@@ -54,20 +54,20 @@ const SubProduct1 = ({
             >
                 <div ref={containerRef} className="  flex py-4 gap-5 pb-6 overflow-x-scroll scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar">
                     <style>{`
-                        .scrollbar::-webkit-scrollbar {
-                            height: 12px;
-                        }
-                        .scrollbar::-webkit-scrollbar-track {
-                            background: ${subProductColor.scrollbarColor};
-                            border: 5px solid ${subProductColor.categoryColor};
-                        }
-                        .scrollbar::-webkit-scrollbar-thumb {
-                            background-color: ${subProductColor.scrollbarColor};
-                            border-radius: 10px;
-                        }
-                    `}</style>
-                    {filteredProducts.map(product => (
-                        <div key={product.id} className="flex-none mr-4 ml-2">
+                            .scrollbar::-webkit-scrollbar {
+                                height: 12px;
+                            }
+                            .scrollbar::-webkit-scrollbar-track {
+                                background: ${subProductColor.scrollbarColor};
+                                border: 5px solid ${subProductColor.categoryColor};
+                            }
+                            .scrollbar::-webkit-scrollbar-thumb {
+                                background-color: ${subProductColor.scrollbarColor};
+                                border-radius: 10px;
+                            }
+                        `}</style>
+                    {filteredProducts.map((product, index) => (
+                        <div key={index} className="flex-none mr-4 ml-2">
                             <ProductCard
                                 product={product}
                                 selectedStyle={selectedStyles[product.id]}
