@@ -16,11 +16,13 @@ import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
 import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
+
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if ( token) {
+  if (true) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -35,7 +37,7 @@ function App() {
 
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
-
+        <Route path="/productlanding" element={<ProjectLanding1 />} />
 
       </React.Fragment>
     );
