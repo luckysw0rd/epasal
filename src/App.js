@@ -5,7 +5,9 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+
 import HomePage from "./HomePage/HomePage";
+
 import Navbar from "./HomePage/Navbar";
 import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
