@@ -1,325 +1,11 @@
 
-// import controller from "../../Assets/controller.png";
-
-// import image2 from "../../Assets/image 52.png";
-// import image1 from "../../Assets/image 53.png";
-// import c from "../../Assets/image 54.png";
-// // const data = {
-// //   products: [
-// //     {
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },
-// //     {
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },{
-// //       id: 1,
-// //       name: "Bleu de Chanel",
-// //       image: image,
-// //       categories: ["Men"],
-// //       subcategories: ["Watch"],
-// //       rating: 3,
-// //       sizes: ["S", "M", "L"],
-// //       variants: [image1, image2, image3], // Using imported images directly
-// //       description:
-// //         "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man...",
-// //     },
-// //     // Other product objects follow with similar changes
-// //   ],
-// //   color: {
-// //     backgroundThemeColor: "#B6947D",
-// //     defaultColor: "#FFFFFF",
-// //     text: "#9A7B49",
-// //     productColor:"#4F3100",
-// //     borderColor: "#D7D7D7",
-// //   },
-
-  
-// //    categories: ["Category 1", "Category 2", "Category 3", "Category 4"],
-// //   volumes: ["Gray", "Brown", "Blue", "Red"] // example volumes
-// // };
-
-
-// const storeMIni={
-//   products: [
-//     {
-//       id: 1,
-//       name: "Watch1",
-//       price: '100',
-//       image: { imageUrl: controller, imageID: '' },
-//       categories: ["Men"],
-//       subcategories: ["Watch"],
-//       rating: 5,
-//       count: 0,
-//       variant: [
-//         {
-//           name: "Color",
-//           options: [
-//             {
-//               name: "Blue",
-//               price: 1200,
-//               image: {
-//                 imageID: "img123",
-//                 imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
-//               },
-//               discount: 5
-//             }, {
-//               name: "Gray",
-//               price: 2000,
-//               image: {
-//                 imageID: "img123",
-//                 imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
-//               },
-//               discount: 6
-//             }
-//           ]
-//         },
-//         {
-//           name: "Color",
-//           options: [
-//             {
-//               name: "blue",
-//               price: 1200,
-//               image: {
-//                 imageID: "img123",
-//                 imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
-//               },
-//               discount: 10
-//             }
-//           ]
-//         },
-//       ],
-//       description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
-//     },
-//     {
-//       id: 2,
-//       name: "Mobile",
-//       price: 200,
-//       image: { imageUrl: "controller", imageID: '' },
-//       count: 0,
-//       categories: ["Men"],
-//       subcategories: ["Watch"],
-//       rating: 3.5,
-//       variant: [
-//         {
-//           name: "Size",
-//           options: [
-//             {
-//               name: "Small",
-//               price: 90,
-//               image: {
-//                 imageId: "img123",
-//                 imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
-//               },
-//               discount: 5
-//             }
-//           ]
-//         }
-//       ],
-//       description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man."
-//     }
-    
-    
-   
-//   ],
-//   color: {
-//     backgroundThemeColor: "#FFFFFF",
-//     secondaryBannerColor: {
-//       backgroundThemeColor1: "#ffffff",
-//       backgroundThemeColor2: "#fcf3f3",
-//       textColor: "#5D4B3F",
-//       buttonColor: "#AB8076",
-//       buttonText: "#ffffff",
-//     },
-//     offerBannerColor: {
-//       backgroundBoxThemeColor1: "#ffffff",
-//       backgroundThemeColor: "#C9BCAC",
-//       textColor: "#4E3E34",
-//       buttonColor: "#AB8076",
-//       buttonText: "#ffffff",
-//     },
-//     navColor: {
-//       backgroundnavColor: "#B6947D",
-//       storeNameTextColor: "#000000",
-//       categoryTextColor: "#1d2830",
-//       searchBarColor: "#fcf3f3",
-//     },
-//     headerColor: {
-//       headerText: "#ffffff",
-//       headerBackground: "#7a5C5c",
-//     },
-//     subcategoryColor: {
-//       background: "#ffffff",
-//       text: "#4F3100",
-//     },
-//     subProductColor: {
-//       categoryColor: "#ffffff",
-//       backgroundColor: "#FDF7E6",
-//       textColor: "#333333",
-//       borderColor: "#AB8076",
-//       priceColor: "#4F3100",
-//       priceLetterColor: "#fff",
-//       scrollbarColor: "#4F3100",
-//       starColor: "#875300",
-//     },
-//     productSection: "#ffffff",
-//     productListColor: {
-//       // Define productListColor object
-//       backgroundColor: "#FFFFFF",
-//       cardBackground: "#FFFFFF",
-//       borderColor: "#B5A297",
-//       headerColor: "#5D4B3F",
-//       textColor: "#4F3100",
-//       priceColor: "#4F3100",
-//       heartColor: "#FF4D00",
-//       buttonTextColor: "#4F3100",
-//       buttonBgColor: "#FFFFFF",
-//       buttonBorderColor: "#4F3100",
-//       buttonBgColorOnHover: "#4F3100",
-//     },
-//     footerColor: {
-//       background: "#333333",
-//       textColor: "#ffffff",
-//       linkColor: "#59CE8F",
-//     },
-//   },
-//   subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
-// }
-// export default storeMIni;
 import controller from "../../Assets/controller.png";
 const storeMIni = {
   products: [
     {
       id: 1,
-      name: "Watch1",
-      price: 100,
+      name: "Watch1 watch this is the watch Watch1 watch this is the watch",
+      price: 2000,
       image: { imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg", imageID: '' },
       categories: ["Men"],
       subcategories: ["Watch"],
@@ -331,7 +17,7 @@ const storeMIni = {
           options: [
             {
               name: "Blue",
-              price: 1200,
+              price: 3000,
               image: {
                 imageID: "img123",
                 imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
@@ -340,7 +26,7 @@ const storeMIni = {
             },
             {
               name: "Gray",
-              price: 2000,
+              price: 4000,
               image: {
                 imageID: "img123",
                 imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
@@ -354,8 +40,8 @@ const storeMIni = {
     },
     {
       id: 2,
-      name: "apple",
-      price: 100,
+      name: "Apple Watch Series 9 45mm Sport Band M/L GPS - EvoStore",
+      price: 2000,
       image: { imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg", imageID: '' },
       categories: ["Men"],
       subcategories: ["electronics"],
@@ -369,7 +55,7 @@ const storeMIni = {
               name: "Blue",
               price: 1200,
               image: {
-                imageID: "img123",
+                imageID: "",
                 imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
               },
               discount: 5
@@ -783,6 +469,7 @@ const storeMIni = {
       headerColor: "#5D4B3F",
       textColor: "#4F3100",
       priceColor: "#4F3100",
+      sideBarBorder:"#D7D7D7",
       heartColor: "#FF4D00",
       buttonTextColor: "#4F3100",
       buttonBgColor: "#FFFFFF",
