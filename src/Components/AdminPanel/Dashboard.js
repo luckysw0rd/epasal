@@ -7,7 +7,7 @@ import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
 import { useParams } from "react-router-dom";
 import EditStore from './EditStore/EditStore.js';
-
+import Order from './Dashboard/Order/Order.js';
 const Dashboard = () => {
   const auth = useContext(AuthContext);
   const [dashboardState, setDashboardState] = useState('Employee');
@@ -73,6 +73,8 @@ const Dashboard = () => {
         }
       case 'Edit Store':
         return <EditStore store={store} />;
+      case 'Order':
+        return <Order store={store}></Order>
       default:
         return <Home />;
     }

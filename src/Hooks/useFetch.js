@@ -19,15 +19,14 @@ export const useFetch = () => {
         activeHttpRequests.current.push(httpAbortCtrl);
 
         try {
-            console.log(process.env.REACT_APP_BACKEND_URL + url)
             const response = await fetch(process.env.REACT_APP_BACKEND_URL + url, {
                 method,
                 body,
                 headers,
                 signal: httpAbortCtrl.signal
             });
-            console.log(response);
             const responseData = await response.json();
+
             activeHttpRequests.current = activeHttpRequests.current.filter(
                 abortCtrl => abortCtrl !== httpAbortCtrl
             );
@@ -41,9 +40,14 @@ export const useFetch = () => {
             setIsLoading(false);
             return responseData;
         } catch (error) {
+            if (error.name === 'AbortError') {
+                // If the error is an abort error, we don't set the error state
+                console.log('Fetch aborted');
+            } else {
+                setError(error);
+                console.error('Fetch error:', error);
+            }
             setIsLoading(false);
-            setError(error);
-            console.log(error);
             throw error;
         }
     }, []);
