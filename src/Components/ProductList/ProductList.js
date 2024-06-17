@@ -16,7 +16,10 @@ const ProductList = ({ productListProps, productListType }) => {
     }, [products]);
 
     const handleDeleteProduct = (productId) => {
-        const productIndex=store.products.findIndex(data=>data.id==productId)
+        const productIndex = store.products.findIndex(data => data.id == productId)
+        if(store.isEdit){
+
+        }
         setStore(prevStore => ({
             ...prevStore,
             featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
@@ -27,18 +30,18 @@ const ProductList = ({ productListProps, productListType }) => {
         switch (productListType) {
             case 'ProductList1':
                 return (
-                    <div className='space-y-10 flex items-center relative flex-col'>
+                    <div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
-                        <div style={{ backgroundColor: productColor.backgroundColor }}>
+                        <div >
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
-                                {filteredProducts.map((product,i) => (
+                                {filteredProducts.map((product, i) => (
                                     (product?.id || product?._id) && <ProductListCard1
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
                                         handleDeleteProduct={handleDeleteProduct}
                                         store={store}
-                                       
+
                                     />
                                 ))}
                             </div>
@@ -52,7 +55,7 @@ const ProductList = ({ productListProps, productListType }) => {
     };
     return (
 
-        <div className='' style={{fontFamily:store?.fonts?.Featured}}>
+        <div className='' style={{ fontFamily: store?.fonts?.Featured }}>
             {renderProductList()}
             <Link>
                 <button className="flex items-center absolute right-10 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none">

@@ -6,8 +6,8 @@ import NewProductList from '../../Components/NewProductList/NewProductList';
 const T1NewProducts = () => {
     const { store, setStore, addToCart } = useStore();
     const { previewMode, featuredProducts, products } = store;
-    const { productListColor } = store.color;
-    const productColor = { ...productListColor };
+    const { newProductColor } = store.color;
+    const productColor = { ...newProductColor };
 
     // Map featured product indices to their actual product objects
     const featuredProductList = products;
@@ -15,7 +15,7 @@ const T1NewProducts = () => {
     const productListProps = { store, productColor, products: featuredProductList, previewMode, setStore, addToCart };
 
     return (
-        <div className='px-8 md:px-10'>
+        <div className=' w-full'>
             <NewProductList productListProps={productListProps} productListType="ProductList1" />
         </div>
     );
