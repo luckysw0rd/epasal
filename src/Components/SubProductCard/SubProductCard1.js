@@ -34,19 +34,19 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
     
     const handleDeleteProduct=async()=>{
         if(isEdit){
-            const responseData = await sendRequest(
-                'product/deleteProduct',
-                'POST',
-                JSON.stringify({
-                    id:product._id, storeId:store._id
-                }),
-                {
-                    'Content-Type': 'application/json'
-                }
-            );
-            handleRemoveProduct(product.id)
+            // const responseData = await sendRequest(
+            //     'product/deleteProduct',
+            //     'POST',
+            //     JSON.stringify({
+            //         id:product._id, storeId:store._id
+            //     }),
+            //     {
+            //         'Content-Type': 'application/json'
+            //     }
+            // );
+            handleRemoveProduct({id:product._id,storeId:store._id})
         }else{
-            handleRemoveProduct(product.id)
+            handleRemoveProduct({id:product.id})
         }
     }
 

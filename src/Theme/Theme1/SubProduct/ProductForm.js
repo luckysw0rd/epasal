@@ -35,6 +35,7 @@ export default function ProductForm({ onClose }) {
     const [formState, setFormState] = useState(initialState);
 
 
+
     const handleCategoryChange = (e) => {
         const { value } = e.target;
         console.log(e.target.value,"options")
@@ -45,13 +46,13 @@ export default function ProductForm({ onClose }) {
     };
 
 
-    const handleSubcategoryChange = (e) => {
-        const { options } = e.target;
-        const selectedSubcategories = Array.from(options)
-            .filter(option => option.selected)
-            .map(option => option.value);
-        setFormState({ ...formState, subcategories: selectedSubcategories });
-    };
+    // const handleSubcategoryChange = (e) => {
+    //     const { options } = e.target;
+    //     const selectedSubcategories = Array.from(options)
+    //         .filter(option => option.selected)
+    //         .map(option => option.value);
+    //     setFormState({ ...formState, subcategories: selectedSubcategories });
+    // };
 
 
     const handleInputChange = (e) => {
@@ -132,109 +133,110 @@ export default function ProductForm({ onClose }) {
         document.getElementById('product-image').click();
     };
 
-    const handleSubmit =async (e) => {
-        e.preventDefault();
-        if(store.isEdit){
-            console.log("Is inside edit");
-            try{
-                const productImg = await uploadImage(formState?.image?.imageUrl);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        if (store.isEdit) {
+            console.log("Is inside edit");
+            try {
+                const productImg = await uploadImage(formState?.image?.imageUrl);
+    
                 // Update product image
-                setFormState(prev=>({...prev,image:{...prev.image,imageUrl:productImg.img}}))
-                setFormState(prev=>({...prev,image:{...prev.image,imageID:productImg.id}}))
-            
-                for(let i=0;i<formState.variant[0].options.length;i++){
-                    const optionImage=await uploadImage(formState.variant[0].options[i].image.imageUrl);
+                setFormState(prev => ({
+                    ...prev,
+                    image: {
+                        ...prev.image,
+                        imageUrl: productImg.img,
+                        imageID: productImg.id
+                    }
+                }));
+                if(formState.variant[0]){
+                for (let i = 0; i < formState.variant[0].options.length; i++) {
+                    const optionImage = await uploadImage(formState.variant[0].options[i].image.imageUrl);
+    
                     setFormState(prev => {
                         // Create a copy of the previous state
                         const formState = { ...prev };
-                      
-                        // Navigate to the specific variant
-                        const variant = { ...formState.variant[0] };
-                      
-                        // Navigate to the specific option
-                        const option = { ...variant.options[i] };
-                      
-                        // Update the image URL in the option
-                        option.image = { ...option.image, imageUrl: optionImage.img };
-                      
-                        // Update the option in the variant
-                        variant.options[i] = option;
-                      
-                        // Update the variant in the new state
-                        formState.variant[0] = variant;
-                      
-                        // Return the updated state
-                        return formState;
-                      });
-                      
-                      setFormState(prev => {
-                        // Create a copy of the previous state
-                        const formState = { ...prev };
-                      
-                        // Navigate to the specific variant
-                        const variant = { ...formState.variant[0] };
-                      
-                        // Navigate to the specific option
-                        const option = { ...variant.options[i] };
-                      
-                        // Update the image URL in the option
-                        option.image = { ...option.image, imageID: optionImage.id };
-                      
-                        // Update the option in the variant
-                        variant.options[i] = option;
-                      
-                        // Update the variant in the new state
-                        formState.variant[0] = variant;
-                      
-                        // Return the updated state
-                        return formState;
-                      });
     
+                        // Navigate to the specific variant
+                        const variant = { ...formState.variant[0] };
+    
+                        // Navigate to the specific option
+                        const option = { ...variant.options[i] };
+    
+                        // Update the image URL and ID in the option
+                        option.image = {
+                            ...option.image,
+                            imageUrl: optionImage.img,
+                            imageID: optionImage.id
+                        };
+    
+                        // Update the option in the variant
+                        variant.options[i] = option;
+    
+                        // Update the variant in the new state
+                        formState.variant[0] = variant;
+    
+                        // Return the updated state
+                        return formState;
+                    });
                 }
-                
-                setOnEditDataUpload(true)
             }
-            catch(err){
-                toast("error uploading variant images ")
-            }
-        
-    }
-    const newProduct = {
-        ...formState,
-        id: Math.random().toString(36).substr(2, 9), // Generates a random id
-    };
-    console.log("product is ", newProduct);
-    console.log("strore is ", store);
-        setStore(prevStore => ({
-            ...prevStore,
-            products: [...prevStore.products, newProduct]
-        }));
-        console.log(store);
-        setFormState(initialState);
-        onClose();
-    //Here upload Images
-    };
-    useEffect(()=>{
-        console.log("here is data")
-        if(onEditDataUpload){
-            console.log("Inside formData");
-            uploadData()
-            
-        }
-    },[onEditDataUpload,setOnEditDataUpload])
     
-    const uploadData=async()=>{
+                // Ensure the state update is complete before proceeding
+                await new Promise(resolve => setTimeout(resolve, 0));
+                setOnEditDataUpload(prev => !prev);
+                console.log("i am behind upload");
+            } catch (err) {
+                toast("error uploading variant images ");
+            }
+        } else {
+            const newProduct = {
+                ...formState,
+                id: Math.random().toString(36).substr(2, 9), // Generates a random id
+            };
+            console.log("product is ", newProduct);
+            console.log("store is ", store);
+            setStore(prevStore => ({
+                ...prevStore,
+                products: [...prevStore.products, newProduct]
+            }));
+            console.log(store);
+            setFormState(initialState);
+            onClose();
+        }
+    };
+    
+    // Function to upload data
+    const uploadData = async () => {
         await sendRequest(
             `product/addProduct`,
             'POST',
-            JSON.stringify({formState}),
+            JSON.stringify({ formState,storeID:store._id }),
             {
                 'Content-Type': 'application/json'
             }
         );
+        const newProduct = {
+            ...formState,
+            id: Math.random().toString(36).substr(2, 9), // Generates a random id
+        };
+        setStore(prevStore => ({
+            ...prevStore,
+            products: [...prevStore.products, newProduct]
+        }));
+        onClose();
         setOnEditDataUpload(false)
-    }
+    };
+    
+
+    useEffect(() => {
+        if (onEditDataUpload) {
+            uploadData();
+        }
+    }, [onEditDataUpload, setOnEditDataUpload]);
+    
 
 
     return (
