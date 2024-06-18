@@ -3,12 +3,14 @@ import { useDropzone } from 'react-dropzone';
 import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { toast } from 'react-toastify';
+import { useImage } from '../../../Hooks/useImage';
 
 const Product = ({ store }) => {
   const initialProducts = [
     // Initial product data
   ];
 
+  const { uploadImage } = useImage();
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [products, setProducts] = useState(initialProducts);
   const [editProductIndex, setEditProductIndex] = useState(null);
@@ -65,13 +67,68 @@ const Product = ({ store }) => {
     fetchProducts();
   }, []);
 
-  const handleSaveClick = () => {
-    const updatedProducts = [...products];
-    updatedProducts[editProductIndex] = editProduct;
-    console.log(updatedProducts);
-    setProducts(updatedProducts);
-    setEditProductIndex(null);
-    setEditProduct(null);
+  const handleSaveClick = async () => {
+    try {
+      // Upload product image
+      const uploadedProductImage = await uploadImage(editProduct.image.imageUrl);
+      const updatedEditProduct = { ...editProduct };
+      updatedEditProduct.image.imageUrl = uploadedProductImage.img; // Update product image URL
+      updatedEditProduct.image.imageId = uploadedProductImage.id; // Update product image ID
+
+      // Upload variant images
+      const updatedVariants = await Promise.all(
+        updatedEditProduct.variant.map(async (variant) => {
+          const updatedOptions = await Promise.all(
+            variant.options.map(async (option) => {
+              if (option.image && option.image.imageUrl) {
+                const uploadedVariantImage = await uploadImage(option.image.imageUrl);
+                return { ...option, image: { imageUrl: uploadedVariantImage.img, imageId: uploadedVariantImage.id } };
+              }
+              return option;
+            })
+          );
+          return { ...variant, options: updatedOptions };
+        })
+      );
+
+      updatedEditProduct.variant = updatedVariants;
+
+      // Prepare the data for the backend
+      const updates = {
+        name: updatedEditProduct.name,
+        description: updatedEditProduct.description,
+        price: updatedEditProduct.price,
+        rating: updatedEditProduct.rating,
+        image: updatedEditProduct.image,
+        variant: updatedEditProduct.variant,
+        inventory: updatedEditProduct.inventory,
+        soldQuantity: updatedEditProduct.soldQuantity,
+        revenueGenerated: updatedEditProduct.revenueGenerated
+      };
+
+      const response = await sendRequest(
+        `product/updateProduct`,
+        'PUT',
+        JSON.stringify({ id: updatedEditProduct._id, updates }),
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token
+        }
+      );
+
+      // Handle success message or update UI
+      console.log('Product updated successfully:', response);
+      toast.success('Product updated successfully');
+
+      // Update local state with updated products
+      const updatedProducts = [...products];
+      updatedProducts[editProductIndex] = updatedEditProduct;
+      setProducts(updatedProducts);
+      setEditProductIndex(null);
+      setEditProduct(null);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleInputChange = (event) => {
@@ -169,9 +226,9 @@ const Product = ({ store }) => {
 
   return (
     store &&
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4  justify-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
       {products.map((product, productIndex) => (
-        <div key={productIndex} className=" w-full rounded overflow-hidden shadow-lg m-4">
+        <div key={productIndex} className="w-full rounded overflow-hidden shadow-lg m-4">
           {editProductIndex === productIndex ? (
             <div className="px-6 py-4">
               {/* Product Name */}
@@ -215,179 +272,179 @@ const Product = ({ store }) => {
                 />
               </div>
 
-              {/* Product Rating */}
+              {/* Inventory */}
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="rating">
-                  Rating
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="inventory">
+                  Inventory
                 </label>
                 <input
                   type="number"
-                  name="rating"
-                  value={editProduct.rating}
+                  name="inventory"
+                  value={editProduct.inventory}
                   onChange={handleInputChange}
                   className="border p-2 w-full"
                 />
               </div>
 
+              {/* Sold Quantity */}
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="soldQuantity">
+                  Sold Quantity
+                </label>
+                <input
+                  type="number"
+                  name="soldQuantity"
+                  value={editProduct.soldQuantity}
+                  onChange={handleInputChange}
+                  className="border p-2 w-full"
+                  disabled
+                />
+              </div>
+
+              {/* Revenue Generated */}
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="revenueGenerated">
+                  Revenue Generated
+                </label>
+                <input
+                  type="number"
+                  name="revenueGenerated"
+                  value={editProduct.revenueGenerated}
+                  onChange={handleInputChange}
+                  className="border p-2 w-full"
+                  disabled
+                />
+              </div>
+
               {/* Product Image */}
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Product Image
-                </label>
                 <ProductImageDropzone
-                  imageUrl={editProduct.image?.imageUrl}
-                  setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
+                  imageUrl={editProduct.image.imageUrl}
+                  setImageUrl={(imageUrl) =>
+                    setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl } })
+                  }
                 />
               </div>
 
               {/* Variants */}
               {editProduct.variant.map((variant, variantIndex) => (
-                <div key={variantIndex} className="mt-4">
-                  {/* Variant Name */}
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="variantName">
-                      Variant Name
-                    </label>
-                    <button onClick={() => handleDeleteVariant(variantIndex)} className="bg-red-500 text-white py-2 px-4 rounded mt-2">
-                      Delete Variant
-                    </button>
-                    <input
-                      type="text"
-                      name="variantName"
-                      value={variant.name}
-                      onChange={(e) => handleVariantNameChange(e, variantIndex)}
-                      className="border p-2 w-full"
-                    />
-                  </div>
-
-                  {/* Variant Options */}
+                <div key={variantIndex} className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Variant Name
+                  </label>
+                  <input
+                    type="text"
+                    value={variant.name}
+                    onChange={(event) => handleVariantNameChange(event, variantIndex)}
+                    className="border p-2 w-full"
+                  />
                   {variant.options.map((option, optionIndex) => (
-                    <div key={optionIndex} className="flex items-center mt-2">
-                      {/* Option Image */}
-                      <div className="mb-4">
-                        {variantIndex === 0 && (
-                          <label className="block text-gray-700 text-sm font-bold mb-2">
-                            Option Image
-                          </label>
-                        )}
-                        {variantIndex === 0 && (
-                          <ProductImageDropzone
-                            imageUrl={option.image?.imageUrl}
-                            setImageUrl={(url) => {
-                              const updatedVariant = editProduct.variant.map((v, vIndex) => {
-                                if (vIndex === variantIndex) {
-                                  const updatedOptions = v.options.map((o, oIndex) => {
-                                    if (oIndex === optionIndex) {
-                                      return { ...o, image: { ...o.image, imageUrl: url } };
-                                    }
-                                    return o;
-                                  });
-                                  return { ...v, options: updatedOptions };
-                                }
-                                return v;
-                              });
-                              setEditProduct({
-                                ...editProduct,
-                                variant: updatedVariant
-                              });
-                            }}
-                          />
-                        )}
-                      </div>
-
-                      {/* Option Details */}
-                      <div className="flex flex-col ml-4">
-                        <button onClick={() => handleDeleteOption(variantIndex, optionIndex)} className="bg-red-500 text-white py-2 px-4 rounded mt-2">
-                          Delete Option
-                        </button>
-                        {/* Option Name */}
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Option Name
-                        </label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={option.name}
-                          onChange={(e) => handleVariantChange(e, variantIndex, optionIndex)}
-                          className="border p-2 mb-2"
-                        // Disable input for other variants
-                        />
-
-                        {variantIndex === 0 && (
-                          <label className="block text-gray-700 text-sm font-bold mb-2">
-                            Option Price
-                          </label>)}
-                        {/* Option Price */}
-                        {variantIndex === 0 && (
-                          <input
-                            type="number"
-                            name="price"
-                            value={option.price}
-                            onChange={(e) => handleVariantChange(e, variantIndex, optionIndex)}
-                            className="border p-2 mb-2"
-                            disabled={variantIndex !== 0} // Disable input for other variants
-                          />)}
-
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Option Discount Amount
-                        </label>
-                        {/* Option Discount */}
-                        <input
-                          type="number"
-                          name="discount"
-                          value={option.discount}
-                          onChange={(e) => handleVariantChange(e, variantIndex, optionIndex)}
-                          className="border p-2 mb-2"
-                          disabled={variantIndex !== 0} // Disable input for other variants
-                        />
-
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Option Count
-                        </label>
-                        {/* Option Count */}
-                        <input
-                          type="number"
-                          name="count"
-                          value={option.count}
-                          onChange={(e) => handleVariantChange(e, variantIndex, optionIndex)}
-                          className="border p-2 mb-2"
-                          disabled={variantIndex !== 0} // Disable input for other variants
-                        />
-                      </div>
+                    <div key={optionIndex} className="ml-4 mb-4">
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Option Name
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={option.name}
+                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                        className="border p-2 w-full"
+                      />
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Option Price
+                      </label>
+                      <input
+                        type="number"
+                        name="price"
+                        value={option.price}
+                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                        className="border p-2 w-full"
+                      />
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Option Discount
+                      </label>
+                      <input
+                        type="number"
+                        name="discount"
+                        value={option.discount}
+                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                        className="border p-2 w-full"
+                      />
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Option Count
+                      </label>
+                      <input
+                        type="number"
+                        name="count"
+                        value={option.count}
+                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                        className="border p-2 w-full"
+                      />
+                      <ProductImageDropzone
+                        imageUrl={option.image.imageUrl}
+                        setImageUrl={(imageUrl) =>
+                          handleVariantChange(
+                            { target: { name: 'image', value: { ...option.image, imageUrl } } },
+                            variantIndex,
+                            optionIndex
+                          )
+                        }
+                      />
+                      <button
+                        type="button"
+                        className="bg-red-500 text-white p-2 rounded mt-2"
+                        onClick={() => handleDeleteOption(variantIndex, optionIndex)}
+                      >
+                        Delete Option
+                      </button>
                     </div>
                   ))}
-
-                  <button onClick={() => handleAddOption(variantIndex)} className="bg-blue-500 text-white py-2 px-4 rounded mt-2">
+                  <button
+                    type="button"
+                    className="bg-green-500 text-white p-2 rounded mt-2"
+                    onClick={() => handleAddOption(variantIndex)}
+                  >
                     Add Option
+                  </button>
+                  <button
+                    type="button"
+                    className="bg-red-500 text-white p-2 rounded mt-2"
+                    onClick={() => handleDeleteVariant(variantIndex)}
+                  >
+                    Delete Variant
                   </button>
                 </div>
               ))}
-
-              {/* Add Variant Button */}
-              <button onClick={handleAddVariant} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
+              <button
+                type="button"
+                className="bg-green-500 text-white p-2 rounded mt-2"
+                onClick={handleAddVariant}
+              >
                 Add Variant
               </button>
 
-              {/* Save Button */}
-              <div className="flex justify-between mt-4">
-                <button onClick={handleSaveClick} className="bg-green-500 text-white py-2 px-4 rounded">
-                  Save
-                </button>
-                <button onClick={() => setEditProductIndex(null)} className="bg-red-500 text-white py-2 px-4 rounded">
-                  Cancel
-                </button>
-              </div>
+              <button
+                type="button"
+                className="bg-blue-500 text-white p-2 rounded mt-2"
+                onClick={handleSaveClick}
+              >
+                Save
+              </button>
             </div>
           ) : (
             <div className="px-6 py-4">
-              {/* Product Display */}
               <div className="font-bold text-xl mb-2">{product.name}</div>
               <p className="text-gray-700 text-base">{product.description}</p>
-              <p className="text-gray-900 text-xl">${product.price}</p>
-              <p className="text-gray-600">{product.rating} Stars</p>
-              <img src={product.image?.imageUrl} alt={product.name} className="w-full object-cover h-64 mb-4 rounded" />
-
-              <button onClick={() => handleEditClick(productIndex)} className="bg-yellow-500 text-white py-2 px-4 rounded mt-4">
+              <p className="text-gray-700 text-base">Price: ${product.price}</p>
+              <p className="text-gray-700 text-base">Inventory: {product.inventory}</p>
+              <p className="text-gray-700 text-base">Sold Quantity: {product.soldQuantity}</p>
+              <p className="text-gray-700 text-base">Revenue Generated: ${product.revenueGenerated}</p>
+              {product.image && <img className="w-full" src={product.image.imageUrl} alt="Product" />}
+              <button
+                type="button"
+                className="bg-yellow-500 text-white p-2 rounded mt-2"
+                onClick={() => handleEditClick(productIndex)}
+              >
                 Edit
               </button>
             </div>
@@ -396,7 +453,6 @@ const Product = ({ store }) => {
       ))}
     </div>
   );
-
 };
 
 export default Product;
