@@ -5,6 +5,16 @@ import Slider, { SliderThumb } from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
+import storeMIni from './data';
+const textColor = storeMIni?.color?.productListColor.textColor || "#000";
+const borderColor = storeMIni?.color?.productListColor.borderColor || "#000";
+const sideBarBorder = storeMIni?.color?.productListColor.sideBarBorder || "#000";
+const backgroundColor = storeMIni?.color?.productListColor.backgroundColor || "#000";
+const cardBackground = storeMIni?.color?.productListColor.cardBackground || "#000";
+const priceColor = storeMIni?.color?.productListColor.priceColor || "#000";
+const buttonColor = storeMIni?.color?.productListColor.buttonBgColor || "#000";
+const buttonBorderColor = storeMIni?.color?.productListColor.buttonBorderColor || "#000";
+const buttonBgColorOnHover = storeMIni?.color?.productListColor.buttonBgColorOnHover || "#000";
 
 function ValueLabelComponent(props) {
   const { children, value } = props;
@@ -22,7 +32,7 @@ ValueLabelComponent.propTypes = {
 };
 
 const AirbnbSlider = styled(Slider)(({ theme }) => ({
-  color: '#4F3100',
+  color: textColor,
   height: 3,
   padding: '13px 0',
   marginLeft: 10,
@@ -31,7 +41,7 @@ const AirbnbSlider = styled(Slider)(({ theme }) => ({
   '& .MuiSlider-thumb': {
     height: 18,
     width: 18,
-    backgroundColor: '#4F3100',
+    backgroundColor: textColor,
     border: '1px solid currentColor',
     borderRadius: 0,
     '& .airbnb-bar': {

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import storeMIni from "./data";
-import "./side.css";
+// import "./side.css";
 import CustomizedSlider from "./CustomizedSlider";
 import Checkbox from "@mui/material/Checkbox";
 import Rating from "@mui/material/Rating";
@@ -111,7 +111,7 @@ const Sidebar = ({
 
       <div className="mb-4">
         <h3 className="font-bold mb-2" style={{ color: textColor }}>
-          Subcategories
+          Categories
         </h3>
         <ul className="space-y-1 list-none ml-0 pl-0">
           {subcategories.map((subcategory, index) => (

@@ -153,7 +153,7 @@ const AllProducts = () => {
               <motion.select
                 value={sortOption}
                 onChange={handleSortChange}
-                className="border-none focus:outline-none lg:text-[14px] "
+                className="border-none focus:outline-none lg:text-[14px] bg-"
                 style={{ borderColor: borderColor, backgroundColor: backgroundColor }}
                 // whileHover={{ backgroundColor: "red" }}
               >
