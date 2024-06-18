@@ -41,21 +41,21 @@ const SaveStoreButton = () => {
                 });
 
                 // Update variant images
-                if (!store.isEdit) {
-                    for (let j = 0; j < product.variant[0].options.length; j++) {
-                        const variantOption = product.variant[0].options[j];
-                        const variantImg = await uploadImage(variantOption.image.imageUrl);
+                if(!store.isEdit){
+                for (let j = 0; j < product?.variant[0]?.options.length; j++) {
+                    const variantOption = product?.variant[0]?.options[j];
+                    const variantImg = await uploadImage(variantOption?.image?.imageUrl);
 
-                        setStore(prev => {
-                            const updatedProducts = [...prev.products];
-                            const updatedOptions = [...updatedProducts[i].variant[0].options];
-                            updatedOptions[j] = {
-                                ...updatedOptions[j],
-                                image: {
-                                    imageID: variantImg.id,
-                                    imageUrl: variantImg.img
-                                }
-                            };
+                    setStore(prev => {
+                        const updatedProducts = [...prev.products];
+                        const updatedOptions = [...updatedProducts[i]?.variant[0]?.options];
+                        updatedOptions[j] = {
+                            ...updatedOptions[j],
+                            image: {
+                                imageID: variantImg.id,
+                                imageUrl: variantImg.img
+                            }
+                        };
 
                             updatedProducts[i] = {
                                 ...updatedProducts[i],

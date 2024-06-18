@@ -8,7 +8,7 @@ export const useImage = () => {
     };
     const uploadImage = async (image) => {
         try {
-            if (!image) {
+            if (!image || '') {
                 return {
                     img: "",
                     id: "",

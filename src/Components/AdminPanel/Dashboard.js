@@ -64,13 +64,13 @@ const Dashboard = () => {
   const renderDashboardContent = (store) => {
     switch (dashboardState) {
       case 'Home':
-        return <Home />;
+        return <Home data={store} />;
       case 'Employee':
         if (role === 'Admin' || role === 'Owner') {
           console.log('Store:', store);
           return <Employee store={store} />;
         } else {
-          return <Home />;
+          return <Home data={store} />;
         }
       case 'Edit Store':
         return <EditStore store={store} />;
