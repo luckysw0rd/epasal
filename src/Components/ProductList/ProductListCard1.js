@@ -4,7 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 
-const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) => {
+const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
     const { productColor, previewMode, addToCart } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 

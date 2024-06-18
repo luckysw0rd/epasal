@@ -1,147 +1,3 @@
-// import React, { useState } from 'react';
-
-// const ProductLanding1 = () => {
-//     const product = {
-//         id: 1,
-//         name: "Controller",
-//         price: '100',
-//         image: { imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg", imageID: '' },
-//         categories: ["Men"],
-//         subcategories: ["Watch"],
-//         rating: 2.5,
-//         count: 0,
-//         variant: [
-//             {
-//                 name: "Color",
-//                 options: [
-//                     {
-//                         name: "Blue",
-//                         price: 1200,
-//                         image: {
-//                             imageID: "img123",
-//                             imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
-//                         },
-//                         discount: 5
-//                     }, {
-//                         name: "Gray",
-//                         price: 2000,
-//                         image: {
-//                             imageID: "img123",
-//                             imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
-//                         },
-//                         discount: 6
-//                     }
-//                 ]
-//             },
-//             {
-//                 name: "Size",
-//                 options: [
-//                     {
-//                         name: "L",
-//                         price: 1200,
-//                         image: {
-//                             imageID: "img123",
-//                             imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
-//                         },
-//                         discount: 10
-//                     }
-//                 ]
-//             },
-//         ],
-//         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
-//     }
-
-//     const selectedVariant = product.variant[0]
-//     // const { products, store } = productLandingProps
-//     const [quantity, setQuantity] = useState(product.count);
-
-//     const increaseQuantity = () => {
-//         setQuantity(quantity + 1);
-//     };
-
-//     const decreaseQuantity = () => {
-//         if (quantity > 1) {
-//             setQuantity(quantity - 1);
-//         }
-//     };
-
-//     return (
-//         <div className="min-h-screen bg-gray-100 p-16" >
-//             <div className="flex gap-10 mx-auto bg-white p-5 rounded-lg shadow-md">
-//                 <div className="flex gap-10 rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
-//                     <div className="flex w-1/2 mt-5">
-//                         <div
-//                             className={`cursor-pointer text-sm sm:text-base rounded-md`}
-//                         >
-//                             <img src={product.image.imageUrl} alt="Default" className='me-2' />
-//                         </div>
-//                         {selectedVariant?.options.map((option, index) => (
-//                             <div
-//                                 key={index}
-//                                 className={`cursor-pointer text-sm sm:text-baserounded-md`}
-//                             >
-//                                 <img src={option.image.imageUrl} alt={option.name} className='me-2' />
-//                             </div>
-//                         ))}
-//                     </div>
-//                     <div className="">
-//                         <h1 className="text-2xl font-bold">{product.name}</h1>
-//                         <p className="text-gray-600 mt-2">
-//                             {product.description}
-//                         </p>
-//                         <div className="mt-2">
-//                             <span className="text-xl font-semibold">{selectedVariant.options.price}</span>
-//                             <span className="line-through text-gray-500 ml-2">{selectedVariant.options.discount}</span>
-//                         </div>
-//                         <div className="mt-4">
-//                             <label htmlFor="variant" className="block text-gray-700">Variant:</label>
-//                             {/* <select
-//                             id="variant"
-//                             className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-//                         >
-//                             {product.variant.options.map((option, index) => (
-//                                 <option key={index} value={option}>
-//                                     {option}
-//                                 </option>
-//                             ))}
-//                         </select> */}
-//                         </div>
-//                         <div className="mt-4 flex items-center">
-//                             <button className="px-4 py-2 bg-gray-200 rounded-md" onClick={decreaseQuantity}> - </button>
-//                             <span className="mx-2">{quantity}</span>
-//                             <button className="px-4 py-2 bg-gray-200 rounded-md" onClick={increaseQuantity}> + </button>
-//                         </div>
-//                         <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md">Buy Now</button>
-//                     </div>
-//                 </div>
-
-//                 {/* LOCATION  */}
-//                 <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
-
-//                     <div className="mt-4">
-//                         <div className="flex items-center">
-//                             <span>Delivery Charge and time</span>
-//                             <span className="ml-auto">Rs. 100 | 2-3 days</span>
-//                         </div>
-//                         <div className="flex items-center mt-2">
-//                             <span>Cash on Delivery available</span>
-//                         </div>
-//                     </div>
-//                     <div className="mt-4">
-//                         <div className="flex items-center">
-//                             <span>4 month warranty available</span>
-//                         </div>
-//                         <div className="flex items-center mt-2">
-//                             <span>14 days return policy</span>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div >
-//     );
-// }
-// export default ProductLanding1;
-
 import React, { useState } from 'react';
 import { TbShoppingBagPlus } from "react-icons/tb";
 import { LiaShippingFastSolid } from "react-icons/lia";
@@ -150,6 +6,8 @@ import { TbCash } from "react-icons/tb";
 import { MdVerifiedUser } from "react-icons/md";
 import { PiCreditCard } from "react-icons/pi";
 import { StarIcon } from '@heroicons/react/16/solid';
+import ProductReview from './ProductReview';
+import SimilarProducts from './SimilarProducts';
 
 
 const ProjectLanding1 = () => {
@@ -161,7 +19,7 @@ const ProjectLanding1 = () => {
         categories: ["Men"],
         subcategories: ["Watch"],
         rating: 3,
-        count: 0,
+        count: 1,
         description: "A pink hoodie is a stylish, comfy hoodie inspired by Link from the Legend of Zelda series.",
         variant: [
             {
@@ -174,7 +32,7 @@ const ProjectLanding1 = () => {
                             imageID: "img123",
                             imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
                         },
-                        discount: 5
+                        discount: 100
                     }, {
                         name: "Gray",
                         price: 2000,
@@ -191,12 +49,9 @@ const ProjectLanding1 = () => {
                 options: [
                     {
                         name: "L",
-                        price: 1200,
-                        image: {
-                            imageID: "img123",
-                            imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
-                        },
-                        discount: 10
+                    },
+                    {
+                        name: "S",
                     }
                 ]
             },
@@ -205,30 +60,48 @@ const ProjectLanding1 = () => {
 
     const [selectedVariant, setSelectedVariant] = useState(product.variant[0]);
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
-    const [displayedImage, setDisplayedImage] = useState(selectedVariant.options[0].image.imageUrl);
+    const [displayedImage, setDisplayedImage] = useState(product.image.imageUrl);
     const selectedOption = selectedOptionIndex === -1 ? null : selectedVariant?.options[selectedOptionIndex];
     const price = selectedOption ? selectedOption.price : product.price || 0;
     const discount = selectedOption ? selectedOption.discount : product.discount || 0;
-
-
+    const [firstVariant, ...remainingVariant] = product.variant
+    const [productCount, setProductCount] = useState(product.count)
 
     const handleOptionSelect = (index) => {
         setSelectedOptionIndex(index);
         setDisplayedImage(selectedVariant?.options[index].image.imageUrl);
     };
 
+
+    const handleDefaultImage = () => {
+        setSelectedOptionIndex(-1);
+        setDisplayedImage(product.image.imageUrl);
+    };
+
     const handleVariantChange = (e) => {
         const selectedVariantName = e.target.value;
         const newSelectedVariant = product.variant.find(
-            (variant) => variant.name === selectedVariantName
+            (variant) => variant.options.some(option => option.name === selectedVariantName)
         );
         setDisplayedImage(newSelectedVariant.options[0].image.imageUrl);
         setSelectedVariant(newSelectedVariant);
     };
+
+    const incrementQuantity = () => {
+        setProductCount(prevCount => prevCount + 1);
+    };
+
+    const decrementQuantity = () => {
+        setProductCount(prevCount => Math.max(1, prevCount - 1));
+    };
+
+    const totalPrice = price * productCount;
+    const totalDiscount = discount * productCount;
     return (
-        <div className="h-screen pt-16 px-16">
-            <div className="flex gap-10">
-                <div className=''>
+        <div className="pt-16 px-16">
+            <div className='flex flex-col gap-10 justify-between'>
+                {/* PRODUCT DISPLAYING SECTION  */}
+                <div className="flex gap-10">
                     <div className="p-5 flex gap-10 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)] ">
                         <div className="w-[400px] h-[400px] flex flex-col gap-5">
                             <img
@@ -238,6 +111,12 @@ const ProjectLanding1 = () => {
                                 style={{ aspectRatio: '1/1' }}
                             />
                             <div className="flex space-x-2">
+                                <div
+                                    className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
+                                    onClick={handleDefaultImage}
+                                >
+                                    <img src={product.image.imageUrl} alt="Default" style={{ height: "69px", width: "69px" }} className='me-2' />
+                                </div>
                                 {selectedVariant?.options.map((option, index) => (
                                     <div
                                         key={index}
@@ -248,7 +127,6 @@ const ProjectLanding1 = () => {
                                         <img src={option.image.imageUrl} alt={option.name} style={{ height: "69px", width: "69px" }} />
                                     </div>
                                 ))}
-
                             </div>
 
                         </div>
@@ -267,30 +145,46 @@ const ProjectLanding1 = () => {
                             </div>
                             {/* <hr className='w-full border-t border-gray-400' /> */}
                             <div className="flex gap-5 items-center">
-                                <span className="text-3xl font-semibold text-[#545454]">Rs {price}</span>
-                                <span className="line-through text-xl text-[#838383]">Rs {price + discount}</span>
+                                <span className="text-3xl font-semibold text-[#545454]">Rs {totalPrice}</span>
+                                <span className="line-through text-xl text-[#838383]">Rs {totalDiscount + totalPrice}</span>
                             </div>
+
                             <div className="flex gap-5">
-                                <label htmlFor="size" className="block text-gray-700">Variant:</label>
+                                <label htmlFor="size" className="block text-gray-700">{firstVariant.name}:</label>
                                 <select
                                     id="size"
-                                    className="pr-5 pl-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                    onChange={handleVariantChange}
+                                    className="pr-5 pl-2 py-1 w-20 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" onChange={handleVariantChange}
+                                    value={selectedOption && selectedOption.name}
                                 >
-                                    {product.variant.map((option, index) => (
-                                        <option value={option.name}>{option.name}</option>
+                                    {firstVariant.options.map((option, index) => (
+                                        <option onClick={() => { handleOptionSelect(index) }} value={option.name}>{option.name}</option>
                                     ))}
                                 </select>
                             </div>
+
+                            {remainingVariant.map((v, index) => (
+                                <div className="flex gap-5">
+                                    <label htmlFor="size" className="block text-gray-700">{v.name}:</label>
+                                    <select
+                                        id="size"
+                                        className="pr-5 pl-2 py-1 w-20 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    >
+                                        {v.options.map((option, index) => (
+                                            <option value={option.name}>{option.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            ))}
+
                             <div className="flex gap-5 items-center">
                                 <label htmlFor="size" className="block text-gray-700">Quantity:</label>
-                                <div className='flex gap-3'>
-                                    <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={() => { }}> - </button>
-                                    <span className="">{product.count}</span>
-                                    <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={() => { }}> + </button>
+                                <div className='flex items-center gap-3'>
+                                    <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={decrementQuantity}> - </button>
+                                    <span className="">{productCount}</span>
+                                    <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={incrementQuantity}> + </button>
                                 </div>
                             </div>
-                            <div className='flex my-5 items-center gap-5'>
+                            <div className='flex mt-5 mb-16 items-center gap-5'>
                                 <button className="w-1/2 border border-gray-600 py-2 rounded-md">Buy Now</button>
                                 <div className='border border-gray-600 rounded-md p-2'><TbShoppingBagPlus size={20} /></div>
                             </div>
@@ -298,29 +192,37 @@ const ProjectLanding1 = () => {
 
                     </div>
 
-                </div>
-                <div className="w-1/3 p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
-                    <div className='flex flex-col gap-5'>
-                        <div>
-                            <div className="flex flex-col gap-3 text-xs text-[#898989]">
-                                <span>Delivery Charge and time</span>
-                                <div className='flex justify-between text-sm text-[#636363]'>
-                                    <span className='flex gap-3 items-center'><LiaShippingFastSolid size={20} />Rs. 100 </span>
-                                    <span className='flex gap-3 items-center mr-5'><FiClock size={20} />2-3 days</span>
+                    {/* LOCATION SECTION  */}
+                    <div className="w-1/3 p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
+                        <div className='flex flex-col gap-8'>
+                            <div>
+                                <div className="flex flex-col gap-3 text-xs text-[#898989]">
+                                    <span>Delivery Charge and time</span>
+                                    <div className='flex justify-between text-sm text-[#636363]'>
+                                        <span className='flex gap-3 items-center'><LiaShippingFastSolid size={20} />Rs. 100 </span>
+                                        <span className='flex gap-3 items-center mr-5'><FiClock size={20} />2-3 days</span>
+                                    </div>
+                                    <span className='flex gap-3 items-center text-sm text-[#636363]'><TbCash size={20} />Cash on Delivery available</span>
                                 </div>
-                                <span className='flex gap-3 items-center text-sm text-[#636363]'><TbCash size={20} />Cash on Delivery available</span>
                             </div>
-                        </div>
-                        <div>
-                            <div className="flex flex-col gap-3 text-xs text-[#898989]">
-                                <span>Services</span>
-                                <span className='flex gap-3 items-center text-sm text-[#636363]'><MdVerifiedUser size={20} />4 month warranty available</span>
-                                <span className='flex gap-3 items-center text-sm text-[#636363]'><PiCreditCard size={20} />14 days return policy</span>
+                            <div>
+                                <div className="flex flex-col gap-3 text-xs text-[#898989]">
+                                    <span>Services</span>
+                                    <span className='flex gap-3 items-center text-sm text-[#636363]'><MdVerifiedUser size={20} />4 month warranty available</span>
+                                    <span className='flex gap-3 items-center text-sm text-[#636363]'><PiCreditCard size={20} />14 days return policy</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                {/* REVIEW SECTION  */}
+                <div className='flex gap-10 justify-between'>
+                    <ProductReview />
+                    <SimilarProducts />
+                </div>
+            </div >
+
         </div>
     );
 }
