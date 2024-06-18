@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useContext } from 'react';
 import useFetch from '../../../../Hooks/useFetch';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import DeliveryCodeModal from './DeliveryCodeModal.js';
+import { toast } from 'react-toastify';
+import {AuthContext} from '../../../../Hooks/AuthContext.js';
+
 
 const Order = ({ store }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -12,17 +16,21 @@ const Order = ({ store }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [showDeliveryCodeModal, setShowDeliveryCodeModal] = useState(false);
+    const [currentOrderId, setCurrentOrderId] = useState(null);
+    const auth = useContext(AuthContext);
 
     const statusOptions = ['Processing', 'Confirmed', 'Being delivered', 'Delivered', 'Cancelled', 'Returned'];
 
     const fetchOrders = async (page, searchQuery = '') => {
         try {
             const responseData = await sendRequest(
-                `order/get/${store._id}?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}`,
+                `order/get/${store._id}?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}&storeId=${store._id}`,
                 'GET',
                 null,
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
                 }
             );
             console.log(responseData);
@@ -85,24 +93,51 @@ const Order = ({ store }) => {
         }));
     };
 
-    const handleEditSubmit = async (orderId) => {
+    const handleEditSubmit = async (orderId, deliveryCode = null) => {
         try {
-            await sendRequest(
-                `order/update/${orderId}`,
+            const updateData = { ...editOrder };
+            if (editOrder.status === 'Delivered' && !deliveryCode) {
+                setShowDeliveryCodeModal(true);
+                setCurrentOrderId(orderId);
+                return;
+            }
+
+            if (deliveryCode) {
+                updateData.deliveryCode = deliveryCode;
+            }
+            updateData.storeID= store._id;
+            const response = await sendRequest(
+                `order/update/${store._id}/${orderId}?storeId=${store._id}`,
                 'PUT',
-                JSON.stringify(editOrder),
+                JSON.stringify(updateData),
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+
                 }
             );
             setOrders((prevOrders) =>
-                prevOrders.map((order) => (order._id === orderId ? editOrder : order))
+                prevOrders.map((order) => (order._id === orderId ? { ...editOrder, deliveryCode } : order))
             );
+            toast(response.message);
             setEditId(null);
             setEditOrder(null);
+            setShowDeliveryCodeModal(false);
+            setCurrentOrderId(null);
         } catch (error) {
+            toast(error.message);
+
             // Handle error
         }
+    };
+
+    const handleModalClose = () => {
+        setShowDeliveryCodeModal(false);
+        setCurrentOrderId(null);
+    };
+
+    const handleModalSubmit = (code) => {
+        handleEditSubmit(currentOrderId, code);
     };
 
     return (
@@ -195,14 +230,12 @@ const Order = ({ store }) => {
                                 {editId === order._id ? 'Cancel' : 'Edit'}
                             </button>
                             {editId === order._id && (
-
                                 <button
                                     onClick={() => handleEditSubmit(order._id)}
                                     className="px-4 py-2 bg-blue-500 text-white rounded"
                                 >
                                     Submit
                                 </button>
-
                             )}
                         </div>
                     </div>
@@ -215,7 +248,7 @@ const Order = ({ store }) => {
                             <div>
                                 {order.cart.map((item, index) => (
                                     <div key={item.product._id} className="mb-4">
-                                        <p className="font-medium">{`Product: ${item.productName} `}</p>
+                                        <p className="font-medium">{`Product: ${item.productName}`}</p>
                                         <p className="text-gray-600">{`Product ID: ${item.product._id}`}</p>
                                         <p className="text-gray-600">{`Quantity: ${item.count}`}</p>
                                         {item.selectedVariant.map((variant, idx) => (
@@ -229,16 +262,13 @@ const Order = ({ store }) => {
                                 ))}
                             </div>
                             <div className="mt-4">
-
                                 <div>
                                     <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
                                     <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
                                     <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
                                     <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>
                                 </div>
-
                             </div>
-
                         </div>
                     )}
                 </div>
@@ -262,6 +292,11 @@ const Order = ({ store }) => {
                     </button>
                 </div>
             )}
+            <DeliveryCodeModal
+                isOpen={showDeliveryCodeModal}
+                onClose={handleModalClose}
+                onSubmit={handleModalSubmit}
+            />
         </div>
     );
 };

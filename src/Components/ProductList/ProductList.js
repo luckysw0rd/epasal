@@ -5,7 +5,7 @@ import ProductListCard1 from './ProductListCard1';
 
 
 const ProductList = ({ productListProps, productListType }) => {
-    const { products, productColor, setStore, store } = productListProps
+    const { products,isEdit, productColor, setStore , store } = productListProps
 
     // Filtered products state
     const [filteredProducts, setFilteredProducts] = useState(products);
@@ -17,6 +17,9 @@ const ProductList = ({ productListProps, productListType }) => {
 
     const handleDeleteProduct = (productId) => {
         const productIndex = store.products.findIndex(data => data.id == productId)
+        if(store.isEdit){
+
+        }
         setStore(prevStore => ({
             ...prevStore,
             featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
