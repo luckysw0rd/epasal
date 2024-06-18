@@ -4,8 +4,8 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 
-const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) => {
-    const { productColor, previewMode, addToCart,isEdit } = productListProps;
+const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
+    const { productColor, previewMode, addToCart, isEdit } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
@@ -36,7 +36,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product  }) =
         >
             <div className="w-full">
                 <div className="relative w-full">
-                    {(!previewMode||isEdit) && (
+                    {(!previewMode || isEdit) && (
                         <button
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
                             onClick={() => handleDeleteProduct(product.id)}

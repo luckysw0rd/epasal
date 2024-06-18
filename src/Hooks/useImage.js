@@ -39,7 +39,7 @@ export const useImage = () => {
                         id: "",
                     };
                 }
-            } else if (image instanceof File && (image.type === 'image/jpeg' || image.type === 'image/png')) {
+            } else if (image instanceof File && (image.type === 'image/jpeg' || image.type === 'image/png' || image.type === 'image/jpg')) {
                 // If image is a File object
                 data = new FormData();
                 data.append("file", image);
