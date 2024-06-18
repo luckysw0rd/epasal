@@ -1,9 +1,9 @@
-import React, { useEffect, useState ,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useFetch from '../../../../Hooks/useFetch';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import DeliveryCodeModal from './DeliveryCodeModal.js';
 import { toast } from 'react-toastify';
-import {AuthContext} from '../../../../Hooks/AuthContext.js';
+import { AuthContext } from '../../../../Hooks/AuthContext.js';
 
 
 const Order = ({ store }) => {
@@ -105,7 +105,7 @@ const Order = ({ store }) => {
             if (deliveryCode) {
                 updateData.deliveryCode = deliveryCode;
             }
-            updateData.storeID= store._id;
+            updateData.storeID = store._id;
             const response = await sendRequest(
                 `order/update/${store._id}/${orderId}?storeId=${store._id}`,
                 'PUT',
