@@ -9,7 +9,8 @@ import { LuWallet } from "react-icons/lu";
 import { store } from "./homeStore"
 import SalesGraph from './SalesGraph';
 
-const Home = () => {
+//store 1 needs to be store
+const Home = ({store1}) => {
   const { revenueGenerated, salesChange, orders, dueAmount, pendingAmount, customers, balance, mostSold } = store;
   return (
     <div className="grid gap-8 bg-white w-full p-6 rounded-lg">
