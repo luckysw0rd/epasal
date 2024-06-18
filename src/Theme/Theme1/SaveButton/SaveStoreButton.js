@@ -10,7 +10,7 @@ const SaveStoreButton = () => {
     const auth = useContext(AuthContext);
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
-    var storeNewImage={};
+    var storeNewImage = {};
     const { previewMode } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
@@ -94,7 +94,7 @@ const SaveStoreButton = () => {
                     }
                 }
             ))
-            storeNewImage=store;
+            storeNewImage = store;
             PostData(storeNewImage)
             console.log(ImageData, "image Data")
             setStoreNew(true)
