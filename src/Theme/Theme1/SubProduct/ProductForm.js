@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaImage } from "react-icons/fa6";
 import { useStore } from '../T1Context';
 import ImageDrop from '../../../Components/Editor/ImageDrop';
+import useFetch from '../../../Hooks/useFetch';
+import { useImage } from '../../../Hooks/useImage';
+import { toast } from 'react-toastify';
 export default function ProductForm({ onClose }) {
-
+    const {sendRequest}=useFetch()
+    const {uploadImage}=useImage()
     const { setStore, store } = useStore();
     const initialState = {
         name: '',
@@ -24,6 +28,8 @@ export default function ProductForm({ onClose }) {
         category: [], // Change to array
         subcategories: [store?.subCategories[0]?.name] // Change to array
     };
+
+    const [onEditDataUpload,setOnEditDataUpload]=useState(false)
 
 
     const [formState, setFormState] = useState(initialState);
@@ -126,17 +132,80 @@ export default function ProductForm({ onClose }) {
         document.getElementById('product-image').click();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
-        console.log("sdsadasdas");
-        const newProduct = {
-            ...formState,
-            id: Math.random().toString(36).substr(2, 9), // Generates a random id
-        };
+        if(store.isEdit){
+            console.log("Is inside edit");
+            try{
+                const productImg = await uploadImage(formState?.image?.imageUrl);
 
-        console.log("product is ", newProduct);
-        console.log("strore is ", store);
-
+                // Update product image
+                setFormState(prev=>({...prev,image:{...prev.image,imageUrl:productImg.img}}))
+                setFormState(prev=>({...prev,image:{...prev.image,imageID:productImg.id}}))
+            
+                for(let i=0;i<formState.variant[0].options.length;i++){
+                    const optionImage=await uploadImage(formState.variant[0].options[i].image.imageUrl);
+                    setFormState(prev => {
+                        // Create a copy of the previous state
+                        const formState = { ...prev };
+                      
+                        // Navigate to the specific variant
+                        const variant = { ...formState.variant[0] };
+                      
+                        // Navigate to the specific option
+                        const option = { ...variant.options[i] };
+                      
+                        // Update the image URL in the option
+                        option.image = { ...option.image, imageUrl: optionImage.img };
+                      
+                        // Update the option in the variant
+                        variant.options[i] = option;
+                      
+                        // Update the variant in the new state
+                        formState.variant[0] = variant;
+                      
+                        // Return the updated state
+                        return formState;
+                      });
+                      
+                      setFormState(prev => {
+                        // Create a copy of the previous state
+                        const formState = { ...prev };
+                      
+                        // Navigate to the specific variant
+                        const variant = { ...formState.variant[0] };
+                      
+                        // Navigate to the specific option
+                        const option = { ...variant.options[i] };
+                      
+                        // Update the image URL in the option
+                        option.image = { ...option.image, imageID: optionImage.id };
+                      
+                        // Update the option in the variant
+                        variant.options[i] = option;
+                      
+                        // Update the variant in the new state
+                        formState.variant[0] = variant;
+                      
+                        // Return the updated state
+                        return formState;
+                      });
+    
+                }
+                
+                setOnEditDataUpload(true)
+            }
+            catch(err){
+                toast("error uploading variant images ")
+            }
+        
+    }
+    const newProduct = {
+        ...formState,
+        id: Math.random().toString(36).substr(2, 9), // Generates a random id
+    };
+    console.log("product is ", newProduct);
+    console.log("strore is ", store);
         setStore(prevStore => ({
             ...prevStore,
             products: [...prevStore.products, newProduct]
@@ -144,10 +213,28 @@ export default function ProductForm({ onClose }) {
         console.log(store);
         setFormState(initialState);
         onClose();
+    //Here upload Images
     };
-
-
-
+    useEffect(()=>{
+        console.log("here is data")
+        if(onEditDataUpload){
+            console.log("Inside formData");
+            uploadData()
+            
+        }
+    },[onEditDataUpload,setOnEditDataUpload])
+    
+    const uploadData=async()=>{
+        await sendRequest(
+            `product/addProduct`,
+            'POST',
+            JSON.stringify({formState}),
+            {
+                'Content-Type': 'application/json'
+            }
+        );
+        setOnEditDataUpload(false)
+    }
 
 
     return (
