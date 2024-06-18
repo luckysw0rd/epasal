@@ -33,13 +33,13 @@ const SubProduct1 = ({
         }));
     };
 
-    const handleRemoveProduct =async (productId) => {
+    const handleRemoveProduct =async (productName) => {
         if(store.isEdit){
             try{
                 const response=await sendRequest(
                     `product/deleteProduct`,
                     'POST',
-                    JSON.stringify({id:productId}),
+                    JSON.stringify(productName),
                     {
                         'Content-Type': 'application/json'
                     }
@@ -49,11 +49,17 @@ const SubProduct1 = ({
                 console.log(err)
                 toast("Error Deleting Product")
             }
+            setStore(prevStore => ({
+                ...prevStore,
+                products: prevStore.products.filter(product => product._id !== productName.id)
+            }));
         }
+        else{
         setStore(prevStore => ({
             ...prevStore,
-            products: prevStore.products.filter(product => product.id !== productId)
+            products: prevStore.products.filter(product => product.id !== productName.id)
         }));
+    }
     };
 
     const toggleAddProduct = () => {
