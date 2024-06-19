@@ -23,13 +23,12 @@ const Product = ({ store }) => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [minPrice, setMinPrice] = useState(''); // Added state for minPrice
   const [maxPrice, setMaxPrice] = useState(''); // Added state for maxPrice
-  const [productId, setProductId] = useState(''); // Added state for productId
+
 
   const fetchProducts = async (page = 1, limit = 10, search = '', sortOrder = 'asc') => {
     try {
       const response = await sendRequest(
         `product/getAllProduct/${store._id}?page=${page}&limit=${limit}&search=${search}&sortOrder=${sortOrder}` +
-        `${productId ? `&productId=${productId}` : ''}` +
         `${minPrice ? `&minPrice=${minPrice}` : ''}` +
         `${maxPrice ? `&maxPrice=${maxPrice}` : ''}`,
         'GET',
@@ -110,6 +109,7 @@ const Product = ({ store }) => {
         rating: updatedEditProduct.rating,
         image: updatedEditProduct.image,
         variant: updatedEditProduct.variant,
+        discount:updatedEditProduct.discount,
         inventory: updatedEditProduct.inventory,
         soldQuantity: updatedEditProduct.soldQuantity,
         revenueGenerated: updatedEditProduct.revenueGenerated
@@ -216,10 +216,12 @@ const Product = ({ store }) => {
     setCurrentPage(page);
     fetchProducts(page, 10, searchQuery, sortOrder);
   };
-
+  const handleSearchButton=(e)=>{
+    fetchProducts(1, 10, searchQuery, sortOrder);
+  }
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    fetchProducts(1, 10, event.target.value, sortOrder);
+    
   };
 
   const handleSortChange = (event) => {
@@ -247,14 +249,17 @@ const Product = ({ store }) => {
   return (
     store && (
       <div>
-        <div className="flex flex-col px-2 justify-between mb-4">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="border p-2 px-3"
-          />
+        <div className="flex flex-col px-2 justify-between mb-4 gap-2">
+          <div className='flex gap-2'>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="border p-2 px-3 h-10 flex-grow"
+            />
+            <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
+          </div>
           <select value={sortOrder} onChange={handleSortChange} className="border p-2">
             <option value="asc">Sort by Revenue (Asc)</option>
             <option value="desc">Sort by Revenue (Desc)</option>
@@ -274,13 +279,6 @@ const Product = ({ store }) => {
               onChange={(e) => setMaxPrice(e.target.value)}
               className="border p-2 px-3 mr-2"
             />
-            <input
-              type="text"
-              placeholder="Product ID"
-              value={productId}
-              onChange={(e) => setProductId(e.target.value)}
-              className="border p-2 px-3"
-            />
             <button
               className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
               onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
@@ -289,12 +287,56 @@ const Product = ({ store }) => {
             </button>
             </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4">
+        <div className="flex flex-wrap grow-0 gap-12 p-4">
           {products.map((product, productIndex) => (
-            <div key={productIndex} className="bg-white w-80 h-100 mx-auto shadow-md rounded-lg overflow-hidden transform transition-transform hover:scale-105">
-              {editProductIndex === productIndex ? (
-                <div className="p-6">
+            <div key={productIndex} className="bg-white shadow-lg pb-5 h-100 rounded-lg overflow-hidden transform transition-transform hover:scale-105">
+              
+                <div className=" capitalize">
+                  <img className="flex justify-center mx-auto w-80 h-60" src={product.image.imageUrl} alt={product.name} />
+                  <h2 className="text-xl font-bold my-2 pl-2">{product.name}</h2>
+                  <div className='flex gap-2 '>
+                  <p className="text-gray-700 mb-2 pl-2 flex-grow">{product.description}</p>
+                    <div className='text-xs pr-2'>
+                      <p className="text-gray-700 mb-2">Price: ${product.price}</p>
+                      <p className="text-gray-700 mb-2">Discount: {product.discount}</p>
+                      <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
+                    </div>
+                  </div>
+                  <button
+                    className="bg-blue-500 text-white ml-2 px-4 py-2 rounded mt-3"
+                    onClick={() => {console.log(productIndex,"product Index");handleEditClick(productIndex)}}
+                  >
+                    Edit
+                  </button>
+                </div>
+              
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between items-center mt-6">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+          >
+            Previous
+          </button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+          >
+            Next
+          </button>
+        </div>
+        {editProductIndex!==null && (
+                <div className="  fixed top-0 left-0 w-full h-screen z-50 flex justify-center">
+                  <div className='absolute bg-black opacity-50 w-screen top-0 left-0 h-screen'></div>
+                  <div className='absolute w-[80%] mt-10 bg-white p-12 h-[80%] overflow-y-scroll'>
+                    <div className='absolute top-3 right-5 text-red-500 cursor-pointer' onClick={()=>{handleEditClick(null)}}>X</div>
                   <div className="mb-4">
+                    <h2 className='text-2xl font-bold mb-4'>Edit Product</h2>
                     <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
                     <input
                       type="text"
@@ -324,11 +366,11 @@ const Product = ({ store }) => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Rating</label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Discount</label>
                     <input
                       type="number"
-                      name="rating"
-                      value={editProduct.rating}
+                      name="discount"
+                      value={editProduct.discount}
                       onChange={handleInputChange}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
@@ -347,7 +389,7 @@ const Product = ({ store }) => {
                       <div className="flex justify-between items-center">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
                         <button
-                          className="bg-red-500 text-white px-2 py-1 rounded"
+                          className="bg-red-500 text-white px-2 py-1 rounded mb-2"
                           onClick={() => handleDeleteVariant(variantIndex)}
                         >
                           Delete Variant
@@ -365,7 +407,7 @@ const Product = ({ store }) => {
                           <div className="flex justify-between items-center">
                             <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
                             <button
-                              className="bg-red-500 text-white px-2 py-1 rounded"
+                              className="bg-red-500 text-white px-2 py-1 rounded mb-2"
                               onClick={() => handleDeleteOption(variantIndex, optionIndex)}
                             >
                               Delete Option
@@ -453,43 +495,10 @@ const Product = ({ store }) => {
                       Cancel
                     </button>
                   </div>
-                </div>
-              ) : (
-                <div className="p-6">
-                  <img className="flex justify-center mx-auto w-60 h-60" src={product.image.imageUrl} alt={product.name} />
-                  <h2 className="text-xl font-bold mb-2">{product.name}</h2>
-                  <p className="text-gray-700 mb-2">{product.description}</p>
-                  <p className="text-gray-700 mb-2">Price: ${product.price}</p>
-                  <p className="text-gray-700 mb-2">Rating: {product.rating}</p>
-                  <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
-                  <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={() => handleEditClick(productIndex)}
-                  >
-                    Edit
-                  </button>
+                  </div>
                 </div>
               )}
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-between items-center mt-4">
-          <button
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-            className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
-          >
-            Previous
-          </button>
-          <span>Page {currentPage} of {totalPages}</span>
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
-            className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
-          >
-            Next
-          </button>
-        </div>
+             
       </div>
     )
   );
