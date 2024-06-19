@@ -7,7 +7,9 @@ import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
 import { useParams } from "react-router-dom";
 import EditStore from './EditStore/EditStore.js';
-
+import Order from './Dashboard/Order/Order.js';
+import Product from "./Product/Product.js";
+import General from "./General/General.js";
 const Dashboard = () => {
   const auth = useContext(AuthContext);
   const [dashboardState, setDashboardState] = useState('Employee');
@@ -63,16 +65,22 @@ const Dashboard = () => {
   const renderDashboardContent = (store) => {
     switch (dashboardState) {
       case 'Home':
-        return <Home />;
+        return <Home data={store} />;
       case 'Employee':
         if (role === 'Admin' || role === 'Owner') {
           console.log('Store:', store);
           return <Employee store={store} />;
         } else {
-          return <Home />;
+          return <Home data={store} />;
         }
       case 'Edit Store':
         return <EditStore store={store} />;
+      case 'Order':
+        return <Order store={store}></Order>
+      case 'Product':
+        return <Product store={store}></Product>
+      case 'General':
+        return <General></General>
       default:
         return <Home />;
     }

@@ -10,7 +10,7 @@ const SaveStoreButton = () => {
     const auth = useContext(AuthContext);
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
-    var storeNewImage={};
+    var storeNewImage = {};
     const { previewMode } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
@@ -41,21 +41,21 @@ const SaveStoreButton = () => {
                 });
 
                 // Update variant images
-                if (!store.isEdit) {
-                    for (let j = 0; j < product.variant[0].options.length; j++) {
-                        const variantOption = product.variant[0].options[j];
-                        const variantImg = await uploadImage(variantOption.image.imageUrl);
+                if(!store.isEdit){
+                for (let j = 0; j < product?.variant[0]?.options.length; j++) {
+                    const variantOption = product?.variant[0]?.options[j];
+                    const variantImg = await uploadImage(variantOption?.image?.imageUrl);
 
-                        setStore(prev => {
-                            const updatedProducts = [...prev.products];
-                            const updatedOptions = [...updatedProducts[i].variant[0].options];
-                            updatedOptions[j] = {
-                                ...updatedOptions[j],
-                                image: {
-                                    imageID: variantImg.id,
-                                    imageUrl: variantImg.img
-                                }
-                            };
+                    setStore(prev => {
+                        const updatedProducts = [...prev.products];
+                        const updatedOptions = [...updatedProducts[i]?.variant[0]?.options];
+                        updatedOptions[j] = {
+                            ...updatedOptions[j],
+                            image: {
+                                imageID: variantImg.id,
+                                imageUrl: variantImg.img
+                            }
+                        };
 
                             updatedProducts[i] = {
                                 ...updatedProducts[i],
@@ -94,7 +94,7 @@ const SaveStoreButton = () => {
                     }
                 }
             ))
-            storeNewImage=store;
+            storeNewImage = store;
             PostData(storeNewImage)
             console.log(ImageData, "image Data")
             setStoreNew(true)

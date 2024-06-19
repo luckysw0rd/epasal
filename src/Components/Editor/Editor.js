@@ -287,7 +287,8 @@ const Editor = () => {
       ) : (
         <button className='fixed top-0 right-10 mt-24 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setNavHide(true) }}>Show</button>
       ) : !store.fetchedFromBackend && (
-        <button className='fixed top-0 right-10 mt-20 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: false })) }}>Preview</button>
+        // <button className='fixed top-0 right-10 mt-20 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: false })) }}>Preview</button>
+        <></>
       )}
     </>
   );

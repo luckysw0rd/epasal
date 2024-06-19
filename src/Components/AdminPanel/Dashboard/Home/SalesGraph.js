@@ -6,22 +6,22 @@ const SalesGraph = () => {
     const [chartDimensions, setChartDimensions] = useState({
         width: window.innerWidth < 768 ? 380 : 750,
         height: window.innerWidth < 768 ? 300 : 400,
-      });
-    
-      const handleResize = () => {
+    });
+
+    const handleResize = () => {
         setChartDimensions({
-          width: window.innerWidth < 768 ? 380 : 750,
-          height: window.innerWidth < 768 ? 300 : 400,
+            width: window.innerWidth < 768 ? 380 : 750,
+            height: window.innerWidth < 768 ? 300 : 400,
         });
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => {
-          window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
-      }, []);
-      
+    }, []);
+
     const handleChange = (event) => {
         setSelectedPeriod(event.target.value);
     };

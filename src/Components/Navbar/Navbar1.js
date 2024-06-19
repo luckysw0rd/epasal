@@ -209,12 +209,12 @@ const Navbar1 = ({
                     )}
                 </button>
                 {isCartOpen && <CartDropdown items={cartItems} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} />} {/* Conditionally render the CartDropdown */}
-                <button
-                    onClick={null}
+                {(store.isEdit || !store.fetchedFromBackend) && <button
+                    onClick={()=>{setStore(prev=>({...prev,previewMode:!store.previewMode}))}}
                     className="bg-transparent border border-black px-2 py-1 rounded text-black"
                 >
                     Preview
-                </button>
+                </button>}
             </div>
 
             {isSidebarOpen && (

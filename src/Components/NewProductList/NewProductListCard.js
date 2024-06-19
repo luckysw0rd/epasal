@@ -10,7 +10,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product  })
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
-    const [displayedImage, setDisplayedImage] = useState(product.image.imageUrl);
+    const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
 
     if (!product) return null;
 
@@ -21,12 +21,12 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product  })
 
     const handleOptionSelect = (index) => {
         setSelectedOptionIndex(index);
-        setDisplayedImage(firstVariant?.options[index].image.imageUrl);
+        setDisplayedImage(firstVariant?.options[index]?.image?.imageUrl);
     };
 
     const handleDefaultImage = () => {
         setSelectedOptionIndex(-1);
-        setDisplayedImage(product.image.imageUrl);
+        setDisplayedImage(product?.image?.imageUrl);
     };
 
     return (
@@ -47,7 +47,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product  })
                     )} */}
                     <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <div>
-                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
+                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-cover mx-auto p-4" style={{ aspectRatio: '1/1' }} />
                         </div>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
@@ -61,15 +61,15 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product  })
                                         className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
                                         onClick={handleDefaultImage}
                                     >
-                                        <img src={image.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2' />
+                                        <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2' />
                                     </div>
-                                    {firstVariant?.options.map((option, index) => (
+                                    {firstVariant?.options?.map((option, index) => (
                                         <div
                                             key={index}
                                             className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
                                             onClick={() => handleOptionSelect(index)}
                                         >
-                                            <img src={option.image.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                                            <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
                                         </div>
                                     ))}
                                 </div>
