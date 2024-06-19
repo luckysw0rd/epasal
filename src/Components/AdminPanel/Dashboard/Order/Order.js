@@ -264,6 +264,7 @@ const Order = ({ store }) => {
                             <div className="mt-4">
                                 <div>
                                     <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
+                                    <p className="text-gray-600">Price : Nrs {order.price}</p>
                                     <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
                                     <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
                                     <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>

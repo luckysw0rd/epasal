@@ -43,7 +43,7 @@ const Home = ({ data }) => {
           <div className="p-4 flex items-center justify-between">
             <div className='flex flex-col gap-5'>
               {/* This could be done using in more optimal way by conditional rendering and checking if the data actually exists or not */}
-              <div className="text-2xl font-semibold">{data?.customers?.length || 0}</div>
+              <div className="text-2xl font-semibold">{data?.customers || 0}</div>
               <div className="text-sm text-gray-500">till this date</div>
 
             </div>
