@@ -1,9 +1,9 @@
-import React, { useEffect, useState ,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useFetch from '../../../../Hooks/useFetch';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import DeliveryCodeModal from './DeliveryCodeModal.js';
 import { toast } from 'react-toastify';
-import {AuthContext} from '../../../../Hooks/AuthContext.js';
+import { AuthContext } from '../../../../Hooks/AuthContext.js';
 
 
 const Order = ({ store }) => {
@@ -105,7 +105,7 @@ const Order = ({ store }) => {
             if (deliveryCode) {
                 updateData.deliveryCode = deliveryCode;
             }
-            updateData.storeID= store._id;
+            updateData.storeID = store._id;
             const response = await sendRequest(
                 `order/update/${store._id}/${orderId}?storeId=${store._id}`,
                 'PUT',
@@ -264,6 +264,7 @@ const Order = ({ store }) => {
                             <div className="mt-4">
                                 <div>
                                     <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
+                                    <p className="text-gray-600">Price : Nrs {order.price}</p>
                                     <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
                                     <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
                                     <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>
