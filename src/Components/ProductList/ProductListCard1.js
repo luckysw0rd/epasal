@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
-
+import './productList.css'
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
     const { productColor, previewMode, addToCart, isEdit } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
@@ -45,8 +45,8 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                         </button>
                     )}
                     <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-                        <div>
-                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
+                        <div className=' '>
+                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px]  rounded-xl object-cover  mx-auto p-4" style={{ aspectRatio: '1/1' }} />
                         </div>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
@@ -55,7 +55,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                 <p className="font-bold text-lg" style={{ color: priceColor }}>Rs {price}</p>
                             </div>
                             <div className="grid gap-2 relative w-full">
-                                <div className="flex mt-5">
+                                <div className="custom custom-scrollbar flex mt-5 overflow-x-scroll w-[300px]">
                                     <div
                                         className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
                                         onClick={handleDefaultImage}
@@ -65,7 +65,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                     {firstVariant?.options.map((option, index) => (
                                         <div
                                             key={index}
-                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
+                                            className={`cursor-pointer overflow-x-auto text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
                                             onClick={() => handleOptionSelect(index)}
                                         >
                                             <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />

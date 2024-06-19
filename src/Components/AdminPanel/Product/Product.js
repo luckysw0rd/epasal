@@ -6,9 +6,7 @@ import { toast } from 'react-toastify';
 import { useImage } from '../../../Hooks/useImage';
 
 const Product = ({ store }) => {
-  const initialProducts = [
-    // Initial product data
-  ];
+  const initialProducts = [];
 
   const { uploadImage } = useImage();
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -17,6 +15,36 @@ const Product = ({ store }) => {
   const [editProduct, setEditProduct] = useState(null);
   const [newVariant, setNewVariant] = useState({ name: '', options: [{ name: '', price: undefined, discount: undefined, count: undefined }] });
   const auth = useContext(AuthContext);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [totalProducts, setTotalProducts] = useState(0);
+
+  const fetchProducts = async (page = 1, limit = 10, search = '', sortOrder = 'asc') => {
+    try {
+      const responseData = await sendRequest(
+        `product/getAllProduct/${store._id}?page=${page}&limit=${limit}&search=${search}&sortOrder=${sortOrder}`,
+        'GET',
+        null,
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token
+        }
+      );
+      setProducts(responseData.products);
+      setTotalProducts(responseData.totalProducts);
+      setTotalPages(responseData.totalPages);
+      setCurrentPage(responseData.currentPage);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const handleEditClick = (productIndex) => {
     setEditProductIndex(productIndex);
@@ -45,37 +73,13 @@ const Product = ({ store }) => {
     });
   };
 
-  const fetchProducts = async () => {
-    try {
-      const responseData = await sendRequest(
-        'product/getAllProduct/' + store._id,
-        'GET',
-        null,
-        {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + auth.token
-        }
-      );
-      console.log(responseData.products);
-      setProducts(responseData.products);
-    } catch (error) {
-      toast(error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const handleSaveClick = async () => {
     try {
-      // Upload product image
       const uploadedProductImage = await uploadImage(editProduct.image.imageUrl);
       const updatedEditProduct = { ...editProduct };
-      updatedEditProduct.image.imageUrl = uploadedProductImage.img; // Update product image URL
-      updatedEditProduct.image.imageId = uploadedProductImage.id; // Update product image ID
+      updatedEditProduct.image.imageUrl = uploadedProductImage.img;
+      updatedEditProduct.image.imageId = uploadedProductImage.id;
 
-      // Upload variant images
       const updatedVariants = await Promise.all(
         updatedEditProduct.variant.map(async (variant) => {
           const updatedOptions = await Promise.all(
@@ -93,7 +97,6 @@ const Product = ({ store }) => {
 
       updatedEditProduct.variant = updatedVariants;
 
-      // Prepare the data for the backend
       const updates = {
         name: updatedEditProduct.name,
         description: updatedEditProduct.description,
@@ -116,11 +119,7 @@ const Product = ({ store }) => {
         }
       );
 
-      // Handle success message or update UI
-      console.log('Product updated successfully:', response);
       toast.success('Product updated successfully');
-
-      // Update local state with updated products
       const updatedProducts = [...products];
       updatedProducts[editProductIndex] = updatedEditProduct;
       setProducts(updatedProducts);
@@ -148,7 +147,7 @@ const Product = ({ store }) => {
             if (variantIndex === 0) {
               return { ...option, [name]: value };
             } else {
-              return option; // Disable editing for other variants
+              return option;
             }
           }
           return option;
@@ -207,6 +206,21 @@ const Product = ({ store }) => {
     });
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    fetchProducts(page, 10, searchQuery, sortOrder);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    fetchProducts(1, 10, event.target.value, sortOrder);
+  };
+
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
+    fetchProducts(1, 10, searchQuery, event.target.value);
+  };
+
   const ProductImageDropzone = ({ imageUrl, setImageUrl }) => {
     const { getRootProps, getInputProps } = useDropzone({
       onDrop: (files) => handleImageUpload(files, setImageUrl),
@@ -226,231 +240,217 @@ const Product = ({ store }) => {
 
   return (
     store &&
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
-      {products.map((product, productIndex) => (
-        <div key={productIndex} className="w-full rounded overflow-hidden shadow-lg m-4">
-          {editProductIndex === productIndex ? (
-            <div className="px-6 py-4">
-              {/* Product Name */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={editProduct.name}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full"
-                />
-              </div>
-
-              {/* Product Description */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-                  Description
-                </label>
-                <textarea
-                  name="description"
-                  value={editProduct.description}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full"
-                />
-              </div>
-
-              {/* Product Price */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
-                  Price
-                </label>
-                <input
-                  type="number"
-                  name="price"
-                  value={editProduct.price}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full"
-                />
-              </div>
-
-              {/* Inventory */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="inventory">
-                  Inventory
-                </label>
-                <input
-                  type="number"
-                  name="inventory"
-                  value={editProduct.inventory}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full"
-                />
-              </div>
-
-              {/* Sold Quantity */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="soldQuantity">
-                  Sold Quantity
-                </label>
-                <input
-                  type="number"
-                  name="soldQuantity"
-                  value={editProduct.soldQuantity}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full"
-                  disabled
-                />
-              </div>
-
-              {/* Revenue Generated */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="revenueGenerated">
-                  Revenue Generated
-                </label>
-                <input
-                  type="number"
-                  name="revenueGenerated"
-                  value={editProduct.revenueGenerated}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full"
-                  disabled
-                />
-              </div>
-
-              {/* Product Image */}
-              <div className="mb-4">
-                <ProductImageDropzone
-                  imageUrl={editProduct.image.imageUrl}
-                  setImageUrl={(imageUrl) =>
-                    setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl } })
-                  }
-                />
-              </div>
-
-              {/* Variants */}
-              {editProduct.variant.map((variant, variantIndex) => (
-                <div key={variantIndex} className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Variant Name
-                  </label>
+    <div>
+      <div className="flex flex-col  px-2 justify-between mb-4">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="border p-2 px-3"
+        />
+        <select value={sortOrder} onChange={handleSortChange} className="border p-2 ">
+          <option value="asc">Sort by Revenue (Asc)</option>
+          <option value="desc">Sort by Revenue (Desc)</option>
+        </select>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-8 p-4">
+        {products.map((product, productIndex) => (
+          <div key={productIndex} className="bg-white w-80 h-100  mx-auto shadow-md rounded-lg overflow-hidden transform transition-transform hover:scale-105">
+            {editProductIndex === productIndex ? (
+              <div className="p-6">
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
                   <input
                     type="text"
-                    value={variant.name}
-                    onChange={(event) => handleVariantNameChange(event, variantIndex)}
-                    className="border p-2 w-full"
+                    name="name"
+                    value={editProduct.name}
+                    onChange={handleInputChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
-                  {variant.options.map((option, optionIndex) => (
-                    <div key={optionIndex} className="ml-4 mb-4">
-                      <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Option Name
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={option.name}
-                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                        className="border p-2 w-full"
-                      />
-                      <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Option Price
-                      </label>
-                      <input
-                        type="number"
-                        name="price"
-                        value={option.price}
-                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                        className="border p-2 w-full"
-                      />
-                      <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Option Discount
-                      </label>
-                      <input
-                        type="number"
-                        name="discount"
-                        value={option.discount}
-                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                        className="border p-2 w-full"
-                      />
-                      <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Option Count
-                      </label>
-                      <input
-                        type="number"
-                        name="count"
-                        value={option.count}
-                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                        className="border p-2 w-full"
-                      />
-                      <ProductImageDropzone
-                        imageUrl={option.image.imageUrl}
-                        setImageUrl={(imageUrl) =>
-                          handleVariantChange(
-                            { target: { name: 'image', value: { ...option.image, imageUrl } } },
-                            variantIndex,
-                            optionIndex
-                          )
-                        }
-                      />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                  <textarea
+                    name="description"
+                    value={editProduct.description}
+                    onChange={handleInputChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={editProduct.price}
+                    onChange={handleInputChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Rating</label>
+                  <input
+                    type="number"
+                    name="rating"
+                    value={editProduct.rating}
+                    onChange={handleInputChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+                  <ProductImageDropzone
+                    imageUrl={editProduct.image.imageUrl}
+                    setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
+                    className=" w-10 h-10"
+                  />
+                </div>
+
+                {editProduct.variant.map((variant, variantIndex) => (
+                  <div key={variantIndex} className="mb-4">
+                    <div className="flex justify-between items-center">
+                      <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
                       <button
-                        type="button"
-                        className="bg-red-500 text-white p-2 rounded mt-2"
-                        onClick={() => handleDeleteOption(variantIndex, optionIndex)}
+                        className="bg-red-500 text-white px-2 py-1 rounded"
+                        onClick={() => handleDeleteVariant(variantIndex)}
                       >
-                        Delete Option
+                        Delete Variant
                       </button>
                     </div>
-                  ))}
+                    <input
+                      type="text"
+                      value={variant.name}
+                      onChange={(event) => handleVariantNameChange(event, variantIndex)}
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                      placeholder="Variant Name"
+                    />
+                    {variant.options.map((option, optionIndex) => (
+                      <div key={optionIndex} className="mb-4">
+                        <div className="flex justify-between items-center">
+                          <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
+                          <button
+                            className="bg-red-500 text-white px-2 py-1 rounded"
+                            onClick={() => handleDeleteOption(variantIndex, optionIndex)}
+                          >
+                            Delete Option
+                          </button>
+                        </div>
+
+                        <input
+                          type="text"
+                          name="name"
+                          value={option.name}
+                          onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                          placeholder="Option Name"
+                        />
+                        {variantIndex === 0 && <>
+                          <input
+                            type="number"
+                            name="price"
+                            value={option.price}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Price"
+                          />
+                          <input
+                            type="number"
+                            name="discount"
+                            value={option.discount}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Discount"
+                          />
+                          <input
+                            type="number"
+                            name="count"
+                            value={option.count}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Count"
+                          /></>}
+                        {variantIndex === 0 && (
+                          <ProductImageDropzone
+                            imageUrl={option.image?.imageUrl}
+                            setImageUrl={(url) =>
+                              setEditProduct((prev) => {
+                                const updatedVariants = [...prev.variant];
+                                updatedVariants[variantIndex].options[optionIndex].image = {
+                                  ...updatedVariants[variantIndex].options[optionIndex].image,
+                                  imageUrl: url
+                                };
+                                return { ...prev, variant: updatedVariants };
+                              })
+                            }
+                          />)}
+                      </div>
+                    ))}
+                    <button
+                      className="bg-blue-500 text-white px-2 py-1 rounded"
+                      onClick={() => handleAddOption(variantIndex)}
+                    >
+                      Add Option
+                    </button>
+                  </div>
+                ))}
+                <button
+                  className="bg-green-500 text-white px-2 py-1 rounded mt-4"
+                  onClick={handleAddVariant}
+                >
+                  Add Variant
+                </button>
+                <div className="mt-4">
                   <button
-                    type="button"
-                    className="bg-green-500 text-white p-2 rounded mt-2"
-                    onClick={() => handleAddOption(variantIndex)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                    onClick={handleSaveClick}
                   >
-                    Add Option
+                    Save
                   </button>
                   <button
-                    type="button"
-                    className="bg-red-500 text-white p-2 rounded mt-2"
-                    onClick={() => handleDeleteVariant(variantIndex)}
+                    className="bg-gray-500 text-white px-4 py-2 rounded"
+                    onClick={() => setEditProductIndex(null)}
                   >
-                    Delete Variant
+                    Cancel
                   </button>
                 </div>
-              ))}
-              <button
-                type="button"
-                className="bg-green-500 text-white p-2 rounded mt-2"
-                onClick={handleAddVariant}
-              >
-                Add Variant
-              </button>
-
-              <button
-                type="button"
-                className="bg-blue-500 text-white p-2 rounded mt-2"
-                onClick={handleSaveClick}
-              >
-                Save
-              </button>
-            </div>
-          ) : (
-            <div className="px-6 py-4">
-              <div className="font-bold text-xl mb-2">{product.name}</div>
-              <p className="text-gray-700 text-base">{product.description}</p>
-              <p className="text-gray-700 text-base">Price: ${product.price}</p>
-              <p className="text-gray-700 text-base">Inventory: {product.inventory}</p>
-              <p className="text-gray-700 text-base">Sold Quantity: {product.soldQuantity}</p>
-              <p className="text-gray-700 text-base">Revenue Generated: ${product.revenueGenerated}</p>
-              {product.image && <img className="w-full" src={product.image.imageUrl} alt="Product" />}
-              <button
-                type="button"
-                className="bg-yellow-500 text-white p-2 rounded mt-2"
-                onClick={() => handleEditClick(productIndex)}
-              >
-                Edit
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
+              </div>
+            ) : (
+              <div className="p-6">
+                <img className=" flex justify-center mx-auto w-60 h-60" src={product.image.imageUrl} alt={product.name} />
+                <h2 className="text-xl font-bold mb-2">{product.name}</h2>
+                <p className="text-gray-700 mb-2">{product.description}</p>
+                <p className="text-gray-700 mb-2">Price: ${product.price}</p>
+                <p className="text-gray-700 mb-2">Rating: {product.rating}</p>
+                <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={() => handleEditClick(productIndex)}
+                >
+                  Edit
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between items-center mt-4">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+          className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+        >
+          Previous
+        </button>
+        <span>Page {currentPage} of {totalPages}</span>
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+          className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

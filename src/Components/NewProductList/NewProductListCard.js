@@ -47,7 +47,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product  })
                     )} */}
                     <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <div>
-                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
+                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-cover mx-auto p-4" style={{ aspectRatio: '1/1' }} />
                         </div>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
