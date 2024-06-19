@@ -16,6 +16,7 @@ import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
 import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
@@ -32,7 +33,6 @@ function App() {
         <Route path="/productform" element={<ProductForm />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
-
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
 
