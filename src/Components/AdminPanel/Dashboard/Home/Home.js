@@ -27,7 +27,8 @@ const Home = ({ data }) => {
 
             <div className="p-4 flex items-center justify-between">
               <div className='flex flex-col gap-5'>
-                <div className="text-2xl font-semibold">Rs. {data?.revenueGenerated || 0}</div>
+                <div className="text-2xl font-semibold">Rs. {data?.revenueGenerated ? data.revenueGenerated.toFixed(2) : '0.00'}</div>
+
                 <div className='text-[#888888]'><span className="text-sm text-green-600">+ {salesChange} </span> from previous month</div>
               </div>
             </div>
@@ -58,7 +59,7 @@ const Home = ({ data }) => {
 
           <div className="p-4 flex items-center justify-between">
             <div className='flex flex-col gap-5'>
-              <div className="text-2xl font-semibold">{data?.orders?.length||0}</div>
+              <div className="text-2xl font-semibold">{data?.orders?.length || 0}</div>
               <div className="text-sm text-gray-500">till this date</div>
 
             </div>
@@ -78,7 +79,8 @@ const Home = ({ data }) => {
 
             <div className="p-4 flex items-center justify-between">
               <div className='flex flex-col gap-5'>
-                <div className="text-2xl font-semibold">Rs. {data?.dueAmount || 0}</div>
+                <div className="text-2xl font-semibold">Rs. {data?.dueAmount ? parseFloat(data.dueAmount).toFixed(2) : '0.00'}</div>
+
                 <div className="text-sm text-[#888888]">Amount you need to pay to Banau </div>
                 <button className='w-[60%] border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-xl py-2 text-green-600'>
                   <div className="flex items-center text-bold justify-center gap-2">
