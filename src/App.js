@@ -17,6 +17,7 @@ import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
+import { StoreProvider } from "./Theme/Theme1/T1Context";
 
 function App() {
   const { token, login, logout, userID } = useAuth();
@@ -52,18 +53,21 @@ function App() {
   }
 
   return (
-    <PrimeReactProvider>
-      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
-        <div className="App">
-          <Router>
-            <Routes>
-              {routes}
-            </Routes>
-          </Router>
-          <ToastContainer />
-        </div>
-      </AuthContext.Provider>
-    </PrimeReactProvider>
+    // DELETE STORE PROVIDER LATER
+    <StoreProvider >
+      <PrimeReactProvider>
+        <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
+          <div className="App">
+            <Router>
+              <Routes>
+                {routes}
+              </Routes>
+            </Router>
+            <ToastContainer />
+          </div>
+        </AuthContext.Provider>
+      </PrimeReactProvider>
+    </StoreProvider>
 
   );
 }

@@ -9,7 +9,6 @@ import { StarIcon } from '@heroicons/react/16/solid';
 import ProductReview from './ProductReview';
 import SimilarProducts from './SimilarProducts';
 
-
 const ProjectLanding1 = () => {
     const product = {
         id: 1,
@@ -18,7 +17,7 @@ const ProjectLanding1 = () => {
         image: { imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg", imageID: '' },
         categories: ["Men"],
         subcategories: ["Watch"],
-        rating: 3,
+        rating: 2.5,
         count: 1,
         description: "A pink hoodie is a stylish, comfy hoodie inspired by Link from the Legend of Zelda series.",
         variant: [
@@ -64,14 +63,13 @@ const ProjectLanding1 = () => {
     const selectedOption = selectedOptionIndex === -1 ? null : selectedVariant?.options[selectedOptionIndex];
     const price = selectedOption ? selectedOption.price : product.price || 0;
     const discount = selectedOption ? selectedOption.discount : product.discount || 0;
-    const [firstVariant, ...remainingVariant] = product.variant
-    const [productCount, setProductCount] = useState(product.count)
+    const [firstVariant, ...remainingVariant] = product.variant;
+    const [productCount, setProductCount] = useState(product.count);
 
     const handleOptionSelect = (index) => {
         setSelectedOptionIndex(index);
         setDisplayedImage(selectedVariant?.options[index].image.imageUrl);
     };
-
 
     const handleDefaultImage = () => {
         setSelectedOptionIndex(-1);
@@ -83,7 +81,8 @@ const ProjectLanding1 = () => {
         const newSelectedVariant = product.variant.find(
             (variant) => variant.options.some(option => option.name === selectedVariantName)
         );
-        setDisplayedImage(newSelectedVariant.options[0].image.imageUrl);
+        const selectedOption = newSelectedVariant.options.find(option => option.name === selectedVariantName);
+        setDisplayedImage(selectedOption.image.imageUrl);
         setSelectedVariant(newSelectedVariant);
     };
 
@@ -99,101 +98,97 @@ const ProjectLanding1 = () => {
     const totalDiscount = discount * productCount;
     return (
         <div className="pt-16 px-16">
-            <div className='flex flex-col gap-10 justify-between'>
+            <div className='flex flex-col gap-5'>
                 {/* PRODUCT DISPLAYING SECTION  */}
                 <div className="flex gap-10">
-                    <div className="p-5 flex gap-10 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)] ">
-                        <div className="w-[400px] h-[400px] flex flex-col gap-5">
-                            <img
-                                src={displayedImage}
-                                alt="Pink Winter Hoodie"
-                                className="w-full h-auto rounded"
-                                style={{ aspectRatio: '1/1' }}
-                            />
-                            <div className="flex space-x-2">
-                                <div
-                                    className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
-                                    onClick={handleDefaultImage}
-                                >
-                                    <img src={product.image.imageUrl} alt="Default" style={{ height: "69px", width: "69px" }} className='me-2' />
-                                </div>
-                                {selectedVariant?.options.map((option, index) => (
+                    <div className="flex flex-col gap-10 p-5 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)] w-[75%]">
+                        <div className="flex gap-10">
+                            <div className="flex flex-col gap-5 w-[400px] h-[400px]">
+                                <img
+                                    src={displayedImage}
+                                    alt="Pink Winter Hoodie"
+                                    className="w-full h-auto rounded"
+                                    style={{ aspectRatio: '1/1' }}
+                                />
+                                <div className="flex space-x-2">
                                     <div
-                                        key={index}
-                                        className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
-                                        onClick={() => handleOptionSelect(index)}
-
+                                        className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
+                                        onClick={handleDefaultImage}
                                     >
-                                        <img src={option.image.imageUrl} alt={option.name} style={{ height: "69px", width: "69px" }} />
+                                        <img src={product.image.imageUrl} alt="Default" style={{ height: "69px", width: "69px" }} className='me-2' />
                                     </div>
-                                ))}
-                            </div>
-
-                        </div>
-                        <div className="flex flex-col gap-6">
-                            <h1 className="text-2xl font-bold text-[#555555]">{product.name}</h1>
-                            <p className="text-sm text-gray-600">
-                                {product.description}
-                            </p>
-                            <div className='flex mb-2 justify-center md:justify-start'>
-                                {[...Array(5)].map((option, index) => {
-                                    if (index < product.rating)
-                                        return <StarIcon className='w-4 h-4' style={{ color: "red" }} />
-                                    else
-                                        return <StarIcon className='w-4 h-4 text-[#959595]' />
-                                })}
-                            </div>
-                            {/* <hr className='w-full border-t border-gray-400' /> */}
-                            <div className="flex gap-5 items-center">
-                                <span className="text-3xl font-semibold text-[#545454]">Rs {totalPrice}</span>
-                                <span className="line-through text-xl text-[#838383]">Rs {totalDiscount + totalPrice}</span>
-                            </div>
-
-                            <div className="flex gap-5">
-                                <label htmlFor="size" className="block text-gray-700">{firstVariant.name}:</label>
-                                <select
-                                    id="size"
-                                    className="pr-5 pl-2 py-1 w-20 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" onChange={handleVariantChange}
-                                    value={selectedOption && selectedOption.name}
-                                >
-                                    {firstVariant.options.map((option, index) => (
-                                        <option onClick={() => { handleOptionSelect(index) }} value={option.name}>{option.name}</option>
+                                    {selectedVariant?.options.map((option, index) => (
+                                        <div
+                                            key={index}
+                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
+                                            onClick={() => handleOptionSelect(index)}
+                                        >
+                                            <img src={option.image.imageUrl} alt={option.name} style={{ height: "69px", width: "69px" }} />
+                                        </div>
                                     ))}
-                                </select>
+                                </div>
                             </div>
-
-                            {remainingVariant.map((v, index) => (
-                                <div className="flex gap-5">
-                                    <label htmlFor="size" className="block text-gray-700">{v.name}:</label>
+                            <div className="flex flex-col gap-4 w-full">
+                                <h1 className="text-2xl font-bold text-[#555555]">{product.name}</h1>
+                                <p className="text-sm text-gray-600">
+                                    {product.description}
+                                </p>
+                                <div className='flex mb-2 justify-center md:justify-start'>
+                                    {[...Array(5)].map((option, index) => {
+                                        if (index < product.rating)
+                                            return <StarIcon className='w-5 h-5 text-[#8B5A08]' key={index} />
+                                        else
+                                            return <StarIcon className='w-5 h-5 text-[#959595]' key={index} />
+                                    })}
+                                </div>
+                                <div className="flex gap-5 items-center">
+                                    <span className="text-3xl font-semibold text-[#545454]">Rs {totalPrice}</span>
+                                    <span className="line-through text-xl text-[#838383]">Rs {totalDiscount + totalPrice}</span>
+                                </div>
+                                <div className="flex gap-5 items-center">
+                                    <label htmlFor="size" className="block text-gray-700">{firstVariant.name}:</label>
                                     <select
                                         id="size"
-                                        className="pr-5 pl-2 py-1 w-20 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                        className="pr-5 pl-2 py-1 w-24 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                        value={selectedOption && selectedOption.name}
+                                        onChange={handleVariantChange}
                                     >
-                                        {v.options.map((option, index) => (
-                                            <option value={option.name}>{option.name}</option>
+                                        {firstVariant.options.map((option, index) => (
+                                            <option key={index} onClick={() => { handleOptionSelect(index) }} value={option.name}>{option.name}</option>
                                         ))}
                                     </select>
                                 </div>
-                            ))}
-
-                            <div className="flex gap-5 items-center">
-                                <label htmlFor="size" className="block text-gray-700">Quantity:</label>
-                                <div className='flex items-center gap-3'>
-                                    <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={decrementQuantity}> - </button>
-                                    <span className="">{productCount}</span>
-                                    <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={incrementQuantity}> + </button>
+                                {remainingVariant.map((v, index) => (
+                                    <div className="flex gap-5 items-center" key={index}>
+                                        <label htmlFor="size" className="block text-gray-700">{v.name}:</label>
+                                        <select
+                                            id="size"
+                                            className="pr-5 pl-2 py-1 w-24 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                        >
+                                            {v.options.map((option, idx) => (
+                                                <option key={idx} value={option.name}>{option.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
+                                <div className="flex gap-5 items-center">
+                                    <label htmlFor="size" className="block text-gray-700">Quantity:</label>
+                                    <div className='flex items-center gap-3'>
+                                        <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={decrementQuantity}> - </button>
+                                        <span className="">{productCount}</span>
+                                        <button className="px-3 py-1 bg-gray-200 rounded-md" onClick={incrementQuantity}> + </button>
+                                    </div>
+                                </div>
+                                <div className='flex my-10 items-center gap-5'>
+                                    <button className="w-1/2 border border-gray-600 py-2 rounded-md">Buy Now</button>
+                                    <div className='border border-gray-600 rounded-md p-2'><TbShoppingBagPlus size={20} /></div>
                                 </div>
                             </div>
-                            <div className='flex mt-5 mb-16 items-center gap-5'>
-                                <button className="w-1/2 border border-gray-600 py-2 rounded-md">Buy Now</button>
-                                <div className='border border-gray-600 rounded-md p-2'><TbShoppingBagPlus size={20} /></div>
-                            </div>
                         </div>
-
                     </div>
 
                     {/* LOCATION SECTION  */}
-                    <div className="w-1/3 p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
+                    <div className="w-[25%] p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
                         <div className='flex flex-col gap-8'>
                             <div>
                                 <div className="flex flex-col gap-3 text-xs text-[#898989]">
@@ -217,12 +212,11 @@ const ProjectLanding1 = () => {
                 </div>
 
                 {/* REVIEW SECTION  */}
-                <div className='flex gap-10 justify-between'>
-                    <ProductReview />
-                    <SimilarProducts />
+                <div className='w-full flex gap-10'>
+                    <div className='w-[75%] p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><ProductReview product={product} /></div>
+                    <div className='w-[25%] p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><SimilarProducts /></div>
                 </div>
-            </div >
-
+            </div>
         </div>
     );
 }

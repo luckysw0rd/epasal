@@ -8,4 +8,3 @@ export const store = {
     mostSold: "Plain T-shirt",
     salesChange: 2.33,
   };
-  

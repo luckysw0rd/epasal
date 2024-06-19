@@ -3,13 +3,13 @@ import { motion } from 'framer-motion';
 import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
-
+import './productList.css'
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart } = productListProps;
+    const { productColor, previewMode, addToCart, isEdit } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
-    const [displayedImage, setDisplayedImage] = useState(product.image.imageUrl);
+    const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
 
     if (!product) return null;
 
@@ -20,12 +20,12 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
 
     const handleOptionSelect = (index) => {
         setSelectedOptionIndex(index);
-        setDisplayedImage(firstVariant?.options[index].image.imageUrl);
+        setDisplayedImage(firstVariant?.options[index]?.image?.imageUrl);
     };
 
     const handleDefaultImage = () => {
         setSelectedOptionIndex(-1);
-        setDisplayedImage(product.image.imageUrl);
+        setDisplayedImage(product?.image?.imageUrl);
     };
 
     return (
@@ -36,7 +36,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
         >
             <div className="w-full">
                 <div className="relative w-full">
-                    {!previewMode && (
+                    {(!previewMode || isEdit) && (
                         <button
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
                             onClick={() => handleDeleteProduct(product.id)}
@@ -45,8 +45,8 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                         </button>
                     )}
                     <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-                        <div>
-                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto" style={{ aspectRatio: '1/1' }} />
+                        <div className=' '>
+                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px]  rounded-xl object-cover  mx-auto p-4" style={{ aspectRatio: '1/1' }} />
                         </div>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
@@ -55,20 +55,20 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                 <p className="font-bold text-lg" style={{ color: priceColor }}>Rs {price}</p>
                             </div>
                             <div className="grid gap-2 relative w-full">
-                                <div className="flex mt-5">
+                                <div className="custom custom-scrollbar flex mt-5 overflow-x-scroll w-[300px]">
                                     <div
                                         className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
                                         onClick={handleDefaultImage}
                                     >
-                                        <img src={image.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2' />
+                                        <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2' />
                                     </div>
                                     {firstVariant?.options.map((option, index) => (
                                         <div
                                             key={index}
-                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
+                                            className={`cursor-pointer overflow-x-auto text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
                                             onClick={() => handleOptionSelect(index)}
                                         >
-                                            <img src={option.image.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                                            <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
                                         </div>
                                     ))}
                                 </div>

@@ -6,7 +6,7 @@ import { FaUserAlt, FaClipboardList, FaBox } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
 
-const SideBar = ({setDashboardState}) => {
+const SideBar = ({ setDashboardState }) => {
   const navigate = useNavigate();
   const { open, setOpen } = useSiderBar();
 
@@ -19,6 +19,7 @@ const SideBar = ({setDashboardState}) => {
   };
 
   const menus = [
+    { name: "General", link: "/adminpanel", icon: MdEdit },
     { name: "Home", link: "/adminpanel", icon: MdOutlineDashboard },
     { name: "Employee", link: "/adminpanel", icon: FaUserAlt },
     { name: "Order", link: "/adminpanel", icon: FaClipboardList },
@@ -44,7 +45,7 @@ const SideBar = ({setDashboardState}) => {
           shadow-lg
         `}
       >
-        <div className="flex font-Roboto flex-col justify-between h-full">
+        <div className="flex fixed font-Roboto flex-col justify-between h-full">
           <div>
             <div className="py-2 flex justify-center">
               <h1 className="text-3xl font-bold text-black bg-yellow-400 px-4 py-1 mr-4 mt-6 rounded-lg decoration-underline decoration-blue-500">
@@ -63,7 +64,7 @@ const SideBar = ({setDashboardState}) => {
                 //   <span className="pl-2">{menu.name}</span>
                 // </Link>
                 <div className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}>
-                <button onClick={(e)=>{e.preventDefault();setDashboardState(menu.name)}}>{menu.name}</button>
+                  <button onClick={(e) => { e.preventDefault(); setDashboardState(menu.name) }}>{menu.name}</button>
                 </div>
               ))}
             </div>

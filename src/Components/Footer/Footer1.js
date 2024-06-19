@@ -17,7 +17,8 @@ const Footer1 = ({
     email: initialEmail,
     phoneNumber: initialPhoneNumber,
     setStore,
-    store
+    store,
+    isEdit
 }) => {
     const { bgColor, textColor, linkColor, linkHeaderColor, btnBgColor, btnBgColorOnHover } = color.footerColor
     // const [location, setLocation] = useState(initialLocation || '');
@@ -60,7 +61,7 @@ const Footer1 = ({
         setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } }));
     };
     console.log(previewMode);
-    if (!previewMode) {
+    if (!previewMode || isEdit) {
         return (
             <footer style={{ backgroundColor: bgColor, color: textColor,fontFamily:store?.fonts?.Footer }} className="px-10 lg:px-16 py-10 mt-20">
                 <div className='flex flex-col md:flex-row gap-7 justify-between'>
