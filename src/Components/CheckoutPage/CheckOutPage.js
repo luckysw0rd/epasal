@@ -6,7 +6,7 @@ import Loading from '../../Theme/Theme1/Loading/Loading';
 
 const EStore = () => {
   const { store } = useStore();
-
+  console.log(store.cart);
   if (window.location.pathname.includes("/store/") && !store.fetchedFromBackend) {
     return (
       <div className="w-screen">
@@ -41,6 +41,39 @@ const Checkout = () => {
       variant: [{ options: [{ price: 20, image: { imageUrl: 'https://via.placeholder.com/50' } }] }]
     }
   ]);
+  const cart = [
+    {
+      product: "Item 1",
+      price: 100,
+      discountAmount: 10,
+      count: 4,
+      selectedvariant: [
+        {
+          name: "default",
+          options: {
+            name: "default"
+          }
+        }
+      ]
+    },
+    {
+      product: "Item 2",
+      price: 200,
+      discountAmount: 20,
+      count: 4,
+      selectedvariant: [
+        {
+          name: "default",
+          options: {
+            name: "default"
+          }
+        }
+      ]
+    }
+  ];
+  
+
+  
 
   const [quantities, setQuantities] = useState(cartItems.map(() => 1));
   const [itemPrices, setItemPrices] = useState(cartItems.map(item => item.variant[0].options[0].price));
@@ -48,11 +81,7 @@ const Checkout = () => {
   const [deliveryCharge, setDeliveryCharge] = useState(5); // Fixed delivery charge
   const [discount, setDiscount] = useState(0); // Discount amount
 
-
-
-
-
-  const deleteFromCart = (item) => {
+  /* const deleteFromCart = (item) => {
     const newCartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
     setCartItems(newCartItems);
 
@@ -64,7 +93,7 @@ const Checkout = () => {
     const newPrices = [...itemPrices];
     newPrices.splice(itemIndex, 1);
     setItemPrices(newPrices);
-  };
+  }; */
 
   const handleApplyCode = () => {
     // Implement the logic to apply the promo code
@@ -75,65 +104,64 @@ const Checkout = () => {
 
   return (
     <div className="p-4 mt-24 flex flex-col lg:flex-row gap-4">
-      <div className="flex-1 bg-white p-4 shadow-md rounded-md mb-4 lg:mb-0">
+      {/* Checkout Section (2/5 width on larger screens) */}
+      <div className="lg:w-2/5 bg-white p-4 shadow-md rounded-md mb-4 lg:mb-0">
         <h1 className="text-2xl font-bold mb-4">Checkout</h1>
         <div className="flex flex-col h-full">
           <div className="overflow-auto">
             <h2 className="text-xl font-bold mb-2">Cart Items</h2>
-            {cartItems.map((item, index) => (
-              <div key={item.id} className="flex items-center justify-between mb-4">
-  <div className="flex items-center">
-    <img src={item.variant[0].options[0].image.imageUrl} alt={item.name} className="h-12 w-12 mr-4" />
-    <div>
-      <p className="font-semibold">{item.name}</p>
-    </div>
-  </div>
-  <div className="flex items-center text-xl flex-1 justify-between">
-    
-    <span className="mx-auto text-center">{quantities[index]}</span> {/* Quantity centered */}
-    <span className='mr-4'>${itemPrices[index]}</span> {/* Item price on the left */}
-    <IoCloseCircleOutline size={20} onClick={() => deleteFromCart(item)} /> {/* Delete icon on the right */}
-  </div>
-</div>
-
-         
+            {cart.map((item, index) => (
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  {/* <img src={item.variant[0].options[0].image.imageUrl} alt={item.name} className="h-12 w-12 mr-4" /> */}
+                  <div>
+                  <p className="font-semibold">{item.product}</p> 
+                  </div>
+                </div>
+                <div className="flex items-center text-xl flex-1 justify-between">
+                  <span className="mx-auto text-center">{item.count}</span> {/* Quantity centered */}
+                  <span className='mr-4'>रु {item.price}</span> {/* Item price on the left */}
+                  <IoCloseCircleOutline size={20} onClick={/* () => deleteFromCart(item) */null} /> {/* Delete icon on the right */}
+                </div>
+              </div>
             ))}
           </div>
           <div className="flex mt-4">
-  <input
-    type="text"
-    value={promoCode}
-    onChange={(e) => setPromoCode(e.target.value)}
-    placeholder="Enter Promo code"
-    className="border border-gray-300 rounded-md px-4 py-1 mr-3 w-48" // Adjusted width and margin-right here
-  />
-  <button
-    onClick={handleApplyCode}
-    className="bg-gray-700 text-white rounded-md px-6 py-1 ml-auto" // Increased width of the button
-  >
-    Apply Promo Code
-  </button>
-</div>
-
-
+            <input
+              type="text"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+              placeholder="Promo code"
+              className="border border-gray-300 rounded-md px-4 py-1 mr-3 w-2/5 placeholder-center"
+            />
+            <button
+              onClick={handleApplyCode}
+              className="bg-gray-700 text-white rounded-md px-6 py-1 ml-auto sm:px-3 sm:py-1"
+            >
+              <span className="hidden sm:inline">Apply Promo Code</span> {/* Full text for larger screens */}
+              <span className="inline sm:hidden">Apply</span> {/* Short text for smaller screens */}
+            </button>
+          </div>
           <div className="mt-4">
             <div className="flex justify-between">
               <p className="text-sm font-medium">Delivery Charge</p>
-              <p className="text-sm">${deliveryCharge}</p>
+              <p className="text-sm">रु {deliveryCharge}</p>
             </div>
             <div className="flex justify-between mt-8">
               <p className="text-sm font-medium">Discount</p>
-              <p className="text-sm">-${discount}</p>
+              <p className="text-sm">-रु {discount}</p>
             </div>
             <hr className="my-4" />
             <div className="flex justify-between font-bold">
               <p className="text-lg">Total Amount</p>
-              <p className="text-lg">${totalAmount}</p>
+              <p className="text-lg">रु {totalAmount}</p>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex-1 bg-white p-4 shadow-md rounded-md">
+      
+      {/* Contact Information Section (3/5 width on larger screens) */}
+      <div className="lg:w-3/5 bg-white p-4 shadow-md rounded-md">
         <h2 className="text-xl font-bold mb-2">Contact Information</h2>
         <form className="space-y-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -168,9 +196,7 @@ const Checkout = () => {
 
           <p className="text-lg font-semibold mb-2">Payment Options</p>
           <div className="flex flex-col sm:flex-row gap-2">
-            <img src="https://cdn.esewa.com.np/ui/images/esewa_og.png?111" alt="eSewa" className="h-16 object-contain border border
-             
-            border-gray-300 rounded-md mb-4 sm:w-1/6 sm:self-center" />
+            <img src="https://cdn.esewa.com.np/ui/images/esewa_og.png?111" alt="eSewa" className="h-16 object-contain border border-gray-300 rounded-md mb-4 sm:w-1/6 sm:self-center" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Khalti_Digital_Wallet_Logo.png.jpg/640px-Khalti_Digital_Wallet_Logo.png.jpg" alt="Khalti" className="h-16 object-contain border border-gray-300 rounded-md mb-4 sm:w-1/6 sm:self-center" />
             <img src="https://cdn.iconscout.com/icon/free/png-256/free-cash-on-delivery-1851649-1569374.png?f=webp" alt="Cash on Delivery" className="h-16 object-contain border border-gray-300 rounded-md mb-4 sm:w-1/6 sm:self-center" />
           </div>

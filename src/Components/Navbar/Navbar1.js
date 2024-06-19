@@ -39,6 +39,36 @@ const Navbar1 = ({
             variant: [{ options: [{ price: 20, image: { imageUrl: 'https://via.placeholder.com/50' } }] }]
         }
     ]);
+    const cart = [
+        {
+          product: "Item 1",
+          price: 100,
+          discountAmount: 10,
+          count: 4,
+          selectedvariant: [
+            {
+              name: "default",
+              options: {
+                name: "default"
+              }
+            }
+          ]
+        },
+        {
+          product: "Item 2",
+          price: 200,
+          discountAmount: 20,
+          count: 4,
+          selectedvariant: [
+            {
+              name: "default",
+              options: {
+                name: "default"
+              }
+            }
+          ]
+        }
+      ];
 
     useEffect(() => {
         const handleScroll = () => {

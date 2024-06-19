@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 const CartDropdown = ({ items, deleteFromCart, backgroundColor }) => {
     const [quantities, setQuantities] = useState(items.map(() => 1));
@@ -35,10 +36,10 @@ const CartDropdown = ({ items, deleteFromCart, backgroundColor }) => {
                 <div className="flex flex-col gap-3 p-2">
                     {items.map((item, index) => (
                         <div key={index} className="flex items-center justify-between border-b border-black pb-2 mb-2">
-                            <img src={item.variant[0].options[0].image.imageUrl} className="w-12 h-12 mr-4" />
+                            {/* <img src={item.variant[0].options[0].image.imageUrl} className="w-12 h-12 mr-4" /> */}
                             <div className='flex-1'>
                                 <p className="font-medium">{item.name}</p>
-                                <p>${itemPrices[index]}</p>
+                                <p>रु{itemPrices[index]}</p>
                             </div>
                             <IoCloseCircleOutline size={20} onClick={() => deleteFromCart(item)} />
                             <div className="flex items-center text-xl">
@@ -48,7 +49,11 @@ const CartDropdown = ({ items, deleteFromCart, backgroundColor }) => {
                             </div>
                         </div>
                     ))}
-                    <button className="w-full bg-transparent hover:bg-gray-300 text-black font-bold py-2 px-4 rounded mt-4 border border-black">Checkout</button>
+                    <Link to="/checkout">
+      <button className="w-full bg-transparent hover:bg-gray-300 text-black font-bold py-2 px-4 rounded mt-4 border border-black">
+        Checkout
+      </button>
+    </Link>
 
 
                 </div>
