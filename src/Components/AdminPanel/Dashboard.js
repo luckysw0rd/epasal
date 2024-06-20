@@ -80,7 +80,7 @@ const Dashboard = () => {
       case 'Product':
         return <Product store={store}></Product>
       case 'General':
-        return <General></General>
+        return <General store={store}></General>
       default:
         return <Home />;
     }

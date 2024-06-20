@@ -106,7 +106,7 @@ const SaveStoreButton = () => {
         if (storeNew) {
             PostData();
         }
-    }, [storeNew])
+    }, [storeNew,setStoreNew])
     const PostData = async () => {
         try {
             console.log(store, "store my")
