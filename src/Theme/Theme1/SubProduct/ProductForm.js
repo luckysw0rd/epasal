@@ -213,7 +213,7 @@ export default function ProductForm({ onClose }) {
         await sendRequest(
             `product/addProduct`,
             'POST',
-            JSON.stringify({ formState,storeID:store._id }),
+            JSON.stringify({ formState, storeId:store._id }),
             {
                 'Content-Type': 'application/json'
             }

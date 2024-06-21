@@ -6,14 +6,16 @@ import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
+
 const General = ({ store }) => {
     const { uploadImage } = useImage();
-
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ ...store });
+    const [newSubCategory, setNewSubCategory] = useState('');
     const [copySuccess, setCopySuccess] = useState('');
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -39,7 +41,6 @@ const General = ({ store }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Upload images to Cloudinary if they are not already Cloudinary URLs
             const uploadImages = async () => {
                 const updatedData = { ...formData };
 
@@ -48,7 +49,6 @@ const General = ({ store }) => {
                         const uploadedImage = await uploadImage(image);
                         updatedData[type][subType].imageUrl = uploadedImage.img;
                         updatedData[type][subType].imageID = uploadedImage.id;
-
                     }
                 };
 
@@ -103,6 +103,16 @@ const General = ({ store }) => {
         }
     }, []);
 
+    const handleAddSubCategory = () => {
+        if (newSubCategory.trim()) {
+            setFormData({
+                ...formData,
+                subCategories: [...formData.subCategories, { name: newSubCategory.trim() }]
+            });
+            setNewSubCategory('');
+        }
+    };
+
     const esewaDropzone = useDropzone({
         onDrop: (acceptedFiles) => handleDrop(acceptedFiles, 'esewa')
     });
@@ -116,12 +126,13 @@ const General = ({ store }) => {
     });
 
     const renderDropzone = (type, dropzoneProps) => (
-        <div className="mb-4">
+        <div className="mb-4 flex justify-center flex-col items-center mx-auto">
             <div {...dropzoneProps.getRootProps({ className: 'dropzone' })} className="p-4 border-dashed border-2 rounded-lg cursor-pointer text-center">
                 <input {...dropzoneProps.getInputProps()} />
+                <h1 className='font-bold'>QR CODE</h1>
                 <p>Drag 'n' drop an image here, or click to select one</p>
             </div>
-            {formData[type]?.qr?.imageUrl && <img src={formData[type].qr.imageUrl} alt={`${type} QR`} className="w-32 h-32 mt-2 border border-gray-200 rounded-lg" />}
+            {formData[type]?.qr?.imageUrl && <img src={formData[type].qr.imageUrl} alt={`${type} QR`} className="w-60 h-60 mt-2 border border-gray-200 rounded-lg" />}
         </div>
     );
 
@@ -140,6 +151,7 @@ const General = ({ store }) => {
         esewa,
         bank,
         khalti,
+        phoneNumber,
     } = formData;
 
     return (
@@ -176,6 +188,14 @@ const General = ({ store }) => {
                             placeholder="Location"
                             className="mb-2 p-2 w-full border rounded"
                         />
+                        <input
+                            type="text"
+                            name="phoneNumber"
+                            value={phoneNumber}
+                            onChange={handleInputChange}
+                            placeholder="Phone Number"
+                            className="mb-2 p-2 w-full border rounded"
+                        />
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sub Categories</h2>
@@ -189,6 +209,22 @@ const General = ({ store }) => {
                                 className="mb-2 p-2 w-full border rounded"
                             />
                         ))}
+                        <div className="flex mt-4">
+                            <input
+                                type="text"
+                                value={newSubCategory}
+                                onChange={(e) => setNewSubCategory(e.target.value)}
+                                placeholder="New Sub Category"
+                                className="p-2 border rounded flex-grow"
+                            />
+                            <button
+                                type="button"
+                                onClick={handleAddSubCategory}
+                                className="ml-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+                            >
+                                Add
+                            </button>
+                        </div>
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Social Media Links</h2>
@@ -209,7 +245,7 @@ const General = ({ store }) => {
                             </div>
                         ))}
                     </section>
-                    <section className="mb-8 border-b pb-4">
+                    {/* <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
                         <input
                             type="text"
@@ -219,7 +255,7 @@ const General = ({ store }) => {
                             placeholder="Owner"
                             className="mb-2 p-2 w-full border rounded"
                         />
-                    </section>
+                    </section> */}
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Payment Details</h2>
                         <div className="mb-4">
@@ -307,6 +343,8 @@ const General = ({ store }) => {
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Contact Information</h2>
                         <p className="text-gray-600">Email: <a href={`mailto:${email}`} className="text-blue-500 hover:underline">{email}</a></p>
                         <p className="text-gray-600">Location: {location}</p>
+                        <p className="text-gray-600">Phone Number: {phoneNumber}</p>
+
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sub Categories</h2>
@@ -328,7 +366,7 @@ const General = ({ store }) => {
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
-                        <p className="text-gray-600">{owner}</p>
+                        <p className="text-gray-600">{owner.name}</p>
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Payment Details</h2>
