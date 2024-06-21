@@ -59,8 +59,8 @@ export default function Subscription() {
         console.log(plan.name);
         const data = {
             amount: 400,
-            products: [{ product: "test", amount: 100, quantity: 1 }],
             payment_method: 'esewa',
+            subscription:'Gold',
         };
         try {
             const responseData = await sendRequest(
@@ -175,18 +175,18 @@ export default function Subscription() {
                             ))}
                             <div className={`p-6 text-center ${plan.name === 'START' ? 'rounded-bl-lg' : 'border-t border-gray-300'}`}>
                                 <button
-                                    className="flex items-center mt-auto text-green-800 bg-gray-300 border-0 py-2 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
+                                    className="flex items-center justify-center space-x-10 mt-auto text-green-800 bg-gray-300 border-0 py-2 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
                                     onClick={() => handleBuy(plan)}
                                 >
-                                    <img src={esewa} alt="eSewa" className="font-Cinzel rounded-md w-20 h-10 mr-2" />
-                                    Pay Now
+                                    <img src={esewa} alt="eSewa" className="font-Cinzel rounded-md w-20 h-10 mr-6" />
+                                    <span className='  relative right-10 '>Pay Now</span>
                                     <svg
                                         fill="none"
                                         stroke="currentColor"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
-                                        className="w-4 h-4 ml-auto"
+                                        className="w-4 h-4"
                                         viewBox="0 0 24 24"
                                     >
                                         <path d="M5 12h14M12 5l7 7-7 7"></path>
