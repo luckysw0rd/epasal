@@ -436,7 +436,6 @@ export const StoreProvider = ({ children, passedStore }) => {
     } 
     else if (window.location.pathname.includes("/store/")) {
       fetchStoreData(false);
-    
     } else {
       setStore(defaultStoreData);
     }

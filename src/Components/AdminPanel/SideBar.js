@@ -1,7 +1,7 @@
 import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FiLogOut, FiSettings } from "react-icons/fi";
-import { MdOutlineDashboard, MdStore, MdEdit } from "react-icons/md";
+import { MdOutlineDashboard, MdStore, MdEdit, MdShop2 } from "react-icons/md";
 import { FaUserAlt, FaClipboardList, FaBox } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
@@ -26,6 +26,7 @@ const SideBar = ({ setDashboardState }) => {
     { name: "Order", link: "/adminpanel", icon: FaClipboardList },
     { name: "Product", link: "/adminpanel", icon: FaBox },
     { name: "Edit Store", link: "/adminpanel", icon: MdEdit },
+
   ];
 
   return (
@@ -51,12 +52,26 @@ const SideBar = ({ setDashboardState }) => {
               <h1 className="text-3xl font-bold text-black bg-black h-6 w-6  px-1 py-1 mr-4 mt-9 rounded-3xl decoration-underline decoration-blue-500">
               </h1>
               <img src={banau} className="h-10 mt-7 filter invert" alt="Logo" />
+
             </div>
-            <div className="mt-[100px] flex flex-col justify-center gap-4 text-gray-700">
+            <hr className="mt-4 border-gray-400 px-8 w-[175px]  ml-9"></hr>
+            <Link
+              onClick={() => {
+                setDashboardState("Shop")
+              }}
+              className={`flex mt-0 w-full items-center ml-5  text-lg gap-4 font-medium p-3   hover:bg-green-200 rounded-md transition-colors duration-200 `}
+            >
+              
+              <span className="pl-2 ml-7   hover:box-border   text-2xl font-Cinzel">Shop</span>
+              {React.createElement(MdShop2, { size: 20 })}
+            </Link>
+            <hr className="mt-0 border-gray-400 px-8 w-[175px]  ml-9"></hr>
+            
+            <div className="mt-[60px] flex flex-col justify-center gap-4 text-gray-700">
               {menus.map((menu, i) => (
                 <Link
                   key={i}
-                  onClick={()=>{
+                  onClick={() => {
                     setDashboardState(menu.name)
                   }}
                   className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}
@@ -67,8 +82,8 @@ const SideBar = ({ setDashboardState }) => {
               ))}
             </div>
           </div>
-          <div className="mb-[260px]">
-            <div className="flex mb-10   justify-center items-center">
+          <div className="mb-[80px]">
+            <div className="flex    justify-center items-center">
               <hr className="border-gray-400 px-8 w-[175px]  ml-9" />
             </div>
             <button
