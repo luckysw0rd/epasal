@@ -30,7 +30,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
 
     return (
         <motion.div
-            className="font-roboto rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[372px] mx-auto"
+            className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[372px] mx-auto"
             style={{ borderColor }}
             whileTap={{ scale: 0.98 }}
         >

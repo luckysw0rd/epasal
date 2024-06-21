@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ProductListCard1 from './ProductListCard1';
 
 
 const ProductList = ({ productListProps, productListType }) => {
-    const navigate = useNavigate()
     const { products, isEdit, productColor, setStore, store } = productListProps
 
     // Filtered products state
@@ -15,10 +14,6 @@ const ProductList = ({ productListProps, productListType }) => {
     useEffect(() => {
         setFilteredProducts(products.slice(0, 4));
     }, [products]);
-
-    const handleProductClick = (product) => {
-        navigate("/productlanding", { state: { product } });
-    };
 
     const handleDeleteProduct = (productId) => {
         const productIndex = store?.products?.findIndex(data => data.id == productId)
@@ -37,19 +32,19 @@ const ProductList = ({ productListProps, productListType }) => {
                 return (
                     <div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10">
-                            {filteredProducts?.map((product, i) => (
-                                (product?.id || product?._id) && (
-                                    <div key={product.id} onClick={() => handleProductClick(product)}>
-                                        <ProductListCard1
-                                            product={product}
-                                            productListProps={productListProps}
-                                            handleDeleteProduct={handleDeleteProduct}
-                                            store={store}
-                                        />
-                                    </div>
-                                )
-                            ))}
+                        <div >
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
+                                {filteredProducts?.map((product, i) => (
+                                    (product?.id || product?._id) && <ProductListCard1
+                                        key={product.id}
+                                        product={product}
+                                        productListProps={productListProps}
+                                        handleDeleteProduct={handleDeleteProduct}
+                                        store={store}
+
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
                 );
