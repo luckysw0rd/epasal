@@ -1,46 +1,119 @@
 
+
+
+
+
+
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import ProductCard from "./ProductCard";
 import Sidebar from "./SideBar";
 import { FaBars } from "react-icons/fa";
-import storeMIni from "./data";
 import { motion } from "framer-motion";
+import useFetch from '../../Hooks/useFetch';
+import { useParams } from "react-router-dom";
 
 const AllProducts = () => {
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("default");
   const [selectedRating, setSelectedRating] = useState(0);
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
-
-  const prices = storeMIni.products.flatMap((product) =>
-    product.variant.flatMap((variant) =>
-      variant.options.map((option) => option.price)
-    )
-  );
-  const minPrice = prices.length ? Math.min(...prices) : 0;
-  const maxPrice = prices.length ? Math.max(...prices) : 100;
-
-  const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
-
+  const [products, setProducts] = useState([  
+ 
+    ]);
+    const { isLoading, error, sendRequest, onCloseError } = useFetch();
+  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [colors, setColors] = useState({
+   
+  });
+  const [loading, setLoading] = useState(true);
+const {storeName}= useParams()
   useEffect(() => {
-    setPriceRange([minPrice, maxPrice]);
-  }, [minPrice, maxPrice]);
+    console.log(useParams)
+    if ( storeName){
+      fetchProducts();
+    }
+   
+  }, [storeName]);
 
-  const textColor = storeMIni?.color?.productListColor.textColor || "#000";
-  const borderColor = storeMIni?.color?.productListColor.borderColor || "#000";
-  const sideBarBorder = storeMIni?.color?.productListColor.sideBarBorder || "#000";
-  const backgroundColor = storeMIni?.color?.productListColor.backgroundColor || "#000";
-  const cardBackground = storeMIni?.color?.productListColor.cardBackground || "#000";
-  const priceColor = storeMIni?.color?.productListColor.priceColor || "#000";
-  const buttonColor = storeMIni?.color?.productListColor.buttonBgColor || "#000";
-  const buttonBorderColor = storeMIni?.color?.productListColor.buttonBorderColor || "#000";
-  const buttonBgColorOnHover = storeMIni?.color?.productListColor.buttonBgColorOnHover || "#000";
+  const fetchProducts = async () => {
+    console.log(storeName)
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/product/getStoreProducts/${storeName}`
+      );
+      const data = response.data;
+      console.log("data", data);
+      setProducts(data.products);
+      setColors(data.color);
+
+      // Calculate initial price range
+      const prices = data.products.flatMap((product) =>
+        product.variant.flatMap((variant) =>
+          variant.options.map((option) => option.price)
+        )
+      );
+      const minPrice = prices.length ? Math.min(...prices) : 0;
+      const maxPrice = prices.length ? Math.max(...prices) : 100;
+      setPriceRange([minPrice, maxPrice]);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  }
+// try {
+//       const response = await sendRequest(
+//           'product/getStoreProducts/6671aaa1947f304e8aa0e5fc',
+//           'GET',
+//            null,
+//           {
+//               'Content-Type': 'application/json'
+//           }
+//       );
+//       // Handle response data as needed
+//       console.log(response)
+//       const data = response.data;
+//         console.log("data", data);
+//         setProducts(data?.products);
+//         setColors(data?.color);
+  
+//         // Calculate initial price range
+//         const prices = data.products.flatMap((product) =>
+//           product.variant.flatMap((variant) =>
+//             variant.options.map((option) => option.price)
+//           )
+//         );
+//         const minPrice = prices.length ? Math.min(...prices) : 0;
+//         const maxPrice = prices.length ? Math.max(...prices) : 100;
+//         setPriceRange([minPrice, maxPrice]);
+//         setLoading(false);
+     
+
+//   } catch (error) {
+      
+//     console.error("Error fetching data:", error);
+//     setLoading(false);
+//   }
+//   };
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
     if (!sidebarOpen) {
-      setPriceRange([minPrice, maxPrice]); // Reset to full range when opening
+      // Reset price range when opening sidebar
+      const prices = products.flatMap((product) =>
+        product.variant.flatMap((variant) =>
+          variant.options.map((option) => option.price)
+        )
+        
+      );
+      console.log(prices)
+      const minPrice = Math.min(...prices) ;
+      const maxPrice = Math.max(...prices) ;
+      setPriceRange([minPrice, maxPrice]);
     }
   };
 
@@ -78,30 +151,44 @@ const AllProducts = () => {
   };
 
   const getFilteredProducts = () => {
-    const filtered = storeMIni.products.filter((product) => {
+  
+    const filtered = products.filter((product) => {
+      console.log("products",products)
       const isVariantInPriceRange = product.variant.some((variant) =>
         variant.options.some(
           (option) =>
             option.price >= priceRange[0] && option.price <= priceRange[1]
+          
         )
       );
 
       return (
+        
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
         isVariantInPriceRange &&
-        product.rating >= selectedRating &&
+        product?.rating >= selectedRating &&
         (!selectedSubcategory ||
           product.subcategories.includes(selectedSubcategory))
+         
       );
+      
     });
+    console.log("Filtered Products:", getSortedProducts(filtered)); // Debug statement
+    console.log("products",products)
     return getSortedProducts(filtered);
   };
 
   const subcategories = [
-    ...new Set(storeMIni.products.flatMap((product) => product.subcategories)),
+    ...new Set(products.flatMap((product) => product.subcategories)),
   ];
 
+  if (loading) {
+    return <div>Loading...</div>; // Render loading indicator while fetching data
+  }
+
   return (
+    <> 
+    
     <div className="flex overflow-auto mx-auto sm:mx-2 md:mx-10 lg:mx-10 xl:mx-16 mt-32">
       <Sidebar
         isOpen={sidebarOpen}
@@ -115,6 +202,8 @@ const AllProducts = () => {
         handleSubcategoryChange={handleSubcategoryChange}
         selectedSubcategory={selectedSubcategory}
         subcategories={subcategories}
+        products={products} // Pass products as prop to Sidebar
+        colors={colors} // Pass colors as prop to Sidebar
       />
       <main className="flex-1 justify-between px-8 sm:px-4 2xl:px-8 mx-auto lg:ml-[24px]">
         <div className="flex justify-between">
@@ -122,13 +211,13 @@ const AllProducts = () => {
             <button
               className="block md:hidden pr-2"
               onClick={toggleSidebar}
-              style={{ color: textColor }}
+              style={{ color: colors.productListColor.textColor }}
             >
               <FaBars className="text-xl" />
             </button>
             <div
               className="flex w-[100%] md:w-[100%] h-[24px] sm:h-[36px] lg:w-[278px] border-2 px-1 focus:outline-none rounded"
-              style={{ borderColor: borderColor }}
+              style={{ borderColor: colors.productListColor.borderColor }}
             >
               <input
                 type="text"
@@ -141,47 +230,33 @@ const AllProducts = () => {
           </div>
           <div
             className="flex justify-end h-[24px] sm:h-[36px] w-full text-[14px]"
-            style={{ backgroundColor: backgroundColor, color: textColor }}
+            style={{
+              backgroundColor: colors.productListColor.backgroundColor,
+              color: colors.productListColor.textColor,
+            }}
           >
             <motion.div
               id="sort"
               className="flex sm:gap-4 lg:gap-6 border-2 mx-1 px-1 text-[14px] rounded"
-              style={{ borderColor: borderColor, backgroundColor: backgroundColor }}
-             
+              style={{
+                borderColor: colors.productListColor.borderColor,
+                backgroundColor: colors.productListColor.backgroundColor,
+              }}
             >
               <div className="my-auto hidden sm:block">Sort By:</div>
               <motion.select
                 value={sortOption}
                 onChange={handleSortChange}
-                className="border-none focus:outline-none lg:text-[14px] bg-"
-                style={{ borderColor: borderColor, backgroundColor: backgroundColor }}
-                // whileHover={{ backgroundColor: "red" }}
+                className="border-none focus:outline-none lg:text-[14px]"
+                style={{
+                  borderColor: colors.productListColor.borderColor,
+                  backgroundColor: colors.productListColor.backgroundColor,
+                }}
               >
-                <motion.option
-                  value="default"
-                  whileHover={{ backgroundColor: "red" }}
-               
-                >
-                  Latest
-                </motion.option>
-                <motion.option
-                  value="price"
-                  whileHover={{ backgroundColor: "#1882A8" }}
-                >
-                  Price
-                </motion.option>
-                <motion.option
-                  value="rating"
-                  whileHover={{ backgroundColor: "#1882A8" }}
-                >
-                  Rating
-                </motion.option>
-                <motion.option
-                  value="az"
-                  whileHover={{ backgroundColor: "#1882A8" }}
-                >
-                  A-Z
-                </motion.option>
+                <motion.option value="default">Latest</motion.option>
+                <motion.option value="price">Price</motion.option>
+                <motion.option value="rating">Rating</motion.option>
+                <motion.option value="az">A-Z</motion.option>
               </motion.select>
             </motion.div>
           </div>
@@ -191,19 +266,17 @@ const AllProducts = () => {
             <ProductCard
               key={product.id}
               product={product}
-              cardBackground={cardBackground}
-              borderColor={borderColor}
-              textColor={textColor}
-              priceColor={priceColor}
-              buttonColor={buttonColor}
-              buttonBorderColor={buttonBorderColor}
-              buttonBgColorOnHover={buttonBgColorOnHover}
+              color={colors} // Pass colors as prop to ProductCard
             />
           ))}
         </div>
       </main>
     </div>
+    
+    </>
+    
   );
 };
 
 export default AllProducts;
+
