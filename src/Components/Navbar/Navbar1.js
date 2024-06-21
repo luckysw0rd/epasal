@@ -85,7 +85,7 @@ const Navbar1 = ({
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
+console.log(store.cartCount)
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -204,11 +204,11 @@ const Navbar1 = ({
                     <FaShoppingCart className="text-2xl" />
                     {cartItems.length > 0 && (
                         <span className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 bg-red-500 rounded-full text-white px-1 py-0.5 text-xs">
-                            {cartItems.length}
+                            {store.cart.length}
                         </span>
                     )}
                 </button>
-                {isCartOpen && <CartDropdown items={cartItems} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} />} {/* Conditionally render the CartDropdown */}
+                {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} />} {/* Conditionally render the CartDropdown */}
                 {(store.isEdit || !store.fetchedFromBackend) && <button
                     onClick={()=>{setStore(prev=>({...prev,previewMode:!store.previewMode}))}}
                     className="bg-transparent border border-black px-2 py-1 rounded text-black"
