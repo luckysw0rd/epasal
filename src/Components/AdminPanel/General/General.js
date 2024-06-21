@@ -7,7 +7,7 @@ import { AuthContext } from '../../../Hooks/AuthContext';
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
 
-const General = ({ store }) => {
+const General = ({ store ,setDashboardState}) => {
     const { uploadImage } = useImage();
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ ...store });
@@ -152,6 +152,11 @@ const General = ({ store }) => {
         bank,
         khalti,
         phoneNumber,
+        promoCode,
+        subscriptionStatus,
+        expectedDeliveryTime,
+        expectedDeliveryPrice,
+        liveChatSource
     } = formData;
 
     return (
@@ -197,15 +202,55 @@ const General = ({ store }) => {
                             className="mb-2 p-2 w-full border rounded"
                         />
                     </section>
+                    <section className='mb-8 border-b pb-4'>
+                    
+                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Delivery Status</h2>
+                    <label className="capitalize">Expected Delivery Time</label>
+                    <input
+                            type="text"
+                            name="DeliveryTime"
+                            value={expectedDeliveryTime}
+                            onChange={(e)=>{setFormData({...formData,expectedDeliveryTime:e.target.value})}}
+                            placeholder="Expected Delivery Time"
+                            className="mb-2 p-2 w-full border rounded"
+                    />
+                        <label className="capitalize">Expected Delivery Price</label>
+                        <input
+                                type="number"
+                                name="DeliveryPrice"
+                                value={expectedDeliveryPrice}
+                                onChange={(e)=>{setFormData({...formData,expectedDeliveryPrice:e.target.value})}}
+                                placeholder="Expected Delivery Price"
+                                className="mb-2 p-2 w-full border rounded"
+                        />
+                    
+                                
+                           
+                    </section>
+                    {(subscriptionStatus!=='Silver') ? (
+                    <section className='mb-8 border-b pb-4'>
+                    
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
+                        <label className="capitalize">Url</label>
+                        <input
+                                type="text"
+                                name="DeliveryTime"
+                                value={liveChatSource}
+                                onChange={(e)=>{setFormData({...formData,liveChatSource:e.target.value})}}
+                                placeholder="Expected Delivery Time"
+                                className="mb-2 p-2 w-full border rounded"
+                        />
+                        </section>
+                    ):''}
                     <section className="mb-8 border-b pb-4">
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sub Categories</h2>
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Categories</h2>
                         {subCategories.map((subCategory, index) => (
                             <input
                                 key={index}
                                 type="text"
-                                value={subCategory.name}
+                                value={subCategory?.name}
                                 onChange={(e) => handleArrayChange(e, 'subCategories', index)}
-                                placeholder="Sub Category"
+                                placeholder="Category"
                                 className="mb-2 p-2 w-full border rounded"
                             />
                         ))}
@@ -214,7 +259,7 @@ const General = ({ store }) => {
                                 type="text"
                                 value={newSubCategory}
                                 onChange={(e) => setNewSubCategory(e.target.value)}
-                                placeholder="New Sub Category"
+                                placeholder="New Category"
                                 className="p-2 border rounded flex-grow"
                             />
                             <button
@@ -245,6 +290,43 @@ const General = ({ store }) => {
                             </div>
                         ))}
                     </section>
+                    {
+                    (subscriptionStatus!=='Silver') ? (
+                    <section className='mb-8 border-b pb-4'>
+                    
+                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
+                        
+                                <div>
+                                <div className='flex flex-col'>
+                                <label className="capitalize">Promo Name</label>
+                                    <input
+                                        type="text"
+                                        value={promoCode[0]?.name}
+                                        onChange={(e) => setFormData({...formData,promoCode:[{name:e.target.value,value:formData?.promoCode[0]?.value}]})}
+                                        placeholder="PromoCode"
+                                        className="p-2 border rounded flex-grow"
+                                    />
+                                </div>
+                                    <div className='flex flex-col mt-3'>
+                                    <label className="capitalize">Discount (%)</label>
+                                    <input
+                                        type="number"
+                                        value={promoCode[0]?.value}
+                                        onChange={(e) => setFormData({...formData,promoCode:[{value:e.target.value,name:formData?.promoCode[0]?.name}]})}
+                                        placeholder="Discount"
+                                        className="p-2 border rounded flex-grow"
+                                    />
+                                    </div>
+                                    
+                                </div>
+                           
+                    </section>
+                ):''
+                               
+
+
+            }
+                    
                     {/* <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
                         <input
@@ -326,8 +408,8 @@ const General = ({ store }) => {
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Store URL :</h2>
                         <div className="flex items-center space-x-2">
                             <li className='text-blue-500 hover:text-blue-700'>
-                                <Link to={`/store/${store.name}`}>
-                                    {`https://banau.com/${store.name}`}
+                                <Link to={`/store/${store?.name}`}>
+                                    {`https://banau.com/${store?.name}`}
                                 </Link>
                             </li>
                             <button
@@ -347,7 +429,30 @@ const General = ({ store }) => {
 
                     </section>
                     <section className="mb-8 border-b pb-4">
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sub Categories</h2>
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Subscription Status</h2>
+                        <p className="text-gray-600 ml-3">{subscriptionStatus} </p>
+                        {subscriptionStatus==='Silver' && <button onClick={()=>{setDashboardState('Shop')}} className='mt-4 px-2 py-1 bg-black text-white text-sm rounded-2xl'>Upgrade</button>}
+
+                    </section>
+
+                    <section className="mb-8 border-b pb-4">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Delivery Status</h2>
+                        <p className="text-gray-600">Expected Delivery Time : {expectedDeliveryTime} </p>
+                        <p className="text-gray-600">Expected Delivery Price : {expectedDeliveryPrice} </p>
+
+                    </section>
+                    <section className="mb-8 border-b pb-4">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
+                        {(subscriptionStatus==='Silver')&& <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={()=>{setDashboardState('Shop')}} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        {
+                            (subscriptionStatus!=='Silver')&&  <p className="text-gray-600">Url Source: {liveChatSource} </p>
+                        }
+                        
+                        
+
+                    </section>
+                    <section className="mb-8 border-b pb-4">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Categories</h2>
                         <ul className="list-disc pl-5 space-y-2">
                             {subCategories.map((subCategory, index) => (
                                 <li key={index} className="text-gray-600">{subCategory.name}</li>
@@ -367,6 +472,17 @@ const General = ({ store }) => {
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
                         <p className="text-gray-600">{owner.name}</p>
+                    </section>
+                    <section className='mb-8 border-b pb-4'>
+                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
+                    {(subscriptionStatus==='Silver')&& <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={()=>{setDashboardState('Shop')}} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        {
+                            (subscriptionStatus!=='Silver')&&  promoCode?.map((data,i)=>(
+                                <div key={i}>
+                                    <div>{data?.name} : {data?.value}%</div>
+                                </div>
+                            ))
+                        }
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Payment Details</h2>

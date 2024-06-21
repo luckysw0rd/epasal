@@ -43,7 +43,7 @@ const Product = ({ store }) => {
       setTotalPages(response.totalPages);
       setCurrentPage(response.currentPage);
     } catch (error) {
-      toast.error(error.message);
+      // toast.error(error.message);
     }
   };
 
