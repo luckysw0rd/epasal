@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStore } from '../../Theme/Theme1/T1Context';
 import ProductForm from '../../Theme/Theme1/SubProduct/ProductForm';
 import ImageDrop from './ImageDrop';
@@ -11,6 +11,7 @@ const fonts = [
   "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
   "Genos", "Orbitron", "Cinzel", "Exo 2", "Roboto", "Sanchez", "DM Serif Text"
 ];
+
 
 const Editor = () => {
   const { store, setStore } = useStore();
@@ -30,7 +31,10 @@ const Editor = () => {
     setStore(n => ({ ...n, subCategories: [...n.subCategories, { name: categoryData }] }));
     setCategoryData('');
   };
-
+  useEffect(()=>{
+    if(store.liveChatSource && (store.liveChatSource!=='' && store.liveChatSource!==null))
+      abc(store.liveChatSource)
+  },[])
   const handleColorChange = (value, field, colorValueObject) => {
     setStore((prevState) => ({
       ...prevState,
@@ -92,7 +96,7 @@ const Editor = () => {
 
   return (
     <>
-      {(!store.fetchedFromBackend && !store.previewMode)||store?.isEdit ? navHide ? (
+      {(!store.fetchedFromBackend && !store.previewMode)||store?.isEdit ? navHide ? !previewMode&&(
         <div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
 
@@ -280,7 +284,6 @@ const Editor = () => {
             </div>
           )}
           <div className='flex justify-center my-3'>
-            {/* <button className='px-4 py-1 bg-green-600 text-white rounded' onClick={() => { toast("helllo") }}>Submit</button> */}
             <SaveStoreButton/>
           </div>
         </div>
@@ -295,3 +298,17 @@ const Editor = () => {
 };
 
 export default Editor;
+
+
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+function abc(liveChatSource){
+
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+// https://embed.tawk.to/66759d429d7f358570d20570/1i0tmsjtn
+s1.src=`${liveChatSource}`;
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+
+};
