@@ -10,9 +10,10 @@ import EditStore from './EditStore/EditStore.js';
 import Order from './Dashboard/Order/Order.js';
 import Product from "./Product/Product.js";
 import General from "./General/General.js";
+import Shop from "./Shop/Shop.js";
 const Dashboard = () => {
   const auth = useContext(AuthContext);
-  const [dashboardState, setDashboardState] = useState('Employee');
+  const [dashboardState, setDashboardState] = useState('General');
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [store, setStore] = useState(null); // Initialize store as null
   const { storeName } = useParams();
@@ -80,7 +81,9 @@ const Dashboard = () => {
       case 'Product':
         return <Product store={store}></Product>
       case 'General':
-        return <General></General>
+        return <General store={store}></General>
+        case 'Shop':
+          return <Shop store={store}></Shop>
       default:
         return <Home />;
     }

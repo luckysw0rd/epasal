@@ -1,0 +1,23 @@
+@keyframes shine {
+    0% {
+        box-shadow: 0 0 40px rgba(79, 70, 229, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 60px rgba(79, 70, 229, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 0 80px rgba(79, 70, 229, 0.5);
+    }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .hover\:animate-shine {
+        animation: shine 4s linear infinite;
+    }
+}
