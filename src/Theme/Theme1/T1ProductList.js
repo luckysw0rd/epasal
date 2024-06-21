@@ -4,14 +4,14 @@ import { useStore } from './T1Context';
 
 const T1ProductList = () => {
     const { store, setStore, addToCart } = useStore();
-    const { previewMode, featuredProducts, products,isEdit } = store;
+    const { previewMode, featuredProducts, products, isEdit, fetchedFromBackend } = store;
     const { productListColor } = store.color;
     const productColor = { ...productListColor };
 
     // Map featured product indices to their actual product objects
     const featuredProductList = featuredProducts.map(index => products[index]);
 
-    const productListProps = { store,isEdit, productColor, products: featuredProductList, previewMode, setStore, addToCart };
+    const productListProps = { store, isEdit, productColor, products: featuredProductList, previewMode, setStore, addToCart, fetchedFromBackend };
 
     return (
         <div className='px-8 md:px-10'>

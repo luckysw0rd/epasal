@@ -4,9 +4,12 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import './productList.css'
+import { useNavigate } from 'react-router-dom';
+
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart, isEdit } = productListProps;
+    const { productColor, previewMode, addToCart, isEdit, fetchedFromBackend } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
+    const navigate = useNavigate()
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
@@ -26,6 +29,11 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
     const handleDefaultImage = () => {
         setSelectedOptionIndex(-1);
         setDisplayedImage(product?.image?.imageUrl);
+    };
+
+    const handleProductClick = (product) => {
+        if (fetchedFromBackend && !isEdit)
+            navigate("/productlanding", { state: { product } });
     };
 
     return (
@@ -50,7 +58,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                         </div>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
-                            <div className="prod-title mt-2 flex justify-between items-center">
+                            <div key={product.id} onClick={() => handleProductClick(product)} className="prod-title mt-2 flex justify-between items-center">
                                 <p className="text-2xl font-bold" style={{ color: textColor }}>{name}</p>
                                 <p className="font-bold text-lg" style={{ color: priceColor }}>Rs {price}</p>
                             </div>

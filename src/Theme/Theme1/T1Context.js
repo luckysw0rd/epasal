@@ -410,7 +410,7 @@ export const StoreProvider = ({ children, passedStore }) => {
           null,
           {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
+            // Authorization: "Bearer " + auth.token,
           }
         ); // Use storeID from useParams
         console.log(response);
@@ -421,7 +421,7 @@ export const StoreProvider = ({ children, passedStore }) => {
           previewMode: true,
           isEdit,
           cart: [],
-          fonts :response.store.fonts|| {} // Set fetchedFromBackend to true when data is fetched
+          fonts: response.store.fonts || {} // Set fetchedFromBackend to true when data is fetched
         });
       } catch (error) {
         // If an error occurs during fetch, set default store data
@@ -429,14 +429,14 @@ export const StoreProvider = ({ children, passedStore }) => {
         console.error("Error fetching store data:", error);
       }
     };
-    if(window.location.pathname.includes("/store/edit/")){
+    if (window.location.pathname.includes("/store/edit/")) {
       fetchStoreData(true);
-      setStore(prev=>({...prev,previewMode:false,fetchedFromBackend:false}))
+      setStore(prev => ({ ...prev, previewMode: false, fetchedFromBackend: false }))
       console.log("I reached here")
-    } 
+    }
     else if (window.location.pathname.includes("/store/")) {
       fetchStoreData(false);
-    
+
     } else {
       setStore(defaultStoreData);
     }
