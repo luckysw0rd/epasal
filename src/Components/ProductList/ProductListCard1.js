@@ -5,7 +5,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import './productList.css'
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart, isEdit } = productListProps;
+    const { productColor, previewMode, addToCart, isEdit,store } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);

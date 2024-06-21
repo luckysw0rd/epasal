@@ -121,7 +121,7 @@ const SaveStoreButton = () => {
                     }
                 );
                 setStoreNew(false)
-                toast(responseData.message); // Handle response data as needed
+                toast.success(responseData.message); // Handle response data as needed
             } else {
                 const responseData = await sendRequest(
                     `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
@@ -133,11 +133,11 @@ const SaveStoreButton = () => {
                     }
                 );
                 setStoreNew(false)
-                toast(responseData.message); // Handle response data as needed
+                toast.success(responseData.message); // Handle response data as needed
             }
         } catch (error) {
             console.error('Error saving store data:', error);
-            toast(error.message); // Handle response data as needed
+            toast.error(error.message); // Handle response data as needed
 
         }
     }
