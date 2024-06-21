@@ -47,7 +47,7 @@ const plans = [
     },
 ];
 
-export default function Subscription() {
+export default function Subscription({store}) {
     const [productName, setProductName] = useState("");
     const [productQuantity, setProductQuantity] = useState(1);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -55,12 +55,13 @@ export default function Subscription() {
 
 
     const handleBuy = async (plan) => {
-
+        console.log(store);
         console.log(plan.name);
         const data = {
             amount: 400,
             payment_method: 'esewa',
             subscription:'Gold',
+            store:store._id,
         };
         try {
             const responseData = await sendRequest(
