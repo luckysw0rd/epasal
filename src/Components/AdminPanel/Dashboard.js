@@ -83,7 +83,7 @@ const Dashboard = () => {
       case 'General':
         return <General store={store} setDashboardState={setDashboardState}></General>
         case 'Shop':
-          return <Shop store={store}></Shop>
+          return <Shop store={store} ></Shop>
       default:
         return <Home />;
     }
