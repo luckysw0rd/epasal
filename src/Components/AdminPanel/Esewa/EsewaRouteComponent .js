@@ -91,15 +91,17 @@ const EsewaRouteComponent = () => {
                                 {/* Add more details if available in parsedData */}
                             </div>
                         )}
+                        <div className=' w-full gap-4 flex flex-row space-x-5 justify-center'>
                         <button
                             onClick={downloadPDF}
-                            className="bg-blue-500 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-600 transition duration-300 mb-4"
+                            className="bg-blue-500 text-white px-4 py-2  rounded-md shadow-md hover:bg-blue-600 transition duration-300 mb-4"
                         >
                             Download PDF
                         </button>
-                        <Link to="/" className="bg-green-500 text-white px-8 py-3 rounded-md shadow-md hover:bg-green-600 transition duration-300">
+                        <Link to="/" className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 transition duration-300 mb-4">
                             Go to Homepage
                         </Link>
+                        </div>
                     </div>
                 ) : (
                     <div>

@@ -7,7 +7,7 @@ import { AuthContext } from '../../../Hooks/AuthContext';
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
 
-const General = ({ store ,setDashboardState}) => {
+const General = ({ store, setDashboardState }) => {
     const { uploadImage } = useImage();
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ ...store });
@@ -156,7 +156,8 @@ const General = ({ store ,setDashboardState}) => {
         subscriptionStatus,
         expectedDeliveryTime,
         expectedDeliveryPrice,
-        liveChatSource
+        liveChatSource,
+        subscriptionExpiry
     } = formData;
 
     return (
@@ -203,45 +204,52 @@ const General = ({ store ,setDashboardState}) => {
                         />
                     </section>
                     <section className='mb-8 border-b pb-4'>
-                    
-                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Delivery Status</h2>
-                    <label className="capitalize">Expected Delivery Time</label>
-                    <input
+
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Delivery Status</h2>
+                        <label className="capitalize">Expected Delivery Time</label>
+                        <input
                             type="text"
                             name="DeliveryTime"
                             value={expectedDeliveryTime}
-                            onChange={(e)=>{setFormData({...formData,expectedDeliveryTime:e.target.value})}}
+                            onChange={(e) => { setFormData({ ...formData, expectedDeliveryTime: e.target.value }) }}
                             placeholder="Expected Delivery Time"
                             className="mb-2 p-2 w-full border rounded"
-                    />
+                        />
                         <label className="capitalize">Expected Delivery Price</label>
                         <input
-                                type="number"
-                                name="DeliveryPrice"
-                                value={expectedDeliveryPrice}
-                                onChange={(e)=>{setFormData({...formData,expectedDeliveryPrice:e.target.value})}}
-                                placeholder="Expected Delivery Price"
-                                className="mb-2 p-2 w-full border rounded"
+                            type="number"
+                            name="DeliveryPrice"
+                            value={expectedDeliveryPrice}
+                            onChange={(e) => { setFormData({ ...formData, expectedDeliveryPrice: e.target.value }) }}
+                            placeholder="Expected Delivery Price"
+                            className="mb-2 p-2 w-full border rounded"
                         />
-                    
-                                
-                           
+
+
+
                     </section>
-                    {(subscriptionStatus!=='Silver') ? (
-                    <section className='mb-8 border-b pb-4'>
-                    
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
-                        <label className="capitalize">Url</label>
-                        <input
+                    {(subscriptionStatus !== 'Silver') ? (
+                        <section className='mb-8 border-b pb-4'>
+                            <h2 className="text-2xl font-semibold mb-4 text-gray-700">Subscription Information</h2>
+                            <label className="capitalize">Subscription Status</label>
+                            <input
                                 type="text"
-                                name="DeliveryTime"
-                                value={liveChatSource}
-                                onChange={(e)=>{setFormData({...formData,liveChatSource:e.target.value})}}
-                                placeholder="Expected Delivery Time"
+                                name="subscriptionStatus"
+                                value={subscriptionStatus}
+                                onChange={handleInputChange}
                                 className="mb-2 p-2 w-full border rounded"
-                        />
+                                disabled
+                            />
+                            <label className="capitalize">Subscription Expiry</label>
+                            <input
+                                type="text"
+                                name="subscriptionExpiry"
+                                value={new Date(subscriptionExpiry).toLocaleDateString()}
+                                className="mb-2 p-2 w-full border rounded"
+                                disabled
+                            />
                         </section>
-                    ):''}
+                    ) : ''}
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Categories</h2>
                         {subCategories.map((subCategory, index) => (
@@ -272,6 +280,24 @@ const General = ({ store ,setDashboardState}) => {
                         </div>
                     </section>
                     <section className="mb-8 border-b pb-4">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
+                        {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        {
+                            (subscriptionStatus !== 'Silver') && (
+                                <>
+                                    <input
+                                        type="text"
+                                        name="liveChatSource"
+                                        value={liveChatSource}
+                                        onChange={(e) => setFormData({ ...formData, liveChatSource: e.target.value })}
+                                        placeholder="Live Chat URL"
+                                        className="mb-2 p-2 w-full border rounded"
+                                    />
+                                </>
+                            )
+                        }
+                    </section>
+                    <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Social Media Links</h2>
                         {Object.entries(socialMediaLinks).map(([platform, url], index) => (
                             <div key={index} className="mb-2">
@@ -291,42 +317,42 @@ const General = ({ store ,setDashboardState}) => {
                         ))}
                     </section>
                     {
-                    (subscriptionStatus!=='Silver') ? (
-                    <section className='mb-8 border-b pb-4'>
-                    
-                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
-                        
+                        (subscriptionStatus !== 'Silver') ? (
+                            <section className='mb-8 border-b pb-4'>
+
+                                <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
+
                                 <div>
-                                <div className='flex flex-col'>
-                                <label className="capitalize">Promo Name</label>
-                                    <input
-                                        type="text"
-                                        value={promoCode[0]?.name}
-                                        onChange={(e) => setFormData({...formData,promoCode:[{name:e.target.value,value:formData?.promoCode[0]?.value}]})}
-                                        placeholder="PromoCode"
-                                        className="p-2 border rounded flex-grow"
-                                    />
-                                </div>
-                                    <div className='flex flex-col mt-3'>
-                                    <label className="capitalize">Discount (%)</label>
-                                    <input
-                                        type="number"
-                                        value={promoCode[0]?.value}
-                                        onChange={(e) => setFormData({...formData,promoCode:[{value:e.target.value,name:formData?.promoCode[0]?.name}]})}
-                                        placeholder="Discount"
-                                        className="p-2 border rounded flex-grow"
-                                    />
+                                    <div className='flex flex-col'>
+                                        <label className="capitalize">Promo Name</label>
+                                        <input
+                                            type="text"
+                                            value={promoCode[0]?.name}
+                                            onChange={(e) => setFormData({ ...formData, promoCode: [{ name: e.target.value, value: formData?.promoCode[0]?.value }] })}
+                                            placeholder="PromoCode"
+                                            className="p-2 border rounded flex-grow"
+                                        />
                                     </div>
-                                    
+                                    <div className='flex flex-col mt-3'>
+                                        <label className="capitalize">Discount (%)</label>
+                                        <input
+                                            type="number"
+                                            value={promoCode[0]?.value}
+                                            onChange={(e) => setFormData({ ...formData, promoCode: [{ value: e.target.value, name: formData?.promoCode[0]?.name }] })}
+                                            placeholder="Discount"
+                                            className="p-2 border rounded flex-grow"
+                                        />
+                                    </div>
+
                                 </div>
-                           
-                    </section>
-                ):''
-                               
+
+                            </section>
+                        ) : ''
 
 
-            }
-                    
+
+                    }
+
                     {/* <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
                         <input
@@ -428,12 +454,12 @@ const General = ({ store ,setDashboardState}) => {
                         <p className="text-gray-600">Phone Number: {phoneNumber}</p>
 
                     </section>
-                    <section className="mb-8 border-b pb-4">
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Subscription Status</h2>
-                        <p className="text-gray-600 ml-3">{subscriptionStatus} </p>
-                        {subscriptionStatus==='Silver' && <button onClick={()=>{setDashboardState('Shop')}} className='mt-4 px-2 py-1 bg-black text-white text-sm rounded-2xl'>Upgrade</button>}
-
+                    <section className='mb-8 border-b pb-4'>
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Subscription Information</h2>
+                        <p>Subscription Status: {subscriptionStatus}</p>
+                        <p>Subscription Expiry: {new Date(subscriptionExpiry).toLocaleDateString()}</p>
                     </section>
+
 
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Delivery Status</h2>
@@ -443,12 +469,12 @@ const General = ({ store ,setDashboardState}) => {
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
-                        {(subscriptionStatus==='Silver')&& <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={()=>{setDashboardState('Shop')}} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
                         {
-                            (subscriptionStatus!=='Silver')&&  <p className="text-gray-600">Url Source: {liveChatSource} </p>
+                            (subscriptionStatus !== 'Silver') && <p className="text-gray-600">Url Source: {liveChatSource} </p>
                         }
-                        
-                        
+
+
 
                     </section>
                     <section className="mb-8 border-b pb-4">
@@ -474,10 +500,10 @@ const General = ({ store ,setDashboardState}) => {
                         <p className="text-gray-600">{owner.name}</p>
                     </section>
                     <section className='mb-8 border-b pb-4'>
-                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
-                    {(subscriptionStatus==='Silver')&& <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={()=>{setDashboardState('Shop')}} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
+                        {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
                         {
-                            (subscriptionStatus!=='Silver')&&  promoCode?.map((data,i)=>(
+                            (subscriptionStatus !== 'Silver') && promoCode?.map((data, i) => (
                                 <div key={i}>
                                     <div>{data?.name} : {data?.value}%</div>
                                 </div>

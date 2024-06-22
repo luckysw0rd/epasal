@@ -48,7 +48,7 @@ const ThirdBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
     console.log(store.thirdBanner)
   }, [store])
   return (
-    <div className="box-border mt-10  py-8">
+    <div className="box-border mt-40  py-8">
       <motion.div
         className="box-border font-roboto relative shadow-lg min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[400px] flex flex-col sm:flex-col md:flex-row lg:flex-row justify-between items-center text-black"
         initial={{ opacity: 0, y: -50 }}
