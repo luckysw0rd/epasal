@@ -210,14 +210,19 @@ export default function ProductForm({ onClose }) {
     
     // Function to upload data
     const uploadData = async () => {
-        await sendRequest(
-            `product/addProduct`,
-            'POST',
-            JSON.stringify({ formState,storeID:store._id }),
-            {
-                'Content-Type': 'application/json'
-            }
-        );
+        try{
+            const response=await sendRequest(
+                `product/addProduct`,
+                'POST',
+                JSON.stringify({ formState,storeID:store._id }),
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+            toast.success(response.message)
+        }catch(err){
+            toast.error(err.message)
+        }
         const newProduct = {
             ...formState,
             id: Math.random().toString(36).substr(2, 9), // Generates a random id

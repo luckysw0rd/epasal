@@ -6,14 +6,16 @@ import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
-const General = ({ store }) => {
-    const { uploadImage } = useImage();
 
+const General = ({ store, setDashboardState }) => {
+    const { uploadImage } = useImage();
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ ...store });
+    const [newSubCategory, setNewSubCategory] = useState('');
     const [copySuccess, setCopySuccess] = useState('');
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -39,7 +41,6 @@ const General = ({ store }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Upload images to Cloudinary if they are not already Cloudinary URLs
             const uploadImages = async () => {
                 const updatedData = { ...formData };
 
@@ -48,7 +49,6 @@ const General = ({ store }) => {
                         const uploadedImage = await uploadImage(image);
                         updatedData[type][subType].imageUrl = uploadedImage.img;
                         updatedData[type][subType].imageID = uploadedImage.id;
-
                     }
                 };
 
@@ -103,6 +103,16 @@ const General = ({ store }) => {
         }
     }, []);
 
+    const handleAddSubCategory = () => {
+        if (newSubCategory.trim()) {
+            setFormData({
+                ...formData,
+                subCategories: [...formData.subCategories, { name: newSubCategory.trim() }]
+            });
+            setNewSubCategory('');
+        }
+    };
+
     const esewaDropzone = useDropzone({
         onDrop: (acceptedFiles) => handleDrop(acceptedFiles, 'esewa')
     });
@@ -116,12 +126,13 @@ const General = ({ store }) => {
     });
 
     const renderDropzone = (type, dropzoneProps) => (
-        <div className="mb-4">
+        <div className="mb-4 flex justify-center flex-col items-center mx-auto">
             <div {...dropzoneProps.getRootProps({ className: 'dropzone' })} className="p-4 border-dashed border-2 rounded-lg cursor-pointer text-center">
                 <input {...dropzoneProps.getInputProps()} />
+                <h1 className='font-bold'>QR CODE</h1>
                 <p>Drag 'n' drop an image here, or click to select one</p>
             </div>
-            {formData[type]?.qr?.imageUrl && <img src={formData[type].qr.imageUrl} alt={`${type} QR`} className="w-32 h-32 mt-2 border border-gray-200 rounded-lg" />}
+            {formData[type]?.qr?.imageUrl && <img src={formData[type].qr.imageUrl} alt={`${type} QR`} className="w-60 h-60 mt-2 border border-gray-200 rounded-lg" />}
         </div>
     );
 
@@ -140,6 +151,13 @@ const General = ({ store }) => {
         esewa,
         bank,
         khalti,
+        phoneNumber,
+        promoCode,
+        subscriptionStatus,
+        expectedDeliveryTime,
+        expectedDeliveryPrice,
+        liveChatSource,
+        subscriptionExpiry
     } = formData;
 
     return (
@@ -176,19 +194,108 @@ const General = ({ store }) => {
                             placeholder="Location"
                             className="mb-2 p-2 w-full border rounded"
                         />
+                        <input
+                            type="text"
+                            name="phoneNumber"
+                            value={phoneNumber}
+                            onChange={handleInputChange}
+                            placeholder="Phone Number"
+                            className="mb-2 p-2 w-full border rounded"
+                        />
                     </section>
+                    <section className='mb-8 border-b pb-4'>
+
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Delivery Status</h2>
+                        <label className="capitalize">Expected Delivery Time</label>
+                        <input
+                            type="text"
+                            name="DeliveryTime"
+                            value={expectedDeliveryTime}
+                            onChange={(e) => { setFormData({ ...formData, expectedDeliveryTime: e.target.value }) }}
+                            placeholder="Expected Delivery Time"
+                            className="mb-2 p-2 w-full border rounded"
+                        />
+                        <label className="capitalize">Expected Delivery Price</label>
+                        <input
+                            type="number"
+                            name="DeliveryPrice"
+                            value={expectedDeliveryPrice}
+                            onChange={(e) => { setFormData({ ...formData, expectedDeliveryPrice: e.target.value }) }}
+                            placeholder="Expected Delivery Price"
+                            className="mb-2 p-2 w-full border rounded"
+                        />
+
+
+
+                    </section>
+                    {(subscriptionStatus !== 'Silver') ? (
+                        <section className='mb-8 border-b pb-4'>
+                            <h2 className="text-2xl font-semibold mb-4 text-gray-700">Subscription Information</h2>
+                            <label className="capitalize">Subscription Status</label>
+                            <input
+                                type="text"
+                                name="subscriptionStatus"
+                                value={subscriptionStatus}
+                                onChange={handleInputChange}
+                                className="mb-2 p-2 w-full border rounded"
+                                disabled
+                            />
+                            <label className="capitalize">Subscription Expiry</label>
+                            <input
+                                type="text"
+                                name="subscriptionExpiry"
+                                value={new Date(subscriptionExpiry).toLocaleDateString()}
+                                className="mb-2 p-2 w-full border rounded"
+                                disabled
+                            />
+                        </section>
+                    ) : ''}
                     <section className="mb-8 border-b pb-4">
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sub Categories</h2>
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Categories</h2>
                         {subCategories.map((subCategory, index) => (
                             <input
                                 key={index}
                                 type="text"
-                                value={subCategory.name}
+                                value={subCategory?.name}
                                 onChange={(e) => handleArrayChange(e, 'subCategories', index)}
-                                placeholder="Sub Category"
+                                placeholder="Category"
                                 className="mb-2 p-2 w-full border rounded"
                             />
                         ))}
+                        <div className="flex mt-4">
+                            <input
+                                type="text"
+                                value={newSubCategory}
+                                onChange={(e) => setNewSubCategory(e.target.value)}
+                                placeholder="New Category"
+                                className="p-2 border rounded flex-grow"
+                            />
+                            <button
+                                type="button"
+                                onClick={handleAddSubCategory}
+                                className="ml-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+                            >
+                                Add
+                            </button>
+                        </div>
+                    </section>
+                    <section className="mb-8 border-b pb-4">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
+                        {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        {
+                            (subscriptionStatus !== 'Silver') && (
+                                <>
+                                    <input
+                                        type="text"
+                                        name="liveChatSource"
+                                        value={liveChatSource}
+                                        onChange={(e) => setFormData({ ...formData, liveChatSource: e.target.value })}
+                                        placeholder="Live Chat URL"
+                                        className="mb-2 p-2 w-full border rounded"
+                                    />
+                                </>
+                            )
+                        }
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Social Media Links</h2>
@@ -209,7 +316,44 @@ const General = ({ store }) => {
                             </div>
                         ))}
                     </section>
-                    <section className="mb-8 border-b pb-4">
+                    {
+                        (subscriptionStatus !== 'Silver') ? (
+                            <section className='mb-8 border-b pb-4'>
+
+                                <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
+
+                                <div>
+                                    <div className='flex flex-col'>
+                                        <label className="capitalize">Promo Name</label>
+                                        <input
+                                            type="text"
+                                            value={promoCode[0]?.name}
+                                            onChange={(e) => setFormData({ ...formData, promoCode: [{ name: e.target.value, value: formData?.promoCode[0]?.value }] })}
+                                            placeholder="PromoCode"
+                                            className="p-2 border rounded flex-grow"
+                                        />
+                                    </div>
+                                    <div className='flex flex-col mt-3'>
+                                        <label className="capitalize">Discount (%)</label>
+                                        <input
+                                            type="number"
+                                            value={promoCode[0]?.value}
+                                            onChange={(e) => setFormData({ ...formData, promoCode: [{ value: e.target.value, name: formData?.promoCode[0]?.name }] })}
+                                            placeholder="Discount"
+                                            className="p-2 border rounded flex-grow"
+                                        />
+                                    </div>
+
+                                </div>
+
+                            </section>
+                        ) : ''
+
+
+
+                    }
+
+                    {/* <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
                         <input
                             type="text"
@@ -219,7 +363,7 @@ const General = ({ store }) => {
                             placeholder="Owner"
                             className="mb-2 p-2 w-full border rounded"
                         />
-                    </section>
+                    </section> */}
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Payment Details</h2>
                         <div className="mb-4">
@@ -290,8 +434,8 @@ const General = ({ store }) => {
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Store URL :</h2>
                         <div className="flex items-center space-x-2">
                             <li className='text-blue-500 hover:text-blue-700'>
-                                <Link to={`/store/${store.name}`}>
-                                    {`https://banau.com/${store.name}`}
+                                <Link to={`/store/${store?.name}`}>
+                                    {`https://banau.com/${store?.name}`}
                                 </Link>
                             </li>
                             <button
@@ -307,9 +451,34 @@ const General = ({ store }) => {
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Contact Information</h2>
                         <p className="text-gray-600">Email: <a href={`mailto:${email}`} className="text-blue-500 hover:underline">{email}</a></p>
                         <p className="text-gray-600">Location: {location}</p>
+                        <p className="text-gray-600">Phone Number: {phoneNumber}</p>
+
+                    </section>
+                    <section className='mb-8 border-b pb-4'>
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Subscription Information</h2>
+                        <p>Subscription Status: {subscriptionStatus}</p>
+                        <p>Subscription Expiry: {new Date(subscriptionExpiry).toLocaleDateString()}</p>
+                    </section>
+
+
+                    <section className="mb-8 border-b pb-4">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Delivery Status</h2>
+                        <p className="text-gray-600">Expected Delivery Time : {expectedDeliveryTime} </p>
+                        <p className="text-gray-600">Expected Delivery Price : {expectedDeliveryPrice} </p>
+
                     </section>
                     <section className="mb-8 border-b pb-4">
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Sub Categories</h2>
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
+                        {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        {
+                            (subscriptionStatus !== 'Silver') && <p className="text-gray-600">Url Source: {liveChatSource} </p>
+                        }
+
+
+
+                    </section>
+                    <section className="mb-8 border-b pb-4">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Categories</h2>
                         <ul className="list-disc pl-5 space-y-2">
                             {subCategories.map((subCategory, index) => (
                                 <li key={index} className="text-gray-600">{subCategory.name}</li>
@@ -328,7 +497,18 @@ const General = ({ store }) => {
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
-                        <p className="text-gray-600">{owner}</p>
+                        <p className="text-gray-600">{owner.name}</p>
+                    </section>
+                    <section className='mb-8 border-b pb-4'>
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Promo Code</h2>
+                        {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                        {
+                            (subscriptionStatus !== 'Silver') && promoCode?.map((data, i) => (
+                                <div key={i}>
+                                    <div>{data?.name} : {data?.value}%</div>
+                                </div>
+                            ))
+                        }
                     </section>
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Payment Details</h2>

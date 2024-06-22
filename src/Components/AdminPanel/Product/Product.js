@@ -43,7 +43,7 @@ const Product = ({ store }) => {
       setTotalPages(response.totalPages);
       setCurrentPage(response.currentPage);
     } catch (error) {
-      toast.error(error.message);
+      // toast.error(error.message);
     }
   };
 
@@ -150,11 +150,9 @@ const Product = ({ store }) => {
       if (vIndex === variantIndex) {
         const updatedOptions = variant.options.map((option, oIndex) => {
           if (oIndex === optionIndex) {
-            if (variantIndex === 0) {
+            
               return { ...option, [name]: value };
-            } else {
-              return option;
-            }
+           
           }
           return option;
         });

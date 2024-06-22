@@ -16,7 +16,7 @@ import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
 import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import EsewaRouteComponent from "./Components/AdminPanel/Esewa/EsewaRouteComponent ";import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
 
 function App() {
@@ -36,6 +36,8 @@ function App() {
         <Route path="/productform" element={<ProductForm />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
+        <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
+
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
 
