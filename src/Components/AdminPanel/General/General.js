@@ -16,6 +16,7 @@ const General = ({ store, setDashboardState }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
 
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -157,7 +158,9 @@ const General = ({ store, setDashboardState }) => {
         expectedDeliveryTime,
         expectedDeliveryPrice,
         liveChatSource,
-        subscriptionExpiry
+        subscriptionExpiry,
+        componentSkin,
+        skin
     } = formData;
 
     return (
@@ -279,6 +282,7 @@ const General = ({ store, setDashboardState }) => {
                             </button>
                         </div>
                     </section>
+
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
                         {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}

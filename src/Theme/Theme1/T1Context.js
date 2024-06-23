@@ -389,7 +389,73 @@ export const StoreProvider = ({ children, passedStore }) => {
     fetchedFromBackend: false,
     fonts: {
 
-    }
+    },
+    componentSkin: {
+      type: [
+          {
+              component: { type: String },
+              skinType: { type: String },
+              activeSkin: { type: String },
+              skinInventory: [{ type: String ,unique:true}],
+          }
+      ],
+      default: [
+          {
+              component: "Navbar",
+              skinType: "Navbar",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Product1",
+              skinType: "Card",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Product2",
+              skinType: "Card",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Product3",
+              skinType: "Card",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Banner1",
+              skinType: "Banner",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Banner2",
+              skinType: "Banner",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Banner3",
+              skinType: "Banner",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Footer",
+              skinType: "Footer",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          },
+          {
+              component: "Background",
+              skinType: "Background",
+              activeSkin: "default",
+              skinInventory: ["default"]
+          }
+      ]
+  }
     // Rest of the default store data...
   };
 
@@ -421,7 +487,7 @@ export const StoreProvider = ({ children, passedStore }) => {
           previewMode: true,
           isEdit,
           cart: [],
-          fonts :response.store.fonts|| {} // Set fetchedFromBackend to true when data is fetched
+          fonts: response.store.fonts || {} // Set fetchedFromBackend to true when data is fetched
         });
       } catch (error) {
         // If an error occurs during fetch, set default store data
@@ -429,11 +495,11 @@ export const StoreProvider = ({ children, passedStore }) => {
         console.error("Error fetching store data:", error);
       }
     };
-    if(window.location.pathname.includes("/store/edit/")){
+    if (window.location.pathname.includes("/store/edit/")) {
       fetchStoreData(true);
-      setStore(prev=>({...prev,previewMode:false,fetchedFromBackend:false}))
+      setStore(prev => ({ ...prev, previewMode: false, fetchedFromBackend: false }))
       console.log("I reached here")
-    } 
+    }
     else if (window.location.pathname.includes("/store/")) {
       fetchStoreData(false);
     } else {

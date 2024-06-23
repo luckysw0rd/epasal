@@ -1,155 +1,9 @@
 import React, { useState } from 'react';
 import cosmetic from '../../../../Assets/cosmetic.webp';
-
-const ProductCard1 = () => (
-    <div
-        className="product-card w-[300px] rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
-    >
-        <div className="para uppercase text-center leading-none z-40">
-            <p
-                style={{
-                    WebkitTextStroke: "1px rgb(207, 205, 205)",
-                    WebkitTextFillColor: "transparent",
-                }}
-                className="z-10 font-bold text-lg -mb-5 tracking-wider text-gray-500"
-            >
-                New Product
-            </p>
-            <p className="font-bold text-xl tracking-wider text-[#495c48] z-30">
-                New Product
-            </p>
-        </div>
-        <div
-            className="w-[180px] aspect-square relative z-20 after:absolute after:h-1 after:w-full flex justify-center flex-col items-center after:opacity-0 after:bg-[#7b956a] after:top-8 after:left-0 after:group-hover:opacity-100 after:translate-x-1/2 after:translate-y-1/2 after:-z-20 after:group-hover:w-full flex justify-center flex-col items-center after:transition-all after:duration-300 after:group-hover:origin-right after:group-hover:-translate-x-1/2 group-hover:translate-x-1/2 transition-all duration-300"
-        >
-            <svg
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                textRendering="geometricPrecision"
-                shapeRendering="geometricPrecision"
-                imageRendering="optimizeQuality"
-                fillRule="evenodd"
-                clipRule="evenodd"
-            >
-                <linearGradient
-                    y2="0"
-                    y1="512"
-                    x2="256"
-                    x1="256"
-                    gradientUnits="userSpaceOnUse"
-                    id="id0"
-                >
-                    <stop stopColor="#495c48" offset="0"></stop>
-                    <stop stopColor="#9db891" offset=".490196"></stop>
-                    <stop stopColor="#7b956a" offset="1"></stop>
-                </linearGradient>
-                <g id="Layer_x0020_1">
-                    <path
-                        fill="url(#id0)"
-                        d="m310 512h-108c-16.4 0-31.9-6.5-43.7-18.3s-18.3-27.3-18.3-43.7v-261c0-29.8 24.2-54 54-54h123c30.3 0 55 24.2 55 54v261c0 16.4-6.5 31.9-18.3 43.7s-27.3 18.3-43.7 18.3zm-90-439v-34c0-23 9.9-39 24-39h24c13.5 0 24 17.1 24 39v34zm-33 48.36v-27.36c0-3.9 3.1-7 7-7h124c3.9 0 7 3.1 7 7v27.46c-2.63-.3-5.3-.46-8-.46h-123c-2.36 0-4.7.12-7 .36zm69 71.6c-33.94 54.87-38.25 93.49-29.7 116.4 5.82 15.59 17.8 23.39 29.7 23.39s23.88-7.8 29.7-23.39c8.55-22.91 4.24-61.53-29.7-116.4zm-42.77 121.27c-10.32-27.64-5.23-73.83 36.85-137.91.52-.84 1.22-1.57 2.09-2.14 3.22-2.12 7.54-1.22 9.65 1.99 42.17 64.16 47.27 110.4 36.95 138.06-8.09 21.68-25.39 32.52-42.77 32.52s-34.68-10.84-42.77-32.52zm102.27 126.87c-2.8 0-5.9-.4-9.3-1.3-.1 0-.1 0-.2 0-14-4.2-21.8-18.1-17.7-31.7.1-.4.3-.8.4-1.1.2-.4.4-.8.6-1.3.8-1.9 1.9-4.3 3.8-6.5 24.5-50.8 21.9-118.2 21.9-118.9-.1-3.5 2.3-6.5 5.7-7.2s6.8 1.3 7.9 4.6c3.3 9.6 11.2 41 15.2 73.2 5.1 42 1.8 69.7-9.9 82.2-3.7 4-9.6 8-18.4 8zm-5.6-14.8c8 2.2 11.7-.5 13.7-2.7 12.5-13.4 9.3-57.7 2.8-94.5-2.9 23.5-8.9 51.9-21.2 76.9-.3.7-.8 1.3-1.3 1.9-.6.6-1.3 2.1-1.8 3.4-.2.4-.4.8-.5 1.2-1.5 5.9 2.1 11.9 8.3 13.8zm-113.4 14.8c-8.9 0-14.8-4-18.4-7.9-11.7-12.5-15-40.2-9.9-82.2 3.9-32.2 11.8-63.6 15.2-73.2 1.1-3.3 4.5-5.2 8-4.6 3.4.7 5.8 3.8 5.6 7.3 0 .7-3.5 68 21.8 118.6 1.9 2.2 3 4.7 3.9 6.6.2.5.4.9.6 1.3s.3.7.4 1.1c4.1 13.6-3.7 27.5-17.7 31.7-.1 0-.1 0-.2 0-3.4.9-6.5 1.3-9.3 1.3zm-11.2-110.6c-6.3 36.5-9.3 79.8 3.1 93.1 2 2.2 5.7 4.8 13.7 2.7 6.3-1.9 9.9-7.9 8.4-13.8-.2-.4-.4-.8-.5-1.2-.5-1.2-1.2-2.7-1.8-3.4-.5-.5-1-1.1-1.3-1.8-12.7-24.5-18.7-52.3-21.6-75.6z"
-                    ></path>
-                </g>
-            </svg>
-            <div
-                className="tooltips absolute top-0 left-0 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full flex justify-center flex-col items-center"
-            >
-                <p
-                    className="text-[#7b956a] font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                >
-                    Toner
-                </p>
-                <ul className="flex flex-col items-start gap-2">
-                    <li
-                        className="inline-flex gap-2 items-center justify-center group-hover:delay-200 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                    >
-                        <svg
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="3"
-                            className="stroke-[#495c48]"
-                            stroke="#000000"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="10"
-                            width="10"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <p className="text-xs font-semibold text-[#495c48]">Hydration</p>
-                    </li>
-                    <li
-                        className="inline-flex gap-2 items-center justify-center group-hover:delay-300 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                    >
-                        <svg
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="3"
-                            className="stroke-[#495c48]"
-                            stroke="#000000"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="10"
-                            width="10"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <p className="text-xs font-semibold text-[#495c48]">
-                            Protect Skin Barrier
-                        </p>
-                    </li>
-                    <li
-                        className="inline-flex gap-2 items-center justify-center group-hover:delay-400 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                    >
-                        <svg
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="3"
-                            className="stroke-[#495c48]"
-                            stroke="#000000"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="10"
-                            width="10"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <p className="text-xs font-semibold text-[#495c48]">Reduce Wrinkles</p>
-                    </li>
-                    <li
-                        className="inline-flex gap-2 items-center justify-center group-hover:delay-500 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                    >
-                        <svg
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="3"
-                            className="stroke-[#495c48]"
-                            stroke="#000000"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="10"
-                            width="10"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <p className="text-xs font-semibold text-[#495c48]">Anti Inflammatory</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-);
-
+import esewa from '../../../../Assets/esewa.webp';
+import useFetch from '../../../../Hooks/useFetch';
 const ProductCard2 = () => (
-    <div className="w-60 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+    <div className="w-62 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
         <a href="#">
             <img
                 src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -189,7 +43,7 @@ const ProductCard2 = () => (
 );
 
 const ProductCard3 = () => (
-    <div className="product-card w-[300px] rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="product-card w-62 rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <div className="para uppercase text-center leading-none z-40">
             <p
                 style={{
@@ -213,7 +67,7 @@ const ProductCard3 = () => (
                 className="object-cover w-full flex justify-center flex-col items-center h-full flex justify-center flex-col items-center"
             />
             <div
-                className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full flex justify-center flex-col items-center"
+                className="tooltips absolute top-0 left-10 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full flex justify-center flex-col items-center"
             >
                 <p
                     className="text-[#7b956a] pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
@@ -316,81 +170,108 @@ const ProductCard3 = () => (
     </div>
 );
 
-const ProductCard4 = () => (
-    <div className="bg-white text-black border border-gray-300 rounded-xl p-6 shadow-md flex flex-col items-center relative transition-transform transform hover:scale-105">
-        <img src="https://via.placeholder.com/150" alt="Sauvignon Blanc" className="w-32 h-32 object-cover rounded-full flex justify-center flex-col items-center mb-4" />
-        <h2 className="text-xl font-semibold mb-2">Sauvignon Blanc</h2>
-        <p className="text-gray-500 mb-4 text-center">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
-        <span className="text-2xl font-bold mb-4">Rs 1295</span>
-        <button className="bg-yellow-600 text-white px-6 py-2 rounded-full flex justify-center flex-col items-center hover:bg-yellow-700 transition-colors">Buy Now</button>
-    </div>
-);
+const productCardsArray = [<ProductCard2 />, <ProductCard3 />]; // Add more as needed
+const productInfo = [{
+    name: 'Modern Minimalistic',
+    price: 150,
+},
+{
+    name: 'Slider',
+    price: 400,
+}
+]
 
-const ProductCard5 = () => (
-    <div className="bg-white text-black border border-gray-300 rounded-xl p-6 shadow-md flex flex-col items-center relative transition-transform transform hover:scale-105">
-        <img src="https://via.placeholder.com/150" alt="Cabernet Sauvignon" className="w-32 h-32 object-cover rounded-full flex justify-center flex-col items-center mb-4" />
-        <h2 className="text-xl font-semibold mb-2">Cabernet Sauvignon</h2>
-        <p className="text-gray-500 mb-4 text-center">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-        <span className="text-2xl font-bold mb-4">Rs 2095</span>
-        <button className="bg-purple-600 text-white px-6 py-2 rounded-full flex justify-center flex-col items-center hover:bg-purple-700 transition-colors">Buy Now</button>
-    </div>
 
-);
+export default function ProductCards({ store }) {
+    const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
-const ProductCard6 = () => (
-    <div className="bg-white text-black border border-gray-300 rounded-xl p-6 shadow-md flex flex-col items-center relative transition-transform transform hover:scale-105">
-        <img src="https://via.placeholder.com/150" alt="Zinfandel" className="w-32 h-32 object-cover rounded-full flex justify-center flex-col items-center mb-4" />
-        <h2 className="text-xl font-semibold mb-2">Zinfandel</h2>
-        <p className="text-gray-500 mb-4 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <span className="text-2xl font-bold mb-4">Rs 1595</span>
-        <button className="bg-red-600 text-white px-6 py-2 rounded-full flex justify-center flex-col items-center hover:bg-red-700 transition-colors">Buy Now</button>
-    </div>
-);
+    const handleBuyNow = async (cardNumber) => {
+        // Function to handle the purchase action with this card's details
+        const data = {
+            skin: {
+                skinType: 'Card',
+                name: productInfo[cardNumber].name,
+            },
+            amount: productInfo[cardNumber].price,
+            payment_method: 'esewa',
+            store: store._id,
+        };
+        const success_url = 'http://localhost:3000/esewa/skin';
+        try {
+            const responseData = await sendRequest(
+                'payment/create',
+                'POST',
+                JSON.stringify({
+                    data, success: success_url
+                }),
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+            console.log(responseData); // Handle response data as needed
+            if (responseData.payment.payment_method === 'esewa') {
+                esewaCall(responseData.formData);
+            }
+        } catch (error) {
+            console.log(error);
+        }
 
-const handleBuyNow = (cardNumber) => {
-    // Function to handle the purchase action with this card's details
-};
+    };
+    const esewaCall = (formData) => {
+        console.log(formData);
+        var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
-const ProductCards = () => (
-    <div className="container mx-auto px-5 py-8 flex flex-wrap">
-        <div className="w-full flex justify-center flex-col items-center sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"><ProductCard1 />   <button
-            onClick={handleBuyNow}
-            className="bg-gray-800 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4"
-        >
-            Buy Now
-        </button></div>
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", path);
 
-        <div className="w-full flex justify-center flex-col items-center sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"><ProductCard2 /> <button
-            onClick={handleBuyNow}
-            className="bg-gray-800 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4"
-        >
-            Buy Now
-        </button> </div>
-        <div className="w-full flex justify-center flex-col items-center sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"><ProductCard3 /> <button
-            onClick={handleBuyNow}
-            className="bg-gray-800 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4"
-        >
-            Buy Now
-        </button></div>
-        <div className="w-full flex justify-center flex-col items-center sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"><ProductCard4 /> <button
-            onClick={handleBuyNow}
-            className="bg-gray-800 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4"
-        >
-            Buy Now
-        </button></div>
-        <div className="w-full flex justify-center flex-col items-center sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"><ProductCard5 /> <button
-            onClick={handleBuyNow}
-            className="bg-gray-800 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4"
-        >
-            Buy Now
-        </button></div>
-        <div className="w-full flex justify-center flex-col items-center sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"><ProductCard6 /> <button
-            onClick={handleBuyNow}
-            className="bg-gray-800 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4"
-        >
-            Buy Now
-        </button></div>
-    </div>
-);
+        for (var key in formData) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", formData[key]);
+            form.appendChild(hiddenField);
+        }
 
-export default ProductCards;
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+    return (
+        <div className="container  mx-auto px-5 py-8 flex flex-wrap">
+
+
+            <div className="product-list flex  flex-wrap gap-4">
+                {productCardsArray.map((card, index) => (
+                    <>
+                        <div className=' flex flex-col'>
+                            <React.Fragment key={index}>{card}</React.Fragment>
+                            <div>
+                                <button
+                                    className="flex items-center justify-center space-x-5 mt-auto text-green-800 bg-gray-300 border-0 py-2 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
+                                    onClick={() => handleBuyNow(index)}
+                                >
+                                    <img src={esewa} alt="eSewa" className="font-Cinzel rounded-md w-20 h-10 mr-6" />
+                                    <span className='  relative right-10 '>Pay Now</span>
+                                    <svg
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        className="w-4 h-4"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                    </svg>
+                                </button></div>
+                        </div>
+                    </>
+                ))}
+
+            </div>
+
+        </div>
+    );
+}
+

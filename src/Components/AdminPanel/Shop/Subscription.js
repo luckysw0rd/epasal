@@ -120,7 +120,7 @@ export default function Subscription({ store }) {
 
     return (
         <section className="text-gray-900 body-font overflow-hidden border-t border-gray-200">
-            <div className="container px-5 py-8 mx-auto flex flex-wrap">
+            <div className="container  py-8 mx-auto flex flex-wrap">
                 <div className="lg:w-[300px] mt-48 hidden lg:block">
                     <div className="mt-[10px]  border-t border-gray-300 border-b border-l rounded-tl-lg rounded-bl-lg overflow-hidden">
                         <p className={`text-white h-12 text-center px-4 flex items-center justify-start bg-gray-800 `}>
@@ -136,7 +136,7 @@ export default function Subscription({ store }) {
                         </div>
                     </div>
                 </div>
-                <div className="flex  space-x-0 md:w-screen lg:w-screen xl:w-3/4 w-full flex-wrap lg:border border-gray-300 rounded-lg">
+                <div className="flex w-screen  space-x-0 md:w-screen lg:w-[650px] xl:w-[700px] 2xl:w-[1000px] 3xl:w-[1000px]  flex-wrap lg:border border-gray-300 rounded-lg">
                     {plans.map((plan, planIndex) => (
                         <div
                             key={planIndex}
@@ -157,38 +157,21 @@ export default function Subscription({ store }) {
                                         selectedDurations[planIndex] === 'quarterly' ? 'per quarter' : 'per year'}
                                 </span>
                             </div>
-                            <div className="flex justify-center my-4 space-x-4">
+                            <div className="flex justify-center my-4">
                                 <label className="flex items-center space-x-2">
-                                    <input
-                                        type="radio"
+                                    <select
                                         name={`duration-${planIndex}`}
-                                        value="monthly"
-                                        checked={selectedDurations[planIndex] === 'monthly'}
-                                        onChange={() => handleDurationChange(planIndex, 'monthly')}
-                                    />
-                                    <span>Monthly</span>
-                                </label>
-                                <label className="flex items-center space-x-2">
-                                    <input
-                                        type="radio"
-                                        name={`duration-${planIndex}`}
-                                        value="quarterly"
-                                        checked={selectedDurations[planIndex] === 'quarterly'}
-                                        onChange={() => handleDurationChange(planIndex, 'quarterly')}
-                                    />
-                                    <span>Quarterly</span>
-                                </label>
-                                <label className="flex items-center space-x-2">
-                                    <input
-                                        type="radio"
-                                        name={`duration-${planIndex}`}
-                                        value="yearly"
-                                        checked={selectedDurations[planIndex] === 'yearly'}
-                                        onChange={() => handleDurationChange(planIndex, 'yearly')}
-                                    />
-                                    <span>Yearly</span>
+                                        value={selectedDurations[planIndex]}
+                                        onChange={(e) => handleDurationChange(planIndex, e.target.value)}
+                                        className="form-select"
+                                    >
+                                        <option value="monthly">Monthly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                        <option value="yearly">Yearly</option>
+                                    </select>
                                 </label>
                             </div>
+
                             {plan.features.map((feature, featureIndex) => (
                                 <div
                                     key={featureIndex}
@@ -230,7 +213,7 @@ export default function Subscription({ store }) {
                                     </span>
                                 </div>
                             ))}
-                            <div className={`p-6 text-center ${plan.name === 'START' ? 'rounded-bl-lg' : 'border-t border-gray-300'}`}>
+                            <div className={`p-6 text-center ${plan.name === 'Silver' ? 'rounded-bl-lg' : 'border-t border-gray-300'}`}>
                                 <button
                                     className="flex items-center justify-center space-x-10 mt-auto text-green-800 bg-gray-300 border-0 py-2 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
                                     onClick={() => handleBuy(plan, selectedDurations[planIndex])}

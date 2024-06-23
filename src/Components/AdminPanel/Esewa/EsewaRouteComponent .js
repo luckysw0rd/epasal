@@ -33,6 +33,26 @@ const EsewaRouteComponent = () => {
         }
     };
 
+    const updateStoreSkin = async (data) => {
+        try {
+            console.log("Data to be sent:", data);
+            const responseData = await sendRequest(
+                'store/upgrade/storeSkin/' + data.transaction_uuid, // Ensure the correct endpoint
+                'PATCH',
+                JSON.stringify(data),
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token
+                }
+            );
+            console.log("Response data:", responseData);
+            setIsSuccess(true);
+        } catch (error) {
+            console.error("Error message:", error.message);
+            console.error("Error details:", error);
+        }
+    };
+
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const data = queryParams.get('data');
@@ -49,6 +69,11 @@ const EsewaRouteComponent = () => {
             if (field === "subscription" && parsedJson) {
                 console.log("Updating now...");
                 updateStoreSubscription(parsedJson);
+            }
+
+            if (field === 'skin' && parsedJson) {
+                console.log("skin update");
+                updateStoreSkin(parsedJson);
             }
         }
     }, [location.search, field]);
@@ -92,15 +117,15 @@ const EsewaRouteComponent = () => {
                             </div>
                         )}
                         <div className=' w-full gap-4 flex flex-row space-x-5 justify-center'>
-                        <button
-                            onClick={downloadPDF}
-                            className="bg-blue-500 text-white px-4 py-2  rounded-md shadow-md hover:bg-blue-600 transition duration-300 mb-4"
-                        >
-                            Download PDF
-                        </button>
-                        <Link to="/" className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 transition duration-300 mb-4">
-                            Go to Homepage
-                        </Link>
+                            <button
+                                onClick={downloadPDF}
+                                className="bg-blue-500 text-white px-4 py-2  rounded-md shadow-md hover:bg-blue-600 transition duration-300 mb-4"
+                            >
+                                Download PDF
+                            </button>
+                            <Link to="/" className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 transition duration-300 mb-4">
+                                Go to Homepage
+                            </Link>
                         </div>
                     </div>
                 ) : (

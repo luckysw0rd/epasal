@@ -15,7 +15,7 @@ const fonts = [
 
 const Editor = () => {
   const { store, setStore } = useStore();
-  const [openType, setOpenType] = useState(false);
+  const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
   const { color } = store;
   const { fetchedFromBackend } = store;
@@ -63,6 +63,19 @@ const Editor = () => {
     setAddProductForm(true);
   };
 
+  const handleActiveSkinChange = (e, index) => {
+    const newActiveSkin = e.target.value;
+    setStore(prevState => ({
+      ...prevState,
+      componentSkin: prevState.componentSkin.map((component, idx) => {
+        if (idx === index) {
+          return { ...component, activeSkin: newActiveSkin };
+        }
+        return component;
+      })
+    }));
+  };
+
   const handleSingleColorChange = (e, field) => {
     const newValue = e.target.value;
     setStore((prevState) => ({
@@ -104,12 +117,15 @@ const Editor = () => {
           <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
 
           <div className='flex justify-between  mt-10 font-semibold text-[#6A6A6A] px-4'>
-            <button className={`flex-1 text-left ${!openType ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(false) }}>Content</button>
-            <button className={`flex-1 text-left ${openType ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(true) }}>Design</button>
+            <button className={`flex-1 text-left ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content</button>
+            <button className={`flex-1 text-left ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
+            {store.isEdit &&
+              <button className={`flex-1 text-left ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
+            }
           </div>
           <div className='text-red-600 absolute top-[22px] right-2' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}>X</div>
           <div className='text-red-600 absolute top-[22px] right-10' onClick={(e) => { e.preventDefault(); setNavHide(false) }}>Hide</div>
-          {!openType && (
+          {openType === 1 && (
             <div>
 
               <ul className='flex flex-col mt-10 gap-2 px-4'>
@@ -213,6 +229,7 @@ const Editor = () => {
                     <button className='px-2 text-[10px] border border-black' onClick={handleAddFeaturedProduct}>Add +</button>
                   </div>
                 </li>
+
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Footer<br />
                   <div>
@@ -240,7 +257,7 @@ const Editor = () => {
             </div>
           )}
 
-          {openType && (
+          {openType === 2 && (
             <div className="mt-5 px-4 capitalize">
               <div className="flex flex-col gap-4">
 
@@ -284,6 +301,22 @@ const Editor = () => {
                   }
                 })}
               </div>
+            </div>
+          )}
+
+          {openType === 3 && (
+            <div className="mt-5 px-4 capitalize">
+              {store?.componentSkin?.map((component, index) => (
+                <li key={index} className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                  {component.component}:<br />
+                  <label className='text-[10px]'>Active Skin</label><br />
+                  <select value={component.activeSkin} onChange={e => handleActiveSkinChange(e, index)} className='border border-[#6A6A6A] rounded px-2'>
+                    {component.skinInventory.map((skin, idx) => (
+                      <option key={idx} value={skin}>{skin}</option>
+                    ))}
+                  </select>
+                </li>
+              ))}
             </div>
           )}
           <div className='flex justify-center my-3'>
