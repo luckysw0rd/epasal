@@ -13,7 +13,36 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
     const { store } = useStore(); // Access the store context
     const { previewMode,isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch()
-    useEffect(() => {
+
+
+    const getTruncateLength = (width) => {
+        if (width < 640) return 15; // sm
+        if (width < 1281) return 15; // md, lg
+        return 30; // xl, 2xl
+      };
+      const getTruncateLength1 = (width) => {
+        if (width < 640) return 40; // sm
+        if (width < 1281) return 40; // md, lg
+        return 50; // xl, 2xl
+      };
+      const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
+      const [truncateLength1, setTruncateLength1] = useState(getTruncateLength(window.innerWidth));
+      useEffect(() => {
+        const handleResize = () => {
+          setTruncateLength(getTruncateLength(window.innerWidth));
+          setTruncateLength1(getTruncateLength1(window.innerWidth));
+        };
+    
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+      const truncateName = (name) => {
+        return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
+      };
+      const truncateName1 = (detail) => {
+        return detail.length > truncateLength1 ? detail.slice(0, truncateLength1) + '...' : detail;
+      };
+      useEffect(() => {
         // Check if the product is in the cart when the component mounts
         // This logic should be replaced with your actual implementation for checking the cart
         // For demonstration purposes, it's set to false by default
@@ -70,7 +99,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
 
             <div className="relative w-1/2  md:w-[160px] h-[139px] flex ml-2 mt-5 md:mt-0">
                 <motion.img
-                    className="w-full object-contain"
+                    className="w-full h-[80px] sm:h-full object-contain"
                     src={product?.image?.imageUrl}
                     alt={product.name}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -80,7 +109,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
             </div>
 
             <div className="px-10 py-4 w-[280px]">
-                <div className="font-bold text-base mt-3">{product.name}</div>
+                <div className="font-bold text-base mt-3">{truncateName(product.name)}</div>
                 <div className='flex mb-2 justify-center md:justify-start'>
                     {[...Array(5)].map((_, index) => {
                         if (index < product.rating)
@@ -89,9 +118,9 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
                             return <StarIcon className='w-4 h-4 text-[#959595]' />
                     })}
                 </div>
-                <div className='h-[56px] py-1 text-xs overflow-hidden'>{product.description}</div>
+                <div className='h-[56px] py-1 text-xs overflow-hidden'>{truncateName1(product.description)}</div>
                 <div className="mt-1">
-                    <div className="text-sm font-bold flex items-center gap-1 justify-between " >
+                    <div className="text-sm font-bold flex items-center gap-1 justify-between mx-2 sm:mx-0" >
                         <div className=' h-10   text-base flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</div>
                         {!addedToCart && (
                             <button

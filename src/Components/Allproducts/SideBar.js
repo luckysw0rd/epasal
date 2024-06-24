@@ -177,7 +177,7 @@ const Sidebar = ({
   selectedSubcategory,
   subcategories,
   products,
-  colors
+  colors,sliderColor
 }) => {
   // Use optional chaining (?.) to safely access nested properties
   const textColor = colors?.subcategoryColor?.textColor ;
@@ -228,6 +228,7 @@ const Sidebar = ({
           onChange={handleSliderChange}
           min={minPrice}
           max={maxPrice}
+          sliderColor={sliderColor}
         />
         <div className="flex justify-between text-sm lg:text-vsm xl:text-sm  mt-2">
           <span>Rs {priceRange[0]}</span>

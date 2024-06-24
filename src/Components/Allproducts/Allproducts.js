@@ -12,6 +12,7 @@ import { FaBars } from "react-icons/fa";
 import { motion } from "framer-motion";
 import useFetch from '../../Hooks/useFetch';
 import { useParams } from "react-router-dom";
+import CustomizedSlider from "./CustomizedSlider";
 
 const AllProducts = () => {
 
@@ -39,7 +40,7 @@ const {storeName}= useParams()
   }, [storeName]);
 
   const fetchProducts = async () => {
-    console.log(storeName)
+    
 
     try {
       const response = await axios.get(
@@ -204,6 +205,7 @@ const {storeName}= useParams()
         subcategories={subcategories}
         products={products} // Pass products as prop to Sidebar
         colors={colors} // Pass colors as prop to Sidebar
+        sliderColor={colors.productListColor}
       />
       <main className="flex-1 justify-between px-8 sm:px-4 2xl:px-8 mx-auto lg:ml-[24px]">
         <div className="flex justify-between">
