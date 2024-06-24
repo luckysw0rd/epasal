@@ -64,6 +64,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     }}
                     className="z-10 font-bold text-lg -mb-5 tracking-wider "
                 >
+                    {/* {product.subcategories[0]} */}
                 </p>
                 <p className="font-bold text-xl tracking-wider ">
                     {product.name}
@@ -89,7 +90,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                             color: store.color.subProductColor.categoryColor,
                         }}
                     >
-                        {product.category}
+                        {product.subcategories[0]}
                     </p>
                     <ul className="flex flex-col items-start gap-2">
                         <li
