@@ -47,6 +47,7 @@ const EStore = ({ Passedstore }) => {
     { id: 9, component: <T1ProductList /> },
     { id: 10, component: <OfferBanner /> },
     { id: 11, component: <Footer /> },
+
   ]);
 
 
@@ -153,5 +154,7 @@ const EStoreWithStoreProvider = (passedStore = { passedStore }) => {
     </StoreProvider>
   );
 };
+
+
 
 export default EStoreWithStoreProvider;

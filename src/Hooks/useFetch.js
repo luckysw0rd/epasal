@@ -48,7 +48,7 @@ export const useFetch = () => {
                 console.error('Fetch error:', error);
             }
             setIsLoading(false);
-            throw error;
+            // throw error;
         }
     }, []);
 

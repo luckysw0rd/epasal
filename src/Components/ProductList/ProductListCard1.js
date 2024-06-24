@@ -103,9 +103,9 @@ import { motion } from 'framer-motion';
 import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
-
-const ProductLIstCard1 = ({ productListProps, handleDeleteProduct, product  }) => {
-    const { productColor, previewMode, addToCart } = productListProps;
+import './productList.css'
+const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
+    const { productColor, previewMode, addToCart, isEdit,store } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);

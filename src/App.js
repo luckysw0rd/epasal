@@ -41,7 +41,7 @@ function App() {
         <Route path="/productform" element={<ProductForm />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
-        <Route path="/esewa" element={<EsewaRouteComponent />} />
+        <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
 
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
