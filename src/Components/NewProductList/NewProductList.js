@@ -3,7 +3,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
 
 import NewProductListCard from './NewProductListCard';
-
+import NewProductListCard2 from './NewProductListCard2';
 
 const NewProductList = ({ productListProps, productListType }) => {
     const { products, productColor, setStore, store } = productListProps
@@ -34,6 +34,26 @@ const NewProductList = ({ productListProps, productListType }) => {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
                                 {filteredProducts.map((product, i) => (
                                     (product?.id || product?._id) && <NewProductListCard
+                                        key={product.id}
+                                        product={product}
+                                        productListProps={productListProps}
+                                        // handleDeleteProduct={handleDeleteProduct}
+                                        store={store}
+
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 'Modern Minimalistic':
+                return (
+                    <div className='space-y-10 py-20 w-full flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                        <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">New Products</h1>
+                        <div style={{}} className=''>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
+                                {filteredProducts.map((product, i) => (
+                                    (product?.id || product?._id) && <NewProductListCard2
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}

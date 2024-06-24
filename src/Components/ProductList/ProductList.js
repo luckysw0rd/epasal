@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import ProductListCard1 from './ProductListCard1';
-
+import SubProductCard2 from './ProductListCard2';
+import ProductListCard2 from './ProductListCard2';
 
 const ProductList = ({ productListProps, productListType }) => {
     const { products,isEdit, productColor, setStore , store } = productListProps
@@ -28,7 +29,7 @@ const ProductList = ({ productListProps, productListType }) => {
 
     const renderProductList = () => {
         switch (productListType) {
-            case 'ProductList1':
+            case 'default':
                 return (
                     <div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
@@ -48,6 +49,27 @@ const ProductList = ({ productListProps, productListType }) => {
                         </div>
                     </div>
                 );
+
+                case 'Modern Minimalistic':
+                    return (
+                        <div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                            <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
+                            <div >
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
+                                    {filteredProducts?.map((product, i) => (
+                                        (product?.id || product?._id) && <ProductListCard2
+                                            key={product.id}
+                                            product={product}
+                                            productListProps={productListProps}
+                                            handleDeleteProduct={handleDeleteProduct}
+                                            store={store}
+    
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    );    
             // Add more cases for other product list types
             default:
                 return null;

@@ -5,7 +5,7 @@ const SubProductCard = ({ categoryType, ...props }) => {
     console.log(props);
 
     switch (categoryType) {
-        case 'Category1':
+        case 'default':
             return <SubProductCard1 {...props} />;
         case 'Modern Minimalistic':
             return <SubProductCard2 {...props}></SubProductCard2>
