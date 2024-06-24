@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TbShoppingBagPlus } from "react-icons/tb";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { FiClock } from "react-icons/fi";
@@ -11,9 +11,9 @@ import SimilarProducts from './SimilarProducts';
 import { useLocation } from 'react-router-dom';
 
 const ProjectLanding1 = () => {
+
     const location = useLocation();
     const { product } = location.state || {};
-    console.log(product);
 
     const [selectedVariant, setSelectedVariant] = useState(product.variant[0]);
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
@@ -36,7 +36,7 @@ const ProjectLanding1 = () => {
 
     const handleVariantChange = (e) => {
         const selectedVariantName = e.target.value;
-        const newSelectedVariant = product.variant.find(
+        const newSelectedVariant = product?.variant.find(
             (variant) => variant.options.some(option => option.name === selectedVariantName)
         );
         const selectedOption = newSelectedVariant.options.find(option => option.name === selectedVariantName);
@@ -54,6 +54,17 @@ const ProjectLanding1 = () => {
 
     const totalPrice = price * productCount;
     const totalDiscount = discount * productCount;
+    const store = {
+        deliveryCharge: 100,
+        COD: "available",
+        deliveryTime: "2-3 Days",
+        warranty: "4 months",
+        returnPolicyTime: "14 days"
+    }
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [product])
     return (
         <div className="p-2 md:p-5 lg:p-16">
             <div className='flex flex-col gap-5'>
@@ -94,7 +105,7 @@ const ProjectLanding1 = () => {
                                 </p>
                                 <div className='flex mb-2 md:justify-start'>
                                     {[...Array(5)].map((option, index) => {
-                                        if (index < product.rating)
+                                        if (index < parseFloat(product.rating))
                                             return <StarIcon className='w-5 h-5 text-[#8B5A08]' key={index} />
                                         else
                                             return <StarIcon className='w-5 h-5 text-[#959595]' key={index} />
@@ -153,17 +164,17 @@ const ProjectLanding1 = () => {
                                 <div className="flex flex-col gap-3 text-xs text-[#898989]">
                                     <span>Delivery Charge and time</span>
                                     <div className='flex justify-between md:text-xs lg:text-sm text-[#636363]'>
-                                        <span className='flex gap-3 items-center'><LiaShippingFastSolid size={20} />Rs. 100 </span>
-                                        <span className='flex gap-3 items-center mr-5'><FiClock size={20} />2-3 days</span>
+                                        <span className='flex gap-3 items-center'><LiaShippingFastSolid size={20} />Rs. {store.deliveryCharge}</span>
+                                        <span className='flex gap-3 items-center mr-5'><FiClock size={20} />{store.deliveryTime} days</span>
                                     </div>
-                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><TbCash size={20} />Cash on Delivery available</span>
+                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><TbCash size={20} />Cash on Delivery {store.COD}</span>
                                 </div>
                             </div>
                             <div>
                                 <div className="flex flex-col gap-3 text-xs text-[#898989]">
                                     <span>Services</span>
-                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><MdVerifiedUser size={20} />4 month warranty available</span>
-                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><PiCreditCard size={20} />14 days return policy</span>
+                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><MdVerifiedUser size={20} />{store.warranty} warranty available</span>
+                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><PiCreditCard size={20} />{store.returnPolicyTime} return policy</span>
                                 </div>
                             </div>
                         </div>

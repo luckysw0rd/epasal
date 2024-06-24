@@ -1,21 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StarIcon } from '@heroicons/react/16/solid';
+import { AuthContext } from "../../Hooks/AuthContext";
+import useFetch from '../../Hooks/useFetch';
+import { useContext } from 'react';
 
 const ProductReview = ({ product }) => {
     const { rating } = product
-    const getRatingText = (rating) => {
-        if (rating >= 4) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [name, setName] = useState('');
+    const [userRating, setUserRating] = useState('');
+    const [description, setDescription] = useState('');
+    const [reviews, setReviews] = useState([])
+    const auth = useContext(AuthContext);
+    const { sendRequest } = useFetch();
+
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = totalRating / reviews.length;
+    const getRatingText = (averageRating) => {
+        if (averageRating >= 4) {
             return "Excellent";
-        } else if (rating >= 3) {
+        } else if (averageRating >= 3) {
             return "Very Good";
-        } else if (rating >= 2) {
+        } else if (averageRating >= 2) {
             return "Good";
-        } else if (rating >= 1) {
+        } else if (averageRating >= 1) {
             return "Fair";
         } else {
             return "Poor";
         }
     };
+
+    const handleSubmit = async (productId) => {
+        const rating = userRating
+        const reviewData = { name, rating, description }
+        try {
+            const responseData = await sendRequest(
+                `review/products/${productId}/reviews`,
+                'POST',
+                JSON.stringify(reviewData),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            console.log(responseData); // Handle response data as needed
+        } catch (error) {
+            // Handle error if needed
+            console.log(error);
+        }
+        finally {
+            fetchReview()
+            setIsModalOpen(false); // Close the modal after submission           
+            setDescription("")
+            setUserRating("")
+            setName("")
+        }
+    };
+
+    async function fetchReview() {
+        try {
+            const responseData = await sendRequest(
+                `review/products/${product._id}/reviews`,
+                'Get',
+                null, {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + auth.token,
+            }
+            );
+            setReviews(responseData) // Handle response data as needed
+        } catch (error) {
+            // Handle error if needed
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchReview()
+    }, [])
+
     return (
         <div className='flex flex-col gap-3'>
             <h1 className="text-sm lg:text-lg font-semibold">Reviews and Rating</h1>
@@ -24,16 +86,16 @@ const ProductReview = ({ product }) => {
                     {/* SHOWS DIRECT RATING  */}
                     <div className='flex flex-col items-center gap-1 lg:gap-3 rounded-sm md:rounded-md border border-[#AD7A29] px-4 md:px-5 lg:px-7 py-2 lg:py-4'>
                         <div className="flex flex-col items-center">
-                            <div className="text-xl md:text-2xl lg:text-3xl text-[#818181] font-semibold">{rating}</div>
+                            <div className="text-xl md:text-2xl lg:text-3xl text-[#818181] font-semibold">{parseFloat(averageRating.toFixed(1))}</div>
                             <div className="text-sm md:text-base lg:text-xl text-[#8B5A08]">
-                                {getRatingText(rating)}
+                                {getRatingText(averageRating)}
                             </div>
                         </div>
                         <div className="flex justify-center">
                             <div className="flex items-center">
                                 <div className='flex mb-2 justify-center md:justify-start'>
                                     {[...Array(5)].map((option, index) => {
-                                        if (index < rating)
+                                        if (index < Math.ceil(averageRating))
                                             return <StarIcon className='w-4 h-4 lg:w-6 lg:h-6 text-[#8B5A08]' />
                                         else
                                             return <StarIcon className='w-4 h-4 lg:w-6 lg:h-6 text-[#959595]' />
@@ -75,31 +137,105 @@ const ProductReview = ({ product }) => {
                     </div>
 
                 </div>
-                <div className='flex gap-2'>
-                    <input type="text" placeholder='Write your reviews' className='w-full p-1 lg:p-2 rounded-md border border-gray-400' />
-                    <button className='py-1 lg:py-2 px-5 lg:px-8 border text-sm md:text-base rounded-md border-gray-400'>Submit</button>
-                </div>
-                <div className="mb-10 text-[#808080]">
-                    <div className="flex w-full gap-2 items-center">
-                        <span className="text-sm lg:text-lg font-semibold mr-2">D</span>
-                        <span className="text-sm lg:text-base font-medium">Dolma</span>
-                        <div className='flex items-center'>
-                            {[...Array(5)].map((option, index) => {
-                                if (index < rating)
-                                    return <StarIcon className='w-3 h-3 text-[#8B5A08]' />
-                                else
-                                    return <StarIcon className='w-3 h-3 text-[#959595]' />
-                            })}
+
+                {/* GET REVIEWS  */}
+
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="border border-gray-400 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mb-5"
+                >
+                    Write a Review
+                </button>
+
+                {isModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white rounded-lg shadow-lg px-6 py-10 max-w-lg w-full">
+                            <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Submit Your Review</h2>
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-gray-700">Name</label>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="mt-1 p-2 w-full border rounded-md border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Rating</label>
+                                    <select
+                                        value={userRating}
+                                        onChange={(e) => setUserRating(e.target.value)}
+                                        className="mt-1 p-2 w-full border rounded-md border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        required
+                                    >
+                                        <option value="" disabled>Select rating</option>
+                                        <option value="1">1 Star</option>
+                                        <option value="2">2 Star</option>
+                                        <option value="3">3 Star</option>
+                                        <option value="4">4 Star</option>
+                                        <option value="5">5 Star</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Description</label>
+                                    <textarea
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        className="mt-1 p-2 w-full border rounded-md border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        rows="4"
+                                        required
+                                    ></textarea>
+                                </div>
+                                <div className="flex justify-end space-x-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button onClick={() => handleSubmit(product._id)}
+                                        type="submit"
+                                        className="border border-gray-400 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                )}
+
+            </div>
+
+            {reviews.map(review => (
+                <div className="mb-3 text-[#808080]">
+                    <div className="flex w-full gap-2 items-center">
+                        <span className="text-sm lg:text-lg font-semibold flex items-center justify-center w-8 h-8 rounded-full border-2 border-black">{review?.name.charAt(0)}</span>
+                        <span className="text-sm lg:text-base font-medium">{review?.name}</span>
+                        {review &&
+                            <div className='flex items-center'>
+
+                                {[...Array(5)].map((option, index) => {
+                                    if (index < review.rating)
+                                        return <StarIcon className='w-3 h-3 text-[#8B5A08]' />
+                                    else
+                                        return <StarIcon className='w-3 h-3 text-[#959595]' />
+                                })}
+                            </div>
+                        }
                         <div className="ml-auto text-gray-400 text-xs lg:text-sm">2 mon</div>
 
                     </div>
-                    <div className="mt-2 text-sm lg:text-base text-gray-600">
-                        It turned out to be better than I had expected. Good product.
+                    <div className="mt-3 text-sm lg:text-base text-gray-600">
+                        {review?.description}
                     </div>
                 </div>
-            </div>
-        </div>
+            ))}
+
+        </div >
     );
 };
 

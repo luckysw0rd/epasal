@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
 import { StoreProvider } from "./Theme/Theme1/T1Context";
 
+import EsewaRouteComponent from "./Components/AdminPanel/Esewa/EsewaRouteComponent ";
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
@@ -35,6 +36,8 @@ function App() {
         <Route path="/productform" element={<ProductForm />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
+        <Route path="/esewa" element={<EsewaRouteComponent />} />
+
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
@@ -53,7 +56,7 @@ function App() {
 
   return (
     // DELETE STORE PROVIDER LATER
-    <StoreProvider >
+    <StoreProvider>
       <PrimeReactProvider>
         <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
           <div className="App">
@@ -67,6 +70,7 @@ function App() {
         </AuthContext.Provider>
       </PrimeReactProvider>
     </StoreProvider>
+
 
   );
 }

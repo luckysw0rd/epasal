@@ -7,7 +7,7 @@ import './productList.css'
 import { useNavigate } from 'react-router-dom';
 
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart, isEdit, fetchedFromBackend } = productListProps;
+    const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
     const navigate = useNavigate()
 
@@ -16,7 +16,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
 
     if (!product) return null;
 
-    const { id, name, image, variant } = product;
+    const { id, name, image, variant, rating } = product;
     const firstVariant = variant[0]; // Considering only the first variant
     const selectedOption = selectedOptionIndex === -1 ? null : firstVariant?.options[selectedOptionIndex];
     const price = selectedOption ? selectedOption.price : product.price || 0;
@@ -33,7 +33,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
 
     const handleProductClick = (product) => {
         if (fetchedFromBackend && !isEdit)
-            navigate("/productlanding", { state: { product } });
+            navigate("/productlanding", { state: { product, store } })
     };
 
     return (
@@ -53,7 +53,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                         </button>
                     )}
                     <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-                        <div className=' '>
+                        <div onClick={() => handleProductClick(product)}>
                             <img src={displayedImage} alt={name} className="w-[252px] h-[196px]  rounded-xl object-cover  mx-auto p-4" style={{ aspectRatio: '1/1' }} />
                         </div>
                         <div className="px-5 w-full">

@@ -10,6 +10,7 @@ const T1ProductList = () => {
 
     // Map featured product indices to their actual product objects
     const featuredProductList = featuredProducts.map(index => products[index]);
+    console.log(featuredProductList)
 
     const productListProps = { store, isEdit, productColor, products: featuredProductList, previewMode, setStore, addToCart, fetchedFromBackend };
 
