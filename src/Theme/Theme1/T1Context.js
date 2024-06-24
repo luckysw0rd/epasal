@@ -15,10 +15,19 @@ export const useStore = () => {
   return useContext(StoreContext);
 };
 
+
 export const StoreProvider = ({ children, passedStore }) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const { storeID } = useParams(); // Extract storeID using useParams
+  
+/*   useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+        console.log('Loaded cart from localStorage:', JSON.parse(savedCart));
+        setStore(prevStore => ({ ...prevStore, cart: JSON.parse(savedCart) }));
+    }
+}, []); */
 
   const defaultStoreData = {
     name: "Store Name",
@@ -373,7 +382,37 @@ export const StoreProvider = ({ children, passedStore }) => {
     },
     previewMode: true,
     selectedSubCategory: "Watch",
-    cart: [],
+    cart: [
+
+      {
+        product: "Item 1",
+        price: 100,
+        discountAmount: 10,
+        count: 4,
+        selectedvariant: [
+          {
+            name: "default",
+            options: {
+              name: "default"
+            }
+          }
+        ]
+      },
+      {
+        product: "Item 2",
+        price: 200,
+        discountAmount: 20,
+        count: 3,
+        selectedvariant: [
+          {
+            name: "default",
+            options: {
+              name: "default"
+            }
+          }
+        ]
+      }
+    ],
     cartCount: 0,
     secondaryBannerText: {
       heading: "",
@@ -466,26 +505,51 @@ export const StoreProvider = ({ children, passedStore }) => {
   };
 
   const addToCart = (product) => {
-    console.log(store, "asdnaisdad ")
-    const existingCartItem = store.cart.find(item => item.product.id === product.id);
-    if (existingCartItem) {
-      setStore((prevState) => ({
-        ...prevState,
-        cart: prevState.cart.map(item =>
-          item.product.id === product.id
-            ? { ...item, count: item.count + 1 }
-            : item
-        ),
-        cartCount: prevState.cartCount + 1
-      }));
+    console.log(product, "Product being added");
+
+    const selectedOptionIndex = product.variant[0]?.options.findIndex(option => option.price === product.price) ?? -1;
+    const selectedOption = selectedOptionIndex !== -1 ? product.variant[0].options[selectedOptionIndex] : null;
+
+    const cartItem = {
+        product: product.name,
+        price: selectedOption ? selectedOption.price : product.price,
+        discountAmount: selectedOption ? selectedOption.discount : 0,
+        count: 1,
+        selectedVariant: selectedOption ? [{
+            name: product.variant[0].name,
+            options: {
+                name: selectedOption.name
+            }
+        }] : [{
+            name: "default",
+            options: {
+                name: "default"
+            }
+        }]
+    };
+
+    const existingCartItemIndex = store.cart.findIndex(item => item.product === product.name);
+
+    if (existingCartItemIndex !== -1) {
+        const updatedCart = [...store.cart];
+        updatedCart[existingCartItemIndex] = {
+            ...updatedCart[existingCartItemIndex],
+            count: updatedCart[existingCartItemIndex].count + 1
+        };
+        setStore((prevState) => ({
+            ...prevState,
+            cart: updatedCart,
+            cartCount: prevState.cartCount + 1
+        }));
     } else {
-      setStore((prevState) => ({
-        ...prevState,
-        cart: [...prevState.cart, { product, count: 1 }],
-        cartCount: prevState.cartCount + 1
-      }));
+        setStore((prevState) => ({
+            ...prevState,
+            cart: [...prevState.cart, cartItem],
+            cartCount: prevState.cartCount + 1
+        }));
     }
-  };
+};
+
 
   const deleteFromCart = (product) => {
     const existingCartItem = store.cart.find(item => item.product.id === product.id);
