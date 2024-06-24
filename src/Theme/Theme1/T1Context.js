@@ -21,13 +21,13 @@ export const StoreProvider = ({ children, passedStore }) => {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const { storeID } = useParams(); // Extract storeID using useParams
   
-  useEffect(() => {
+/*   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
+        console.log('Loaded cart from localStorage:', JSON.parse(savedCart));
         setStore(prevStore => ({ ...prevStore, cart: JSON.parse(savedCart) }));
     }
-  }, []);
-  
+}, []); */
 
   const defaultStoreData = {
     name: "Store Name",

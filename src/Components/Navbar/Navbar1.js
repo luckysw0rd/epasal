@@ -70,6 +70,67 @@ const Navbar1 = ({
         }
       ];
 
+      
+        const loadCartFromLocalStorage = () => {
+            console.log('Attempting to load cart from localStorage');
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                try {
+                    const parsedCart = JSON.parse(savedCart);
+                    if (Array.isArray(parsedCart)) {
+                        console.log('Loaded cart from localStorage:', parsedCart);
+                        setStore(prevStore => ({ ...prevStore, cart: parsedCart }));
+                    } else {
+                        console.warn('Invalid cart data in localStorage');
+                    }
+                } catch (error) {
+                    console.error('Error parsing cart data from localStorage:', error);
+                }
+            } else {
+                console.log('No cart data found in localStorage');
+            }
+        };
+        useEffect(() => {
+        loadCartFromLocalStorage();
+    }, [setStore]);
+
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        const saveCartToLocalStorage = () => {
+            // Load existing cart data from localStorage
+            const savedCart = localStorage.getItem('cart');
+            console.log(savedCart);
+            // Initialize mergedCart with store.cart
+            let mergedCart = [...store.cart];
+    
+            if (savedCart) {
+                try {
+                    const parsedCart = JSON.parse(savedCart);
+    
+                    if (Array.isArray(parsedCart)) {
+                        // Merge store.cart with existing localStorage cart, ignoring common elements
+                        mergedCart = [
+                            ...parsedCart.filter(item => !store.cart.some(storeItem => storeItem.id === item.id)),
+                            ...store.cart
+                        ];
+                    } else {
+                        console.warn('Invalid cart data in localStorage');
+                    }
+                } catch (error) {
+                    console.error('Error parsing cart data from localStorage:', error);
+                }
+            }
+    
+            // Save mergedCart to localStorage
+            console.log('Cart updated: saving to localStorage', mergedCart);
+            localStorage.setItem('cart', JSON.stringify(mergedCart));
+        };
+    
+        saveCartToLocalStorage(); // Invoke the function on mount and whenever store.cart changes
+    
+    }, [store.cart]);
+    
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
@@ -121,6 +182,40 @@ console.log(store.cartCount)
     };
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+    const handleIncreaseQuantity = (index) => {
+        setStore(prevStore => {
+            const updatedCart = [...prevStore.cart];
+            updatedCart[index] = {
+                ...updatedCart[index],
+                count: updatedCart[index].count + 1
+            };
+            return { ...prevStore, cart: updatedCart };
+        });
+    };
+    
+    const handleDecreaseQuantity = (index) => {
+        setStore(prevStore => {
+            if (prevStore.cart[index].count > 1) {
+                const updatedCart = [...prevStore.cart];
+                updatedCart[index] = {
+                    ...updatedCart[index],
+                    count: updatedCart[index].count - 1
+                };
+                return { ...prevStore, cart: updatedCart };
+            }
+            return prevStore; // No change if count is 1
+        });
+    };
+    
+    const handleDeleteFromCart = (item) => {
+        setStore(prevStore => {
+            const updatedCart = prevStore.cart.filter(cartItem => cartItem !== item);
+            return { ...prevStore, cart: updatedCart };
+        });
+        deleteFromCart(item); // Call the prop function to delete item from cart
+    };
+    
 
     const handleCartClick = () => {
         setIsCartOpen(!isCartOpen);
