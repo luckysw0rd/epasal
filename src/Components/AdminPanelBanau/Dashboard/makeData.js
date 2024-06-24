@@ -15,6 +15,19 @@ const fakeDataFromStaffArray = (staffArray, storeId) => {
     });
 };
 
+const extractData = (staffArray, storeId) => {
+    return staffArray.map((staff) => {
+        return {
+            _id: staff._id,
+            name: staff.name,
+            email: staff.email,
+            isBanauAdmin: staff.isBanauAdmin,
+            role: staff.banauRoles.role
+        };
+    });
+};
+
 module.exports = {
-    fakeDataFromStaffArray
+    fakeDataFromStaffArray,
+    extractData
 };

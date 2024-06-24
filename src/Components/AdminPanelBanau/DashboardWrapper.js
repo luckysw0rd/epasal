@@ -4,10 +4,9 @@ import SideBar from "./SideBar";
 
 import SharedNavbar from "./SharedNavbar";
 
-const DashboardWrapper = ({ children, store,setDashboardState}) => {
+const DashboardWrapper = ({ children, setDashboardState}) => {
   const [open, setOpen] = useState(true);
 
-  console.log(store);
   return (
     <div className="flex relative overflow-hidden">
       {/* For Side bar */}
@@ -17,7 +16,7 @@ const DashboardWrapper = ({ children, store,setDashboardState}) => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
-        <SharedNavbar storeName={'Admin Panel Banau'} open={open} setOpen={setOpen} />
+        <SharedNavbar storeName={'Banau Admin Panel '} open={open} setOpen={setOpen} />
         <div>{children}</div>
       </div>
     </div>

@@ -22,8 +22,9 @@ const SideBar = ({ setDashboardState }) => {
   const menus = [
     // { name: "General", link: "/adminpanelbanau", icon: MdEdit },
     { name: "Home", link: "/adminpanelbanau", icon: MdOutlineDashboard },
-    { name: "Stores", link: "/stores", icon: MdOutlineDashboard },
-    // { name: "Employee", link: "/adminpanel", icon: FaUserAlt },
+    { name: "Stores", link: "/adminpanelbanau", icon: MdOutlineDashboard },
+    { name: "Logs", link: "/adminpanelbanau", icon: MdOutlineDashboard },
+    { name: "Employee", link: "/adminpanelbanau", icon: FaUserAlt },
     // { name: "Order", link: "/adminpanel", icon: FaClipboardList },
     // { name: "Product", link: "/adminpanel", icon: FaBox },
     // { name: "Edit Store", link: "/adminpanel", icon: MdEdit },

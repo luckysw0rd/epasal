@@ -3,6 +3,9 @@ import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaUser, FaDollarSign, FaExclamationCircle, FaHourglassHalf, FaEdit } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { store } from '../../AdminPanel/Dashboard/Home/homeStore';
+import { IoMedalOutline } from "react-icons/io5";
+import { IoMedalSharp } from "react-icons/io5";
 const Stores = () => {
     const [storesArr, setStoresArr] = useState([]);
     const [search, setSearch] = useState('');
@@ -14,10 +17,30 @@ const Stores = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [selectedStore, setSelectedStore] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const auth = useContext(AuthContext);
+    const [transactionLogs, setTransactionLogs] = useState({
+        employee: auth.userID,
+        pendingAmount: 0,
+        dueAmount: 0,
+        paymentReceived: 0,
+        paymentGiven: 0,
+        subscriptionStatus: 'Silver',
+        logDescription: '',
+        customerName: '',
+        store: '',
+        paymentMethod: 'Cash',
+    });
+    /* This Is For Duration To Update */
+    const [duration, setDuration] = useState(
+        {
+            duration: ''
+        }
+    );
+
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [updatingStore, setUpdatingStore] = useState(false);
-    const auth = useContext(AuthContext);
-    console.log({ page, hasNextPage, storesArr });
+
+    console.log({ page, hasNextPage, storesArr, auth });
 
     const fetchStores = async (flag = false) => {
         console.log(`[+] Called Fetch stores`);
@@ -39,6 +62,9 @@ const Stores = () => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
+            if (!response)
+                throw new Error('[+] No response');
+            console.log({ response });
             setHasNextPage(response.hasNextPage);
             setStoresArr(response.stores);
             setTotalCount(response.totalCount);
@@ -59,33 +85,56 @@ const Stores = () => {
         if (page > 1) setPage((prevPage) => prevPage - 1);
     };
 
+
+    /* This is for edit and will update the  */
     const handleEdit = (store) => {
         setSelectedStore(store);
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, store: store._id }));
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, subscriptionStatus: store.subscriptionStatus }));
         setModalOpen(true);
     };
 
     const handleUpdate = async () => {
-        // console.log(selectedStore);
-
         try {
             setUpdatingStore(true);
-
+            /* This is to update the store*/
             const updatedData = {
                 name: selectedStore.name,
                 phoneNumber: selectedStore.phoneNumber,
-                revenueGenerated: selectedStore.revenueGenerated,
                 pendingAmount: selectedStore.pendingAmount,
                 dueAmount: selectedStore.dueAmount,
-                location: selectedStore.location
+                location: selectedStore.location,
+                subscriptionStatus: transactionLogs.subscriptionStatus,
+
             };
-            console.log({ updatedData });
+            /* this is for transaction log */
+            const transactionLog = {
+                employee: transactionLogs.employee,
+                subscriptionStatus: transactionLogs.subscriptionStatus,
+                logDescription: transactionLogs.logDescription,
+                customerName: transactionLogs.customerName,
+                paymentMethod: updatedData.paymentMethod,
+                dueAmount: updatedData.dueAmount,
+                pendingAmount: transactionLogs.pendingAmount,
+                paymentMethod: transactionLogs.paymentMethod,
+                store: transactionLogs.store,
+                paymentGiven: Number(transactionLogs.paymentGiven),
+                paymentReceived: Number(transactionLogs.paymentReceived)
+            };
+            const data = {
+                updatedData,
+                transactionLog,
+                duration
+            };
+
+            console.log({ updatedData, transactionLog, duration });
             const responseData = await sendRequest(
-                'store/update/dashboard/' + selectedStore._id,
+                'store/update/dashboard/banau/' + selectedStore._id,
                 'PUT',
-                JSON.stringify(updatedData),
+                JSON.stringify(data),
                 {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + auth.token
+                    'Authorization': 'Bearer ' + auth.token,
                 }
             );
             toast.success(responseData.message);
@@ -105,6 +154,24 @@ const Stores = () => {
         }));
     };
 
+    const handleInputChangev1 = (e, cb) => {
+        const { name, value } = e.target;
+        cb((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleTransactionLogChange = (e) => {
+        const { name, value } = e.target;
+        setTransactionLogs((prevLogs) => ({
+            ...prevLogs,
+            [name]: value,
+        }));
+    };
+
+
+
     return (
         <div className="min-h-screen p-4">
             <h1 className="text-3xl font-bold mb-4 text-start text-md">Stores</h1>
@@ -116,8 +183,7 @@ const Stores = () => {
                     value={search}
                     onChange={(e) => {
                         setSearch(e.target.value);
-                        if (page !== 1)
-                            setPage(1);
+                        if (page !== 1) setPage(1);
                     }}
                 />
                 <input
@@ -127,8 +193,7 @@ const Stores = () => {
                     value={ownername}
                     onChange={(e) => {
                         setOwnername(e.target.value);
-                        if (page !== 1)
-                            setPage(1);
+                        if (page !== 1) setPage(1);
                     }}
                 />
                 <input
@@ -138,8 +203,7 @@ const Stores = () => {
                     value={staffname}
                     onChange={(e) => {
                         setStaffname(e.target.value);
-                        if (page !== 1)
-                            setPage(1);
+                        if (page !== 1) setPage(1);
                     }}
                 />
                 <button
@@ -152,9 +216,9 @@ const Stores = () => {
             <div className="py-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto h-64 md:h-96 lg:h-100 w-full md:w-3/4 lg:w-full">
                 {storesArr.length > 0 ? (
                     storesArr.map((store) => (
-                        <div key={store._id} className="bg-white p-6 text-sm rounded-lg shadow-lg">
+                        <div key={store._id} className="bg-white p-6 text-sm rounded-xl shadow-lg transform transition duration-500 hover:scale-105">
                             <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-sm md:text-xl lg:text-xl font-bold text-white bg-indigo-600 p-2 rounded">
+                                <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-3 py-1 rounded">
                                     {store.name.toUpperCase()}
                                 </h2>
                                 <button
@@ -164,34 +228,36 @@ const Stores = () => {
                                     <FaEdit />
                                 </button>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:md:grid-cols-2 gap-4 mt-5">
-                                <div className="text-gray-700 mb-2 flex items-center">
-                                    <FaMapMarkerAlt className="mr-2" />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-5">
+                                <div className="flex items-center text-gray-700">
+                                    <FaMapMarkerAlt className="mr-2 text-red-500" />
                                     <span>{store.location}</span>
                                 </div>
-                                <div className="text-gray-700 mb-2 flex items-center">
-                                    <FaPhone className="mr-2" />
-                                    <span>{store.phoneNumber}</span>
-                                </div>
-                                <div className="text-gray-700 mb-2 flex items-center">
-                                    <FaEnvelope className="mr-2" />
-                                    <span>{store.email}</span>
-                                </div>
-                                <div className="text-gray-700 mb-2 flex items-center">
-                                    <FaUser className="mr-2" />
+                                <div className="flex items-center text-gray-700">
+                                    <FaUser className="mr-2 text-indigo-500" />
                                     <span>{store.owner.name}</span>
                                 </div>
-                                <div className="text-green-500 mb-2 flex items-center">
-                                    <FaDollarSign className="mr-2" />
-                                    <span>$ {store.revenueGenerated}</span>
+                                <div className="flex items-center text-gray-700">
+                                    <FaDollarSign className="mr-2 text-green-500" />
+                                    <span>Revenue: <span className="text-green-500">{store.revenueGenerated}</span></span>
                                 </div>
-                                <div className="text-red-500 mb-2 flex items-center">
-                                    <FaExclamationCircle className="mr-2" />
-                                    <span>$ {store.dueAmount}</span>
+                                <div className="flex items-center text-gray-700">
+                                    <FaDollarSign className="mr-2 text-green-500" />
+                                    <span>Amount From Store: <span className="text-green-500">{store.dueAmount}</span></span>
                                 </div>
-                                <div className="text-red-500 mb-2 flex items-center">
-                                    <FaHourglassHalf className="mr-2" />
-                                    <span>$ {store.pendingAmount}</span>
+                                <div className="flex items-center text-gray-700">
+                                    <FaDollarSign className="mr-2 text-red-500" />
+                                    <span>Amount To Store: <span className="text-red-500">{store.pendingAmount}</span></span>
+                                </div>
+                                <div className="flex items-center text-gray-700">
+                                    {store.subscriptionStatus === 'Gold' && <IoMedalSharp className='text-yellow-400 mr-2' />}
+                                    {store.subscriptionStatus === 'Silver' && <IoMedalSharp className='text-[#C0C0C0] mr-2' />}
+                                    {store.subscriptionStatus === 'Platinum' && <IoMedalSharp className='text-[#E5E4E2] mr-2' />}
+                                    <span>Status: {store.subscriptionStatus}</span>
+                                </div>
+                                <div className="flex items-center text-gray-700">
+                                    <FaHourglassHalf className="mr-2 text-[#C0C0C0]" />
+                                    <span>Expiry: {new Date(store.subscriptionExpiry).toLocaleDateString()}</span>
                                 </div>
                                 <div>
                                     <button
@@ -202,9 +268,19 @@ const Stores = () => {
                                     </button>
                                 </div>
                             </div>
+                            <div className='grid grid-cols-1 md:grid-cols-1 gap-2 mt-5'>
+                                <div className="flex items-center text-gray-700">
+                                    <FaPhone className="mr-2 text-green-500" />
+                                    <u className='text-blue-600 cursor-pointer'>{store.phoneNumber}</u>
+                                </div>
+                                <div className="flex items-center text-gray-700">
+                                    <FaEnvelope className="mr-2 text-red-500" />
+                                    <u className='text-blue-600 cursor-pointer'>{store.email}</u>
+                                </div>
+                            </div>
                             {store.staff.length > 0 && (
                                 <div>
-                                    <h3 className="text-lg font-semibold mt-2">Staff:</h3>
+                                    <h3 className="text-lg font-semibold mt-4">Staff:</h3>
                                     <ul className="list-disc pl-5 text-gray-600">
                                         {store.staff.map((staff, index) => (
                                             <li key={index}>{staff.name}</li>
@@ -215,8 +291,9 @@ const Stores = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="text-center col-span-full">No stores found.</p>
+                    <p className="text-center col-span-full text-gray-500">No stores found.</p>
                 )}
+
             </div>
             <div className="mt-4 flex justify-between sm:justify-between md:justify-start lg:justify-start items-center space-x-4">
                 <button
@@ -237,8 +314,8 @@ const Stores = () => {
             </div>
 
             {modalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 text-sm">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[50vh] md:h-[70vh] lg:h-[90vh] overflow-auto">
                         <h2 className="text-xl font-bold mb-4">Edit Store</h2>
                         {selectedStore && (
                             <form>
@@ -272,33 +349,20 @@ const Stores = () => {
                                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
-
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">Revenue Generated</label>
-                                    <input
-                                        type="Number"
-                                        name="revenueGenerated"
-                                        value={selectedStore.revenueGenerated}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-
                                 <div className="mb-4">
                                     <label className="block text-gray-700">Pending Amount</label>
                                     <input
-                                        type="pendingAmount"
+                                        type="number"
                                         name="pendingAmount"
                                         value={selectedStore.pendingAmount}
                                         onChange={handleInputChange}
                                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
-
                                 <div className="mb-4">
                                     <label className="block text-gray-700">Due Amount</label>
                                     <input
-                                        type="dueAmount"
+                                        type="number"
                                         name="dueAmount"
                                         value={selectedStore.dueAmount}
                                         onChange={handleInputChange}
@@ -306,30 +370,124 @@ const Stores = () => {
                                     />
                                 </div>
 
-
-
-
-                                {/* <div className="mb-4">
-                                    <label className="block text-gray-700">Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={selectedStore.email}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div> */}
-                                {/* <div className="mb-4">
-                                    <label className="block text-gray-700">Owner Name</label>
+                                <h2 className="text-xl font-bold mb-4 mt-6">Transaction Logs</h2>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Employee</label>
                                     <input
                                         type="text"
-                                        name="owner"
-                                        disabled={true}
-                                        value={selectedStore.owner.name}
-                                        onChange={handleInputChange}
+                                        name="employee"
+                                        value={transactionLogs.employee}
+                                        onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                {/* <div className="mb-4">
+                                    <label className="block text-gray-700">Pending Amount</label>
+                                    <input
+                                        type="number"
+                                        name="pendingAmount"
+                                        value={transactionLogs.pendingAmount}
+                                        onChange={handleTransactionLogChange}
                                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div> */}
+                                {/* <div className="mb-4">
+                                    <label className="block text-gray-700">Due Amount</label>
+                                    <input
+                                        type="number"
+                                        name="dueAmount"
+                                        value={transactionLogs.dueAmount}
+                                        onChange={handleTransactionLogChange}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div> */}
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Payment Received</label>
+                                    <input
+                                        type="number"
+                                        name="paymentReceived"
+                                        value={transactionLogs.paymentReceived}
+                                        // onChange={handleTransactionLogChange}
+                                        onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Payment Given</label>
+                                    <input
+                                        type="number"
+                                        name="paymentGiven"
+                                        value={transactionLogs.paymentGiven}
+                                        // onChange={handleTransactionLogChange}
+                                        onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Subscription Status</label>
+                                    <select
+                                        name="subscriptionStatus"
+                                        value={transactionLogs.subscriptionStatus}
+                                        // onChange={handleTransactionLogChange}
+                                        onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                        <option value="Silver">Silver</option>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Platinum">Platinum</option>
+                                    </select>
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Duration</label>
+                                    <select
+                                        name="duration"
+                                        value={duration.duration}
+                                        // onChange={handleTransactionLogChange}
+                                        onChange={(e) => handleInputChangev1(e, setDuration)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+
+                                        <option value="">None</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Quarterly">Quaterly</option>
+                                        <option value="Yearly">Yearly</option>
+                                    </select>
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Log Description</label>
+                                    <textarea
+                                        name="logDescription"
+                                        value={transactionLogs.logDescription}
+                                        // onChange={handleTransactionLogChange}
+                                        onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    ></textarea>
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Customer Name</label>
+                                    <input
+                                        type="text"
+                                        name="customerName"
+                                        value={transactionLogs.customerName}
+                                        onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Payment Method</label>
+                                    <select
+                                        name="paymentMethod"
+                                        value={transactionLogs.paymentMethod}
+                                        onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                        <option value="Cash">Cash</option>
+                                        <option value="Bank">Bank</option>
+                                        <option value="Esewa">Esewa</option>
+                                        <option value="Khalti">Khalti</option>
+                                    </select>
+                                </div>
+
                                 <div className="flex justify-end">
                                     <button
                                         type="button"
@@ -337,7 +495,6 @@ const Stores = () => {
                                         disabled={updatingStore}
                                         onClick={() => {
                                             setModalOpen(false);
-                                            // toast('Canceled');
                                             toast.error('Canceled');
                                         }}
                                     >
@@ -348,10 +505,16 @@ const Stores = () => {
                                         className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
                                         onClick={handleUpdate}
                                         disabled={updatingStore}
-
                                     >
                                         Update
                                     </button>
+                                    {/* <button
+                                        type="button"
+                                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors ml-2"
+                                        onClick={logTransactionState}
+                                    >
+                                        Log Transaction State
+                                    </button> */}
                                 </div>
                             </form>
                         )}

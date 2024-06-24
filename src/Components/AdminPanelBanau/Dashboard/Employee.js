@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../../Hooks/AuthContext';
+import { toast } from 'react-toastify';
+
 import {
     MRT_EditActionButtons,
     MaterialReactTable,
@@ -34,13 +36,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './Employee.css'; // Import your CSS file here
 import useFetch from "../../../Hooks/useFetch";
-import { fakeDataFromStaffArray } from './makeData'; // Import the fake data generator
+import { extractData, fakeDataFromStaffArray } from './makeData'; // Import the fake data generator
 
-const Example = ({ store }) => {
+const Example = ({ banau }) => {
     const [validationErrors, setValidationErrors] = useState({});
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
-    console.log(store);
+    console.log({ banau });
 
     /* Custom Handle Updating User */
     const [editingRow, setEditingRow] = useState(null);
@@ -59,14 +61,14 @@ const Example = ({ store }) => {
         role: 'Staff',
     });
 
-
-    // Get fake data from the staff array using the store ID
-    const staffFakeData = useMemo(() => fakeDataFromStaffArray(store.staff, store._id), [store.staff, store._id]);
+    console.log({ userState });
+    // Get fake data from the staff array using the banau ID
+    const staffFakeData = useMemo(() => extractData(banau.staff, banau._id), [banau.staff, banau._id]);
 
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'id',
+                accessorKey: '_id',
                 header: 'Id'
             },
             {
@@ -81,14 +83,14 @@ const Example = ({ store }) => {
                 accessorKey: 'role',
                 header: 'Role',
                 editVariant: 'select',
-                editSelectOptions: ['Owner', 'Admin', 'Staff', 'Delivery'],
+                editSelectOptions: ['Admin', 'Staff', 'Manager'],
             },
         ],
         []
     );
 
     //call CREATE hook
-    const { mutateAsync: createUser, isPending: isCreatingUser } = useCreateUser();
+    // const { mutateAsync: createUser, isPending: isCreatingUser } = useCreateUser();
     //call READ hook
     const {
         data: fetchedUsers = staffFakeData,
@@ -97,9 +99,9 @@ const Example = ({ store }) => {
         isLoading: isLoadingUsers,
     } = useGetUsers();
     //call UPDATE hook
-    const { mutateAsync: updateUserRole, isPending: isUpdatingUserRole } = useUpdateUserRole();
+    // const { mutateAsync: updateUserRole, isPending: isUpdatingUserRole } = useUpdateUserRole();
     //call DELETE hook
-    const { mutateAsync: deleteUser, isPending: isDeletingUser } = useDeleteUser();
+    // const { mutateAsync: deleteUser, isPending: isDeletingUser } = useDeleteUser();
 
     const addUser = async (values) => {
         try {
@@ -108,7 +110,7 @@ const Example = ({ store }) => {
                 'POST',
                 JSON.stringify({
                     email: values.email,
-                    storeId: store._id,
+                    banauId: banau._id,
                     newRole: values.role,
                 }),
                 {
@@ -126,18 +128,20 @@ const Example = ({ store }) => {
     };
 
     /* This is for custom Create User Dialog */
+    /* 
+    * * This function is responsive for creating user
+     */
     const addUserV1 = async () => {
         try {
             console.log({ userState });
             if (userState.email === '' || userState.role === '')
                 return alert('[+] Info required');
             const responseData = await sendRequest(
-                'users/addEmployee',
+                'banau/addemployee',
                 'POST',
                 JSON.stringify({
                     email: userState.email,
-                    storeId: store._id,
-                    newRole: userState.role,
+                    role: userState.role,
                 }),
                 {
                     'Content-Type': 'application/json',
@@ -146,7 +150,7 @@ const Example = ({ store }) => {
             );
 
             console.log(`[+] User Created`, { responseData }); // Handle response data as needed
-            window.location.reload();
+            // window.location.reload();
             table.setCreatingRow(null); //exit creating mode
         } catch (error) {
             console.log(`[+] Error while creating a user:`, { error });
@@ -170,7 +174,7 @@ const Example = ({ store }) => {
                 'PUT',
                 JSON.stringify({
                     userId: values.id,
-                    storeId: store._id,
+                    banauId: banau._id,
                     newRole: values.role,
                 }),
                 {
@@ -187,46 +191,25 @@ const Example = ({ store }) => {
         }
     };
 
+    /* 
+    * *This is the function user for editing the employee roles
+     */
     const editEmployeeV1 = async (userData) => {
         try {
-            console.log(updateUser.role === '');
+            console.log(`[+]Edit EmployeeV1`);
+            console.log(updateUser.role === '', (updateUser.role === userData.role));
             if (updateUser.role === '')
                 return alert('No Role Specified');
+            if (updateUser.role === userData.role)
+                throw new Error('same role');
             userData.role = updateUser.role;
             console.log({ updateUser, userData });
-            /* Todo user check */
-            const userResponse = await sendRequest('users/getLoggedInUser', 'GET', null, {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + auth.token,
-            });
-            const role = userResponse.user.roles[0].role;
-
-            let updateRoute = '';
-
-            /* Check which route to hit */
-            switch (role) {
-                case 'Owner':
-                    updateRoute = 'users/ownerUpdate';
-                    break;
-                case 'Admin':
-                    updateRoute = 'users/adminUpdate';
-                    break;
-                default:
-                    console.log('Unknown fruit.');
-                    updateRoute = null;
-            }
-            console.log({ role, updateRoute });
-
-            if (updateRoute === null || updateRoute === '')
-                throw new Error('[+] Permission error');
 
             const responseData = await sendRequest(
-                updateRoute,
+                `banau/updateemployee/${userData._id}`,
                 'PUT',
                 JSON.stringify({
-                    userId: userData.id,
-                    storeId: store._id,
-                    newRole: userData.role,
+                    role: userData.role,
                 }),
                 {
                     'Content-Type': 'application/json',
@@ -234,15 +217,16 @@ const Example = ({ store }) => {
                 }
             );
 
-            console.log({ responseData }); // Handle response data as needed
-            /* This is just for testing */
-            window.location.reload();
 
+            console.log(`[+] Edit Employee : `, { responseData }); // Handle response data as needed
+            // toast.success("UserRole Updated ");
+            /* This is just for testing */
+            // window.location.reload();
             table.setEditingRow(null); //exit editing mode
 
         } catch (error) {
-            console.log({ error });
-            alert(error.message);
+            console.log(`[-] Edit Employee Error:`, { error });
+            toast.error(error.message);
         }
     };
     //UPDATE action
@@ -278,13 +262,11 @@ const Example = ({ store }) => {
 
     const deleteEmployee = async (value) => {
         try {
+            console.log(value);
             const responseData = await sendRequest(
-                'users/deleteEmployee',
+                `banau/deleteemployee/${value._id}`,
                 'DELETE',
-                JSON.stringify({
-                    userId: value.id,
-                    storeId: store._id,
-                }),
+                null,
                 {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + auth.token,
@@ -294,7 +276,7 @@ const Example = ({ store }) => {
             console.log(responseData); // Handle response data as needed
 
             // Refresh the page
-            window.location.reload();
+            // window.location.reload();
         } catch (error) {
             // Handle error if needed
             console.error(error); // Optionally log the error
@@ -305,7 +287,7 @@ const Example = ({ store }) => {
     const openDeleteConfirmModal = (row) => {
         console.log(row.original);
         if (window.confirm('Are you sure you want to delete this user?')) {
-            // deleteEmployee(row.original);
+            deleteEmployee(row.original);
             // deleteUser(row.id); // Pass the id directly to deleteUser
         }
     };
@@ -333,9 +315,12 @@ const Example = ({ store }) => {
         onCreatingRowCancel: () => setValidationErrors({}),
         onCreatingRowSave: handleCreateUser,
         onEditingRowSave: handleSaveUserRole,
-        openDeleteConfirmModal: deleteEmployee(),
+        // openDeleteConfirmModal: deleteEmployee(),
         renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => {
             /* Handle UserData */
+            /* 
+            * * Create User-> Will be here
+            */
             return (
                 <>
                     <div><h1 className='px-7 font-bold text-xl py-2'>CreateUser</h1></div>
@@ -362,6 +347,7 @@ const Example = ({ store }) => {
                                 <MenuItem value="Admin">Admin</MenuItem>
                                 <MenuItem value="Staff">Staff</MenuItem>
                                 <MenuItem value="Delivery">Delivery</MenuItem>
+                                <MenuItem value="Manager">Manager</MenuItem>
                             </Select>
                         </FormControl>
                     </DialogContent>
@@ -393,6 +379,9 @@ const Example = ({ store }) => {
         renderEditRowDialogContent: ({ table, row, internalEditComponents }) => {
             let userData = row.original;
             /* This is under testing */
+            /* 
+            * * This is where the User will be Edited
+             */
             return (
                 <>
                     <div><h1 className='px-7 font-bold text-xl py-2'>Edit User Role</h1></div>
@@ -414,13 +403,16 @@ const Example = ({ store }) => {
                         <FormControl fullWidth>
                             <InputLabel>Role</InputLabel>
                             <Select
-                                defaultValue={userData.role}
+                                defaultValue={updateUser.role}
+                                // defaultValue={userData.role}
                                 onChange={(e) => handleInputChange('role', e.target.value)}
                             >
                                 {/* <MenuItem value="Owner">Owner</MenuItem> */}
+                                {/* <MenuItem value="">None</MenuItem> */}
                                 <MenuItem value="Admin">Admin</MenuItem>
                                 <MenuItem value="Staff">Staff</MenuItem>
                                 <MenuItem value="Delivery">Delivery</MenuItem>
+                                <MenuItem value="Manager">Manager</MenuItem>
                             </Select>
                         </FormControl>
                     </DialogContent>
@@ -471,7 +463,7 @@ const Example = ({ store }) => {
         ),
         state: {
             isLoading: isLoadingUsers,
-            isSaving: isCreatingUser || isUpdatingUserRole || isDeletingUser,
+            // isSaving: isCreatingUser || isUpdatingUserRole || isDeletingUser,
             showAlertBanner: isLoading,
             showProgressBars: isFetchingUsers,
         },
@@ -558,10 +550,10 @@ function useDeleteUser() {
 
 const queryClient = new QueryClient();
 
-const ExampleWithProviders = ({ store }) => (
+const ExampleWithProviders = ({ banau }) => (
     //Put this with your other react-query providers near root of your app
     <QueryClientProvider client={queryClient}>
-        <Example store={store} />
+        <Example banau={banau} />
     </QueryClientProvider>
 );
 
