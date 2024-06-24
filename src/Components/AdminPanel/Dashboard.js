@@ -81,9 +81,9 @@ const Dashboard = () => {
       case 'Product':
         return <Product store={store}></Product>
       case 'General':
-        return <General store={store}></General>
+        return <General store={store} setDashboardState={setDashboardState}></General>
         case 'Shop':
-          return <Shop store={store}></Shop>
+          return <Shop store={store} ></Shop>
       default:
         return <Home />;
     }

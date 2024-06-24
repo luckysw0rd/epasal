@@ -159,7 +159,7 @@ const Order = ({ store }) => {
                 </button>
             </div>
             {orders.map((order) => (
-                <div key={order._id} className="bg-white shadow-lg rounded-lg overflow-hidden max-w-7xl mb-4">
+                <div key={order._id} className="bg-white xl:max-w-screen shadow-lg rounded-lg overflow-hidden 2xl:max-w-[1550px] mb-4">
                     <div className="p-4 border-b flex justify-between items-center cursor-pointer">
                         <div>
                             {editId === order._id ? (
