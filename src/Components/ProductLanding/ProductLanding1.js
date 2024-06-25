@@ -15,7 +15,6 @@ const ProjectLanding1 = () => {
     const location = useLocation();
     const { product, store } = location.state || {};
     const [selectedProduct, setSelectedProduct] = useState(product)
-    console.log(selectedProduct);
     const [selectedVariant, setSelectedVariant] = useState(selectedProduct.variant[0]);
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(selectedProduct.image.imageUrl);
@@ -30,8 +29,9 @@ const ProjectLanding1 = () => {
         setDisplayedImage(selectedVariant?.options[index].image.imageUrl);
     };
 
-    const handleDefaultImage = () => {
+    const handleDefaultImage = (newProduct) => {
         setSelectedOptionIndex(-1);
+        navigate(location.pathname, { state: { product: newProduct, store } });
         setDisplayedImage(selectedProduct.image.imageUrl);
     };
 
@@ -89,7 +89,7 @@ const ProjectLanding1 = () => {
                                 <div className="flex flex-col md:flex-row gap-2">
                                     <div
                                         className={`cursor-pointer text-sm lg:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
-                                        onClick={handleDefaultImage}
+                                        onClick={() => handleDefaultImage(product)}
                                     >
                                         <img src={selectedProduct.image.imageUrl} alt="Default" className='w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] me-2' />
                                     </div>
@@ -171,7 +171,7 @@ const ProjectLanding1 = () => {
                                     <span>Delivery Charge and time</span>
                                     <div className='flex justify-between md:text-xs lg:text-sm text-[#636363]'>
                                         <span className='flex gap-3 items-center'><LiaShippingFastSolid size={20} />Rs. {storeDetails.deliveryCharge}</span>
-                                        <span className='flex gap-3 items-center mr-5'><FiClock size={20} />{storeDetails.deliveryTime} days</span>
+                                        <span className='flex gap-3 items-center mr-5'><FiClock size={20} />{storeDetails.deliveryTime}</span>
                                     </div>
                                     <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><TbCash size={20} />Cash on Delivery {storeDetails.COD}</span>
                                 </div>
@@ -190,7 +190,7 @@ const ProjectLanding1 = () => {
                 {/* REVIEW SECTION  */}
                 <div className='w-full flex flex-col md:flex-row gap-5 lg:gap-10'>
                     <div className='w-full md:w-[75%] p-2 md:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><ProductReview product={selectedProduct} /></div>
-                    <div className='w-full md:w-[25%] p-2 lg:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><SimilarProducts store={store} onProductSelect={handleProductSelect} /></div>
+                    <div className='w-full md:w-[25%] p-2 lg:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><SimilarProducts store={store} product={selectedProduct} onProductSelect={handleProductSelect} handleImage={handleDefaultImage} /></div>
                 </div>
             </div>
         </div>

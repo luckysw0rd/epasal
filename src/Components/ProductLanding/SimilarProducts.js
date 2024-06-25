@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { StarIcon } from '@heroicons/react/16/solid';
 
-const SimilarProducts = ({ store, onProductSelect }) => {
-    const navigate = useNavigate()
-
+const SimilarProducts = ({ store, onProductSelect, product: currentProduct, handleImage }) => {
     const handleProductClick = (product) => {
         onProductSelect(product);
+        handleImage(product.image.imageUrl)
+
     };
+
+    const similarProducts = store.products.filter(product => product._id !== currentProduct._id).slice(0, 3);
 
     return (
         <div >
             <h1 className='text-sm lg:text-lg font-semibold'>Similar Products</h1>
-            {store.products.slice(0, 3).map((product) => (
+            {similarProducts.map((product) => (
                 <div onClick={() => handleProductClick(product)} className="flex flex-col items-center md:items-start mb-10" >
                     <img src={product.image.imageUrl} className="w-[200px] h-[200px] lg:-[300px] lg:h-[300px] object-contain mb-5 mx-auto " style={{ aspectRatio: '1/1' }} />
                     <h1 className='text-lg text-[#4F3100] font-bold'>{product.name}</h1>
