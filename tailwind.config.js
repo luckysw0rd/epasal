@@ -17,7 +17,9 @@ module.exports = {
         Roboto: ["Roboto", "sans-serif"],
         Sanchez: ["Sanchez", "serif"],
         "DM-Serif-Text" :["DM Serif Text","serif"],
+        "Zen-Tokyo-Zoo":["Zen Tokyo Zoo","serif"]
       },
+      
     },
   },
   plugins: [],

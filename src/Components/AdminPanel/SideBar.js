@@ -1,12 +1,13 @@
 import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FiLogOut, FiSettings } from "react-icons/fi";
-import { MdOutlineDashboard, MdStore, MdEdit } from "react-icons/md";
+import { MdOutlineDashboard, MdStore, MdEdit, MdShop2 } from "react-icons/md";
 import { FaUserAlt, FaClipboardList, FaBox } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
+import banau from '../../Assets/banau.png';
 
-const SideBar = ({setDashboardState}) => {
+const SideBar = ({ setDashboardState }) => {
   const navigate = useNavigate();
   const { open, setOpen } = useSiderBar();
 
@@ -19,11 +20,13 @@ const SideBar = ({setDashboardState}) => {
   };
 
   const menus = [
+    { name: "General", link: "/adminpanel", icon: MdEdit },
     { name: "Home", link: "/adminpanel", icon: MdOutlineDashboard },
     { name: "Employee", link: "/adminpanel", icon: FaUserAlt },
     { name: "Order", link: "/adminpanel", icon: FaClipboardList },
     { name: "Product", link: "/adminpanel", icon: FaBox },
     { name: "Edit Store", link: "/adminpanel", icon: MdEdit },
+
   ];
 
   return (
@@ -32,7 +35,6 @@ const SideBar = ({setDashboardState}) => {
         className={` 
           min-h-screen
           h-full
-
           w-[250px] 
           bg-white
           relative
@@ -44,33 +46,45 @@ const SideBar = ({setDashboardState}) => {
           shadow-lg
         `}
       >
-        <div className="flex font-Roboto flex-col justify-between h-full">
+        <div className=" flex fixed font-Roboto flex-col justify-between h-full">
           <div>
-            <div className="py-2 flex justify-center">
-              <h1 className="text-3xl font-bold text-black bg-yellow-400 px-4 py-1 mr-4 mt-6 rounded-lg decoration-underline decoration-blue-500">
-                Epasal
+            <div className="py-2 flex justify-center flex-row">
+              <h1 className="text-3xl font-bold text-black bg-black h-6 w-6  px-1 py-1 mr-4 mt-9 rounded-3xl decoration-underline decoration-blue-500">
               </h1>
+              <img src={banau} className="h-10 mt-7 filter invert" alt="Logo" />
+
             </div>
-            <div className="mt-4 flex flex-col justify-center gap-4 text-gray-700">
+            <hr className="mt-4 border-gray-400 px-8 w-[175px]  ml-9"></hr>
+            <Link
+              onClick={() => {
+                setDashboardState("Shop")
+              }}
+              className={`flex mt-0 w-full items-center ml-5  text-lg gap-4 font-medium p-3   hover:bg-green-200 rounded-md transition-colors duration-200 `}
+            >
+              
+              <span className="pl-2 ml-7   hover:box-border   text-2xl font-Cinzel">Shop</span>
+              {React.createElement(MdShop2, { size: 20 })}
+            </Link>
+            <hr className="mt-0 border-gray-400 px-8 w-[175px]  ml-9"></hr>
+            
+            <div className="mt-[60px] flex flex-col justify-center gap-4 text-gray-700">
               {menus.map((menu, i) => (
-                // <Link
-                //   // onClick={() => setOpen(false)}
-                //   to={menu.link}
-                //   key={i}
-                //   className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}
-                // >
-                //   {React.createElement(menu.icon, { size: 20 })}
-                //   <span className="pl-2">{menu.name}</span>
-                // </Link>
-                <div className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}>
-                <button onClick={(e)=>{e.preventDefault();setDashboardState(menu.name)}}>{menu.name}</button>
-                </div>
+                <Link
+                  key={i}
+                  onClick={() => {
+                    setDashboardState(menu.name)
+                  }}
+                  className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}
+                >
+                  {React.createElement(menu.icon, { size: 20 })}
+                  <span className="pl-2">{menu.name}</span>
+                </Link>
               ))}
             </div>
           </div>
-          <div className=" mb-40">
-            <div className=" flex justify-center">
-              <hr className="border-gray-400 px-8 w-[200px]  my-4" />
+          <div className="mb-[80px]">
+            <div className="flex    justify-center items-center">
+              <hr className="border-gray-400 px-8 w-[175px]  ml-9" />
             </div>
             <button
               onClick={() => setOpen(false)}
@@ -89,7 +103,6 @@ const SideBar = ({setDashboardState}) => {
           </div>
         </div>
       </div>
-
     </section>
   );
 };

@@ -21,6 +21,7 @@ const Navbar1 = ({
     setSearchInput,
     setLogoFile,
     setPreviewMode,
+    deleteFromCart
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const [editableText, setEditableText] = useState("Ecom Template-2");
@@ -39,6 +40,97 @@ const Navbar1 = ({
             variant: [{ options: [{ price: 20, image: { imageUrl: 'https://via.placeholder.com/50' } }] }]
         }
     ]);
+    const cart = [
+        {
+            product: "Item 1",
+            price: 100,
+            discountAmount: 10,
+            count: 4,
+            selectedvariant: [
+                {
+                    name: "default",
+                    options: {
+                        name: "default"
+                    }
+                }
+            ]
+        },
+        {
+            product: "Item 2",
+            price: 200,
+            discountAmount: 20,
+            count: 4,
+            selectedvariant: [
+                {
+                    name: "default",
+                    options: {
+                        name: "default"
+                    }
+                }
+            ]
+        }
+    ];
+
+
+    const loadCartFromLocalStorage = () => {
+        console.log('Attempting to load cart from localStorage');
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            try {
+                const parsedCart = JSON.parse(savedCart);
+                if (Array.isArray(parsedCart)) {
+                    console.log('Loaded cart from localStorage:', parsedCart);
+                    setStore(prevStore => ({ ...prevStore, cart: parsedCart }));
+                } else {
+                    console.warn('Invalid cart data in localStorage');
+                }
+            } catch (error) {
+                console.error('Error parsing cart data from localStorage:', error);
+            }
+        } else {
+            console.log('No cart data found in localStorage');
+        }
+    };
+    useEffect(() => {
+        loadCartFromLocalStorage();
+    }, [setStore]);
+
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        const saveCartToLocalStorage = () => {
+            // Load existing cart data from localStorage
+            const savedCart = localStorage.getItem('cart');
+            console.log(savedCart);
+            // Initialize mergedCart with store.cart
+            let mergedCart = [...store.cart];
+
+            if (savedCart) {
+                try {
+                    const parsedCart = JSON.parse(savedCart);
+
+                    if (Array.isArray(parsedCart)) {
+                        // Merge store.cart with existing localStorage cart, ignoring common elements
+                        mergedCart = [
+                            ...parsedCart.filter(item => !store.cart.some(storeItem => storeItem.id === item.id)),
+                            ...store.cart
+                        ];
+                    } else {
+                        console.warn('Invalid cart data in localStorage');
+                    }
+                } catch (error) {
+                    console.error('Error parsing cart data from localStorage:', error);
+                }
+            }
+
+            // Save mergedCart to localStorage
+            console.log('Cart updated: saving to localStorage', mergedCart);
+            localStorage.setItem('cart', JSON.stringify(mergedCart));
+        };
+
+        saveCartToLocalStorage(); // Invoke the function on mount and whenever store.cart changes
+
+    }, [store.cart]);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -55,7 +147,7 @@ const Navbar1 = ({
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
+    console.log(store.cartCount)
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -92,6 +184,40 @@ const Navbar1 = ({
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+    const handleIncreaseQuantity = (index) => {
+        setStore(prevStore => {
+            const updatedCart = [...prevStore.cart];
+            updatedCart[index] = {
+                ...updatedCart[index],
+                count: updatedCart[index].count + 1
+            };
+            return { ...prevStore, cart: updatedCart };
+        });
+    };
+
+    const handleDecreaseQuantity = (index) => {
+        setStore(prevStore => {
+            if (prevStore.cart[index].count > 1) {
+                const updatedCart = [...prevStore.cart];
+                updatedCart[index] = {
+                    ...updatedCart[index],
+                    count: updatedCart[index].count - 1
+                };
+                return { ...prevStore, cart: updatedCart };
+            }
+            return prevStore; // No change if count is 1
+        });
+    };
+
+    const handleDeleteFromCart = (item) => {
+        setStore(prevStore => {
+            const updatedCart = prevStore.cart.filter(cartItem => cartItem !== item);
+            return { ...prevStore, cart: updatedCart };
+        });
+        deleteFromCart(item); // Call the prop function to delete item from cart
+    };
+
+
     const handleCartClick = () => {
         setIsCartOpen(!isCartOpen);
         console.log(store.cart);  // Log the cart items to the console
@@ -105,20 +231,19 @@ const Navbar1 = ({
         setIsSearchClicked(!isSearchClicked);
     };
 
-    const deleteFromCart = (itemToDelete) => {
-        setCartItems(cartItems.filter(item => item.id !== itemToDelete.id));
-    };
-   
+    // const deleteFromCart = (itemToDelete) => {
+    //     setCartItems(cartItems.filter(item => item.id !== itemToDelete.id));
+    // };
+
     return (
-         <motion.nav
-            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${
-                scrolling ? 'bg-brown-700' : 'bg-transparent'
-            }`}
+        <motion.nav
+            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${scrolling ? 'bg-brown-700' : 'bg-transparent'
+                }`}
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }}
             style={{
-                fontFamily:store?.fonts?.Navbar,
+                fontFamily: store?.fonts?.Navbar,
                 backgroundColor: scrolling ? color?.navColor?.backgroundnavColor : 'transparent',
                 color: color.navColor.storeNameTextColor,
             }}
@@ -174,17 +299,17 @@ const Navbar1 = ({
                     <FaShoppingCart className="text-2xl" />
                     {cartItems.length > 0 && (
                         <span className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 bg-red-500 rounded-full text-white px-1 py-0.5 text-xs">
-                            {cartItems.length}
+                            {store.cart.length}
                         </span>
                     )}
                 </button>
-                {isCartOpen && <CartDropdown items={cartItems} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} />} {/* Conditionally render the CartDropdown */}
-                <button
-                    onClick={null}
+                {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} />} {/* Conditionally render the CartDropdown */}
+                {(store.isEdit || !store.fetchedFromBackend) && <button
+                    onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
                     className="bg-transparent border border-black px-2 py-1 rounded text-black"
                 >
                     Preview
-                </button>
+                </button>}
             </div>
 
             {isSidebarOpen && (

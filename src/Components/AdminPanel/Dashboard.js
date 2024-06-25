@@ -8,9 +8,12 @@ import Employee from "./Dashboard/Employee";
 import { useParams } from "react-router-dom";
 import EditStore from './EditStore/EditStore.js';
 import Order from './Dashboard/Order/Order.js';
+import Product from "./Product/Product.js";
+import General from "./General/General.js";
+import Shop from "./Shop/Shop.js";
 const Dashboard = () => {
   const auth = useContext(AuthContext);
-  const [dashboardState, setDashboardState] = useState('Employee');
+  const [dashboardState, setDashboardState] = useState('General');
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [store, setStore] = useState(null); // Initialize store as null
   const { storeName } = useParams();
@@ -63,18 +66,24 @@ const Dashboard = () => {
   const renderDashboardContent = (store) => {
     switch (dashboardState) {
       case 'Home':
-        return <Home />;
+        return <Home data={store} />;
       case 'Employee':
         if (role === 'Admin' || role === 'Owner') {
           console.log('Store:', store);
           return <Employee store={store} />;
         } else {
-          return <Home />;
+          return <Home data={store} />;
         }
       case 'Edit Store':
         return <EditStore store={store} />;
       case 'Order':
         return <Order store={store}></Order>
+      case 'Product':
+        return <Product store={store}></Product>
+      case 'General':
+        return <General store={store} setDashboardState={setDashboardState}></General>
+        case 'Shop':
+          return <Shop store={store} ></Shop>
       default:
         return <Home />;
     }

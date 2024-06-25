@@ -12,7 +12,7 @@ const T1SubProduct = () => {
     const subProductType = 'Category1';
 
     const subProductsProps = {
-        products, categories, subCategories, previewMode, store, setStore, subProductType, CategorySelector, AddProduct:ProductForm, ProductCard, useDraggable
+        products, categories, subCategories, previewMode, store, setStore, subProductType, CategorySelector, AddProduct: ProductForm, ProductCard, useDraggable
     };
 
     return (

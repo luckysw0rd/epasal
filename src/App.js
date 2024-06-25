@@ -23,11 +23,12 @@ import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
 import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EsewaRouteComponent from "./Components/AdminPanel/Esewa/EsewaRouteComponent ";
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if ( true) {
+  if (token) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -37,14 +38,12 @@ function App() {
         <Route path="/buildstore/products" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
-        <Route path="/productform" element={<ProductForm />} />
+        <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
-
+        <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
-
-
       </React.Fragment>
     );
   } else {
@@ -65,7 +64,7 @@ function App() {
               {routes}
             </Routes>
           </Router>
-          <ToastContainer />
+          
         </div>
       </AuthContext.Provider>
     </PrimeReactProvider>

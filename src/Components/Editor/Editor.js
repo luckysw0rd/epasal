@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStore } from '../../Theme/Theme1/T1Context';
 import ProductForm from '../../Theme/Theme1/SubProduct/ProductForm';
 import ImageDrop from './ImageDrop';
@@ -6,15 +6,18 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FontSelector from './FontSelector';
 import SaveStoreButton from '../../Theme/Theme1/SaveButton/SaveStoreButton';
+import { SketchPicker } from 'react-color';
+
 // List of fonts from your Tailwind configuration
 const fonts = [
   "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
   "Genos", "Orbitron", "Cinzel", "Exo 2", "Roboto", "Sanchez", "DM Serif Text"
 ];
 
+
 const Editor = () => {
   const { store, setStore } = useStore();
-  const [openType, setOpenType] = useState(false);
+  const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
   const { color } = store;
   const { fetchedFromBackend } = store;
@@ -25,11 +28,74 @@ const Editor = () => {
   const [featuredProducts, setFeaturedProducts] = useState(0);
   const [addProductForm, setAddProductForm] = useState(false);
 
+  // Mapping of developer names to user-friendly names
+  const friendlyNames = {
+    backgroundThemeColor: 'Background Color',
+    secondaryBannerColor: 'Second Banner',
+    firstBannerColor: 'First Banner',
+    offerBannerColor: 'Offer Banner Color',
+    navColor: 'Navbar',
+    headerColor: 'Header Color',
+    subcategoryColor: 'Category ',
+    subProductColor: 'Category Product',
+    productListColor: ' Color',
+    newProductColor: 'New Product ',
+    footerColor: 'Footer Color',
+  };
+
+  // Mapping of developer names to user-friendly names for nested properties
+  const nestedFriendlyNames = {
+    backgroundThemeColor1: 'Background',
+    backgroundThemeColor2: 'Background 2',
+    textColor: 'Text Color',
+    buttonColor: 'Button Color',
+    buttonText: 'Button Text',
+    backgroundBoxThemeColor1: 'Background Box Theme Color 1',
+    backgroundnavColor: 'Background ',
+    storeNameTextColor: 'Store Name',
+    categoryTextColor: 'Text',
+    searchBarColor: 'Search Bar',
+    headerText: 'Header Text Color',
+    headerBackground: 'Header Background Color',
+    background: 'Background',
+    text: 'Text ',
+    categoryColor: ' Background ',
+    backgroundColor: ' Background ',
+    borderColor: ' Border ',
+    priceColor: ' Price ',
+    priceLetterColor: ' Cart Text ',
+    scrollbarColor: ' Scrollbar ',
+    starColor: ' Star ',
+    cardBackground: ' Card Background Color',
+    borderColor: ' List Border ',
+    headerColor: ' List Header ',
+    textColor: ' Text Color',
+    priceColor: 'Price',
+    heartColor: ' Heart Color',
+    buttonTextColor: ' Button Text Color',
+    buttonBgColor: ' Button Background Color',
+    buttonBorderColor: ' Button Border Color',
+    buttonBgColorOnHover: ' Button Background Hover Color',
+    bgColor: 'Footer Background Color',
+    textColor: 'Text Color',
+    linkHeaderColor: 'Footer Link Header Color',
+    linkColor: 'Footer Link Color',
+    btnBgColor: 'Footer Button Background Color',
+    btnText: 'Footer Button Text Color',
+    btnBgColorOnHover: 'Footer Button Background Hover Color',
+  };
+
   const handleAddCategory = (e) => {
     e.preventDefault();
     setStore(n => ({ ...n, subCategories: [...n.subCategories, { name: categoryData }] }));
     setCategoryData('');
   };
+
+  useEffect(() => {
+    if (store.liveChatSource && (store.liveChatSource !== '' && store.liveChatSource !== null) && store.subscriptionStatus !== 'Silver')
+      abc(store.liveChatSource)
+  }, [])
+
 
   const handleColorChange = (value, field, colorValueObject) => {
     setStore((prevState) => ({
@@ -54,6 +120,19 @@ const Editor = () => {
   const handleAddProduct = (e) => {
     e.preventDefault();
     setAddProductForm(true);
+  };
+
+  const handleActiveSkinChange = (e, index) => {
+    const newActiveSkin = e.target.value;
+    setStore(prevState => ({
+      ...prevState,
+      componentSkin: prevState.componentSkin.map((component, idx) => {
+        if (idx === index) {
+          return { ...component, activeSkin: newActiveSkin };
+        }
+        return component;
+      })
+    }));
   };
 
   const handleSingleColorChange = (e, field) => {
@@ -92,26 +171,29 @@ const Editor = () => {
 
   return (
     <>
-      {(!store.fetchedFromBackend && !store.previewMode)||store?.isEdit ? navHide ? (
-        <div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
+      {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
+        <div className='fixed mt-1 top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
 
-          <div className='flex justify-between  mt-10 font-semibold text-[#6A6A6A] px-4'>
-            <button className={`flex-1 text-left ${!openType ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(false) }}>Content</button>
-            <button className={`flex-1 text-left ${openType ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(true) }}>Design</button>
+          <div className='flex justify-between  font-Cinzel  mt-10 font-semibold text-[#6A6A6A] '>
+            <button className={`flex-1 text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content</button>
+            <button className={`flex-1 text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
+            {store.isEdit &&
+              <button className={`flex-1 text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
+            }
           </div>
           <div className='text-red-600 absolute top-[22px] right-2' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}>X</div>
           <div className='text-red-600 absolute top-[22px] right-10' onClick={(e) => { e.preventDefault(); setNavHide(false) }}>Hide</div>
-          {!openType && (
+          {openType === 1 && (
             <div>
-              
+
               <ul className='flex flex-col mt-10 gap-2 px-4'>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Navbar:<br />
                   <div>
-                <FontSelector section="Navbar" />
-              </div> 
-                  
+                    <FontSelector section="Navbar" />
+                  </div>
+
                   <div className='font-normal'>
                     <label className='text-[10px]'>Shop Name</label><br />
                     <input type='text' className='border border-[#6A6A6A] h-[24px] rounded px-2' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
@@ -138,7 +220,7 @@ const Editor = () => {
                   Categories:<br />
                   <div>
                     <FontSelector section="Categories" />
-                  </div>  
+                  </div>
                   <div className='font-normal'>
                     <label className='text-[10px]'>Title</label><br />
                     <div className='flex'>
@@ -151,40 +233,40 @@ const Editor = () => {
                   </ul>
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-              Banner #1<br />
-              <div>
-                <FontSelector section="Banner1" />
-              </div>  
-              <label className='text-[10px]'>Title</label><br />
-              <input value={store.thirdBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,thirdBannerText:{...prev.thirdBannerText,heading:e.target.value}}))}} ></input><br />
-              <label className='text-[10px]'>Description</label><br />
-              <textarea value={store.thirdBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e)=>{setStore(prev=>({...prev,thirdBannerText:{...prev.thirdBannerText,paragraph:e.target.value}}))}} ></textarea><br />
-              <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
-            </li>
-            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-              Banner #2<br />
-              <div>
-                <FontSelector section="Banner2" />
-              </div> 
-              <label className='text-[10px]'>Title</label><br />
-              <input value={store.secondaryBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,secondaryBannerText:{...prev.secondaryBannerText,heading:e.target.value}}))}} ></input><br />
-              <label className='text-[10px]'>Description</label><br />
-              <textarea value={store.secondaryBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e)=>{setStore(prev=>({...prev,secondaryBannerText:{...prev.secondaryBannerText,paragraph:e.target.value}}))}} ></textarea><br />
-              <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
-            </li>
-            <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-              Banner #3<br />
-              <div>
-                <FontSelector section="Banner3" />
-              </div> 
-              <label className='text-[10px]'>Title</label><br />
-              <input value={store.offerBannerText.para1} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,offerBannerText:{...prev.offerBannerText,para1:e.target.value}}))}} ></input><br />
-              <label className='text-[10px]'>Description</label><br />
-              <textarea value={store.offerBannerText.para2} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e)=>{setStore(prev=>({...prev,offerBannerText:{...prev.offerBannerText,para2:e.target.value}}))}} ></textarea><br />
-              <label className='text-[10px]'>Description</label><br />
-              <textarea value={store.offerBannerText.para3} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e)=>{setStore(prev=>({...prev,offerBannerText:{...prev.offerBannerText,para3:e.target.value}}))}} ></textarea><br />
-              <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
-            </li>
+                  Banner #1<br />
+                  <div>
+                    <FontSelector section="Banner1" />
+                  </div>
+                  <label className='text-[10px]'>Title</label><br />
+                  <input value={store.thirdBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }} ></input><br />
+                  <label className='text-[10px]'>Description</label><br />
+                  <textarea value={store.thirdBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }} ></textarea><br />
+                  <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
+                </li>
+                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                  Banner #2<br />
+                  <div>
+                    <FontSelector section="Banner2" />
+                  </div>
+                  <label className='text-[10px]'>Title</label><br />
+                  <input value={store.secondaryBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }} ></input><br />
+                  <label className='text-[10px]'>Description</label><br />
+                  <textarea value={store.secondaryBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }} ></textarea><br />
+                  <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
+                </li>
+                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                  Banner #3<br />
+                  <div>
+                    <FontSelector section="Banner3" />
+                  </div>
+                  <label className='text-[10px]'>Title</label><br />
+                  <input value={store.offerBannerText.para1} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }} ></input><br />
+                  <label className='text-[10px]'>Description</label><br />
+                  <textarea value={store.offerBannerText.para2} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para2: e.target.value } })) }} ></textarea><br />
+                  <label className='text-[10px]'>Description</label><br />
+                  <textarea value={store.offerBannerText.para3} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para3: e.target.value } })) }} ></textarea><br />
+                  <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
+                </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Add Products<br />
                   <div className='mt-2'>
@@ -194,11 +276,11 @@ const Editor = () => {
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Featured Products<br />
                   <div>
-                <FontSelector section="Featured" />
-              </div> 
-              <div>
-                <FontSelector section="NewProduct" />
-              </div> 
+                    <FontSelector section="Featured" />
+                  </div>
+                  <div>
+                    <FontSelector section="NewProduct" />
+                  </div>
                   <div className='mt-2 flex '>
                     <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
                       {store.products.map((n, i) => (<option value={i} key={i}>{n.name}</option>))}
@@ -206,34 +288,35 @@ const Editor = () => {
                     <button className='px-2 text-[10px] border border-black' onClick={handleAddFeaturedProduct}>Add +</button>
                   </div>
                 </li>
+
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-                  Footer<br/>
+                  Footer<br />
                   <div>
                     <FontSelector section="Footer" />
                   </div>
                   <label className='text-[10px]'>Location</label><br />
-              <input value={store.location} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, location: e.target.value }));console.log(store.location)}} ></input><br />
-              <label className='text-[10px]'>Email</label><br />
-              <input value={store.email} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,email:e.target.value}))}} ></input><br />
-              <label className='text-[10px]'>Phone Number</label><br />
-              <input value={store.phoneNumber} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prev=>({...prev,phoneNumber:e.target.value}))}} ></input><br />
-              <div className='mt-3'>Social Media Links</div>
-              <label className='text-[10px]'>Facebook</label><br />
-              <input value={store.socialMediaLinks.facebook} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } }));}} ></input><br />
-              <label className='text-[10px]'>Twitter</label><br />
-              <input value={store.socialMediaLinks.twitter} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } }));}} ></input><br />
-              <label className='text-[10px]'>Instagram</label><br />
-              <input value={store.socialMediaLinks.instagram} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } }));}} ></input><br />
-              <label className='text-[10px]'>linkedIn</label><br />
-              <input value={store.socialMediaLinks.linkedin} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e)=>{setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } }));}} ></input><br />
-              
+                  <input value={store.location} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
+                  <label className='text-[10px]'>Email</label><br />
+                  <input value={store.email} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
+                  <label className='text-[10px]'>Phone Number</label><br />
+                  <input value={store.phoneNumber} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
+                  <div className='mt-3'>Social Media Links</div>
+                  <label className='text-[10px]'>Facebook</label><br />
+                  <input value={store.socialMediaLinks.facebook} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
+                  <label className='text-[10px]'>Twitter</label><br />
+                  <input value={store.socialMediaLinks.twitter} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
+                  <label className='text-[10px]'>Instagram</label><br />
+                  <input value={store.socialMediaLinks.instagram} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
+                  <label className='text-[10px]'>linkedIn</label><br />
+                  <input value={store.socialMediaLinks.linkedin} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
+
                 </li>
               </ul>
               {addProductForm && <ProductForm onClose={() => setAddProductForm(!addProductForm)} />}
             </div>
           )}
 
-          {openType && (
+          {openType === 2 && (
             <div className="mt-5 px-4 capitalize">
               <div className="flex flex-col gap-4">
 
@@ -241,16 +324,16 @@ const Editor = () => {
                   if (typeof colorValue === 'object') {
                     return (
                       <div key={index}>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{colorKey}</h4>
+                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
                           <div key={nestedIndex} className="flex flex-row justify-around items-start items-center">
-                            <label className="text-gray-700 w-24 flex-grow">{nestedKey}</label>
+                            <label className="text-gray-700 w-24 flex-grow">{nestedFriendlyNames[nestedKey]}</label>
                             <div className="flex mt-2 md:flex-row items-center justify-center ml-4">
                               <input
                                 type="color"
                                 value={nestedValue}
                                 onChange={(e) => handleColorChange(e.target.value, nestedKey, colorKey)}
-                                className="  rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
+                                className="rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
                               />
                             </div>
                           </div>
@@ -260,8 +343,8 @@ const Editor = () => {
                   } else {
                     return (
                       <div key={index}>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{colorKey}</h4>
-                        <div className="flex  justify-between">
+                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
+                        <div className="flex justify-between">
                           <label className="flex-grow text-gray-700 w-24">Default</label>
                           <div className="flex items-center ml-4">
                             <input
@@ -279,18 +362,48 @@ const Editor = () => {
               </div>
             </div>
           )}
+
+          {openType === 3 && (
+            <div className="mt-5 px-4 capitalize">
+              {store?.componentSkin?.map((component, index) => (
+                <li key={index} className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                  {component.component}:<br />
+                  <label className='text-[10px]'>Active Skin</label><br />
+                  <select value={component.activeSkin} onChange={e => handleActiveSkinChange(e, index)} className='border border-[#6A6A6A] rounded px-2'>
+                    {component.skinInventory.map((skin, idx) => (
+                      <option key={idx} value={skin}>{skin}</option>
+                    ))}
+                  </select>
+                </li>
+              ))}
+            </div>
+          )}
           <div className='flex justify-center my-3'>
-            {/* <button className='px-4 py-1 bg-green-600 text-white rounded' onClick={() => { toast("helllo") }}>Submit</button> */}
-            <SaveStoreButton/>
+            <SaveStoreButton />
           </div>
         </div>
       ) : (
         <button className='fixed top-0 right-10 mt-24 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setNavHide(true) }}>Show</button>
       ) : !store.fetchedFromBackend && (
-        <button className='fixed top-0 right-10 mt-20 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: false })) }}>Preview</button>
+        // <button className='fixed top-0 right-10 mt-20 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: false })) }}>Preview</button>
+        <></>
       )}
     </>
   );
 };
 
 export default Editor;
+
+
+var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+function abc(liveChatSource) {
+
+  var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+  s1.async = true;
+  // https://embed.tawk.to/66759d429d7f358570d20570/1i0tmsjtn
+  s1.src = `${liveChatSource}`;
+  s1.charset = 'UTF-8';
+  s1.setAttribute('crossorigin', '*');
+  s0.parentNode.insertBefore(s1, s0);
+
+};

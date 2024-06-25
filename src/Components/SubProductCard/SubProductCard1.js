@@ -4,13 +4,14 @@ import { motion } from 'framer-motion';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Import FaTimes for the remove icon
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
-const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store2 }) => {
+import useFetch from '../../Hooks/useFetch';
+const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,store }) => {
     // Component state
     const [selectedStyle, setSelectedStyle] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0)
     const [addedToCart, setAddedToCart] = useState(false);
-    const { store } = useStore(); // Access the store context
     const { previewMode,isEdit } = store;
+    const { isLoading, error, sendRequest, onCloseError } = useFetch()
     useEffect(() => {
         // Check if the product is in the cart when the component mounts
         // This logic should be replaced with your actual implementation for checking the cart
@@ -29,7 +30,24 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         setSelectedStyle(styleIndex);
         handleStyleSelect(product.id, styleIndex);
     };
-
+    
+    const handleDeleteProduct=async()=>{
+        if(isEdit){
+            // const responseData = await sendRequest(
+            //     'product/deleteProduct',
+            //     'POST',
+            //     JSON.stringify({
+            //         id:product._id, storeId:store._id
+            //     }),
+            //     {
+            //         'Content-Type': 'application/json'
+            //     }
+            // );
+            handleRemoveProduct({id:product._id,storeId:store._id})
+        }else{
+            handleRemoveProduct({id:product.id})
+        }
+    }
 
     return (
         <motion.div
@@ -42,7 +60,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             {(!previewMode||isEdit) && (
                 <button
                     className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center" // Added flex and justify-center
-                    onClick={() => handleRemoveProduct(product.id)} // Call handleRemoveProduct on click
+                    onClick={handleDeleteProduct} // Call handleRemoveProduct on click
                 >
                     <FaTimes /> {/* Moved the FaTimes icon outside of the button text */}
                 </button>

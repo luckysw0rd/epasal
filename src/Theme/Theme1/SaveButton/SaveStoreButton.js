@@ -10,7 +10,7 @@ const SaveStoreButton = () => {
     const auth = useContext(AuthContext);
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
-    var storeNewImage={};
+    var storeNewImage = {};
     const { previewMode } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
@@ -41,21 +41,21 @@ const SaveStoreButton = () => {
                 });
 
                 // Update variant images
-                if (!store.isEdit) {
-                    for (let j = 0; j < product.variant[0].options.length; j++) {
-                        const variantOption = product.variant[0].options[j];
-                        const variantImg = await uploadImage(variantOption.image.imageUrl);
+                if(!store.isEdit){
+                for (let j = 0; j < product?.variant[0]?.options.length; j++) {
+                    const variantOption = product?.variant[0]?.options[j];
+                    const variantImg = await uploadImage(variantOption?.image?.imageUrl);
 
-                        setStore(prev => {
-                            const updatedProducts = [...prev.products];
-                            const updatedOptions = [...updatedProducts[i].variant[0].options];
-                            updatedOptions[j] = {
-                                ...updatedOptions[j],
-                                image: {
-                                    imageID: variantImg.id,
-                                    imageUrl: variantImg.img
-                                }
-                            };
+                    setStore(prev => {
+                        const updatedProducts = [...prev.products];
+                        const updatedOptions = [...updatedProducts[i]?.variant[0]?.options];
+                        updatedOptions[j] = {
+                            ...updatedOptions[j],
+                            image: {
+                                imageID: variantImg.id,
+                                imageUrl: variantImg.img
+                            }
+                        };
 
                             updatedProducts[i] = {
                                 ...updatedProducts[i],
@@ -94,7 +94,7 @@ const SaveStoreButton = () => {
                     }
                 }
             ))
-            storeNewImage=store;
+            storeNewImage = store;
             PostData(storeNewImage)
             console.log(ImageData, "image Data")
             setStoreNew(true)
@@ -106,7 +106,7 @@ const SaveStoreButton = () => {
         if (storeNew) {
             PostData();
         }
-    }, [storeNew])
+    }, [storeNew,setStoreNew])
     const PostData = async () => {
         try {
             console.log(store, "store my")
@@ -121,7 +121,7 @@ const SaveStoreButton = () => {
                     }
                 );
                 setStoreNew(false)
-                toast(responseData.message); // Handle response data as needed
+                toast.success(responseData.message); // Handle response data as needed
             } else {
                 const responseData = await sendRequest(
                     `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
@@ -133,11 +133,11 @@ const SaveStoreButton = () => {
                     }
                 );
                 setStoreNew(false)
-                toast(responseData.message); // Handle response data as needed
+                toast.success(responseData.message); // Handle response data as needed
             }
         } catch (error) {
             console.error('Error saving store data:', error);
-            toast(error.message); // Handle response data as needed
+            toast.error(error.message); // Handle response data as needed
 
         }
     }
