@@ -28,6 +28,63 @@ const Editor = () => {
   const [featuredProducts, setFeaturedProducts] = useState(0);
   const [addProductForm, setAddProductForm] = useState(false);
 
+  // Mapping of developer names to user-friendly names
+  const friendlyNames = {
+    backgroundThemeColor: 'Background Color',
+    secondaryBannerColor: 'Second Banner',
+    firstBannerColor: 'First Banner',
+    offerBannerColor: 'Offer Banner Color',
+    navColor: 'Navbar',
+    headerColor: 'Header Color',
+    subcategoryColor: 'Category ',
+    subProductColor: 'Category Product',
+    productListColor: ' Color',
+    newProductColor: 'New Product ',
+    footerColor: 'Footer Color',
+  };
+
+  // Mapping of developer names to user-friendly names for nested properties
+  const nestedFriendlyNames = {
+    backgroundThemeColor1: 'Background',
+    backgroundThemeColor2: 'Background 2',
+    textColor: 'Text Color',
+    buttonColor: 'Button Color',
+    buttonText: 'Button Text',
+    backgroundBoxThemeColor1: 'Background Box Theme Color 1',
+    backgroundnavColor: 'Background ',
+    storeNameTextColor: 'Store Name',
+    categoryTextColor: 'Text',
+    searchBarColor: 'Search Bar',
+    headerText: 'Header Text Color',
+    headerBackground: 'Header Background Color',
+    background: 'Background',
+    text: 'Text ',
+    categoryColor: ' Background ',
+    backgroundColor: ' Background ',
+    borderColor: ' Border ',
+    priceColor: ' Price ',
+    priceLetterColor: ' Cart Text ',
+    scrollbarColor: ' Scrollbar ',
+    starColor: ' Star ',
+    cardBackground: ' Card Background Color',
+    borderColor: ' List Border ',
+    headerColor: ' List Header ',
+    textColor: ' Text Color',
+    priceColor: 'Price',
+    heartColor: ' Heart Color',
+    buttonTextColor: ' Button Text Color',
+    buttonBgColor: ' Button Background Color',
+    buttonBorderColor: ' Button Border Color',
+    buttonBgColorOnHover: ' Button Background Hover Color',
+    bgColor: 'Footer Background Color',
+    textColor: 'Text Color',
+    linkHeaderColor: 'Footer Link Header Color',
+    linkColor: 'Footer Link Color',
+    btnBgColor: 'Footer Button Background Color',
+    btnText: 'Footer Button Text Color',
+    btnBgColorOnHover: 'Footer Button Background Hover Color',
+  };
+
   const handleAddCategory = (e) => {
     e.preventDefault();
     setStore(n => ({ ...n, subCategories: [...n.subCategories, { name: categoryData }] }));
@@ -267,16 +324,16 @@ const Editor = () => {
                   if (typeof colorValue === 'object') {
                     return (
                       <div key={index}>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{colorKey}</h4>
+                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
                           <div key={nestedIndex} className="flex flex-row justify-around items-start items-center">
-                            <label className="text-gray-700 w-24 flex-grow">{nestedKey}</label>
+                            <label className="text-gray-700 w-24 flex-grow">{nestedFriendlyNames[nestedKey]}</label>
                             <div className="flex mt-2 md:flex-row items-center justify-center ml-4">
                               <input
                                 type="color"
                                 value={nestedValue}
                                 onChange={(e) => handleColorChange(e.target.value, nestedKey, colorKey)}
-                                className="  rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
+                                className="rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
                               />
                             </div>
                           </div>
@@ -286,8 +343,8 @@ const Editor = () => {
                   } else {
                     return (
                       <div key={index}>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{colorKey}</h4>
-                        <div className="flex  justify-between">
+                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
+                        <div className="flex justify-between">
                           <label className="flex-grow text-gray-700 w-24">Default</label>
                           <div className="flex items-center ml-4">
                             <input

@@ -53,6 +53,26 @@ const EsewaRouteComponent = () => {
         }
     };
 
+    const updateOrder = async (data) => {
+        try {
+            console.log("Data to be sent:", data);
+            const responseData = await sendRequest(
+                'store/upgrade/storeSkin/' + data.transaction_uuid, // Ensure the correct endpoint
+                'PUT',
+                JSON.stringify({status:'Confirmed'}),
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token
+                }
+            );
+            console.log("Response data:", responseData);
+            setIsSuccess(true);
+        } catch (error) {
+            console.error("Error message:", error.message);
+            console.error("Error details:", error);
+        }
+    };
+
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const data = queryParams.get('data');
@@ -67,13 +87,18 @@ const EsewaRouteComponent = () => {
             console.log("Field:", field);
 
             if (field === "subscription" && parsedJson) {
-                console.log("Updating now...");
+                console.log("subscription now...");
                 updateStoreSubscription(parsedJson);
             }
 
             if (field === 'skin' && parsedJson) {
                 console.log("skin update");
                 updateStoreSkin(parsedJson);
+            }
+
+            if (field === 'order' && parsedJson) {
+                console.log("order update");
+                updateOrder(parsedJson);
             }
         }
     }, [location.search, field]);

@@ -21,6 +21,7 @@ const Navbar1 = ({
     setSearchInput,
     setLogoFile,
     setPreviewMode,
+    deleteFromCart
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const [editableText, setEditableText] = useState("Ecom Template-2");
@@ -41,56 +42,56 @@ const Navbar1 = ({
     ]);
     const cart = [
         {
-          product: "Item 1",
-          price: 100,
-          discountAmount: 10,
-          count: 4,
-          selectedvariant: [
-            {
-              name: "default",
-              options: {
-                name: "default"
-              }
-            }
-          ]
+            product: "Item 1",
+            price: 100,
+            discountAmount: 10,
+            count: 4,
+            selectedvariant: [
+                {
+                    name: "default",
+                    options: {
+                        name: "default"
+                    }
+                }
+            ]
         },
         {
-          product: "Item 2",
-          price: 200,
-          discountAmount: 20,
-          count: 4,
-          selectedvariant: [
-            {
-              name: "default",
-              options: {
-                name: "default"
-              }
-            }
-          ]
-        }
-      ];
-
-      
-        const loadCartFromLocalStorage = () => {
-            console.log('Attempting to load cart from localStorage');
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) {
-                try {
-                    const parsedCart = JSON.parse(savedCart);
-                    if (Array.isArray(parsedCart)) {
-                        console.log('Loaded cart from localStorage:', parsedCart);
-                        setStore(prevStore => ({ ...prevStore, cart: parsedCart }));
-                    } else {
-                        console.warn('Invalid cart data in localStorage');
+            product: "Item 2",
+            price: 200,
+            discountAmount: 20,
+            count: 4,
+            selectedvariant: [
+                {
+                    name: "default",
+                    options: {
+                        name: "default"
                     }
-                } catch (error) {
-                    console.error('Error parsing cart data from localStorage:', error);
                 }
-            } else {
-                console.log('No cart data found in localStorage');
+            ]
+        }
+    ];
+
+
+    const loadCartFromLocalStorage = () => {
+        console.log('Attempting to load cart from localStorage');
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            try {
+                const parsedCart = JSON.parse(savedCart);
+                if (Array.isArray(parsedCart)) {
+                    console.log('Loaded cart from localStorage:', parsedCart);
+                    setStore(prevStore => ({ ...prevStore, cart: parsedCart }));
+                } else {
+                    console.warn('Invalid cart data in localStorage');
+                }
+            } catch (error) {
+                console.error('Error parsing cart data from localStorage:', error);
             }
-        };
-        useEffect(() => {
+        } else {
+            console.log('No cart data found in localStorage');
+        }
+    };
+    useEffect(() => {
         loadCartFromLocalStorage();
     }, [setStore]);
 
@@ -102,11 +103,11 @@ const Navbar1 = ({
             console.log(savedCart);
             // Initialize mergedCart with store.cart
             let mergedCart = [...store.cart];
-    
+
             if (savedCart) {
                 try {
                     const parsedCart = JSON.parse(savedCart);
-    
+
                     if (Array.isArray(parsedCart)) {
                         // Merge store.cart with existing localStorage cart, ignoring common elements
                         mergedCart = [
@@ -120,16 +121,16 @@ const Navbar1 = ({
                     console.error('Error parsing cart data from localStorage:', error);
                 }
             }
-    
+
             // Save mergedCart to localStorage
             console.log('Cart updated: saving to localStorage', mergedCart);
             localStorage.setItem('cart', JSON.stringify(mergedCart));
         };
-    
+
         saveCartToLocalStorage(); // Invoke the function on mount and whenever store.cart changes
-    
+
     }, [store.cart]);
-    
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -146,7 +147,7 @@ const Navbar1 = ({
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-console.log(store.cartCount)
+    console.log(store.cartCount)
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -193,7 +194,7 @@ console.log(store.cartCount)
             return { ...prevStore, cart: updatedCart };
         });
     };
-    
+
     const handleDecreaseQuantity = (index) => {
         setStore(prevStore => {
             if (prevStore.cart[index].count > 1) {
@@ -207,7 +208,7 @@ console.log(store.cartCount)
             return prevStore; // No change if count is 1
         });
     };
-    
+
     const handleDeleteFromCart = (item) => {
         setStore(prevStore => {
             const updatedCart = prevStore.cart.filter(cartItem => cartItem !== item);
@@ -215,7 +216,7 @@ console.log(store.cartCount)
         });
         deleteFromCart(item); // Call the prop function to delete item from cart
     };
-    
+
 
     const handleCartClick = () => {
         setIsCartOpen(!isCartOpen);
@@ -230,20 +231,19 @@ console.log(store.cartCount)
         setIsSearchClicked(!isSearchClicked);
     };
 
-    const deleteFromCart = (itemToDelete) => {
-        setCartItems(cartItems.filter(item => item.id !== itemToDelete.id));
-    };
-   
+    // const deleteFromCart = (itemToDelete) => {
+    //     setCartItems(cartItems.filter(item => item.id !== itemToDelete.id));
+    // };
+
     return (
-         <motion.nav
-            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${
-                scrolling ? 'bg-brown-700' : 'bg-transparent'
-            }`}
+        <motion.nav
+            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${scrolling ? 'bg-brown-700' : 'bg-transparent'
+                }`}
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }}
             style={{
-                fontFamily:store?.fonts?.Navbar,
+                fontFamily: store?.fonts?.Navbar,
                 backgroundColor: scrolling ? color?.navColor?.backgroundnavColor : 'transparent',
                 color: color.navColor.storeNameTextColor,
             }}
@@ -305,7 +305,7 @@ console.log(store.cartCount)
                 </button>
                 {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} />} {/* Conditionally render the CartDropdown */}
                 {(store.isEdit || !store.fetchedFromBackend) && <button
-                    onClick={()=>{setStore(prev=>({...prev,previewMode:!store.previewMode}))}}
+                    onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
                     className="bg-transparent border border-black px-2 py-1 rounded text-black"
                 >
                     Preview
