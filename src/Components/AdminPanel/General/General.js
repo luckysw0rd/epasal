@@ -16,6 +16,19 @@ const General = ({ store, setDashboardState }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
 
+    const handleInputChange2 = (e) => {
+        const inputScript = e.target.value;
+        const scriptRegex = /s1\.src\s*=\s*['"]([^'"]+)['"]/;
+        const match = inputScript.match(scriptRegex);
+
+        if (match) {
+            const extractedSrc = match[1];
+            setFormData({ ...formData, liveChatSource: extractedSrc });
+        } else {
+            setFormData({ ...formData, liveChatSource: '' });
+        }
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -157,7 +170,9 @@ const General = ({ store, setDashboardState }) => {
         expectedDeliveryTime,
         expectedDeliveryPrice,
         liveChatSource,
-        subscriptionExpiry
+        subscriptionExpiry,
+        componentSkin,
+        skin
     } = formData;
 
     return (
@@ -279,20 +294,31 @@ const General = ({ store, setDashboardState }) => {
                             </button>
                         </div>
                     </section>
+
                     <section className="mb-8 border-b pb-4">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Live Chat Url (tawk.io)</h2>
                         {(subscriptionStatus === 'Silver') && <div className='text-gray-400'>Upgrade to higher tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
                         {
                             (subscriptionStatus !== 'Silver') && (
                                 <>
-                                    <input
-                                        type="text"
-                                        name="liveChatSource"
-                                        value={liveChatSource}
-                                        onChange={(e) => setFormData({ ...formData, liveChatSource: e.target.value })}
-                                        placeholder="Live Chat URL"
-                                        className="mb-2 p-2 w-full border rounded"
-                                    />
+                                    <div>
+                                        <textarea
+                                            name="liveChatSourceScript"
+                                            onChange={handleInputChange2}
+                                            placeholder="Paste the Tawk.to script here"
+                                            className="mb-2 p-2 w-full border rounded"
+                                            rows="10"
+                                        ></textarea>
+
+                                        <input
+                                            type="text"
+                                            name="liveChatSource"
+                                            value={formData.liveChatSource}
+                                            readOnly
+                                            placeholder="Live Chat URL"
+                                            className="mb-2 p-2 w-full border rounded"
+                                        />
+                                    </div>
                                 </>
                             )
                         }

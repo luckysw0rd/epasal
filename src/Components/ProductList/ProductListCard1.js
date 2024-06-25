@@ -6,22 +6,15 @@ import { FaTimes } from 'react-icons/fa';
 import './productList.css'
 
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
-
-    
-
-
-
-    const { productColor, previewMode, addToCart, isEdit,store } = productListProps;
-
+    const { productColor, previewMode, addToCart, isEdit, store } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
-    
+
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
 
     if (!product) return null;
 
     const { id, name, image, variant } = product;
-    
     const firstVariant = variant[0]; // Considering only the first variant
     const selectedOption = selectedOptionIndex === -1 ? null : firstVariant?.options[selectedOptionIndex];
     const price = selectedOption ? selectedOption.price : product.price || 0;
@@ -89,13 +82,21 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                             Learn More <IoIosArrowForward />
                                         </div>
                                     </button>
-                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                                    <button
+                                        style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
+                                        className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                         onClick={() => {
-                                            console.log(product); // Log the product to the console
-                                            addToCart(product);
-                                        }}>
+                                            const productToAdd = {
+                                                ...product,
+                                                selectedVariant: selectedOption ? [firstVariant?.name, selectedOption?.name] : null,
+                                                price
+                                            };
+                                            console.log(productToAdd); // Log the product with variant to the console
+                                            addToCart(productToAdd);
+                                        }}
+                                    >
                                         Add to cart
                                     </button>
                                 </div>

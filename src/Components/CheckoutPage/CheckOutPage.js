@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useStore } from '../../Theme/Theme1/T1Context';
-
-const Checkout = ({ cart, onClose,deleteItem }) => {
-    const { setStore } = useStore(); // Assuming useStore provides methods to update store
+import useFetch from '../../Hooks/useFetch';
+import { AuthContext } from '../../Hooks/AuthContext';
+const Checkout = ({ cart, onClose, deleteItem }) => {
+    const { store, setStore } = useStore(); // Assuming useStore provides methods to update store
+    const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
     const [promoCode, setPromoCode] = useState('');
     const [selectedPayment, setSelectedPayment] = useState('');
@@ -12,12 +14,11 @@ const Checkout = ({ cart, onClose,deleteItem }) => {
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
     const [landmark, setLandmark] = useState('');
-    const deliveryCharge = 5; // Fixed delivery charge
+    const { expectedDeliveryPrice } = store || 10;
     const [discount, setDiscount] = useState(0); // Discount amount
-
+    const auth = useContext(AuthContext);
     // Calculate total amount whenever cart or discount changes
-    const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + deliveryCharge - discount;
-
+    const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + expectedDeliveryPrice - discount;
     // Close checkout if cart is empty
     useEffect(() => {
         if (cart.length === 0) {
@@ -36,14 +37,63 @@ const Checkout = ({ cart, onClose,deleteItem }) => {
         localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
-    const handleSubmitOrder = () => {
+    // const handleEsewBuy = async (plan, duration) => {
+
+
+
+    //     try {
+    //         const responseData = await sendRequest(
+    //             'payment/create',
+    //             'POST',
+    //             JSON.stringify({
+    //                 data
+    //             }),
+    //             {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         );
+    //         console.log(responseData); // Handle response data as needed
+    //         if (responseData.payment.payment_method === 'esewa') {
+    //             // esewaCall(responseData.formData);
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+
+
+    const esewaCall = (formData) => {
+        console.log(formData);
+        var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", path);
+
+        for (var key in formData) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", formData[key]);
+            form.appendChild(hiddenField);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+
+    const handleSubmitOrder = async () => {
+
+
+        console.log(cart);
         const orderData = {
             fullName,
             phoneNumber,
             email,
             status: 'Processing',
             cart: cart.map(item => ({
-                product: item.productId,
+                product: item.productID,
                 productName: item.product,
                 price: item.price,
                 discountAmount: discount,
@@ -51,7 +101,7 @@ const Checkout = ({ cart, onClose,deleteItem }) => {
                 selectedVariant: item.variant,
             })),
             price: cart.reduce((total, item) => total + item.price * item.count, 0),
-            deliveryCharge,
+            deliveryCharge: expectedDeliveryPrice,
             promoCode,
             promoDiscount: discount,
             totalPrice: totalAmount,
@@ -61,15 +111,33 @@ const Checkout = ({ cart, onClose,deleteItem }) => {
             esewaTransactionID: null, // This would be set if the payment method is eSewa
             deliveryCode: null,
         };
+        const success_url = 'http://localhost:3000/esewa/order';
 
+        try {
+            const responseData = await sendRequest(
+                'order/create/' + store._id,
+                'POST',
+                JSON.stringify({ orderData ,success:success_url }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            console.log(responseData); // Handle response data as needed
+            if (responseData.payment.paymentMethod === 'esewa') {
+                esewaCall(responseData.formData);
+            }
+        } catch (error) {
+            // Handle error if needed
+            console.log(error);
+        }
         console.log('Order Data:', orderData);
-        alert('Order submitted!');
 
         // Here you can add the logic to send orderData to your backend
     };
 
     const paymentOptions = [
-        { id: 'esewa', label: 'eSewa', src: 'https://cdn.esewa.com.np/ui/images/esewa_og.png?111' },
+        { id: 'esewa', label: 'esewa', src: 'https://cdn.esewa.com.np/ui/images/esewa_og.png?111' },
         { id: 'khalti', label: 'Khalti', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Khalti_Digital_Wallet_Logo.png.jpg/640px-Khalti_Digital_Wallet_Logo.png.jpg' },
         { id: 'cod', label: 'Cash on Delivery', src: 'https://cdn.iconscout.com/icon/free/png-256/free-cash-on-delivery-1851649-1569374.png?f=webp' },
     ];
@@ -132,7 +200,7 @@ const Checkout = ({ cart, onClose,deleteItem }) => {
                         <div className="mt-4">
                             <div className="flex justify-between">
                                 <p className="text-sm font-medium">Delivery Charge</p>
-                                <p className="text-sm">रु {deliveryCharge}</p>
+                                <p className="text-sm">रु {expectedDeliveryPrice}</p>
                             </div>
                             <div className="flex justify-between mt-8">
                                 <p className="text-sm font-medium">Discount</p>
@@ -188,10 +256,9 @@ const Checkout = ({ cart, onClose,deleteItem }) => {
                             {paymentOptions.map(option => (
                                 <div
                                     key={option.id}
-                                    className={`h-16 object-contain border border-gray-300 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${
-                                        selectedPayment === option.id ? 'border-4 border-blue-500' : ''
-                                    }`}
-                                    onClick={() => setSelectedPayment(option.id)}
+                                    className={`h-16 object-contain border border-gray-300 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.id ? 'border-4 border-blue-500' : ''
+                                        }`}
+                                    onClick={() => setSelectedPayment(option.label)}
                                 >
                                     <img src={option.src} alt={option.label} className="h-full w-full" />
                                 </div>
