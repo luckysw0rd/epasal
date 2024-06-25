@@ -22,7 +22,7 @@ function App() {
   const auth = useContext(AuthContext);
   let routes;
 
-  if (token) {
+  if (true) {
 
     routes = (
       <React.Fragment>
