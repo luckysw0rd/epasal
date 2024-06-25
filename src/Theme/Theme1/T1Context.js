@@ -15,10 +15,19 @@ export const useStore = () => {
   return useContext(StoreContext);
 };
 
+
 export const StoreProvider = ({ children, passedStore }) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const { storeID } = useParams(); // Extract storeID using useParams
+
+  /*   useEffect(() => {
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+          console.log('Loaded cart from localStorage:', JSON.parse(savedCart));
+          setStore(prevStore => ({ ...prevStore, cart: JSON.parse(savedCart) }));
+      }
+  }, []); */
 
   const defaultStoreData = {
     name: "Store Name",
@@ -275,36 +284,11 @@ export const StoreProvider = ({ children, passedStore }) => {
     featuredProducts: [0, 1, 4],
     color: {
       backgroundThemeColor: "#FFFFFF",
-      secondaryBannerColor: {
-        backgroundThemeColor1: "#ffffff",
-        backgroundThemeColor2: "#fcf3f3",
-        textColor: "#5D4B3F",
-        buttonColor: "#AB8076",
-        buttonText: "#ffffff",
-      },
-      firstBannerColor: {
-        backgroundThemeColor1: "#ffffff",
-        backgroundThemeColor2: "#fcf3f3",
-        textColor: "#5D4B3F",
-        buttonColor: "#AB8076",
-        buttonText: "#ffffff",
-      },
-      offerBannerColor: {
-        backgroundBoxThemeColor1: "#ffffff",
-        backgroundThemeColor: "#C9BCAC",
-        textColor: "#4E3E34",
-        buttonColor: "#AB8076",
-        buttonText: "#ffffff",
-      },
       navColor: {
         backgroundnavColor: "#B6947D",
         storeNameTextColor: "#000000",
         categoryTextColor: "#1d2830",
         searchBarColor: "#fcf3f3",
-      },
-      headerColor: {
-        headerText: "#ffffff",
-        headerBackground: "#7a5C5c",
       },
       subcategoryColor: {
         background: "#ffffff",
@@ -320,20 +304,12 @@ export const StoreProvider = ({ children, passedStore }) => {
         scrollbarColor: "#4F3100",
         starColor: "#875300",
       },
-      productSection: "#ffffff",
-      productListColor: {
-        // Define productListColor object
-        backgroundColor: "#FFFFFF",
-        cardBackground: "#FFFFFF",
-        borderColor: "#B5A297",
-        headerColor: "#5D4B3F",
-        textColor: "#4F3100",
-        priceColor: "#4F3100",
-        heartColor: "#FF4D00",
-        buttonTextColor: "#4F3100",
-        buttonBgColor: "#FFFFFF",
-        buttonBorderColor: "#4F3100",
-        buttonBgColorOnHover: "#4F3100",
+      firstBannerColor: {
+        backgroundThemeColor1: "#ffffff",
+        backgroundThemeColor2: "#fcf3f3",
+        textColor: "#5D4B3F",
+        buttonColor: "#AB8076",
+        buttonText: "#ffffff",
       },
       newProductColor: {
         // Define productListColor object
@@ -349,6 +325,43 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonBorderColor: "#4F3100",
         buttonBgColorOnHover: "#4F3100",
       },
+      secondaryBannerColor: {
+        backgroundThemeColor1: "#ffffff",
+        backgroundThemeColor2: "#fcf3f3",
+        textColor: "#5D4B3F",
+        buttonColor: "#AB8076",
+        buttonText: "#ffffff",
+      },
+
+      offerBannerColor: {
+        backgroundBoxThemeColor1: "#ffffff",
+        backgroundThemeColor: "#C9BCAC",
+        textColor: "#4E3E34",
+        buttonColor: "#AB8076",
+        buttonText: "#ffffff",
+      },
+    
+      headerColor: {
+        headerText: "#ffffff",
+        headerBackground: "#7a5C5c",
+      },
+
+      productSection: "#ffffff",
+      productListColor: {
+        // Define productListColor object
+        backgroundColor: "#FFFFFF",
+        cardBackground: "#FFFFFF",
+        borderColor: "#B5A297",
+        headerColor: "#5D4B3F",
+        textColor: "#4F3100",
+        priceColor: "#4F3100",
+        heartColor: "#FF4D00",
+        buttonTextColor: "#4F3100",
+        buttonBgColor: "#FFFFFF",
+        buttonBorderColor: "#4F3100",
+        buttonBgColorOnHover: "#4F3100",
+      },
+    
       footerColor: {
         bgColor: "#736860",
         textColor: "#ffffff",
@@ -373,7 +386,9 @@ export const StoreProvider = ({ children, passedStore }) => {
     },
     previewMode: true,
     selectedSubCategory: "Watch",
-    cart: [],
+    cart: [
+
+    ],
     cartCount: 0,
     secondaryBannerText: {
       heading: "",
@@ -389,13 +404,80 @@ export const StoreProvider = ({ children, passedStore }) => {
     fetchedFromBackend: false,
     fonts: {
 
-    }
+    },
+    componentSkin: {
+      type: [
+        {
+          component: { type: String },
+          skinType: { type: String },
+          activeSkin: { type: String },
+          skinInventory: [{ type: String, unique: true }],
+        }
+      ],
+      default: [
+        {
+          component: "Navbar",
+          skinType: "Navbar",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Product1",
+          skinType: "Card",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Product2",
+          skinType: "Card",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Product3",
+          skinType: "Card",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Banner1",
+          skinType: "Banner",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Banner2",
+          skinType: "Banner",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Banner3",
+          skinType: "Banner",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Footer",
+          skinType: "Footer",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        },
+        {
+          component: "Background",
+          skinType: "Background",
+          activeSkin: "default",
+          skinInventory: ["default"]
+        }
+      ]
+    },
+    expectedDeliveryPrice:100,
     // Rest of the default store data...
   };
 
-  useEffect(() => {
-    console.log(passedStore);
-  }, [passedStore]);
+  // useEffect(() => {
+  //   console.log(passedStore);
+  // }, [passedStore]);
 
   const [store, setStore] = useState(defaultStoreData); // Start with null while fetching
 
@@ -421,25 +503,41 @@ export const StoreProvider = ({ children, passedStore }) => {
           previewMode: true,
           isEdit,
           cart: [],
-          fonts :response.store.fonts|| {} // Set fetchedFromBackend to true when data is fetched
+          fonts: response.store.fonts || {} // Set fetchedFromBackend to true when data is fetched
         });
+
       } catch (error) {
         // If an error occurs during fetch, set default store data
         setStore(defaultStoreData);
         console.error("Error fetching store data:", error);
       }
     };
-    if(window.location.pathname.includes("/store/edit/")){
+    if (window.location.pathname.includes("/store/edit/")) {
       fetchStoreData(true);
-      setStore(prev=>({...prev,previewMode:false,fetchedFromBackend:false}))
+      setStore(prev => ({ ...prev, previewMode: false, fetchedFromBackend: false }))
       console.log("I reached here")
-    } 
+    }
     else if (window.location.pathname.includes("/store/")) {
       fetchStoreData(false);
     } else {
       setStore(defaultStoreData);
     }
   }, [storeID]);
+
+  useEffect(() => {
+    // Fetch cart data from localStorage
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const storedCartCount = parseInt(localStorage.getItem('cartCount'), 10) || 0;
+
+    // Set initial state with data from localStorage and preserve other state properties
+    if (store) {
+      setStore(prevState => ({
+        ...prevState,
+        cart: storedCart,
+        cartCount: storedCartCount
+      }));
+    }
+  }, []);
 
   const addProduct = (newProduct) => {
     setStore((prevState) => ({
@@ -466,47 +564,101 @@ export const StoreProvider = ({ children, passedStore }) => {
   };
 
   const addToCart = (product) => {
-    console.log(store, "asdnaisdad ")
-    const existingCartItem = store.cart.find(item => item.product.id === product.id);
-    if (existingCartItem) {
-      setStore((prevState) => ({
-        ...prevState,
-        cart: prevState.cart.map(item =>
-          item.product.id === product.id
-            ? { ...item, count: item.count + 1 }
-            : item
-        ),
-        cartCount: prevState.cartCount + 1
-      }));
+    console.log(product, "Product being added");
+
+    const selectedOption = product.variant[0]?.options.find(option => option.price === product.price) || null;
+
+    const cartItem = {
+      product: product.name,
+      price: selectedOption ? selectedOption.price : product.price,
+      discountAmount: selectedOption ? selectedOption.discount : 0,
+      count: 1,
+      productID:product._id || 1,
+      selectedVariant: selectedOption ? [{
+        name: product.variant[0].name,
+        options: {
+          name: selectedOption.name
+        }
+      }] : [{
+        name: "default",
+        options: {
+          name: "default"
+        }
+      }]
+    };
+
+    const existingCartItemIndex = store.cart.findIndex(item =>
+      item.product === product.name &&
+      item.price === cartItem.price &&
+      JSON.stringify(item.selectedVariant) === JSON.stringify(cartItem.selectedVariant)
+    );
+
+    let updatedCart;
+    if (existingCartItemIndex !== -1) {
+      updatedCart = [...store.cart];
+      updatedCart[existingCartItemIndex] = {
+        ...updatedCart[existingCartItemIndex],
+        count: updatedCart[existingCartItemIndex].count + 1
+      };
     } else {
-      setStore((prevState) => ({
-        ...prevState,
-        cart: [...prevState.cart, { product, count: 1 }],
-        cartCount: prevState.cartCount + 1
-      }));
+      updatedCart = [...store.cart, cartItem];
     }
+
+    // Update the state and local storage
+    setStore((prevState) => {
+      const newStore = {
+        ...prevState,
+        cart: updatedCart,
+        cartCount: prevState.cartCount + 1
+      };
+      localStorage.setItem('cart', JSON.stringify(newStore.cart));
+      localStorage.setItem('cartCount', newStore.cartCount.toString());
+      return newStore;
+    });
   };
 
+
+
   const deleteFromCart = (product) => {
-    const existingCartItem = store.cart.find(item => item.product.id === product.id);
-    if (existingCartItem) {
-      if (existingCartItem.count === 1) {
-        setStore((prevState) => ({
-          ...prevState,
-          cart: prevState.cart.filter(item => item.product.id !== product.id),
-          cartCount: prevState.cartCount - 1
-        }));
+    console.log(product.product);
+    const {  price, selectedVariant } = product;
+    const name = product.product;
+    console.log(name,price,selectedVariant);
+    console.log(store.cart);
+    // Find index of the item in cart
+    const existingCartItemIndex = store.cart.findIndex(item =>
+      item.product === name &&
+      item.price === price &&
+      JSON.stringify(item.selectedVariant) === JSON.stringify(selectedVariant)
+    );
+    console.log(existingCartItemIndex);
+    if (existingCartItemIndex !== -1) {
+      const updatedCart = [...store.cart];
+
+      if (updatedCart[existingCartItemIndex].count === 1) {
+        // Remove the item from cart if count is 1
+        updatedCart.splice(existingCartItemIndex, 1);
       } else {
-        setStore((prevState) => ({
-          ...prevState,
-          cart: prevState.cart.map(item =>
-            item.product.id === product.id
-              ? { ...item, count: item.count - 1 }
-              : item
-          ),
-          cartCount: prevState.cartCount - 1
-        }));
+        // Decrease the count if more than 1
+        updatedCart[existingCartItemIndex] = {
+          ...updatedCart[existingCartItemIndex],
+          count: updatedCart[existingCartItemIndex].count - 1
+        };
       }
+
+    console.log(updatedCart);
+      // Update the state and local storage
+      setStore(prevState => ({
+        ...prevState,
+        cart: updatedCart,
+        cartCount: prevState.cartCount - 1
+      }));
+
+      // Update local storage after modifying the state
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      localStorage.setItem('cartCount', (store.cartCount - 1).toString());
+
+      // Remove the specific item from localStorage based on its name
     }
   };
 

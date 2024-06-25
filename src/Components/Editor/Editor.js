@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FontSelector from './FontSelector';
 import SaveStoreButton from '../../Theme/Theme1/SaveButton/SaveStoreButton';
+import { SketchPicker } from 'react-color';
+
 // List of fonts from your Tailwind configuration
 const fonts = [
   "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
@@ -15,7 +17,7 @@ const fonts = [
 
 const Editor = () => {
   const { store, setStore } = useStore();
-  const [openType, setOpenType] = useState(false);
+  const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
   const { color } = store;
   const { fetchedFromBackend } = store;
@@ -25,6 +27,63 @@ const Editor = () => {
   const [navHide, setNavHide] = useState(true);
   const [featuredProducts, setFeaturedProducts] = useState(0);
   const [addProductForm, setAddProductForm] = useState(false);
+
+  // Mapping of developer names to user-friendly names
+  const friendlyNames = {
+    backgroundThemeColor: 'Background Color',
+    secondaryBannerColor: 'Second Banner',
+    firstBannerColor: 'First Banner',
+    offerBannerColor: 'Offer Banner Color',
+    navColor: 'Navbar',
+    headerColor: 'Header Color',
+    subcategoryColor: 'Category ',
+    subProductColor: 'Category Product',
+    productListColor: ' Color',
+    newProductColor: 'New Product ',
+    footerColor: 'Footer Color',
+  };
+
+  // Mapping of developer names to user-friendly names for nested properties
+  const nestedFriendlyNames = {
+    backgroundThemeColor1: 'Background',
+    backgroundThemeColor2: 'Background 2',
+    textColor: 'Text Color',
+    buttonColor: 'Button Color',
+    buttonText: 'Button Text',
+    backgroundBoxThemeColor1: 'Background Box Theme Color 1',
+    backgroundnavColor: 'Background ',
+    storeNameTextColor: 'Store Name',
+    categoryTextColor: 'Text',
+    searchBarColor: 'Search Bar',
+    headerText: 'Header Text Color',
+    headerBackground: 'Header Background Color',
+    background: 'Background',
+    text: 'Text ',
+    categoryColor: ' Background ',
+    backgroundColor: ' Background ',
+    borderColor: ' Border ',
+    priceColor: ' Price ',
+    priceLetterColor: ' Cart Text ',
+    scrollbarColor: ' Scrollbar ',
+    starColor: ' Star ',
+    cardBackground: ' Card Background Color',
+    borderColor: ' List Border ',
+    headerColor: ' List Header ',
+    textColor: ' Text Color',
+    priceColor: 'Price',
+    heartColor: ' Heart Color',
+    buttonTextColor: ' Button Text Color',
+    buttonBgColor: ' Button Background Color',
+    buttonBorderColor: ' Button Border Color',
+    buttonBgColorOnHover: ' Button Background Hover Color',
+    bgColor: 'Footer Background Color',
+    textColor: 'Text Color',
+    linkHeaderColor: 'Footer Link Header Color',
+    linkColor: 'Footer Link Color',
+    btnBgColor: 'Footer Button Background Color',
+    btnText: 'Footer Button Text Color',
+    btnBgColorOnHover: 'Footer Button Background Hover Color',
+  };
 
   const handleAddCategory = (e) => {
     e.preventDefault();
@@ -61,6 +120,19 @@ const Editor = () => {
   const handleAddProduct = (e) => {
     e.preventDefault();
     setAddProductForm(true);
+  };
+
+  const handleActiveSkinChange = (e, index) => {
+    const newActiveSkin = e.target.value;
+    setStore(prevState => ({
+      ...prevState,
+      componentSkin: prevState.componentSkin.map((component, idx) => {
+        if (idx === index) {
+          return { ...component, activeSkin: newActiveSkin };
+        }
+        return component;
+      })
+    }));
   };
 
   const handleSingleColorChange = (e, field) => {
@@ -100,16 +172,19 @@ const Editor = () => {
   return (
     <>
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
-        <div className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
+        <div className='fixed mt-1 top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
 
-          <div className='flex justify-between  mt-10 font-semibold text-[#6A6A6A] px-4'>
-            <button className={`flex-1 text-left ${!openType ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(false) }}>Content</button>
-            <button className={`flex-1 text-left ${openType ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(true) }}>Design</button>
+          <div className='flex justify-between  font-Cinzel  mt-10 font-semibold text-[#6A6A6A] '>
+            <button className={`flex-1 text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content</button>
+            <button className={`flex-1 text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
+            {store.isEdit &&
+              <button className={`flex-1 text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
+            }
           </div>
           <div className='text-red-600 absolute top-[22px] right-2' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}>X</div>
           <div className='text-red-600 absolute top-[22px] right-10' onClick={(e) => { e.preventDefault(); setNavHide(false) }}>Hide</div>
-          {!openType && (
+          {openType === 1 && (
             <div>
 
               <ul className='flex flex-col mt-10 gap-2 px-4'>
@@ -213,6 +288,7 @@ const Editor = () => {
                     <button className='px-2 text-[10px] border border-black' onClick={handleAddFeaturedProduct}>Add +</button>
                   </div>
                 </li>
+
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Footer<br />
                   <div>
@@ -240,7 +316,7 @@ const Editor = () => {
             </div>
           )}
 
-          {openType && (
+          {openType === 2 && (
             <div className="mt-5 px-4 capitalize">
               <div className="flex flex-col gap-4">
 
@@ -248,16 +324,16 @@ const Editor = () => {
                   if (typeof colorValue === 'object') {
                     return (
                       <div key={index}>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{colorKey}</h4>
+                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
                           <div key={nestedIndex} className="flex flex-row justify-around items-start items-center">
-                            <label className="text-gray-700 w-24 flex-grow">{nestedKey}</label>
+                            <label className="text-gray-700 w-24 flex-grow">{nestedFriendlyNames[nestedKey]}</label>
                             <div className="flex mt-2 md:flex-row items-center justify-center ml-4">
                               <input
                                 type="color"
                                 value={nestedValue}
                                 onChange={(e) => handleColorChange(e.target.value, nestedKey, colorKey)}
-                                className="  rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
+                                className="rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
                               />
                             </div>
                           </div>
@@ -267,8 +343,8 @@ const Editor = () => {
                   } else {
                     return (
                       <div key={index}>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{colorKey}</h4>
-                        <div className="flex  justify-between">
+                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
+                        <div className="flex justify-between">
                           <label className="flex-grow text-gray-700 w-24">Default</label>
                           <div className="flex items-center ml-4">
                             <input
@@ -284,6 +360,22 @@ const Editor = () => {
                   }
                 })}
               </div>
+            </div>
+          )}
+
+          {openType === 3 && (
+            <div className="mt-5 px-4 capitalize">
+              {store?.componentSkin?.map((component, index) => (
+                <li key={index} className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                  {component.component}:<br />
+                  <label className='text-[10px]'>Active Skin</label><br />
+                  <select value={component.activeSkin} onChange={e => handleActiveSkinChange(e, index)} className='border border-[#6A6A6A] rounded px-2'>
+                    {component.skinInventory.map((skin, idx) => (
+                      <option key={idx} value={skin}>{skin}</option>
+                    ))}
+                  </select>
+                </li>
+              ))}
             </div>
           )}
           <div className='flex justify-center my-3'>
