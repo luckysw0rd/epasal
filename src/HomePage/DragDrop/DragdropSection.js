@@ -17,9 +17,19 @@ const DragdropSection = () => {
     };
 
     return (
-        <div className="bg-white flex flex-col gap-10 md:flex-row items-center justify-between p-8 md:p-10 lg:p-20">
+        <div className="bg-white flex flex-col gap-5 md:flex-row items-center justify-between p-8 md:p-10 lg:p-20">
             {/* Left Section */}
-            <div className={`relative bg-white border-dashed border-2 border-[#793A00] rounded-lg p-5 md:p-6 md:w-1/2`}>
+            <div className="md:w-1/3 md:order-2 flex flex-col gap-5">
+                <h2 className="text-[#2F2F2F] text-lg md:text-xl lg:text-3xl lg:leading-tight font-bold">
+                    Transform clicks into customers with seamless eCommerce experiences!
+                </h2>
+                <p className="hidden lg:block text-xs md:text-sm lg:text-base text-[#828282]">
+                    Our platform ensures a smooth and intuitive shopping journey, turning casual visitors into loyal buyers. From
+                    user-friendly interfaces to secure payment gateways, we provide everything you need to drive sales and grow
+                    your online business.
+                </p>
+            </div>
+            <div className={`md:order-1 relative bg-white border-dashed border-2 border-[#793A00] rounded-lg p-5 md:p-6 md:w-1/2`}>
                 <div className="flex gap-3 justify-start items-start">
                     <div className={`flex flex-col gap-3 lg:gap-5 md:w-[60%] ${isVisible && 'opacity-50 md:opacity-100'}`}>
                         <h2 style={styles} className="text-xl md:text-2xl lg:text-3xl leading-tight lg:leading-normal font-bold mb-4">
@@ -44,7 +54,7 @@ const DragdropSection = () => {
                     )}
                 </div>
 
-                <div className="hidden md:flex flex-col gap-2 lg:gap-4 bg-[#793A00] w-[70%] lg:w-[55%] rounded-2xl absolute top-[25%] -right-[25%] text-white py-4 px-6 lg:px-12">
+                <div className="hidden md:flex flex-col gap-2 lg:gap-4 bg-[#793A00] w-[70%] lg:w-[55%] rounded-2xl absolute top-[28%] -right-[25%] text-white py-4 px-6 lg:px-12">
                     <h3 className="text-xs md:text-sm lg:text-base font-bold">FREEDOM IS YOURS</h3>
                     <p className="text-xs lg:text-sm">Have fun customizing your digital store.</p>
                     <button className="border border-white hover:bg-white hover:text-[#793A00] p-1 rounded-md lg:rounded-xl text-xs lg:text-sm lg:w-2/3">
@@ -69,16 +79,7 @@ const DragdropSection = () => {
             </div>
 
             {/* Right Section */}
-            <div className="md:w-1/3 flex flex-col gap-5">
-                <h2 className="text-[#2F2F2F] text-lg md:text-xl lg:text-3xl lg:leading-tight font-bold">
-                    Transform clicks into customers with seamless eCommerce experiences!
-                </h2>
-                <p className="text-xs md:text-sm lg:text-base text-[#828282]">
-                    Our platform ensures a smooth and intuitive shopping journey, turning casual visitors into loyal buyers. From
-                    user-friendly interfaces to secure payment gateways, we provide everything you need to drive sales and grow
-                    your online business.
-                </p>
-            </div>
+
         </div>
     );
 };
