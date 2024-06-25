@@ -120,7 +120,7 @@ const Home = ({ data }) => {
         {/* Graph Section  */}
         <div className='-mx-6 sm:mx-0 md:col-span-2'>
           <div className="bg-white rounded-lg">
-            <SalesGraph />
+            <SalesGraph storeId={data._id} />
           </div>
         </div>
       </div>

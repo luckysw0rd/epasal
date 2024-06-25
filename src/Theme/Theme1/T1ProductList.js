@@ -12,11 +12,20 @@ const T1ProductList = () => {
     const featuredProductList = featuredProducts.map(index => products[index]);
     console.log(featuredProductList)
 
-    const productListProps = { store, isEdit, productColor, products: featuredProductList, previewMode, setStore, addToCart, fetchedFromBackend };
+    var categoryType;
+    if (store?.componentSkin[3]?.activeSkin && store?.componentSkin[3]?.activeSkin !== '') {
+        categoryType = store?.componentSkin[3]?.activeSkin || 'default';
+    } else {
+        categoryType = 'default';
+    }
+
+    const productListProps = { store, isEdit, productColor, products: featuredProductList, previewMode, setStore, addToCart, store, fetchedFromBackend };
+
+
 
     return (
         <div className='px-8 md:px-10'>
-            <ProductList productListProps={productListProps} productListType="ProductList1" />
+            <ProductList productListProps={productListProps} productListType={categoryType} />
         </div>
     );
 }

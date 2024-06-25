@@ -8,20 +8,21 @@ import { PiCreditCard } from "react-icons/pi";
 import { StarIcon } from '@heroicons/react/16/solid';
 import ProductReview from './ProductReview';
 import SimilarProducts from './SimilarProducts';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProjectLanding1 = () => {
-
+    const navigate = useNavigate()
     const location = useLocation();
-    const { product } = location.state || {};
-
-    const [selectedVariant, setSelectedVariant] = useState(product.variant[0]);
+    const { product, store } = location.state || {};
+    const [selectedProduct, setSelectedProduct] = useState(product)
+    console.log(selectedProduct);
+    const [selectedVariant, setSelectedVariant] = useState(selectedProduct.variant[0]);
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
-    const [displayedImage, setDisplayedImage] = useState(product.image.imageUrl);
+    const [displayedImage, setDisplayedImage] = useState(selectedProduct.image.imageUrl);
     const selectedOption = selectedOptionIndex === -1 ? null : selectedVariant?.options[selectedOptionIndex];
-    const price = selectedOption ? parseFloat(selectedOption.price) : parseFloat(product.price) || 0;
+    const price = selectedOption ? parseFloat(selectedOption.price) : parseFloat(selectedProduct.price) || 0;
     const discount = selectedOption ? parseFloat(selectedOption.discount) : 0;
-    const [firstVariant, ...remainingVariant] = product.variant;
+    const [firstVariant, ...remainingVariant] = selectedProduct.variant;
     const [productCount, setProductCount] = useState(1);
 
     const handleOptionSelect = (index) => {
@@ -31,7 +32,7 @@ const ProjectLanding1 = () => {
 
     const handleDefaultImage = () => {
         setSelectedOptionIndex(-1);
-        setDisplayedImage(product.image.imageUrl);
+        setDisplayedImage(selectedProduct.image.imageUrl);
     };
 
     const handleVariantChange = (e) => {
@@ -52,9 +53,14 @@ const ProjectLanding1 = () => {
         setProductCount(prevCount => Math.max(1, prevCount - 1));
     };
 
+    const handleProductSelect = (newProduct) => {
+        setSelectedProduct(newProduct);
+        navigate(location.pathname, { state: { product: newProduct, store } });
+    };
+
     const totalPrice = price * productCount;
     const totalDiscount = discount * productCount;
-    const store = {
+    const storeDetails = {
         deliveryCharge: 100,
         COD: "available",
         deliveryTime: "2-3 Days",
@@ -85,7 +91,7 @@ const ProjectLanding1 = () => {
                                         className={`cursor-pointer text-sm lg:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
                                         onClick={handleDefaultImage}
                                     >
-                                        <img src={product.image.imageUrl} alt="Default" className='w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] me-2' />
+                                        <img src={selectedProduct.image.imageUrl} alt="Default" className='w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] me-2' />
                                     </div>
                                     {selectedVariant?.options.map((option, index) => (
                                         <div
@@ -99,13 +105,13 @@ const ProjectLanding1 = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col gap-3 md:gap-4 w-full">
-                                <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-[#555555]">{product.name}</h1>
+                                <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-[#555555]">{selectedProduct.name}</h1>
                                 <p className="text-sm text-gray-600">
-                                    {product.description}
+                                    {selectedProduct.description}
                                 </p>
                                 <div className='flex mb-2 md:justify-start'>
                                     {[...Array(5)].map((option, index) => {
-                                        if (index < parseFloat(product.rating))
+                                        if (index < parseFloat(selectedProduct.rating))
                                             return <StarIcon className='w-5 h-5 text-[#8B5A08]' key={index} />
                                         else
                                             return <StarIcon className='w-5 h-5 text-[#959595]' key={index} />
@@ -164,17 +170,17 @@ const ProjectLanding1 = () => {
                                 <div className="flex flex-col gap-3 text-xs text-[#898989]">
                                     <span>Delivery Charge and time</span>
                                     <div className='flex justify-between md:text-xs lg:text-sm text-[#636363]'>
-                                        <span className='flex gap-3 items-center'><LiaShippingFastSolid size={20} />Rs. {store.deliveryCharge}</span>
-                                        <span className='flex gap-3 items-center mr-5'><FiClock size={20} />{store.deliveryTime} days</span>
+                                        <span className='flex gap-3 items-center'><LiaShippingFastSolid size={20} />Rs. {storeDetails.deliveryCharge}</span>
+                                        <span className='flex gap-3 items-center mr-5'><FiClock size={20} />{storeDetails.deliveryTime} days</span>
                                     </div>
-                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><TbCash size={20} />Cash on Delivery {store.COD}</span>
+                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><TbCash size={20} />Cash on Delivery {storeDetails.COD}</span>
                                 </div>
                             </div>
                             <div>
                                 <div className="flex flex-col gap-3 text-xs text-[#898989]">
                                     <span>Services</span>
-                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><MdVerifiedUser size={20} />{store.warranty} warranty available</span>
-                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><PiCreditCard size={20} />{store.returnPolicyTime} return policy</span>
+                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><MdVerifiedUser size={20} />{storeDetails.warranty} warranty available</span>
+                                    <span className='flex gap-3 items-center md:text-xs lg:text-sm text-[#636363]'><PiCreditCard size={20} />{storeDetails.returnPolicyTime} return policy</span>
                                 </div>
                             </div>
                         </div>
@@ -183,8 +189,8 @@ const ProjectLanding1 = () => {
 
                 {/* REVIEW SECTION  */}
                 <div className='w-full flex flex-col md:flex-row gap-5 lg:gap-10'>
-                    <div className='w-full md:w-[75%] p-2 md:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><ProductReview product={product} /></div>
-                    <div className='w-full md:w-[25%] p-2 lg:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><SimilarProducts /></div>
+                    <div className='w-full md:w-[75%] p-2 md:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><ProductReview product={selectedProduct} /></div>
+                    <div className='w-full md:w-[25%] p-2 lg:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><SimilarProducts store={store} onProductSelect={handleProductSelect} /></div>
                 </div>
             </div>
         </div>

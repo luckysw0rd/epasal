@@ -1,45 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { StarIcon } from '@heroicons/react/16/solid';
-import { AuthContext } from "../../Hooks/AuthContext";
-import useFetch from '../../Hooks/useFetch';
-import { useContext } from 'react';
-import { useStore } from '../../Theme/Theme1/T1Context';
 
-const SimilarProducts = ({ }) => {
-    const auth = useContext(AuthContext);
-    const { store } = useStore()
-    console.log(store)
-    const { sendRequest } = useFetch();
+const SimilarProducts = ({ store, onProductSelect }) => {
     const navigate = useNavigate()
-    const [similarProducts, setSimilarProducts] = useState([]);
-
-    async function fetchSimilarProducts() {
-        // try {
-        //     const responseData = await sendRequest(
-        //         `product/getAllStoreProduct/${store}`,
-        //         'GET',
-        //         null, {
-        //         'Content-Type': 'application/json',
-        //         Authorization: 'Bearer ' + auth.token,
-        //     }
-        //     );
-        //     console.log(responseData.products)
-        //     setSimilarProducts(responseData.products)
-        //     // Handle response data as needed
-        // } catch (error) {
-        //     // Handle error if needed
-        //     console.log(error);
-        // }
-    }
 
     const handleProductClick = (product) => {
-        navigate("/productlanding", { state: { product } });
+        onProductSelect(product);
     };
 
-    useEffect(() => {
-        fetchSimilarProducts()
-    }, [])
     return (
         <div >
             <h1 className='text-sm lg:text-lg font-semibold'>Similar Products</h1>

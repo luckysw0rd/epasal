@@ -14,8 +14,8 @@ const ProductReview = ({ product }) => {
     const auth = useContext(AuthContext);
     const { sendRequest } = useFetch();
 
-    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-    const averageRating = totalRating / reviews.length;
+    const totalRating = reviews?.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = totalRating / reviews?.length || 0;
     const getRatingText = (averageRating) => {
         if (averageRating >= 4) {
             return "Excellent";
@@ -67,6 +67,7 @@ const ProductReview = ({ product }) => {
                 Authorization: 'Bearer ' + auth.token,
             }
             );
+            console.log(responseData)
             setReviews(responseData) // Handle response data as needed
         } catch (error) {
             // Handle error if needed
@@ -76,7 +77,7 @@ const ProductReview = ({ product }) => {
 
     useEffect(() => {
         fetchReview()
-    }, [])
+    }, [product])
 
     return (
         <div className='flex flex-col gap-3'>
@@ -210,7 +211,7 @@ const ProductReview = ({ product }) => {
 
             </div>
 
-            {reviews.map(review => (
+            {reviews?.map(review => (
                 <div className="mb-3 text-[#808080]">
                     <div className="flex w-full gap-2 items-center">
                         <span className="text-sm lg:text-lg font-semibold flex items-center justify-center w-8 h-8 rounded-full border-2 border-black">{review?.name.charAt(0)}</span>

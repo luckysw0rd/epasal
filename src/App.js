@@ -24,7 +24,9 @@ function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
+
   if (token) {
+
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -33,10 +35,11 @@ function App() {
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
-        <Route path="/productform" element={<ProductForm />} />
+        <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
+
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
-        <Route path="/esewa" element={<EsewaRouteComponent />} />
+        <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
 
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
@@ -55,22 +58,18 @@ function App() {
   }
 
   return (
-    // DELETE STORE PROVIDER LATER
-    <StoreProvider>
-      <PrimeReactProvider>
-        <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
-          <div className="App">
-            <Router>
-              <Routes>
-                {routes}
-              </Routes>
-            </Router>
-            <ToastContainer />
-          </div>
-        </AuthContext.Provider>
-      </PrimeReactProvider>
-    </StoreProvider>
+    <PrimeReactProvider>
+      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
+        <div className="App">
+          <Router>
+            <Routes>
+              {routes}
+            </Routes>
+          </Router>
 
+        </div>
+      </AuthContext.Provider>
+    </PrimeReactProvider>
 
   );
 }
