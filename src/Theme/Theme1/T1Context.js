@@ -1043,6 +1043,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       updatedCart = [...store.cart, cartItem];
     }
 
+    console.log(updatedCart);
     // Update the state and local storage
     setStore((prevState) => {
       const newStore = {
