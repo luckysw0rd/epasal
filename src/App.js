@@ -27,8 +27,7 @@ function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-
-  if (token) {
+  if ( token) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -44,6 +43,7 @@ function App() {
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
+        <Route path="/settings" element={<SettingPage />} />
       </React.Fragment>
     );
   } else {

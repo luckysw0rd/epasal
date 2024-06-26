@@ -156,14 +156,14 @@ const getTruncateLength = (width) => {
         >
             <div className="w-full">
                 <div className="relative w-full">
-                    {/* {!previewMode && (
+                    {!previewMode && (
                         <button
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
                             onClick={() => handleDeleteProduct(product.id)}
                         >
                             <FaTimes />
                         </button>
-                    )} */}
+                    )}
                     <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <div>
                             <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
