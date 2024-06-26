@@ -6,7 +6,6 @@ import ColorPicker from "./ColorPicker";
 import StoreHeader from "./StoreHeader";
 import CategorySelector from "./T1Category";
 import { useMediaQuery } from "react-responsive";
-import SecondaryBanner from "./T1SecondaryBanner";
 import OfferBanner from "./T1OfferBanner";
 import Footer from "./Footer/T1Footer";
 import SaveStoreButton from "./SaveButton/SaveStoreButton";
@@ -32,6 +31,7 @@ import T1ProductList from './T1ProductList';
 import Editor from "../../Components/Editor/Editor";
 import T1ThirdBanner from "./T1ThirdBanner";
 import T1NewProducts from "./T1NewProducts";
+import T1SecondaryBanner from "./T1SecondaryBanner";
 
 const EStore = ({ Passedstore }) => {
   const [tasks, setTasks] = useState([
@@ -43,7 +43,7 @@ const EStore = ({ Passedstore }) => {
     {id:6,component:<T1ThirdBanner/>},
     { id: 7, component: <T1NewProducts /> },
 
-    { id: 8, component: <SecondaryBanner /> },
+    { id: 8, component: <T1SecondaryBanner /> },
     { id: 9, component: <T1ProductList /> },
     { id: 10, component: <OfferBanner /> },
     { id: 11, component: <Footer /> },
