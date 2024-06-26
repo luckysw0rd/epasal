@@ -24,12 +24,13 @@ import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EsewaRouteComponent from "./Components/AdminPanel/Esewa/EsewaRouteComponent ";
+import SettingPage from "./Components/SettingsPage/SettingPage";
 function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
 
-  if (true) {
+  if (token) {
 
     routes = (
       <React.Fragment>
@@ -46,6 +47,7 @@ function App() {
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
+        <Route path="/settings" element={<SettingPage />} />
       </React.Fragment>
     );
   } else {
