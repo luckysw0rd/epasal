@@ -113,6 +113,7 @@ const EStore = ({ Passedstore }) => {
           className=" h-full overflow-auto"
           style={{ backgroundColor: store.color.backgroundThemeColor }}
         >
+          
           <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}
