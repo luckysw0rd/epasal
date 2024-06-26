@@ -51,7 +51,6 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
             hiddenField.setAttribute("value", formData[key]);
             form.appendChild(hiddenField);
         }
-
         document.body.appendChild(form);
         form.submit();
     };
