@@ -128,11 +128,11 @@ const EStore = ({ Passedstore }) => {
           <Task id={tasks[2].id} component={<Comp3 />} /> */}
               {tasks.map((item, index) => {
                 return (
-                  <div key={index} style={{ width: "100%" }}>
-                    <Task
-                      id={tasks[index].id}
-                      component={tasks[index].component}
-                    />
+                  <div key={index} className="" style={{ width: "100%" }}>
+                      <Task
+                        id={tasks[index].id}
+                        component={tasks[index].component}
+                      />
                   </div>
                 );
               })}
