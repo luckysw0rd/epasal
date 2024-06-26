@@ -6,11 +6,18 @@ import { toast } from 'react-toastify';
 import { store } from '../../AdminPanel/Dashboard/Home/homeStore';
 import { IoMedalOutline } from "react-icons/io5";
 import { IoMedalSharp } from "react-icons/io5";
+import { FaEye } from 'react-icons/fa';
+import { esewaIcon, fonepayIcon, khaltiIcon } from '../../../Assets/icons';
+
 const Stores = () => {
     const [storesArr, setStoresArr] = useState([]);
     const [search, setSearch] = useState('');
     const [ownername, setOwnername] = useState('');
     const [staffname, setStaffname] = useState('');
+    const [minPendingAmount, setMinPendingAmount] = useState(0);
+    const [maxPendingAmount, setMaxPendingAmount] = useState(500000);
+    const [minDueAmount, setMinDueAmount] = useState(0);
+    const [maxDueAmount, setMaxDueAmount] = useState(500);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(2);
     const [totalCount, setTotalCount] = useState(0);
@@ -18,6 +25,89 @@ const Stores = () => {
     const [selectedStore, setSelectedStore] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const auth = useContext(AuthContext);
+    const [updatingPayment, setUpdatingPayment] = useState(false);
+    const [filterType, setFilterType] = useState('pendingAmount');
+    const [orderType, setOrderType] = useState('dsc');
+    /* 
+    * * Handle Payment 
+     */
+    const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+    const [paymentMethodDetails, setPaymentMethodDetails] = useState(null);
+    const [paymentTransferred, setPaymentTransferred] = useState(0);
+
+    const [payNowDetails, setPayNowDetails] = useState({
+        paymentGiven: 0,
+
+    });
+
+    const openPaymentModal = (methodDetails) => {
+        console.log({ methodDetails });
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, store: methodDetails.store._id }));
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, subscriptionStatus: methodDetails.store.subscriptionStatus }));
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, paymentMethod: methodDetails.paymentMethod }));
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, customerName: methodDetails.store.name }));
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, pendingAmount: methodDetails.store.pendingAmount }));
+        setTransactionLogs((prevLogs) => ({ ...prevLogs, dueAmount: methodDetails.store.dueAmount }));
+        setPaymentMethodDetails(methodDetails);
+        setSelectedStore(methodDetails.store);
+        setPaymentModalOpen(true);
+    };
+    /*
+    * * This is for paynow 
+    */
+    const handlePaymentSubmit = async () => {
+        console.log('Payment Transferred:', transactionLogs);
+
+        try {
+
+            if (Number(transactionLogs.paymentGiven) > Number(transactionLogs.pendingAmount))
+                throw new Error("[+] Invalid payment Number");
+
+            setUpdatingPayment(true);
+
+            const updatedData = {
+                payment: Number(transactionLogs.paymentGiven)
+            };
+
+            const transactionLog = {
+                employee: transactionLogs.employee,
+                subscriptionStatus: transactionLogs.subscriptionStatus,
+                logDescription: transactionLogs.logDescription,
+                customerName: transactionLogs.customerName,
+                paymentMethod: transactionLogs.paymentMethod,
+                dueAmount: transactionLogs.dueAmount,
+                pendingAmount: Math.abs(Number(transactionLogs.pendingAmount) - Number(transactionLogs.paymentGiven)),
+                paymentMethod: transactionLogs.paymentMethod,
+                store: transactionLogs.store,
+                paymentGiven: Number(transactionLogs.paymentGiven),
+                paymentReceived: Number(transactionLogs.paymentReceived)
+            };
+
+            const data = {
+                updatedData,
+                transactionLog,
+            };
+
+            console.log('[+] Payment Transferred:', data, { selectedStore });
+
+            const responseData = await sendRequest(
+                'store/update/dashboard/banau/paymenttostore/' + selectedStore._id,
+                'POST',
+                JSON.stringify(data),
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token,
+                }
+            );
+            toast.success(responseData.message);
+            setPaymentModalOpen(false);
+            setUpdatingPayment(false);
+        } catch (error) {
+            toast.error(error.message);
+            setUpdatingPayment(false);
+            setPaymentModalOpen(false);
+        }
+    };
     const [transactionLogs, setTransactionLogs] = useState({
         employee: auth.userID,
         pendingAmount: 0,
@@ -45,13 +135,25 @@ const Stores = () => {
     const fetchStores = async (flag = false) => {
         console.log(`[+] Called Fetch stores`);
         try {
+            const order = orderType;
             const params = new URLSearchParams({
                 search,
                 ownername,
                 staffname,
                 page,
                 limit,
+                order
             });
+            // Add parameters based on filterType
+            if (filterType === 'pendingAmount') {
+                params.append('minPendingAmount', minPendingAmount);
+                params.append('maxPendingAmount', maxPendingAmount);
+                params.append('filterType', 'pendingAmount');
+            } else if (filterType === 'dueAmount') {
+                params.append('minDueAmount', minDueAmount);
+                params.append('maxDueAmount', maxDueAmount);
+                params.append('filterType', 'dueAmount');
+            }
 
             const response = await sendRequest(
                 `store/getstorebyfilter?${params.toString()}`,
@@ -94,6 +196,9 @@ const Stores = () => {
         setModalOpen(true);
     };
 
+    /* 
+    * * Update the Store and create the log
+     */
     const handleUpdate = async () => {
         try {
             setUpdatingStore(true);
@@ -169,54 +274,155 @@ const Stores = () => {
             [name]: value,
         }));
     };
-
+    /* 
+     */
+    // switch(paymentMethod) {
+    //     case 'esewa':
+    //         textColor = "text-green-600";
+    //         bgColor = "bg-green-100";
+    //         icon = esewaIcon;
+    //         break;
+    //     case 'khalti':
+    //         textColor = "text-indigo-600";
+    //         bgColor = "bg-indigo-100";
+    //         icon = khaltiIcon;
+    //         break;
+    //     case 'bank':
+    //         textColor = "text-red-600";
+    //         bgColor = "bg-red-100";
+    //         icon = bankIcon;
+    //         break;
+    //     default:
+    //         textColor = "text-gray-600";
+    //         bgColor = "bg-gray-100";
+    //         break;
+    // }
 
 
     return (
         <div className="min-h-screen p-4">
             <h1 className="text-3xl font-bold mb-4 text-start text-md">Stores</h1>
-            <div className="mb-4 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
-                <input
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                    type="text"
-                    placeholder="Search"
-                    value={search}
-                    onChange={(e) => {
-                        setSearch(e.target.value);
-                        if (page !== 1) setPage(1);
-                    }}
-                />
-                <input
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                    type="text"
-                    placeholder="Owner Name"
-                    value={ownername}
-                    onChange={(e) => {
-                        setOwnername(e.target.value);
-                        if (page !== 1) setPage(1);
-                    }}
-                />
-                <input
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                    type="text"
-                    placeholder="Staff Name"
-                    value={staffname}
-                    onChange={(e) => {
-                        setStaffname(e.target.value);
-                        if (page !== 1) setPage(1);
-                    }}
-                />
-                <button
-                    className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                    onClick={fetchStores}
-                >
-                    Search
-                </button>
+            <div >
+                <div className="mb-4 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
+                    <input
+                        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                        type="text"
+                        placeholder="Search"
+                        value={search}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            if (page !== 1) setPage(1);
+                        }}
+                    />
+                    <input
+                        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                        type="text"
+                        placeholder="Owner Name"
+                        value={ownername}
+                        onChange={(e) => {
+                            setOwnername(e.target.value);
+                            if (page !== 1) setPage(1);
+                        }}
+                    />
+                    <input
+                        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                        type="text"
+                        placeholder="Staff Name"
+                        value={staffname}
+                        onChange={(e) => {
+                            setStaffname(e.target.value);
+                            if (page !== 1) setPage(1);
+                        }}
+                    />
+                </div>
+
+                {/* 
+                * * This is For the Filter types
+                 */}
+                <div className="mb-4 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
+                    <div className="flex items-center">
+                        <label className="mr-1">{"Filter"}</label>
+                        <select
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                            value={filterType}
+                            onChange={(e) => setFilterType(e.target.value)}
+                        >
+                            <option value="pendingAmount">Pending Amount</option>
+                            <option value="dueAmount">Due Amount</option>
+                        </select>
+                    </div>
+                    <div className="flex items-center">
+                        {/* <label className="mr-2">Filter <br/> by:</label> */}
+                        <select
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                            value={orderType}
+                            onChange={(e) => setOrderType(e.target.value)}
+                        >
+                            <option value="dsc">Descending</option>
+                            <option value="asc">Ascending</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="mb-4 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
+                    {filterType === 'pendingAmount' ? (
+                        <>
+                            {/* <label className="mr-1">{"Min Pending Amount"}</label> */}
+
+                            <input
+                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                type='number'
+                                placeholder="Min Pending Amount"
+                                value={minPendingAmount}
+                                onChange={(e) => {
+                                    setMinPendingAmount(e.target.value);
+                                    if (page !== 1) setPage(1);
+                                }}
+                            />
+                            <input
+                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                type='number'
+                                placeholder="Max Pending Amount"
+                                value={maxPendingAmount}
+                                onChange={(e) => {
+                                    setMaxPendingAmount(e.target.value);
+                                    if (page !== 1) setPage(1);
+                                }}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <input
+                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                type='number'
+                                value={minDueAmount}
+                                onChange={(e) => {
+                                    setMinDueAmount(e.target.value);
+                                    if (page !== 1) setPage(1);
+                                }}
+                            />
+                            <input
+                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                type='number'
+                                value={maxDueAmount}
+                                onChange={(e) => {
+                                    setMaxDueAmount(e.target.value);
+                                    if (page !== 1) setPage(1);
+                                }}
+                            />
+                        </>
+                    )}
+                    <button
+                        className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                        onClick={fetchStores}
+                    >
+                        Search
+                    </button>
+                </div>
             </div>
-            <div className="py-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto h-64 md:h-96 lg:h-100 w-full md:w-3/4 lg:w-full">
+            <div className="py-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto h-64 md:h-96 lg:h-105 w-full md:w-3/4 lg:w-full">
                 {storesArr.length > 0 ? (
                     storesArr.map((store) => (
-                        <div key={store._id} className="bg-white p-6 text-sm rounded-xl shadow-lg transform transition duration-500 hover:scale-105">
+                        <div key={store._id} className="bg-white p-6 text-sm rounded-xl shadow-lg transform transition duration-500 hover:scale-105 w-full h-64 md:h-96 lg:h-96 overflow-auto">
                             <div className="flex justify-between items-center mb-4">
                                 <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-3 py-1 rounded">
                                     {store.name.toUpperCase()}
@@ -257,18 +463,133 @@ const Stores = () => {
                                 </div>
                                 <div className="flex items-center text-gray-700">
                                     <FaHourglassHalf className="mr-2 text-[#C0C0C0]" />
-                                    <span>Expiry: {new Date(store.subscriptionExpiry).toLocaleDateString()}</span>
+                                    <span>Expiry:  {store.subscriptionExpiry ? new Date(store.subscriptionExpiry).toLocaleDateString() : 'Unlimited'}</span>
+                                </div>
+
+                                <div className="flex items-center text-gray-700">
+                                    <FaPhone className="mr-2 text-green-500" />
+                                    <u className='text-blue-600 cursor-pointer'>{store.phoneNumber}</u>
+                                </div>
+                                {/* <div className=" text-gray-700">
+                                    <FaEnvelope className="mr-2 text-red-500" />
+                                    <u className='text-blue-600 cursor-pointer'>{store.email}</u>
+                                </div> */}
+                                {/* <div>
+                                    <button
+                                        className="flex items-center text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 w-full"
+                                        onClick={() => console.log({ store })}
+                                    >
+                                        <FaEye className="mr-2" />
+                                        Transactions
+                                    </button>
                                 </div>
                                 <div>
                                     <button
-                                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
-                                        onClick={() => console.log(store)}
+                                        className="flex items-center text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 w-full"
+                                        onClick={() => console.log({ esewa: store.esewa })}
                                     >
-                                        View Transactions
+                                        <img src={esewaIcon} alt="icon" className="mr-2 w-4 h-4 " />
+                                        Pay Now
+                                    </button>
+                                </div>
+                                <div>
+                                    <button
+                                        className="flex items-center text-sm bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-700 w-full"
+                                        onClick={() => console.log({ khalti: store.khalti })}
+                                    >
+                                        <img src={khaltiIcon} alt="icon" className="mr-2 w-4 h-4 " />
+                                        Pay Now
+                                    </button>
+                                </div>
+                                <div>
+                                    <button
+                                        className="flex items-center text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700 w-full"
+                                        onClick={() => console.log({ khalti: store.bank })}
+                                    >
+                                        <img src={fonepayIcon} alt="icon" className="mr-2 w-4 h-4 " />
+                                        Pay Now
+                                    </button>
+                                </div> */}
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-1 gap-1 mt-5">
+                                <div className="flex items-center text-gray-700">
+                                    <FaEnvelope className="mr-2 text-red-500" />
+                                    <u className='text-blue-600 cursor-pointer'>{store.email}</u>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-5">
+                                <div>
+                                    <button
+                                        className="flex items-center text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 w-full"
+                                        onClick={() => console.log({ store })}
+                                    >
+                                        <FaEye className="mr-2" />
+                                        Transactions
+                                    </button>
+                                </div>
+                                <div>
+                                    <button
+                                        className="flex items-center text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 w-full"
+                                        onClick={() => {
+                                            console.log({ esewa: store.esewa });
+                                            openPaymentModal(
+                                                {
+                                                    name: store.name,
+                                                    pendingAmount: store.pendingAmount,
+                                                    dueAmount: store.dueAmount,
+                                                    store: store,
+                                                    paymentMethod: 'Esewa',
+                                                    methodData: store.esewa
+                                                });
+                                        }}
+                                    >
+                                        <img src={esewaIcon} alt="icon" className="mr-2 w-4 h-4 " />
+                                        Pay Now
+                                    </button>
+                                </div>
+                                <div>
+                                    <button
+                                        className="flex items-center text-sm bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-700 w-full"
+                                        onClick={() => {
+                                            console.log({ khalti: store.khalti });
+                                            openPaymentModal(
+                                                {
+                                                    name: store.name,
+                                                    pendingAmount: store.pendingAmount,
+                                                    dueAmount: store.dueAmount,
+                                                    store: store,
+                                                    paymentMethod: 'Khalti',
+                                                    methodData: store.khalti
+                                                });
+                                        }}
+                                    >
+                                        <img src={khaltiIcon} alt="icon" className="mr-2 w-4 h-4 " />
+                                        Pay Now
+                                    </button>
+                                </div>
+                                <div>
+                                    <button
+                                        className="flex items-center text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700 w-full"
+                                        onClick={() => {
+                                            console.log({ khalti: store.bank });
+                                            openPaymentModal(
+                                                {
+                                                    name: store.name,
+                                                    pendingAmount: store.pendingAmount,
+                                                    dueAmount: store.dueAmount,
+                                                    store: store,
+                                                    paymentMethod: 'Bank',
+                                                    methodData: store.bank
+                                                });
+                                        }}
+                                    >
+                                        <img src={fonepayIcon} alt="icon" className="mr-2 w-4 h-4 " />
+                                        Pay Now
                                     </button>
                                 </div>
                             </div>
-                            <div className='grid grid-cols-1 md:grid-cols-1 gap-2 mt-5'>
+                            {/* <div className='grid grid-cols-1 md:grid-cols-1 gap-2 mt-5'>
                                 <div className="flex items-center text-gray-700">
                                     <FaPhone className="mr-2 text-green-500" />
                                     <u className='text-blue-600 cursor-pointer'>{store.phoneNumber}</u>
@@ -277,7 +598,7 @@ const Stores = () => {
                                     <FaEnvelope className="mr-2 text-red-500" />
                                     <u className='text-blue-600 cursor-pointer'>{store.email}</u>
                                 </div>
-                            </div>
+                            </div> */}
                             {store.staff.length > 0 && (
                                 <div>
                                     <h3 className="text-lg font-semibold mt-4">Staff:</h3>
@@ -312,7 +633,9 @@ const Stores = () => {
                     →
                 </button>
             </div>
-
+            {/* 
+             * * Edit Store Details
+             */}
             {modalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 text-sm">
                     <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[50vh] md:h-[70vh] lg:h-[90vh] overflow-auto">
@@ -518,6 +841,90 @@ const Stores = () => {
                                 </div>
                             </form>
                         )}
+                    </div>
+                </div>
+            )}
+            {paymentModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-sm">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[50vh] md:h-[70vh] lg:h-[80vh] overflow-auto transform transition duration-500 hover:scale-105">
+                        <div className='flex items-center justify-between'>
+                            <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-3 py-1 rounded">
+                                {paymentMethodDetails.store.name.toUpperCase()}
+                            </h2>
+                            <button
+                                className={`text-sm md:text-xl lg:text-xl font-bold px-3 py-1 rounded flex items-center ${paymentMethodDetails?.paymentMethod === 'Esewa'
+                                    ? 'text-green-600 bg-green-100'
+                                    : paymentMethodDetails?.paymentMethod === 'Khalti'
+                                        ? 'text-indigo-600 bg-indigo-100'
+                                        : paymentMethodDetails?.paymentMethod === 'Bank'
+                                            ? 'text-red-600 bg-red-100'
+                                            : 'text-gray-600 bg-gray-100'
+                                    }`}
+                            >
+                                Make Payment
+                                {paymentMethodDetails?.paymentMethod === 'Esewa' && <img src={esewaIcon} alt="icon" className="ml-2 w-5 h-5" />}
+                                {paymentMethodDetails?.paymentMethod === 'Khalti' && <img src={khaltiIcon} alt="icon" className="ml-2 w-5 h-5" />}
+                                {paymentMethodDetails?.paymentMethod === 'Bank' && <img src={fonepayIcon} alt="icon" className="ml-2 w-5 h-5" />}
+                            </button>
+
+
+                        </div>
+
+
+                        <div className='px-2 mt-2'>
+                            <p className="mb-2">Pending Amount: {paymentMethodDetails.pendingAmount}</p>
+                            <p className="mb-2">Due Amount: {paymentMethodDetails.dueAmount}</p>
+
+                        </div>
+                        <div className='px-2 mt-2'>
+                            <div>
+                                <p className="mb-2"> Account Number:{paymentMethodDetails.methodData.accountNumber}</p>
+                                <p className="mb-2"> QR:</p>
+                                <img src={paymentMethodDetails.methodData.qr.imageUrl} alt='Not Provided' className='w-[150px] h-[150px]'></img>
+                            </div>
+                        </div>
+
+                        <div className='px-2 mt-2'>
+                            <label className="block font-bold mb-1">Payment Given:</label>
+                            <input
+                                type="number"
+                                name="paymentGiven"
+                                value={transactionLogs.paymentGiven}
+                                // onChange={handleTransactionLogChange}
+                                onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                // className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                            />
+                        </div>
+
+                        <div className='px-2 mt-2'>
+                            <label className="block font-bold mb-1">Description:</label>
+                            <label className="block text-gray-700"></label>
+                            <textarea
+                                name="logDescription"
+                                value={transactionLogs.logDescription}
+                                // onChange={handleTransactionLogChange}
+                                onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            ></textarea>
+
+                        </div>
+
+
+                        <div className="flex justify-end gap-x-2 items-center px-3">
+                            <button
+                                onClick={handlePaymentSubmit}
+                                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                            >
+                                Submit
+                            </button>
+                            <button
+                                onClick={() => setPaymentModalOpen(false)}
+                                className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
