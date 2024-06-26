@@ -28,7 +28,9 @@ function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
+
   if (true) {
+
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -38,8 +40,9 @@ function App() {
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
-        <Route path="/productform" element={<ProductForm />} />
+        <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
+        
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
 
@@ -67,7 +70,7 @@ function App() {
               {routes}
             </Routes>
           </Router>
-          <ToastContainer />
+          
         </div>
       </AuthContext.Provider>
     </PrimeReactProvider>
