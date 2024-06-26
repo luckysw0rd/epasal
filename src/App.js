@@ -42,14 +42,10 @@ function App() {
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
-        
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
-
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
-
-
       </React.Fragment>
     );
   } else {
