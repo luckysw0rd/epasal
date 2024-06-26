@@ -218,4 +218,4 @@ const getTruncateLength = (width) => {
     );
 };
 
-export default ProductLIstCard1;
+export default ProductListCard1;
