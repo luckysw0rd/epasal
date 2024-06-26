@@ -157,6 +157,8 @@
   .dropdown-selection-text {
     @apply text-gray-500 font-semibold tracking-wide mr-auto transition duration-300 ease-in-out hover:text-pink-500 dark:hover:text-gray-500 cursor-pointer;
   }
+
+  
 }
 
 @tailwind utilities;

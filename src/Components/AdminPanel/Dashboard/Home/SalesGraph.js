@@ -115,7 +115,7 @@ const SalesGraph = ({ storeId }) => {
                 </LineChart>
             </ResponsiveContainer>
 
-        </div>
+        </div>  
     );
 };
 
