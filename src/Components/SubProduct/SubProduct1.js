@@ -69,10 +69,10 @@ const SubProduct1 = ({
     const subProductColor = store.color.subProductColor;
 
     return (
-        <div className=' mt-20  h-[400px]' style={{ fontFamily: store?.fonts?.Categories }}>
+        <div className='  h-[400px] mb-16' style={{ fontFamily: store?.fonts?.Categories ,backgroundColor: subProductColor.categoryColor}}>
             <CategorySelector />
             <div className="px-20  pb-8 overflow-x-scroll" style={{
-                maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
+                maxWidth: '100vw', 
             }}
                 {...events}
                 ref={ref}

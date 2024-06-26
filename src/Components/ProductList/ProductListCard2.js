@@ -5,7 +5,8 @@ import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreCont
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 
-const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
+const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store,productListProps }) => {
+    const {addToCart}=productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -132,7 +133,15 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
             {!addedToCart && (
                 <button
                     className="py-2 px-6 rounded-full duration-300 mt-4"
-                    onClick={handleAddToCart}
+                    onClick={() => {
+                        const productToAdd = {
+                            ...product,
+                            selectedVariant: null,
+                            price:product.originalPrice
+                        };
+                        console.log(productToAdd); // Log the product with variant to the console
+                        addToCart(productToAdd);
+                    }}
                     style={{ backgroundColor: `${store.color.productListColor.buttonBgColor}`, color: `${store.color.productListColor.buttonTextColor}` }}
                 >
                     Add to Cart

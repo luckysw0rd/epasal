@@ -44,7 +44,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.subProductColor.backgroundColor, color: store.color.subProductColor.textColor, border: `2px solid ${store.color.subProductColor.borderColor}` }}
         >
-            {(!previewMode || isEdit) && (
+            {(!previewMode) && (
                 <button
                     className="absolute top-2 right-2 p-2 rounded-full bg-red-500 flex items-center justify-center"
                     onClick={handleDeleteProduct}

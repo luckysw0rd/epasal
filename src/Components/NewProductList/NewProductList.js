@@ -109,7 +109,7 @@ const NewProductList = ({ productListProps, productListType }) => {
     };
     return (
 
-        <div className='' style={{ fontFamily: store?.fonts?.NewProduct }}>
+        <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
             {renderProductList()}
             <Link>
                 <button className="flex items-center absolute right-10 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none">
