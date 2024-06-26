@@ -90,7 +90,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                         onClick={() => {
                                             const productToAdd = {
                                                 ...product,
-                                                selectedVariant: selectedOption ? [firstVariant?.name, selectedOption?.name] : null,
+                                                selectedVariant: selectedOption ? [{ name: firstVariant?.name, options: { name: selectedOption?.name } }] : [{ name: 'default', options: { name: 'default' } }],
                                                 price
                                             };
                                             console.log(productToAdd); // Log the product with variant to the console
