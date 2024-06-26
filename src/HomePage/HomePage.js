@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './Header/Navbar';
 import SearchPage from '../SearchPage/SearchPage';
 import Heading from './Header/Heading';
+import Landingpage from './Landingpage';
 function HomePage() {
     return (
         <div className="flex flex-col relative -z-30">
@@ -17,6 +18,7 @@ function HomePage() {
                 
                 {/* <SearchPage /> */}
             </div>
+            <Landingpage/>
 
         </div>
     );
