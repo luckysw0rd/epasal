@@ -73,24 +73,24 @@ export default function Subscription({ store }) {
             subscription: `${plan.name}`,
             store: store._id,
         };
-        // try {
-        //     const responseData = await sendRequest(
-        //         'payment/create',
-        //         'POST',
-        //         JSON.stringify({
-        //             data
-        //         }),
-        //         {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     );
-        //     console.log(responseData); // Handle response data as needed
-        //     if (responseData.payment.payment_method === 'esewa') {
-        //         esewaCall(responseData.formData);
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            const responseData = await sendRequest(
+                'payment/create',
+                'POST',
+                JSON.stringify({
+                    data
+                }),
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+            console.log(responseData); // Handle response data as needed
+            if (responseData.payment.payment_method === 'esewa') {
+                esewaCall(responseData.formData);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const esewaCall = (formData) => {

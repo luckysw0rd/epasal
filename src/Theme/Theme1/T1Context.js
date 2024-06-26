@@ -8,6 +8,11 @@ import offerBannerImg from '../../Assets/offerbanner.webp'
 import secondaryBannerImg from '../../Assets/ImageGroup.png'
 import herobanner from '../../Assets/firstbanner.webp'
 import Shirt from '../../Assets/shirt.webp'
+import fiveHundred from '../../Assets/ratio/500.png';
+import sevenForty from '../../Assets/ratio/740.png';
+import oneFourty from '../../Assets/ratio/140.png';
+import twoFiftySix from '../../Assets/ratio/256.png';
+import sixTeenHundred from '../../Assets/ratio/1600.png';
 
 const StoreContext = createContext();
 
@@ -480,13 +485,13 @@ export const StoreProvider = ({ children, passedStore }) => {
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Kids" }],
 
     subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
-    banner: { bannerUrl: `${herobanner}`, bannerID: '' },
+    banner: { bannerUrl: `${sixTeenHundred}`, bannerID: '' },
     products: [
       {
         id: 1,
         name: "Controller",
         price: '100',
-        image: { imageUrl: controller, imageID: '' },
+        image: { imageUrl: oneFourty, imageID: '' },
         categories: ["Men"],
         subcategories: ["Watch"],
         rating: 2.5,
@@ -1012,6 +1017,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       price: selectedOption ? selectedOption.price : product.price,
       discountAmount: selectedOption ? selectedOption.discount : 0,
       count: 1,
+      image:product.image.imageUrl,
       productID:product._id || 1,
       selectedVariant: selectedOption ? [{
         name: product.variant[0].name,
