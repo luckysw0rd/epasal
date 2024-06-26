@@ -44,6 +44,7 @@ function App() {
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
+        <Route path="/settings" element={<SettingPage />} />
       </React.Fragment>
     );
   } else {
