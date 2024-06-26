@@ -4,6 +4,7 @@ import SearchPage from '../SearchPage/SearchPage';
 import './Homepage.css'
 
 import Heading from './Header/Heading';
+import Landingpage from './Landingpage';
 function HomePage() {
     const [navbarImage, setnavbarImage] = useState(false);
     return (
@@ -1974,6 +1975,7 @@ function HomePage() {
                 <br></br>
                 <br></br>
             </div>
+            <Landingpage/>
 
         </div>
     );
