@@ -4,6 +4,7 @@ import ProductCard from './ProductCard';
 import { useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import StarRating from './StarRating'; // Import the StarRating component
+import { FaSearch } from 'react-icons/fa'; // Import the search icon
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -229,74 +230,84 @@ const AllProducts = () => {
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
         <div className="flex">
-          <div className="w-64 p-4 py-0 ml-2 h-screen -mt-4 bg-gray-100 rounded-lg shadow-md">
-            <h3 className="font-bold mb-4 text-lg">Filters</h3>
-            <div className="block mb-4">
-              <input
-                type="text"
-                name="productName"
-                value={name}
-                onChange={handleNameFilterChange} // Handle change for name filter input
-                placeholder="Search by name"
-                className="mt-1 p-2 border rounded w-full"
-              />
-              <label className="block mb-2">Price Range:</label>
-              <div className="flex items-center">
-                <input
-                  type="number"
-                  name="minPrice"
-                  value={minPrice}
-                  onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
-                  placeholder="Min"
-                  className="mt-1 p-2 border rounded w-1/2 mr-2"
-                />
-                <span>-</span>
-                <input
-                  type="number"
-                  name="maxPrice"
-                  value={maxPrice}
-                  onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
-                  placeholder="Max"
-                  className="mt-1 p-2 border rounded w-1/2 ml-2"
-                />
-              </div>
-            </div>
-            <label className="block mb-4">
-              Rating:
-              <StarRating
-                value={parseInt(filters.rating)}
-                onChange={handleRatingChange}
-              />
-            </label>
+        <div className="w-64 p-4 py-0 ml-2 h-screen -mt-4 bg-gray-100 rounded-lg shadow-md">
+  <h3 className="font-bold mb-4 text-lg text-blue-700">Filters</h3>
+  <div className="block mb-4">
+    <label className="block mb-2 text-gray-700">Price Range:</label>
+    <div className="flex items-center">
+      <input
+        type="number"
+        name="minPrice"
+        value={minPrice}
+        onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
+        placeholder="Min"
+        className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
+      />
+      <span className="text-gray-500">-</span>
+      <input
+        type="number"
+        name="maxPrice"
+        value={maxPrice}
+        onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
+        placeholder="Max"
+        className="mt-1 p-2 border rounded w-1/2 ml-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
+      />
+    </div>
+  </div>
+  <label className="block mb-4 text-gray-700">
+    Rating:
+    <StarRating
+      value={parseInt(filters.rating)}
+      onChange={handleRatingChange}
+    />
+  </label>
 
-            {store?.subCategories && (
-              <div className="mb-4">
-                <h4 className="font-bold mb-2">Subcategories:</h4>
-                {store.subCategories.map((subCategory, index) => (
-                  <div key={subCategory._id} className="flex items-center mb-2">
-                    <input
-                      type="checkbox"
-                      id={`subCategory-${index}`}
-                      name="category"
-                      value={subCategory.name}
-                      onChange={handleFilterChange}
-                      className="mr-2"
-                    />
-                    <label htmlFor={`subCategory-${index}`}>{subCategory.name}</label>
-                  </div>
-                ))}
-              </div>
-            )}
-            <button
-              onClick={handleSearch} // Handle click on search button
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Search
-            </button>
-          </div>
+  {store?.subCategories && (
+    <div className="mb-4">
+      <h4 className="font-bold mb-2 text-gray-700">Subcategories:</h4>
+      {store.subCategories.map((subCategory, index) => (
+        <div key={subCategory._id} className="flex items-center mb-2">
+          <input
+            type="checkbox"
+            id={`subCategory-${index}`}
+            name="category"
+            value={subCategory.name}
+            onChange={handleFilterChange}
+            className="mr-2"
+          />
+          <label htmlFor={`subCategory-${index}`} className="text-gray-600">{subCategory.name}</label>
+        </div>
+      ))}
+    </div>
+  )}
+  <button
+    onClick={handleSearch} // Handle click on search button
+    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+  >
+    Search
+  </button>
+</div>
+
 
           <div className="flex-grow p-4">
             <div className="flex flex-wrap justify-center gap-4">
+              <div className="flex items-center mb-4 w-full">
+              <input
+  type="text"
+  name="productName"
+  value={name}
+  onChange={handleNameFilterChange} // Handle change for name filter input
+  placeholder="Search by name"
+  className="mt-1 p-2 border rounded w-2/3 md:w-1/6 ml-6"
+/>
+
+                <button
+                  onClick={handleSearch} // Handle click on search button
+                  className="p-2 bg-blue-500 text-white rounded ml-2"
+                >
+                  <FaSearch />
+                </button>
+              </div>
               {products.map(product => (
                 <ProductCard
                   key={product.id}

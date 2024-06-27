@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
+
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
 import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
@@ -50,6 +51,7 @@ function App() {
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
+        <Route path="/settings" element={<SettingPage />} />
 
       </React.Fragment>
     );
