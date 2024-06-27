@@ -1,0 +1,40 @@
+/* Employee.css */
+
+/* Custom scrollbar for better UX */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    overflow-x: scroll;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+    overflow-x: scroll;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Horizontal scroll for smaller devices */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* For smooth scrolling */
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-responsive table {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .table-container {
+        width: 100%;
+    }
+}

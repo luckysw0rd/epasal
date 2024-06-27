@@ -30,7 +30,7 @@ const ProductList = ({ productListProps, productListType }) => {
         switch (productListType) {
             case 'default':
                 return (
-                    <div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                    <div className='space-y-10 py-10 flex items-center relative flex-col mb-16' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
                         <div >
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
@@ -113,10 +113,10 @@ const ProductList = ({ productListProps, productListType }) => {
     };
     return (
 
-        <div className='' style={{ fontFamily: store?.fonts?.Featured }}>
+        <div className='relative' style={{ fontFamily: store?.fonts?.Featured, backgroundColor:"#ffff" }}>
             {renderProductList()}
             <Link>
-                <button className="flex items-center absolute right-10 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none">
+                <button className="flex items-center absolute right-10 bottom-2 font-semibold transition ease-in duration-200 border-nore focus:outline-none">
                     <span>View More</span> <IoIosArrowForward />
                 </button>
             </Link>

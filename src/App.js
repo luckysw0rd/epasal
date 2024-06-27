@@ -1,47 +1,55 @@
-
 import React, { Suspense, useContext } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import HomePage from "./HomePage/HomePage";
-import Navbar from "./HomePage/Navbar"
-import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
-import Theme from "./Theme/Theme";
-import GetUserLocation from "./Components/Geolocaiton/GetUserLocation";
-import Dashboard from "./Components/AdminPanel/Dashboard";
-import GoogleOAuth from "./Components/Google-OAuth/GoogleOAuth";
-import GoogleOAuthCustom from "./Components/Google-OAuth/GoogleOAuthCustom";
 import { PrimeReactProvider } from 'primereact/api';
-import ProductForm from "./Theme/Theme1/SubProduct/ProductForm";
-import Home from "./Components/AdminPanel/Dashboard/Home/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import EsewaRouteComponent from "./Components/AdminPanel/Esewa/EsewaRouteComponent ";
+import useFetch from "./Hooks/useFetch";
+import Loading from "./Theme/Theme1/Loading/Loading";
+import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
+import SettingPage from "./Components/SettingsPage/SettingPage";
+
+// Lazy loading components
+const HomePage = React.lazy(() => import('./HomePage/HomePage'));
+const Navbar = React.lazy(() => import('./HomePage/Navbar'));
+const SignInPage = React.lazy(() => import('./Login/SignInPage'));
+const Theme = React.lazy(() => import('./Theme/Theme'));
+const GetUserLocation = React.lazy(() => import('./Components/Geolocaiton/GetUserLocation'));
+const Dashboard = React.lazy(() => import('./Components/AdminPanel/Dashboard'));
+const GoogleOAuth = React.lazy(() => import('./Components/Google-OAuth/GoogleOAuth'));
+const GoogleOAuthCustom = React.lazy(() => import('./Components/Google-OAuth/GoogleOAuthCustom'));
+const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductForm'));
+const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Home'));
+const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
+const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
+
+
 function App() {
+  const { isLoading, error, sendRequest, onCloseError } = useFetch();
+
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-
   if (token) {
-
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
-        
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
-
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
-
-
+        <Route path="/settings" element={<SettingPage />} />
       </React.Fragment>
     );
   } else {
@@ -49,6 +57,7 @@ function App() {
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignInPage />}></Route>
+        {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
 
       </React.Fragment>
     );
@@ -59,15 +68,16 @@ function App() {
       <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
         <div className="App">
           <Router>
-            <Routes>
-              {routes}
-            </Routes>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                {routes}
+              </Routes>
+            </Suspense>
           </Router>
-          
         </div>
+        <ToastContainer />
       </AuthContext.Provider>
     </PrimeReactProvider>
-
   );
 }
 

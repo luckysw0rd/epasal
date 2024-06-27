@@ -19,7 +19,7 @@ const DragdropSection = () => {
     return (
         <div className="bg-white flex flex-col gap-5 md:flex-row items-center justify-between p-8 md:p-10 lg:p-20">
             {/* Left Section */}
-            <div className="md:w-1/3 md:order-2 flex flex-col gap-5">
+            <div className="md:w-1/3 md:order-2 flex flex-col gap-5 px-2 md:px-0">
                 <h2 className="text-[#2F2F2F] text-lg md:text-xl lg:text-3xl lg:leading-tight font-bold">
                     Transform clicks into customers with seamless eCommerce experiences!
                 </h2>

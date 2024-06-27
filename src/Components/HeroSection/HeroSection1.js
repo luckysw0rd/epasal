@@ -44,7 +44,7 @@ const HeroSection1 = ({ previewMode, store, setStore }) => {
     };
 
     return (
-        <div className='box-border py-19'>
+        <div className='box-border py-19 mb-16'>
             <motion.div
                 className="bg-white mt-0  box-border font-kode-mono relative shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] min-h-[600px] flex flex-col justify-center items-start text-black"
                 initial={{ opacity: 0, y: -50 }}

@@ -98,7 +98,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                                 >
                                     {subcategory.name}
                                 </button>
-                                {(!previewMode||isEdit) && (
+                                {(!previewMode) && (
                                     <button
                                         className="absolute top-0 right-0  focus:outline-none"
                                         onClick={() => handleRemoveSubCategory(index)}
@@ -110,7 +110,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                                 )}
                             </div>
                         ))}
-                        {(!previewMode||isEdit) && (
+                        {(!previewMode) && (
                             <button className="py-2 px-8 hover:bg-gray-100" onClick={handleAddCategory}>Add Subcategory</button>
                         )}
                     </div>
