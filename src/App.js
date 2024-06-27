@@ -1,5 +1,8 @@
 import React, { Suspense, useContext } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import HomePage from "./HomePage/HomePage";
+import Navbar from "./HomePage/Navbar";
+import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
 import { PrimeReactProvider } from 'primereact/api';
@@ -20,14 +23,16 @@ const GoogleOAuthCustom = React.lazy(() => import('./Components/Google-OAuth/Goo
 const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductForm'));
 const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Home'));
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
-const Allproducts = React.lazy(()=>  import('./Components/Allproducts/Allproducts'));
+const Allproducts = React.lazy(()=>  import('./Components/Allproducts/Allproducts'));import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
+
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if ( token) {
+  if (token) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -36,6 +41,7 @@ function App() {
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
@@ -51,6 +57,8 @@ function App() {
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignInPage />}></Route>
+        {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
+
       </React.Fragment>
     );
   }
