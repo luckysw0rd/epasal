@@ -72,7 +72,7 @@ const Navbar = ({ color, store, addToCart, deleteFromCart, setStore }) => {
                 </div>
 
                 <button className="focus:outline-none" onClick={toggleCartDropdown} aria-label="Open Cart">
-                <AiOutlineShoppingCart className=' mt-1 size-6 ' />
+                    <AiOutlineShoppingCart className=' mt-1 size-6 ' />
 
                     {store.cart.length > 0 && (
                         <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute -top-1 -right-1">
@@ -90,7 +90,7 @@ const Navbar = ({ color, store, addToCart, deleteFromCart, setStore }) => {
                         backgroundColor={color?.navColor?.backgroundnavColor}
                         store={store}
                         setStore={setStore}
-                        />
+                    />
                 )}
             </div>
 
