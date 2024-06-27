@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import CheckOutPage from './CheckoutPage';
+
 const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundColor, store }) => {
     const [showCheckout, setShowCheckout] = useState(false);
-    console.log(store);
+
     const handleIncreaseQuantity = (index) => {
         const updatedCart = [...store.cart];
         updatedCart[index] = {
@@ -17,7 +18,6 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
         }));
     };
 
-
     const handleCheckout = () => {
         setShowCheckout(true);
     };
@@ -25,6 +25,7 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
     const handleCloseCheckout = () => {
         setShowCheckout(false);
     };
+
     const handleDeleteFromCart = (index) => {
         const product = store.cart[index];
         const updatedCart = store.cart.filter((_, i) => i !== index);
@@ -42,7 +43,7 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
             deleteFromCart(product);
         }
     };
-    console.log(cart);
+
     return (
         <div className="absolute top-8 right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50" style={{ backgroundColor }}>
             <div className="p-4">
@@ -54,7 +55,7 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
                             <img src={item.image.imageUrl} alt={item.product} className="h-12 w-12 rounded" />
                             <div className="flex-1 ml-2">
                                 <h4 className="text-sm font-semibold">{item.product}</h4>
-                                <p className="text-xs text-gray-600">{item.selectedVariant[0]?.options.name}</p>
+                                {/* <p className="text-xs text-gray-600">{item.selectedVariant[0]?.options.name}</p> */}
                                 <p className="text-xs font-bold">${item.price}</p>
                             </div>
                             <div className="flex items-center">

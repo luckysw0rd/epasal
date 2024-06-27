@@ -60,7 +60,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
             email,
             status: 'Processing',
             cart: cart.map(item => ({
-                product: item.productID,
+                product: item.productId,
                 productName: item.product,
                 price: item.price,
                 discountAmount: discount,
