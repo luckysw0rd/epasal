@@ -1,5 +1,5 @@
 import React, { Suspense, useContext } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
 import { PrimeReactProvider } from 'primereact/api';
@@ -7,6 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
+import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
+import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
 const Navbar = React.lazy(() => import('./HomePage/Navbar'));
@@ -37,6 +40,7 @@ function App() {
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
@@ -52,6 +56,8 @@ function App() {
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignInPage />}></Route>
+        {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
+
       </React.Fragment>
     );
   }
