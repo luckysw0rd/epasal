@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import useFetch from '../../Hooks/useFetch';
+import { AuthContext } from '../../Hooks/AuthContext'; 
 
 const SettingPage = () => {
   const [userName, setUserName] = useState('');
+  const auth = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   
@@ -25,11 +27,12 @@ const SettingPage = () => {
     const fetchUserData = async () => {
       try {
         const responseData = await sendRequest(
-          '/api/users/getLoggedInUserDetails',
+          'users/getLoggedInUserDetails',
           'GET',
           null,
           {
-            Authorization: `Bearer ${localStorage.getItem('token')}` // Assuming you store token in localStorage
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + auth.token,
           }
         );
         const { name, email } = responseData.user;
@@ -60,40 +63,48 @@ const SettingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("submiting")
     // Basic validation
     if (!userName || !email) {
       setMessage('Please fill out all fields.');
       return;
     }
-
+  
     if (!validateEmail(email)) {
       setMessage('Please enter a valid email.');
       return;
     }
-
+  
     if (editMode.password && (passwordChange.newPassword !== passwordChange.confirmPassword)) {
       setMessage('New passwords do not match.');
       return;
     }
-
+  
     try {
-      // Simulate an API call to update user settings
-      await sendRequest(
-        '/api/users/updateUserDetails',
+      // Prepare the request body
+      const requestBody = {
+        name: userName,
+        email: email,
+      };
+  
+      // Add password fields if in password edit mode
+      if (editMode.password) {
+        requestBody.oldPassword = passwordChange.oldPassword;
+        requestBody.newPassword = passwordChange.newPassword;
+      }
+  
+      // Send the API request
+      const response = await sendRequest(
+        'users/updateUserDetails',
         'PUT',
-        JSON.stringify({
-          name: userName,
-          email: email,
-          oldPassword: passwordChange.oldPassword,
-          newPassword: passwordChange.newPassword,
-        }),
+        JSON.stringify(requestBody),
         {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}` // Assuming you store token in localStorage
+          Authorization: `Bearer ${auth.token}`, // Retrieve token from AuthContext
         }
       );
-      
+      console.log(response);
+      // Handle success response
       setMessage('Settings updated successfully!');
       setEditMode({
         userName: false,
@@ -106,10 +117,12 @@ const SettingPage = () => {
         confirmPassword: '',
       });
     } catch (error) {
+      // Handle error response
       console.error('Error updating user settings:', error);
       setMessage('Error updating user settings');
     }
   };
+  
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -129,7 +142,6 @@ const SettingPage = () => {
               value={userName}
               onChange={handleUserNameChange}
               disabled={!editMode.userName}
-              required
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-800"
             />
             <button
@@ -150,7 +162,6 @@ const SettingPage = () => {
               value={email}
               onChange={handleEmailChange}
               disabled={!editMode.email}
-              required
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-800"
             />
             <button
@@ -180,7 +191,6 @@ const SettingPage = () => {
                 placeholder="Old Password"
                 value={passwordChange.oldPassword}
                 onChange={handlePasswordChange}
-                required
                 className="px-3 py-2 border border-gray-300 rounded-md text-gray-800"
               />
               <input
@@ -189,7 +199,6 @@ const SettingPage = () => {
                 placeholder="New Password"
                 value={passwordChange.newPassword}
                 onChange={handlePasswordChange}
-                required
                 className="px-3 py-2 border border-gray-300 rounded-md text-gray-800"
               />
               <input
@@ -198,7 +207,6 @@ const SettingPage = () => {
                 placeholder="Confirm New Password"
                 value={passwordChange.confirmPassword}
                 onChange={handlePasswordChange}
-                required
                 className="px-3 py-2 border border-gray-300 rounded-md text-gray-800"
               />
               <button

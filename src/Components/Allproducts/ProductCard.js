@@ -1,20 +1,22 @@
+// ProductCard.js
 
-import React, { useState, useEffect } from "react";
-import { TbShoppingBagPlus } from "react-icons/tb";
-// import storeMIni from "./data";
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { IoIosArrowForward } from "react-icons/io";
 
-const ProductCard = ({product,color}) => {
-  console.log("product side",product)
-  console.log(color)
+const ProductCard = ({ product, productColor, addToCart }) => {
+  const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, buttonBorderColor } = productColor;
+  console.log(productColor);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
+  const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
+
+  // Truncating function
   const getTruncateLength = (width) => {
     if (width < 640) return 50; // sm
     if (width < 1281) return 37; // md, lg
     return 50; // xl, 2xl
   };
-
-  const [selectedVariant, setSelectedVariant] = useState(null);
   const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
-
   useEffect(() => {
     const handleResize = () => {
       setTruncateLength(getTruncateLength(window.innerWidth));
@@ -24,174 +26,93 @@ const ProductCard = ({product,color}) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const renderStars = (rating) => {
-    const totalStars = 5;
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 !== 0;
-    const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
-
-    return (
-      <div className="flex text-xl">
-        {[...Array(fullStars)].map((_, index) => (
-          <span key={index} className="" style={{ color: color.subProductColor.starColor }}>
-            &#9733;
-          </span>
-        ))}
-        {halfStar && (
-          <span className="relative" style={{ color: color.subProductColor.starColor }}>
-            <span className="absolute w-1/2 overflow-hidden" style={{ width: '50%' }}>
-              &#9733;
-            </span>
-            <span className="text-gray-300">
-              &#9733;
-            </span>
-          </span>
-        )}
-        {[...Array(emptyStars)].map((_, index) => (
-          <span key={index} className="text-gray-300">
-            &#9733;
-          </span>
-        ))}
-      </div>
-    );
-  };
-
-  const handleVariantClick = (variant) => {
-    setSelectedVariant(variant);
-  };
-
   const truncateName = (name) => {
     return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
   };
 
-  const displayImage = selectedVariant ? selectedVariant.image.imageUrl : product.image.imageUrl;
-  const displayPrice = selectedVariant ? selectedVariant.price : product.price;
+  if (!product) return null;
 
-  // const defaultVariant = {
-  //   name: "Default",
-  //   price: product.price,
-  //   image: product.image
-  // };
+  const { name, image, variant } = product;
+  const firstVariant = variant[0]; // Considering only the first variant
+  const selectedOption = selectedOptionIndex === -1 ? null : firstVariant?.options[selectedOptionIndex];
+  const price = selectedOption ? selectedOption.price : product.price || 0;
+
+  const handleOptionSelect = (index) => {
+    setSelectedOptionIndex(index);
+    setDisplayedImage(firstVariant?.options[index]?.image?.imageUrl);
+  };
+
+  const handleDefaultImage = () => {
+    setSelectedOptionIndex(-1);
+    setDisplayedImage(product?.image?.imageUrl);
+  };
 
   return (
-    <div
-      key={product.id}
-      className="border p-4 rounded-lg shadow-md w-[100%] h-100%"
-      style={{ borderColor: color.backgroundThemeColor }}
+    <motion.div
+      className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
+      style={{ borderColor:productColor.borderColor }}
+      whileTap={{ scale: 0.98 }}
     >
-      <img
-        src={displayImage}
-        alt={product.name}
-        className="w-[100%] h-[133px] object-contain"
-      />
-      <div className="my-auto py-1">
-        <div className="flex justify-between h-[60px]">
-          <h2 className="text-lg font-Roboto font-bold" style={{ color: color.productListColor.textColor }}>
-            {truncateName(product.name)}
-          </h2>
-        </div>
-        <p className="text-sm w-[90%] font-bold" style={{ color: color.productListColor.textColor }}>
-          Rs.{"\t"}{displayPrice}
-        </p>
-        <div className="flex items-center text-[13.6px]">
-          {renderStars(product.rating)}
-        </div>
-        <div className="flex justify-between items-center mt-1">
-          <div className="flex justify-between gap-2">
-            <img
-              src={product.image.imageUrl}
-              alt="default"
-              className="w-8 h-8 object-cover cursor-pointer"
-              onClick={() => handleVariantClick(null)}
-            />
-            {product.variant && product.variant[0] && product.variant[0].options &&
-              product.variant[0].options.map((variant, index) => (
-                <img
-                  key={index}
-                  src={variant.image.imageUrl}
-                  alt={variant.name || 'variant'}
-                  className="w-8 h-8 object-cover cursor-pointer"
-                  onClick={() => handleVariantClick(variant)}
-                />
-              ))}
+      <div className="w-full">
+        <div className="relative w-full">
+          <div className="card cursor-pointer flex flex-col justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+            <div>
+              <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto p-3" style={{ aspectRatio: '1/1' }} />
+            </div>
+            <div className="px-5 w-full">
+              <hr className="border-t-2" style={{ borderColor: borderColor }} />
+              <div className="py-2">
+                <p className="text-xl font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
+                <p className="my-1 font-bold text-[13px]" style={{ color: priceColor }}>Rs. {price}</p>
+              </div>
+              <div className="grid gap-2 relative w-full">
+                <div className="flex">
+                  <div
+                    className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
+                    onClick={handleDefaultImage}
+                  >
+                    <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2 object-contain' />
+                  </div>
+                  {firstVariant?.options?.map((option, index) => (
+                    <div
+                      key={index}
+                      className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
+                      onClick={() => handleOptionSelect(index)}
+                    >
+                      <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
+                  <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
+                    <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
+                      Learn More <IoIosArrowForward />
+                    </div>
+                  </button>
+                  <button
+                    style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
+                    className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
+                    onClick={() => {
+                      const productToAdd = {
+                        ...product,
+                        selectedVariant: selectedOption ? [{ name: firstVariant?.name, options: { name: selectedOption?.name } }] : [{ name: 'default', options: { name: 'default' } }],
+                        price
+                      };
+                      addToCart(productToAdd);
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <button className="bg-brown-700 px-3 rounded w-10 h-10 bg-[#4F3100]" style={{ color: color.productListColor.cardBackground }}>
-            <TbShoppingBagPlus className="w-4 h-4" />
-          </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default ProductCard;
-// import React from 'react'
-
-// function ProductCard({product,color}) {
-//   console.log("p",product)
-//   console.log('colors',color)
-//   return (
-//     <div>ProductCard</div>
-//   )
-// }
-
-// export default ProductCard
-
-// import React from "react";
-//  import { TbShoppingBagPlus } from "react-icons/tb";
-// function ProductCard({ product, color }) {
-//   console.log("p", product);
-//   console.log("colors", color);
-
-//   return (
-//     <div
-//       key={product.id}
-//       className="border p-4 rounded-lg shadow-md w-[100%] h-100%"
-//       style={{ borderColor: color.backgroundThemeColor }}
-//     >
-//       <img
-//         src={product.image.imageUrl}
-//         alt={product.name}
-//         className="w-[100%] h-[133px] object-contain"
-//       />
-//       <div className="my-auto py-1">
-//         <div className="flex justify-between h-[60px]">
-//           <h2 className="text-lg font-Roboto font-bold" style={{ color: color.productListColor.textColor }}>
-//             {product.name}
-//           </h2>
-//         </div>
-//         <p className="text-sm w-[90%] font-bold" style={{ color: color.productListColor.textColor }}>
-//           Rs.{"\t"}{product.price}
-//         </p>
-//         <div className="flex items-center text-[13.6px]">
-//           {product.rating}
-//         </div>
-//         <div className="flex justify-between items-center mt-1">
-//           <div className="flex justify-between gap-2">
-//             <img
-//               src={product.image.imageUrl}
-//               alt="default"
-//               className="w-8 h-8 object-cover cursor-pointer"
-//               // onClick={() => handleVariantClick(null)}
-//             />
-//             {product.variant && product.variant[0] && product.variant[0].options &&
-//               product.variant[0].options.map((variant, index) => (
-//                 <img
-//                   key={index}
-//                   src={variant.image.imageUrl}
-//                   alt={variant.name || 'variant'}
-//                   className="w-8 h-8 object-cover cursor-pointer"
-//                   // onClick={() => handleVariantClick(variant)}
-//                 />
-//               ))}
-//           </div>
-//           <button className="bg-brown-700 px-3 rounded w-10 h-10 bg-[#4F3100]" style={{ color: color.productListColor.cardBackground }}>
-//             <TbShoppingBagPlus className="w-4 h-4" />
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default ProductCard;

@@ -2,49 +2,52 @@ import React, { useState, useEffect } from 'react';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Checkout from '../CheckoutPage/CheckOutPage'; // Adjust path as necessary
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useStore } from '../../Theme/Theme1/T1Context';
+import { m } from 'framer-motion';
 
-const CartDropdown = ({ deleteFromCart,cart, backgroundColor }) => {
+const CartDropdown = ({ backgroundColor }) => {
     const [showCheckout, setShowCheckout] = useState(false);
-    const [cartState, setCartState] = useState([]);
+    const { store, setStore, addToCart, deleteFromCart } = useStore();
 
     // Fetch cart from localStorage when component mounts
     useEffect(() => {
-        const storedCart = JSON.parse(localStorage.getItem('cart')) || cart || [];
-        setCartState(storedCart);
-    }, []);
-
-    // // Update cartState when cart prop changes
-    // useEffect(() => {
-    //     setCartState(cart);
-    // }, [cart]);
+        const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+        setStore(prevState => ({
+            ...prevState,
+            cart: storedCart,
+            cartCount: storedCart.length
+        }));
+    }, [setStore]);
 
     const handleIncreaseQuantity = (index) => {
-        const updatedCart = [...cartState];
+        const updatedCart = [...store.cart];
         updatedCart[index] = {
             ...updatedCart[index],
             count: updatedCart[index].count + 1
         };
-        setCartState(updatedCart);
-        updateLocalStorage(updatedCart);
+        setStore(prevState => ({
+            ...prevState,
+            cart: updatedCart,
+            cartCount: updatedCart.length
+        }));
     };
 
     const handleDecreaseQuantity = (index) => {
-        if (cartState[index].count > 1) {
-            const updatedCart = [...cartState];
-            updatedCart[index] = {
-                ...updatedCart[index],
-                count: updatedCart[index].count - 1
-            };
-            setCartState(updatedCart);
-            updateLocalStorage(updatedCart);
+        const product = store.cart[index];
+        if (product.count > 1) {
+            deleteFromCart(product);
         }
     };
 
-    const handleDeleteFromCart = (item) => {
-        const updatedCart = cartState.filter(cartItem => cartItem !== item);
-        setCartState(updatedCart);
-        deleteFromCart(item); // Call the prop function to delete item from cart
-        updateLocalStorage(updatedCart);
+    const handleDeleteFromCart = (index) => {
+        const product = store.cart[index];
+        const updatedCart = store.cart.filter((_, i) => i !== index);
+        setStore(prevState => ({
+            ...prevState,
+            cart: updatedCart,
+            cartCount: prevState.cartCount - product.count
+        }));
+        deleteFromCart(product);
     };
 
     const handleCheckout = () => {
@@ -55,14 +58,9 @@ const CartDropdown = ({ deleteFromCart,cart, backgroundColor }) => {
         setShowCheckout(false);
     };
 
-    const updateLocalStorage = (updatedCart) => {
-        // Update the state and local storage
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-    };
-
     return (
         <div className="absolute right-0 w-64 md:w-[500px] md:h-[720px] shadow-lg rounded-lg py-2 z-30 transition-all duration-300" style={{ backgroundColor, top: '100%' }}>
-            {cartState.length === 0 ? (
+            {store.cart.length === 0 ? (
                 <p className="px-4 py-2">Your cart is empty</p>
             ) : (
                 <div className="flex flex-col gap-3 p-5">
@@ -72,18 +70,19 @@ const CartDropdown = ({ deleteFromCart,cart, backgroundColor }) => {
                     </div>
                     <h3>Number of Items</h3>
                     <div className='border rounded-md p-5 border-[#D7D7D7]'>
-                        {cartState.map((item, index) => (
+                        {store.cart.map((item, index) => (
                             <div key={index} className="flex items-center justify-between border-b border-gray-200 pb-2 mb-2">
                                 <div className='flex items-center'>
                                     <div className='flex-shrink-0 w-20 h-20'>
-                                        <img className='w-full h-full object-contain' src={item?.image} alt={item.productName} />
+                                        <img className='w-full h-full object-contain' src={item?.image.imageUrl || item?.image} alt={item.productName} />
                                     </div>
                                     <div className='ml-3'>
                                         <p className="font-medium">{item.productName}</p>
                                         <p>रु{item.price * item.count}</p>
-                                    </div>
+                                        <p className="text-xs text-gray-600">{item.selectedVariant[0]?.options.name}</p>
+                                     </div>
                                 </div>
-                                <IoCloseCircleOutline size={20} onClick={() => handleDeleteFromCart(item)} />
+                                <IoCloseCircleOutline size={20} onClick={() => handleDeleteFromCart(index)} />
                                 <div className="flex items-center text-xl">
                                     <button className="text-black focus:outline-none" onClick={() => handleDecreaseQuantity(index)}>-</button>
                                     <span className="mx-2">{item.count}</span>
@@ -99,7 +98,7 @@ const CartDropdown = ({ deleteFromCart,cart, backgroundColor }) => {
             )}
             {showCheckout && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
-                    <Checkout cart={cartState} onClose={handleCloseCheckout} deleteItem={handleDeleteFromCart} />
+                    <Checkout cart={store.cart} onClose={handleCloseCheckout} deleteItem={handleDeleteFromCart} />
                 </div>
             )}
         </div>

@@ -10,17 +10,13 @@ const Navbar1 = ({
     setNewCategory,
     store,
     setStore,
-    addCategory,
-    removeCategory,
     color,
     previewMode,
     isSidebarOpen,
-    newCategory,
     searchInput,
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
-    setPreviewMode,
     deleteFromCart
 }) => {
     const [scrolling, setScrolling] = useState(false);

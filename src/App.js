@@ -7,7 +7,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
-
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
 const Navbar = React.lazy(() => import('./HomePage/Navbar'));
@@ -20,14 +19,16 @@ const GoogleOAuthCustom = React.lazy(() => import('./Components/Google-OAuth/Goo
 const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductForm'));
 const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Home'));
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
-const Allproducts = React.lazy(()=>  import('./Components/Allproducts/Allproducts'));
+const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
+const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
+
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if ( token) {
+  if (token) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />

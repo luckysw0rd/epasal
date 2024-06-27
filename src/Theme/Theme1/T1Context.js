@@ -968,20 +968,9 @@ export const StoreProvider = ({ children, passedStore }) => {
     }
   }, [storeID]);
 
-  useEffect(() => {
-    // Fetch cart data from localStorage
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    const storedCartCount = parseInt(localStorage.getItem('cartCount'), 10) || 0;
 
-    // Set initial state with data from localStorage and preserve other state properties
-    if (store) {
-      setStore(prevState => ({
-        ...prevState,
-        cart: storedCart,
-        cartCount: storedCartCount
-      }));
-    }
-  }, []);
+  
+  
 
   const addProduct = (newProduct) => {
     setStore((prevState) => ({
@@ -1006,6 +995,45 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
     }));
   };
+
+  useEffect(() => {
+    if (store.fetchedFromBackend) {
+      // Function to initialize localStorage with store data
+      const initializeLocalStorage = () => {
+        if (!localStorage.getItem('store')) {
+          localStorage.setItem('store', JSON.stringify({ name: store.name }));
+        }
+      };
+  
+      // Fetch store data from localStorage
+      const storedStore = JSON.parse(localStorage.getItem('store'));
+  
+      // Check if the stored store name is different from the current store name
+      if (storedStore && storedStore.name !== store.name) {
+        // If different, reset the cart in localStorage
+        localStorage.setItem('cart', JSON.stringify([]));
+        localStorage.setItem('cartCount', '0');
+        // Update the store name in localStorage
+        localStorage.setItem('store', JSON.stringify({ name: store.name }));
+      }
+  
+      // Fetch cart data from localStorage
+      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      const storedCartCount = parseInt(localStorage.getItem('cartCount'), 10) || 0;
+  
+      // Set initial state with data from localStorage and preserve other state properties
+      if (store) {
+        setStore(prevState => ({
+          ...prevState,
+          cart: storedCart,
+          cartCount: storedCartCount
+        }));
+      }
+  
+      // Ensure the store is initialized in localStorage
+      initializeLocalStorage();
+    }
+  }, [store.name, store.fetchedFromBackend]);
 
   const addToCart = (product) => {
     console.log(product, "Product being added");

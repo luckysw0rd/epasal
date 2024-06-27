@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 const SubProduct1 = ({
     products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
-}) => {
+,addToCart}) => {
     const ref = useRef();
     const containerRef = useRef(null);
     const { events } = useDraggable(ref);
@@ -99,6 +99,7 @@ const SubProduct1 = ({
                                 handleStyleSelect={handleStyleSelect}
                                 handleRemoveProduct={handleRemoveProduct}
                                 store={store}
+                                addToCart={addToCart}
                             />
                         </div>
                     ))}

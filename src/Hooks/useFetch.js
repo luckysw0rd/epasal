@@ -53,7 +53,7 @@ export const useFetch = () => {
 
             }
             setIsLoading(false);
-            // throw error;
+            throw error;
         }
     }, []);
 
