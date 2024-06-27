@@ -4,8 +4,9 @@ import CheckOutPage from './CheckoutPage';
 
 const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundColor, store }) => {
     const [showCheckout, setShowCheckout] = useState(false);
-
+    console.log(cart);
     const handleIncreaseQuantity = (index) => {
+        console.log(store);
         const updatedCart = [...store.cart];
         updatedCart[index] = {
             ...updatedCart[index],
@@ -52,11 +53,11 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
                 ) : (
                     cart.map((item, index) => (
                         <div key={index} className="flex items-center justify-between mb-2">
-                            <img src={item.image.imageUrl} alt={item.product} className="h-12 w-12 rounded" />
+                            <img src={item?.productImage} alt={item.productName} className="h-12 w-12 rounded" />
                             <div className="flex-1 ml-2">
-                                <h4 className="text-sm font-semibold">{item.product}</h4>
+                                <h4 className="text-sm font-semibold">{item.productName}</h4>
                                 {/* <p className="text-xs text-gray-600">{item.selectedVariant[0]?.options.name}</p> */}
-                                <p className="text-xs font-bold">${item.price}</p>
+                                <p className="text-xs font-bold">Rs {item.price}</p>
                             </div>
                             <div className="flex items-center">
                                 <button

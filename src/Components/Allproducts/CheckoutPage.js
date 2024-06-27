@@ -54,14 +54,15 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     };
 
     const handleSubmitOrder = async () => {
+        console.log(cart);
         const orderData = {
             fullName,
             phoneNumber,
             email,
             status: 'Processing',
             cart: cart.map(item => ({
-                product: item.productId,
-                productName: item.product,
+                product: item.product,
+                productName: item.prodproductName,
                 price: item.price,
                 discountAmount: discount,
                 count: item.count,
@@ -79,7 +80,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
             deliveryCode: null,
         };
         const success_url = 'http://localhost:3000/esewa/order';
-
+        console.log(orderData);
         try {
             console.log(store);
             const responseData = await sendRequest(
@@ -131,7 +132,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                     <div className="flex items-center justify-between mb-4" key={index}>
                                         <div className="flex items-center">
                                             <div>
-                                                <p className="font-semibold">{item.product}</p>
+                                                <p className="font-semibold">{item.productName}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center text-xl flex-1 justify-between">

@@ -5,6 +5,7 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Import FaTimes for 
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
 const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
     // Component state
     const { addToCart } = useStore();
@@ -13,6 +14,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch()
+    const navigate = useNavigate()
 
 
     const getTruncateLength = (width) => {
@@ -79,6 +81,14 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         }
     }
 
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store.fetchedFromBackend && !store.isEdit)
+            navigate("/productlanding", { state: { product, store } })
+    };
+
     return (
         <motion.div
             className="  flex flex-col md:flex-row items-center text-center md:text-left   w-[200px] h-[280px]  md:w-[402px] md:h-[216px] rounded overflow-hidden shadow-md cursor-pointer relative " // Add relative class
@@ -126,13 +136,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                         <button
                             className="text-xs h-8 w-[80px] rounded mr-1"
                             onClick={() => {
-                                const productToAdd = {
-                                    ...product,
-                                    selectedVariant: null,
-                                    price: product.price
-                                };
-                                console.log(productToAdd); // Log the product with variant to the console
-                                addToCart(productToAdd);
+                                handleProductClick(product)
                             }}
                             style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
                         >

@@ -49,13 +49,12 @@ const AllProducts = () => {
       setProducts(data.products);
       setLoading(false);
       setColor(data.color);
-      setStore(data.store);
-      setTotalPages(data.totalPages);
       setStore(prevState => ({
         ...prevState,
-        cart: [],
-        cartCount: 1
+        ...data.store,
+        fetchedFromBackend: true
       }));
+      setTotalPages(data.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
       setLoading(false);
@@ -63,26 +62,24 @@ const AllProducts = () => {
   };
 
   const initializeLocalStorageWithStoreData = () => {
-    if (!localStorage.getItem('store')) {
-      localStorage.setItem('store', JSON.stringify({ name: store.name }));
-    }
-
     const storedStore = JSON.parse(localStorage.getItem('store'));
-
-    if (storedStore && storedStore.name !== store.name) {
-      localStorage.setItem('cart', JSON.stringify([]));
-      localStorage.setItem('cartCount', '0');
-      localStorage.setItem('store', JSON.stringify({ name: store.name }));
-    }
-
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const storedCartCount = parseInt(localStorage.getItem('cartCount'), 10) || 0;
 
-    if (store) {
+    if (storedStore && storedStore.name === store.name) {
       setStore(prevState => ({
         ...prevState,
         cart: storedCart,
         cartCount: storedCartCount
+      }));
+    } else {
+      localStorage.setItem('store', JSON.stringify({ name: store.name }));
+      localStorage.setItem('cart', JSON.stringify([]));
+      localStorage.setItem('cartCount', '0');
+      setStore(prevState => ({
+        ...prevState,
+        cart: [],
+        cartCount: 0
       }));
     }
   };

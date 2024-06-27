@@ -14,7 +14,8 @@ import Navbar from '../Allproducts/Navbar';
 const ProjectLanding1 = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { product, store: fetchedStore } = localStorage.getItem('product') || {};
+    const { product, store: fetchedStore } = location.state || {};
+
     const [store, setStore] = useState(() => {
         const storeData = localStorage.getItem('store');
         return fetchedStore || (storeData ? JSON.parse(storeData) : null);
@@ -27,26 +28,14 @@ const ProjectLanding1 = () => {
     const [displayedImage, setDisplayedImage] = useState(selectedProduct?.image?.imageUrl);
     const [productCount, setProductCount] = useState(1);
 
-
-
-
-
     const handleOptionSelect = (variantIndex, optionIndex) => {
         const newSelectedVariants = [...selectedVariants];
         newSelectedVariants[variantIndex] = optionIndex;
         setSelectedVariants(newSelectedVariants);
 
-        const selectedOption = selectedProduct.variant[variantIndex]?.options[optionIndex]; // Use optional chaining
-        setDisplayedImage(selectedOption?.image?.imageUrl || selectedProduct?.image?.imageUrl); // Check if selectedOption is defined
+        const selectedOption = selectedProduct.variant[variantIndex].options[optionIndex];
+        setDisplayedImage(selectedOption.image?.imageUrl || selectedProduct?.image?.imageUrl);
     };
-
-    const handleProductSelect = (newProduct) => {
-        setSelectedProduct(newProduct);
-        navigate(location.pathname, { state: { product: newProduct, store } });
-        localStorage.setItem('product', JSON.stringify(newProduct));
-        setDisplayedImage(newProduct.image.imageUrl);
-    };
-
 
     const handleVariantChange = (variantIndex, optionName) => {
         const variant = selectedProduct.variant[variantIndex];
@@ -63,88 +52,35 @@ const ProjectLanding1 = () => {
     };
 
     const handleAddToCart = () => {
-        console.log(selectedProduct);
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const selectedVariant = selectedProduct.variant.map((variant, index) => ({
-            name: variant.name,
-            options: {
-                name: variant.options[selectedVariants[index]] ? variant.options[selectedVariants[index]].name : 'default',
-                image: variant.options[selectedVariants[index]]?.image?.imageUrl
-            }
-        }));
-
         const newCartItem = {
-            product: selectedProduct._id || product._id,
+            product: selectedProduct._id,
             productName: selectedProduct.name,
             price: calculateTotalPrice(),
             discountAmount: calculateTotalDiscount(),
             count: productCount,
-            selectedVariant: selectedVariant,
-            productImage: selectedVariant[0]?.options?.image || selectedProduct?.image?.imageUrl
+            selectedVariants: selectedProduct.variant.map((variant, index) => ({
+                name: variant.name,
+                option: variant.options[selectedVariants[index]]
+            }))
         };
-
         cart.push(newCartItem);
-
-        // Update local storage
         localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Update store state
-        setStore(prevStore => {
-            const updatedCart = [...(prevStore.cart || []), newCartItem];
-            const updatedStore = { ...prevStore, cart: updatedCart };
-            localStorage.setItem('store', JSON.stringify(updatedStore));
-            return updatedStore;
-        });
-
-        console.log(newCartItem);
-        console.log(store);
         alert("Product added to cart!");
     };
 
-
-
-
     const calculateTotalPrice = () => {
-        if (!selectedProduct.variant || selectedProduct.variant.length === 0) {
-            // Handle products without variants
-            return parseFloat(selectedProduct.price) || 0;
-        } else {
-            // Handle products with variants
-            return selectedProduct.variant.reduce((total, variant, index) => {
-                const selectedOptionIndex = selectedVariants[index];
-                const selectedOption = variant.options[selectedOptionIndex];
-                const basePrice = parseFloat(selectedProduct.price) || 0;
-                const variantPrice = selectedOption ? parseFloat(selectedOption.price) : 0;
-                const discountedPrice = basePrice - (parseFloat(selectedProduct.discount) || 0);
-                const variantDiscountedPrice = variantPrice - (selectedOption && parseFloat(selectedOption.discount) || 0);
-
-                // Calculate the total price based on selected variants
-                return total + (variantDiscountedPrice > 0 ? variantDiscountedPrice : discountedPrice);
-            }, 0);
-        }
+        return selectedProduct.variant.reduce((total, variant, index) => {
+            const option = variant.options[selectedVariants[index]];
+            return total + (option ? parseFloat(option.price) : 0);
+        }, parseFloat(selectedProduct.price) || 0);
     };
 
-
-
     const calculateTotalDiscount = () => {
-        if (!selectedProduct.variant || selectedProduct.variant.length === 0) {
-            // Handle products without variants
-            return parseFloat(selectedProduct.discount) || 0;
-        } else {
-            // Handle products with variants
-            return selectedProduct.variant.reduce((total, variant, index) => {
-                // Check if index is 0 (first variant)
-                if (index === 0) {
-                    const selectedOptionIndex = selectedVariants[index];
-                    const selectedOption = variant.options[selectedOptionIndex];
-                    // Calculate discount based on selected variant option
-                    return total + (selectedOption ? parseFloat(selectedOption.discount) || 0 : parseFloat(selectedProduct.discount) || 0);
-                } else {
-                    // For other variants, do not calculate discount
-                    return total;
-                }
-            }, 0);
-        }
+        return selectedProduct.variant.reduce((total, variant, index) => {
+            const option = variant.options[selectedVariants[index]];
+            return total + (option ? parseFloat(option.discount) : 0);
+        }, 0);
     };
 
     useEffect(() => {
@@ -166,7 +102,7 @@ const ProjectLanding1 = () => {
 
     return (
         <div>
-            <Navbar store={store} setStore={setStore} />
+            <Navbar store={store} />
             <div className="p-2 md:p-5 lg:p-16">
                 <div className='mt-5 flex flex-col gap-5'>
                     <div className="flex flex-col md:flex-row md:gap-5 lg:gap-10">
@@ -179,7 +115,7 @@ const ProjectLanding1 = () => {
                                         className="w-full h-auto rounded"
                                         style={{ aspectRatio: '1/1' }}
                                     />
-                                    <div className="flex flex-row">
+                                    <div className="flex flex-col">
                                         {selectedProduct.image && (
                                             <div
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
@@ -274,8 +210,8 @@ const ProjectLanding1 = () => {
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
-                        <ProductReview product={selectedProduct} />
-                        {/* <SimilarProducts store={store || JSON.parse(localStorage.getItem('store'))} product={selectedProduct} onProductSelect={handleProductSelect} /> */}
+                        <ProductReview product={product} />
+                        {/* <SimilarProducts store={store}  similarProducts={selectedProduct.similarProducts} /> */}
                     </div>
                 </div>
             </div>

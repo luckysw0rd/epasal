@@ -1,12 +1,51 @@
+// Navbar component with deleteFromCart function implementation
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import CartDropDown from './CartDropDown';
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
-const Navbar = ({ color, store, addToCart, deleteFromCart, setStore }) => {
+const Navbar = ({ color, store, addToCart, setStore }) => {
     const [scrolling, setScrolling] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    // Function to delete item from cart
+    const deleteFromCart = (product) => {
+        const { product: name, price, selectedVariant } = product;
+
+        // Find the index of the item in cart
+        const existingCartItemIndex = store.cart.findIndex(item =>
+            item.product === name &&
+            item.price === price &&
+            JSON.stringify(item.selectedVariant) === JSON.stringify(selectedVariant)
+        );
+
+        // If item exists in cart
+        if (existingCartItemIndex !== -1) {
+            const updatedCart = [...store.cart];
+
+            // Decrease quantity or remove item if count is 1
+            if (updatedCart[existingCartItemIndex].count === 1) {
+                updatedCart.splice(existingCartItemIndex, 1);
+            } else {
+                updatedCart[existingCartItemIndex] = {
+                    ...updatedCart[existingCartItemIndex],
+                    count: updatedCart[existingCartItemIndex].count - 1
+                };
+            }
+
+            // Update React state
+            setStore(prevState => ({
+                ...prevState,
+                cart: updatedCart,
+                cartCount: prevState.cartCount - 1
+            }));
+
+            // Update localStorage
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            localStorage.setItem('cartCount', (store.cartCount - 1).toString());
+        }
+    };
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -14,17 +53,6 @@ const Navbar = ({ color, store, addToCart, deleteFromCart, setStore }) => {
 
     const toggleCartDropdown = () => {
         setIsCartOpen(!isCartOpen);
-    };
-
-    const handleDeleteFromCart = (index) => {
-        const product = store.cart[index];
-        const updatedCart = store.cart.filter((_, i) => i !== index);
-        setStore((prevState) => ({
-            ...prevState,
-            cart: updatedCart,
-            cartCount: prevState.cartCount - product.count,
-        }));
-        deleteFromCart(product);
     };
 
     return (
@@ -74,7 +102,7 @@ const Navbar = ({ color, store, addToCart, deleteFromCart, setStore }) => {
                 <button className="focus:outline-none" onClick={toggleCartDropdown} aria-label="Open Cart">
                     <AiOutlineShoppingCart className=' mt-1 size-6 ' />
 
-                    {store.cart.length > 0 && (
+                    {store?.cart?.length > 0 && (
                         <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute -top-1 -right-1">
                             {store.cart.length}
                         </span>
@@ -85,8 +113,7 @@ const Navbar = ({ color, store, addToCart, deleteFromCart, setStore }) => {
                     <CartDropDown
                         cart={store.cart}
                         addToCart={addToCart}
-                        deleteFromCart={deleteFromCart}
-                        handleDeleteFromCart={handleDeleteFromCart}
+                        deleteFromCart={deleteFromCart} // Pass deleteFromCart here
                         backgroundColor={color?.navColor?.backgroundnavColor}
                         store={store}
                         setStore={setStore}

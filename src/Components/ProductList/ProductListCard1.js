@@ -220,13 +220,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                             onClick={() => {
-                                                const productToAdd = {
-                                                    ...product,
-                                                    selectedVariant: selectedOption ? [{ name: firstVariant?.name, options: { name: selectedOption?.name } }] : [{ name: 'default', options: { name: 'default' } }],
-                                                    price
-                                                };
-                                                console.log(productToAdd); // Log the product with variant to the console
-                                                addToCart(productToAdd);
+                                                handleProductClick(product)
                                             }}
                                         >
                                             Add to cart
