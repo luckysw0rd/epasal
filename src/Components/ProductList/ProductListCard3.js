@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
-const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
+const ProductListcard3 = ({ product, handleRemoveProduct, store ,productListProps}) => {
+    const {addToCart}=productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
 
@@ -46,7 +47,7 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
                     <FaTimes />
                 </button>
             )}
-            <a href="#">
+            <a >
                 <img
                     src={product.image.imageUrl}
                     alt={product.name}
@@ -64,7 +65,16 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
                             {!addedToCart && (
                                 <button
                                     className="py-2 px-6 rounded-full duration-300"
-                                    onClick={handleAddToCart}
+                                    onClick={() => {
+                                        const productToAdd = {
+                                            ...product,
+                                            selectedVariant: null,
+                                            price:product.originalPrice
+                                        };
+                                        console.log("productToAdd"); // Log the product with variant to the console
+                                        addToCart(productToAdd);
+
+                                    }}
                                     style={{ backgroundColor: `${store.color.productListColor.priceColor}`, color: `${store.color.productListColor.priceLetterColor}` }}
                                 >
                                     <FaShoppingCart />

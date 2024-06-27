@@ -1,5 +1,5 @@
 import React, { Suspense, useContext } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
 import { PrimeReactProvider } from 'primereact/api';
@@ -8,6 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
 import SettingPage from "./Components/SettingsPage/SettingPage";
+import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
+import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
 
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
@@ -21,14 +24,15 @@ const GoogleOAuthCustom = React.lazy(() => import('./Components/Google-OAuth/Goo
 const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductForm'));
 const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Home'));
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
-const Allproducts = React.lazy(()=>  import('./Components/Allproducts/Allproducts'));
+const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
+const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
+
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-
   if (token) {
     routes = (
       <React.Fragment>
@@ -38,6 +42,7 @@ function App() {
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
@@ -45,7 +50,8 @@ function App() {
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
-        <Route path="/settings" element={<SettingPage />} />
+        <Route path="/productlanding" element={<ProjectLanding1 />} />
+
       </React.Fragment>
     );
   } else {
@@ -53,6 +59,8 @@ function App() {
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignInPage />}></Route>
+        {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
+
       </React.Fragment>
     );
   }
@@ -68,10 +76,10 @@ function App() {
               </Routes>
             </Suspense>
           </Router>
-        </div>
+        </div >
         <ToastContainer />
-      </AuthContext.Provider>
-    </PrimeReactProvider>
+      </AuthContext.Provider >
+    </PrimeReactProvider >
   );
 }
 

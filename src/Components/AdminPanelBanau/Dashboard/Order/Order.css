@@ -1,0 +1,60 @@
+/* styles.css */
+
+/* Style the main scrollbar for the entire document */
+::-webkit-scrollbar {
+    width: 10px;
+    /* Width of the scrollbar */
+}
+
+/* Track (background of the scrollbar) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Color of the scrollbar track */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    /* Color of the scrollbar handle */
+    border-radius: 5px;
+    /* Rounded corners */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* Darker background on hover */
+}
+
+/* Optionally, hide scrollbar buttons */
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+/* Style a specific container with custom scrollbar */
+.scrollable-container {
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    scrollbar-width: thin;
+    /* Width of scrollbar in Firefox */
+    scrollbar-color: #888 #f1f1f1;
+    /* Color of scrollbar thumb and track */
+}
+
+/* Style scrollbar in Firefox */
+.scrollable-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

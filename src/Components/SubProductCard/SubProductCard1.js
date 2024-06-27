@@ -5,12 +5,13 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Import FaTimes for 
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
-const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,store }) => {
+const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
     // Component state
+    const { addToCart } = useStore();
     const [selectedStyle, setSelectedStyle] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0)
     const [addedToCart, setAddedToCart] = useState(false);
-    const { previewMode,isEdit } = store;
+    const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch()
 
 
@@ -18,30 +19,30 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
         if (width < 640) return 15; // sm
         if (width < 1281) return 15; // md, lg
         return 30; // xl, 2xl
-      };
-      const getTruncateLength1 = (width) => {
+    };
+    const getTruncateLength1 = (width) => {
         if (width < 640) return 40; // sm
         if (width < 1281) return 40; // md, lg
         return 50; // xl, 2xl
-      };
-      const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
-      const [truncateLength1, setTruncateLength1] = useState(getTruncateLength(window.innerWidth));
-      useEffect(() => {
+    };
+    const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
+    const [truncateLength1, setTruncateLength1] = useState(getTruncateLength(window.innerWidth));
+    useEffect(() => {
         const handleResize = () => {
-          setTruncateLength(getTruncateLength(window.innerWidth));
-          setTruncateLength1(getTruncateLength1(window.innerWidth));
+            setTruncateLength(getTruncateLength(window.innerWidth));
+            setTruncateLength1(getTruncateLength1(window.innerWidth));
         };
-    
+
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-      }, []);
-      const truncateName = (name) => {
+    }, []);
+    const truncateName = (name) => {
         return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
-      };
-      const truncateName1 = (detail) => {
+    };
+    const truncateName1 = (detail) => {
         return detail.length > truncateLength1 ? detail.slice(0, truncateLength1) + '...' : detail;
-      };
-      useEffect(() => {
+    };
+    useEffect(() => {
         // Check if the product is in the cart when the component mounts
         // This logic should be replaced with your actual implementation for checking the cart
         // For demonstration purposes, it's set to false by default
@@ -59,9 +60,9 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
         setSelectedStyle(styleIndex);
         handleStyleSelect(product.id, styleIndex);
     };
-    
-    const handleDeleteProduct=async()=>{
-        if(isEdit){
+
+    const handleDeleteProduct = async () => {
+        if (isEdit) {
             // const responseData = await sendRequest(
             //     'product/deleteProduct',
             //     'POST',
@@ -72,9 +73,9 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
             //         'Content-Type': 'application/json'
             //     }
             // );
-            handleRemoveProduct({id:product._id,storeId:store._id})
-        }else{
-            handleRemoveProduct({id:product.id})
+            handleRemoveProduct({ id: product._id, storeId: store._id })
+        } else {
+            handleRemoveProduct({ id: product.id })
         }
     }
 
@@ -86,7 +87,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
             style={{ backgroundColor: store.color.subProductColor.backgroundColor, color: store.color.subProductColor.textColor, border: `2px solid ${store.color.subProductColor.borderColor}` }}
         >
             {/* Add remove button/icon */}
-            {(!previewMode||isEdit) && (
+            {(!previewMode) && (
                 <button
                     className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center" // Added flex and justify-center
                     onClick={handleDeleteProduct} // Call handleRemoveProduct on click
@@ -98,7 +99,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
 
             <div className="relative w-1/2  md:w-[160px] h-[139px] flex ml-2 mt-5 md:mt-0">
                 <motion.img
-                    className="w-full h-[80px] sm:h-full object-contain"
+                    className="w-full h-[80px] sm:h-full object-contain "
                     src={product?.image?.imageUrl}
                     alt={product.name}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -121,24 +122,23 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct ,stor
                 <div className="mt-1">
                     <div className="text-sm font-bold flex items-center gap-1 justify-between mx-2 sm:mx-0" >
                         <div className=' h-10   text-base flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</div>
-                        {!addedToCart && (
-                            <button
-                                className="text-xs h-8 w-[80px] rounded mr-1"
-                                onClick={handleAddToCart}
-                                style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
-                            >
-                                Add to Cart
-                            </button>
-                        )}
-                        {addedToCart && (
-                            <button
-                                className="text-green-200 text-xs px-2 h-10 cursor-not-allowed rounded px-8"
-                                disabled
-                                style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
-                            >
-                                <FaShoppingCart className="mr-1 text-green-800" />
-                            </button>
-                        )}
+
+                        <button
+                            className="text-xs h-8 w-[80px] rounded mr-1"
+                            onClick={() => {
+                                const productToAdd = {
+                                    ...product,
+                                    selectedVariant: null,
+                                    price: product.price
+                                };
+                                console.log(productToAdd); // Log the product with variant to the console
+                                addToCart(productToAdd);
+                            }}
+                            style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
+                        >
+                            Add to Cart
+                        </button>
+
                     </div>
                 </div>
             </div>

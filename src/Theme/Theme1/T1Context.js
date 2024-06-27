@@ -8,6 +8,11 @@ import offerBannerImg from '../../Assets/offerbanner.webp'
 import secondaryBannerImg from '../../Assets/ImageGroup.png'
 import herobanner from '../../Assets/firstbanner.webp'
 import Shirt from '../../Assets/shirt.webp'
+import fiveHundred from '../../Assets/ratio/500.png';
+import sevenForty from '../../Assets/ratio/740.png';
+import oneFourty from '../../Assets/ratio/140.png';
+import twoFiftySix from '../../Assets/ratio/256.png';
+import sixTeenHundred from '../../Assets/ratio/1600.png';
 
 const StoreContext = createContext();
 
@@ -480,13 +485,13 @@ export const StoreProvider = ({ children, passedStore }) => {
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Kids" }],
 
     subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
-    banner: { bannerUrl: `${herobanner}`, bannerID: '' },
+    banner: { bannerUrl: `${sixTeenHundred}`, bannerID: '' },
     products: [
       {
         id: 1,
         name: "Controller",
         price: '100',
-        image: { imageUrl: controller, imageID: '' },
+        image: { imageUrl: oneFourty, imageID: '' },
         categories: ["Men"],
         subcategories: ["Watch"],
         rating: 2.5,
@@ -530,6 +535,14 @@ export const StoreProvider = ({ children, passedStore }) => {
           },
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
       },
       {
         id: 2,
@@ -571,6 +584,14 @@ export const StoreProvider = ({ children, passedStore }) => {
           },
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
       },
       {
         id: 3,
@@ -620,6 +641,14 @@ export const StoreProvider = ({ children, passedStore }) => {
           },
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Sita",
+          text: "Ok"
+        },
+        {
+          user: "Hari",
+          text: "Bad"
+        }]
       },
       {
         id: 4,
@@ -672,7 +701,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 5,
-        name: "Watch1",
+        name: "Ghadi",
         price: '100',
         image: { imageUrl: controller, imageID: '' },
         categories: ["Men"],
@@ -963,20 +992,9 @@ export const StoreProvider = ({ children, passedStore }) => {
     }
   }, [storeID]);
 
-  useEffect(() => {
-    // Fetch cart data from localStorage
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    const storedCartCount = parseInt(localStorage.getItem('cartCount'), 10) || 0;
 
-    // Set initial state with data from localStorage and preserve other state properties
-    if (store) {
-      setStore(prevState => ({
-        ...prevState,
-        cart: storedCart,
-        cartCount: storedCartCount
-      }));
-    }
-  }, []);
+  
+  
 
   const addProduct = (newProduct) => {
     setStore((prevState) => ({
@@ -1002,6 +1020,45 @@ export const StoreProvider = ({ children, passedStore }) => {
     }));
   };
 
+  useEffect(() => {
+    if (store.fetchedFromBackend) {
+      // Function to initialize localStorage with store data
+      const initializeLocalStorage = () => {
+        if (!localStorage.getItem('store')) {
+          localStorage.setItem('store', JSON.stringify({ name: store.name }));
+        }
+      };
+  
+      // Fetch store data from localStorage
+      const storedStore = JSON.parse(localStorage.getItem('store'));
+  
+      // Check if the stored store name is different from the current store name
+      if (storedStore && storedStore.name !== store.name) {
+        // If different, reset the cart in localStorage
+        localStorage.setItem('cart', JSON.stringify([]));
+        localStorage.setItem('cartCount', '0');
+        // Update the store name in localStorage
+        localStorage.setItem('store', JSON.stringify({ name: store.name }));
+      }
+  
+      // Fetch cart data from localStorage
+      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      const storedCartCount = parseInt(localStorage.getItem('cartCount'), 10) || 0;
+  
+      // Set initial state with data from localStorage and preserve other state properties
+      if (store) {
+        setStore(prevState => ({
+          ...prevState,
+          cart: storedCart,
+          cartCount: storedCartCount
+        }));
+      }
+  
+      // Ensure the store is initialized in localStorage
+      initializeLocalStorage();
+    }
+  }, [store.name, store.fetchedFromBackend]);
+
   const addToCart = (product) => {
     console.log(product, "Product being added");
 
@@ -1012,6 +1069,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       price: selectedOption ? selectedOption.price : product.price,
       discountAmount: selectedOption ? selectedOption.discount : 0,
       count: 1,
+      image:product.image.imageUrl,
       productID:product._id || 1,
       selectedVariant: selectedOption ? [{
         name: product.variant[0].name,

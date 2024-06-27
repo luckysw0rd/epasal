@@ -44,8 +44,9 @@ const SignInPage = () => {
             window.location.href = "/";
 
         } catch (error) {
+            console.log(error.message);
             // Check if the error message contains "`user `not verified" (case insensitive)
-            if (error.message && error.message.toLowerCase().includes("user not verified")) {
+            if (error?.message === 'User not verified') {
                 setShowOverlay(true); // Set showOverlay to true if the error message contains "user not verified"
             } else {
                 console.error('Sign-in request failed:', error);
