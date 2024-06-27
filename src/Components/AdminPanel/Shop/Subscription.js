@@ -62,7 +62,8 @@ export default function Subscription({ store }) {
     const handleBuy = async (plan, duration) => {
         console.log(store);
         console.log(duration);
-        console.log(plan.name);
+        console.log(plan);
+
         const price = duration === 'monthly' ? plan.priceMonthly :
             duration === 'quarterly' ? plan.priceQuarterly : plan.priceYearly;
         const data = {
@@ -72,24 +73,24 @@ export default function Subscription({ store }) {
             subscription: `${plan.name}`,
             store: store._id,
         };
-        try {
-            const responseData = await sendRequest(
-                'payment/create',
-                'POST',
-                JSON.stringify({
-                    data
-                }),
-                {
-                    'Content-Type': 'application/json'
-                }
-            );
-            console.log(responseData); // Handle response data as needed
-            if (responseData.payment.payment_method === 'esewa') {
-                esewaCall(responseData.formData);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     const responseData = await sendRequest(
+        //         'payment/create',
+        //         'POST',
+        //         JSON.stringify({
+        //             data
+        //         }),
+        //         {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     );
+        //     console.log(responseData); // Handle response data as needed
+        //     if (responseData.payment.payment_method === 'esewa') {
+        //         esewaCall(responseData.formData);
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     const esewaCall = (formData) => {
@@ -136,7 +137,7 @@ export default function Subscription({ store }) {
                         </div>
                     </div>
                 </div>
-                <div className="flex w-screen  space-x-0 md:w-screen lg:w-[650px] xl:w-[700px] 2xl:w-[1000px] 3xl:w-[1000px]  flex-wrap lg:border border-gray-300 rounded-lg">
+                <div className="flex w-screen  space-x-0 md:w-screen lg:w-[500px] xl:w-[700px] 2xl:w-[1230px] 3xl:w-[1200px]  flex-wrap lg:border border-gray-300 rounded-lg">
                     {plans.map((plan, planIndex) => (
                         <div
                             key={planIndex}

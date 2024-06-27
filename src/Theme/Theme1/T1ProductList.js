@@ -24,7 +24,7 @@ const T1ProductList = () => {
 
 
     return (
-        <div className='px-8 md:px-10'>
+        <div className=''>
             <ProductList productListProps={productListProps} productListType={categoryType} />
         </div>
     );
