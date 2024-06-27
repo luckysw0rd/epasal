@@ -5,11 +5,9 @@ import { StarIcon } from '@heroicons/react/16/solid';
 const SimilarProducts = ({ store, onProductSelect, product: currentProduct, handleImage }) => {
     const handleProductClick = (product) => {
         onProductSelect(product);
-        handleImage(product.image.imageUrl)
-
+        handleImage(product);
     };
-
-    const similarProducts = store.products.filter(product => product._id !== currentProduct._id).slice(0, 3);
+    const similarProducts = store.products.filter(product => product._id !== currentProduct._id).slice(0, 3)
 
     return (
         <div >

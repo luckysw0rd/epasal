@@ -14,7 +14,10 @@ const ProjectLanding1 = () => {
     const navigate = useNavigate()
     const location = useLocation();
     const { product, store } = location.state || {};
-    const [selectedProduct, setSelectedProduct] = useState(product)
+    const [selectedProduct, setSelectedProduct] = useState(() => {
+        const storedProduct = localStorage.getItem('product');
+        return product || (storedProduct ? JSON.parse(storedProduct) : null);
+    });
     const [selectedVariant, setSelectedVariant] = useState(selectedProduct.variant[0]);
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(selectedProduct.image.imageUrl);
@@ -32,7 +35,8 @@ const ProjectLanding1 = () => {
     const handleDefaultImage = (newProduct) => {
         setSelectedOptionIndex(-1);
         navigate(location.pathname, { state: { product: newProduct, store } });
-        setDisplayedImage(selectedProduct.image.imageUrl);
+        localStorage.setItem('product', JSON.stringify(newProduct));
+        setDisplayedImage(newProduct.image.imageUrl);
     };
 
     const handleVariantChange = (e) => {
@@ -56,6 +60,8 @@ const ProjectLanding1 = () => {
     const handleProductSelect = (newProduct) => {
         setSelectedProduct(newProduct);
         navigate(location.pathname, { state: { product: newProduct, store } });
+        localStorage.setItem('product', JSON.stringify(newProduct));
+        setDisplayedImage(newProduct.image.imageUrl);
     };
 
     const totalPrice = price * productCount;
@@ -69,8 +75,11 @@ const ProjectLanding1 = () => {
     }
 
     useEffect(() => {
+        if (selectedProduct) {
+            localStorage.setItem('product', JSON.stringify(selectedProduct));
+        }
         window.scrollTo(0, 0);
-    }, [product])
+    }, [selectedProduct]);
     return (
         <div className="p-2 md:p-5 lg:p-16">
             <div className='flex flex-col gap-5'>
@@ -187,10 +196,10 @@ const ProjectLanding1 = () => {
                     </div>
                 </div>
 
-                {/* REVIEW SECTION  */}
+                {/* REVIEW SECTION  */}c
                 <div className='w-full flex flex-col md:flex-row gap-5 lg:gap-10'>
                     <div className='w-full md:w-[75%] p-2 md:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><ProductReview product={selectedProduct} /></div>
-                    <div className='w-full md:w-[25%] p-2 lg:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><SimilarProducts store={store} product={selectedProduct} onProductSelect={handleProductSelect} handleImage={handleDefaultImage} /></div>
+                    <div className='w-full md:w-[25%] p-2 lg:p-5 bg-gray-50 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]'><SimilarProducts store={store || JSON.parse(localStorage.getItem('store'))} product={selectedProduct} onProductSelect={handleProductSelect} handleImage={handleDefaultImage} /></div>
                 </div>
             </div>
         </div>

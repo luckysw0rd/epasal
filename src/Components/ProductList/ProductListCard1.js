@@ -32,7 +32,9 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
     };
 
     const handleProductClick = (product) => {
-        console.log(fetchedFromBackend, isEdit)
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
         if (fetchedFromBackend && !isEdit)
             navigate("/productlanding", { state: { product, store } })
     };
