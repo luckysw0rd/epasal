@@ -1,19 +1,18 @@
-// ProductCard.js
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { IoIosArrowForward } from "react-icons/io";
+import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa'; // Importing star icons
 
 const ProductCard = ({ product, productColor, addToCart }) => {
   const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, buttonBorderColor } = productColor;
   console.log(productColor);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
+  const [rating, setRating] = useState(4.5); // Dummy rating data
 
   // Truncating function
   const getTruncateLength = (width) => {
     if (width < 640) return 50; // sm
-    if (width < 1281) return 37; // md, lg
+    if (width < 800) return 37; // md, lg
     return 50; // xl, 2xl
   };
   const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
@@ -47,10 +46,24 @@ const ProductCard = ({ product, productColor, addToCart }) => {
     setDisplayedImage(product?.image?.imageUrl);
   };
 
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i) {
+        stars.push(<FaStar key={i} style={{ color: 'orange', fontSize: '14px' }} />);
+      } else if (rating >= i - 0.5) {
+        stars.push(<FaStarHalfAlt key={i} style={{ color: 'orange', fontSize: '14px' }} />);
+      } else {
+        stars.push(<FaRegStar key={i} style={{ color: 'orange', fontSize: '14px' }} />);
+      }
+    }
+    return stars;
+  };
+
   return (
     <motion.div
       className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
-      style={{ borderColor:productColor.borderColor }}
+      style={{ borderColor: productColor.borderColor }}
       whileTap={{ scale: 0.98 }}
     >
       <div className="w-full">
@@ -84,14 +97,12 @@ const ProductCard = ({ product, productColor, addToCart }) => {
                   ))}
                 </div>
                 <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
-                  <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
-                    <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
-                      Learn More <IoIosArrowForward />
-                    </div>
-                  </button>
+                  <div style={{ color: priceColor }} className="flex gap-1 items-center">
+                    {renderStars(product.rating)}
+                  </div>
                   <button
                     style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
-                    className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                    className={`px-6 py-2 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                     onClick={() => {
