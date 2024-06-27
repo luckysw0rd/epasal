@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
+import SettingPage from "./Components/SettingsPage/SettingPage";
 
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
