@@ -7,12 +7,12 @@ import CategorySelector from '../T1Category';
 import SubProduct from '../../../Components/SubProduct/SubProduct';
 
 const T1SubProduct = () => {
-    const { store, setStore } = useStore();
+    const { store, setStore ,addToCart} = useStore();
     const { products, categories, subCategories, previewMode } = store;
     const subProductType = 'Category1';
 
     const subProductsProps = {
-        products, categories, subCategories, previewMode, store, setStore, subProductType, CategorySelector, AddProduct: ProductForm, ProductCard, useDraggable
+        products, addToCart, categories, subCategories, previewMode, store, setStore, subProductType, CategorySelector, AddProduct: ProductForm, ProductCard, useDraggable
     };
 
     return (

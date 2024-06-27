@@ -112,7 +112,8 @@ const Product = ({ store }) => {
         discount: updatedEditProduct.discount,
         inventory: updatedEditProduct.inventory,
         soldQuantity: updatedEditProduct.soldQuantity,
-        revenueGenerated: updatedEditProduct.revenueGenerated
+        revenueGenerated: updatedEditProduct.revenueGenerated,
+        inventory:updatedEditProduct.inventory
       };
 
       const response = await sendRequest(
@@ -298,6 +299,8 @@ const Product = ({ store }) => {
                     <p className="text-gray-700 mb-2">Price: ${product.price}</p>
                     <p className="text-gray-700 mb-2">Discount: {product.discount}</p>
                     <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
+                    <p className="text-gray-700 mb-2">Inventory: {product.inventory}</p>
+
                   </div>
                 </div>
                 <button
@@ -370,6 +373,16 @@ const Product = ({ store }) => {
                   name="discount"
                   value={editProduct.discount}
                   onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Inventory</label>
+                <input
+                  type="number"
+                  name="inventory"
+                  value={editProduct.inventory}
+                  onChange={handleInputChange }
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>

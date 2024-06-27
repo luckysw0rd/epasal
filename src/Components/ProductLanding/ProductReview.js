@@ -222,7 +222,7 @@ const ProductReview = ({ product }) => {
                                     return <StarIcon key={idx} className='w-3 h-3 text-[#959595]' />
                             })}
                         </div>
-                        <div className="ml-auto text-gray-400 text-xs lg:text-sm">2 mon</div>
+                        {/* <div className="ml-auto text-gray-400 text-xs lg:text-sm">2 mon</div> */}
                     </div>
                     <div className="mt-3 text-sm lg:text-base text-gray-600">
                         {review?.description}

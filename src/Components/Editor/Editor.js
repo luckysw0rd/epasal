@@ -1672,20 +1672,7 @@ const Editor = () => {
                   </select>
                 </div>
 
-          
-                <div className="mb-4">
-                  <h4 className="text-lg font-semibold mb-2">Select Preset</h4>
-                  <select
-                    className="border border-gray-300 rounded-md py-2 px-4 w-full"
-                    onChange={handlePresetChange}
-                  >
-                    <option value="">Select Preset</option>
-                    {presets.map((preset) => (
-                      <option key={preset.name} value={preset.name}>{preset.name}</option>
-                    ))}
-                  </select>
-                </div>
-
+       
                 {Object.entries(color).map(([colorKey, colorValue], index) => {
                   if (typeof colorValue === 'object') {
                     return (

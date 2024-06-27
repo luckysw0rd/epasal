@@ -638,7 +638,7 @@ const Stores = () => {
              */}
             {modalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 text-sm">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[50vh] md:h-[70vh] lg:h-[90vh] overflow-auto">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[85vh] md:h-[70vh] lg:h-[90vh] overflow-auto">
                         <h2 className="text-xl font-bold mb-4">Edit Store</h2>
                         {selectedStore && (
                             <form>

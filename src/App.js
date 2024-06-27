@@ -24,7 +24,7 @@ const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductFo
 const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Home'));
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
 const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
-
+const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
 
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
