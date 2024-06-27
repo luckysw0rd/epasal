@@ -17,6 +17,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Sanchez:ital@0;1&display=swap");
 @import "primereact/resources/themes/lara-light-indigo/theme.css";
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap');
+@import 'react-toastify/dist/ReactToastify.css';
 @import-normalize;
 
 *,
@@ -155,6 +157,8 @@
   .dropdown-selection-text {
     @apply text-gray-500 font-semibold tracking-wide mr-auto transition duration-300 ease-in-out hover:text-pink-500 dark:hover:text-gray-500 cursor-pointer;
   }
+
+  
 }
 
 @tailwind utilities;

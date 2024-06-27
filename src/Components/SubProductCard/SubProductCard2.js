@@ -44,7 +44,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.subProductColor.backgroundColor, color: store.color.subProductColor.textColor, border: `2px solid ${store.color.subProductColor.borderColor}` }}
         >
-            {(!previewMode || isEdit) && (
+            {(!previewMode) && (
                 <button
                     className="absolute top-2 right-2 p-2 rounded-full bg-red-500 flex items-center justify-center"
                     onClick={handleDeleteProduct}
@@ -64,6 +64,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     }}
                     className="z-10 font-bold text-lg -mb-5 tracking-wider "
                 >
+                    {/* {product.subcategories[0]} */}
                 </p>
                 <p className="font-bold text-xl tracking-wider ">
                     {product.name}
@@ -89,7 +90,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                             color: store.color.subProductColor.categoryColor,
                         }}
                     >
-                        {product.category}
+                        {product.subcategories[0]}
                     </p>
                     <ul className="flex flex-col items-start gap-2">
                         <li

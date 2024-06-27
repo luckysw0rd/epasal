@@ -1,12 +1,17 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-import React, { useEffect, useState } from 'react';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import React, { useContext, useEffect, useState } from 'react';
+import useFetch from '../../../../Hooks/useFetch';
+import { AuthContext } from '../../../../Hooks/AuthContext';
 
-const SalesGraph = () => {
-    const [selectedPeriod, setSelectedPeriod] = useState('week');
+const SalesGraph = ({ storeId }) => {
+    const { isLoading, error, sendRequest, onCloseError } = useFetch();
+    const auth = useContext(AuthContext);
+    const [selectedPeriod, setSelectedPeriod] = useState('month'); // Default to monthly
     const [chartDimensions, setChartDimensions] = useState({
         width: window.innerWidth < 768 ? 380 : 750,
         height: window.innerWidth < 768 ? 300 : 400,
     });
+    const [data, setData] = useState([]);
 
     const handleResize = () => {
         setChartDimensions({
@@ -22,39 +27,46 @@ const SalesGraph = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const responseData = await sendRequest(
+                    `store/get/graph/sales?storeId=${storeId}&period=${selectedPeriod}`,
+                    'GET',
+                    null,
+                    {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + auth.token,
+                    }
+                );
+                // Ensure data is formatted correctly
+                const formattedData = responseData.orders.map(order => ({
+                    totalRevenue: order.totalRevenue,
+                    periodKey: selectedPeriod === 'day' ? `Hour ${order._id.hour}` :
+                                selectedPeriod === 'week' ? `Day ${order._id.dayOfWeek}` :
+                                selectedPeriod === 'month' ? `Week ${order._id.week}` :
+                                `Month ${order._id.month}`,
+                }));
+                setData(formattedData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, [storeId, selectedPeriod]);
+
     const handleChange = (event) => {
         setSelectedPeriod(event.target.value);
     };
-    const data = {
-        week: [
-            { day: 'Mon', sales: 1500 },
-            { day: 'Tue', sales: 2000 },
-            { day: 'Wed', sales: 2500 },
-            { day: 'Thu', sales: 1000 },
-            { day: 'Fri', sales: 2100 },
-        ],
-        month: [
-            { week: 'Week 1', sales: 1000 },
-            { week: 'Week 2', sales: 1200 },
-            { week: 'Week 3', sales: 1300 },
-            { week: 'Week 4', sales: 1100 },
-        ],
-        year: [
-            { month: 'Jan', sales: 4000 },
-            { month: 'Feb', sales: 3800 },
-            { month: 'Mar', sales: 4200 },
-            { month: 'Apr', sales: 4500 },
-            { month: 'May', sales: 4700 },
-            { month: 'Jun', sales: 4400 },
-            { month: 'Jul', sales: 4600 },
-            { month: 'Aug', sales: 4800 },
-            { month: 'Sep', sales: 4900 },
-            { month: 'Oct', sales: 5100 },
-            { month: 'Nov', sales: 5300 },
-            { month: 'Dec', sales: 5500 },
-        ],
-    };
-    const dataKey = selectedPeriod === 'year' ? 'month' : selectedPeriod === 'month' ? 'week' : 'day';
+
+    const periodOptions = [
+        { value: 'day', label: 'Daily', dataKey: 'hour' },
+        { value: 'week', label: 'Weekly', dataKey: 'day' },
+        { value: 'month', label: 'Monthly', dataKey: 'week' },
+        { value: 'year', label: 'Yearly', dataKey: 'month' },
+    ];
+
+    const currentPeriod = periodOptions.find(option => option.value === selectedPeriod);
 
     return (
         <div className=''>
@@ -83,24 +95,27 @@ const SalesGraph = () => {
                     onChange={handleChange}
                     className="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                 >
-                    <option value="week" className="text-gray-900">Weekly</option>
-                    <option value="month" className="text-gray-900">Monthly</option>
-                    <option value="year" className="text-gray-900">Yearly</option>
+                    {periodOptions.map(option => (
+                        <option key={option.value} value={option.value} className="text-gray-900">
+                            {option.label}
+                        </option>
+                    ))}
                 </select>
 
             </div>
 
-
             {/* GRAPH  */}
-            <LineChart width={chartDimensions.width} height={chartDimensions.height} data={data[selectedPeriod]} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <Line type="monotone" dataKey="sales" stroke="#000000" strokeWidth={2} />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey={dataKey} />
-                <YAxis />
-                <Tooltip />
-            </LineChart>
+            <ResponsiveContainer width="100%" height={chartDimensions.height}>
+                <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <Line type="monotone" dataKey="totalRevenue" stroke="#000000" strokeWidth={2} />
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis dataKey="periodKey" />
+                    <YAxis />
+                    <Tooltip />
+                </LineChart>
+            </ResponsiveContainer>
 
-        </div>
+        </div>  
     );
 };
 
