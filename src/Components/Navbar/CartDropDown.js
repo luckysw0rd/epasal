@@ -79,8 +79,8 @@ const CartDropdown = ({ backgroundColor }) => {
                                     <div className='ml-3'>
                                         <p className="font-medium">{item.productName}</p>
                                         <p>रु{item.price * item.count}</p>
-                                        <p className="text-xs text-gray-600">{item.selectedVariant[0]?.options.name}</p>
-                                     </div>
+                                        {/* <p className="text-xs text-gray-600">{item.selectedVariant[0]?.options.name}</p> */}
+                                    </div>
                                 </div>
                                 <IoCloseCircleOutline size={20} onClick={() => handleDeleteFromCart(index)} />
                                 <div className="flex items-center text-xl">
