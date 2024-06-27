@@ -530,6 +530,14 @@ export const StoreProvider = ({ children, passedStore }) => {
           },
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
       },
       {
         id: 2,
@@ -571,6 +579,14 @@ export const StoreProvider = ({ children, passedStore }) => {
           },
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
       },
       {
         id: 3,
@@ -620,6 +636,14 @@ export const StoreProvider = ({ children, passedStore }) => {
           },
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Sita",
+          text: "Ok"
+        },
+        {
+          user: "Hari",
+          text: "Bad"
+        }]
       },
       {
         id: 4,
@@ -672,7 +696,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 5,
-        name: "Watch1",
+        name: "Ghadi",
         price: '100',
         image: { imageUrl: controller, imageID: '' },
         categories: ["Men"],
@@ -931,7 +955,7 @@ export const StoreProvider = ({ children, passedStore }) => {
           null,
           {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
+            // Authorization: "Bearer " + auth.token,
           }
         ); // Use storeID from useParams
         console.log(response);

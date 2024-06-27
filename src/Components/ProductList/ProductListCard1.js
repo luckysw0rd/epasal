@@ -98,42 +98,44 @@
 // };
 
 // export default ProductListCard1;
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import './productList.css'
+import { useNavigate } from 'react-router-dom';
 
 const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart, isEdit, store } = productListProps;
+    const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
+    const navigate = useNavigate()
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
 
-//truncating 
-const getTruncateLength = (width) => {
-    if (width < 640) return 50; // sm
-    if (width < 1281) return 37; // md, lg
-    return 50; // xl, 2xl
-  };
-  const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
-  useEffect(() => {
-    const handleResize = () => {
-      setTruncateLength(getTruncateLength(window.innerWidth));
+    //truncating 
+    const getTruncateLength = (width) => {
+        if (width < 640) return 50; // sm
+        if (width < 1281) return 37; // md, lg
+        return 50; // xl, 2xl
     };
+    const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
+    useEffect(() => {
+        const handleResize = () => {
+            setTruncateLength(getTruncateLength(window.innerWidth));
+        };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-  const truncateName = (name) => {
-    return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
-  };
+    const truncateName = (name) => {
+        return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
+    };
     if (!product) return null;
 
-    const { id, name, image, variant } = product;
+    const { id, name, image, variant, rating } = product;
     const firstVariant = variant[0]; // Considering only the first variant
     const selectedOption = selectedOptionIndex === -1 ? null : firstVariant?.options[selectedOptionIndex];
     const price = selectedOption ? selectedOption.price : product.price || 0;
@@ -146,6 +148,14 @@ const getTruncateLength = (width) => {
     const handleDefaultImage = () => {
         setSelectedOptionIndex(-1);
         setDisplayedImage(product?.image?.imageUrl);
+    };
+
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (fetchedFromBackend && !isEdit)
+            navigate("/productlanding", { state: { product, store } })
     };
 
     return (
@@ -164,62 +174,64 @@ const getTruncateLength = (width) => {
                             <FaTimes />
                         </button>
                     )}
-                    <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-                        <div>
-                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
-                        </div>
-                        <div className="px-5 w-full">
-                            <hr className="border-t-2" style={{ borderColor: borderColor }} />
-                            <div className=" py-2 "
-                            // className="prod-title mt-2 flex justify-between items-center"
-                            >
-                                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
-                                <p className="my-1 font-bold text-[13px]" style={{ color: priceColor }}>Rs. {price}</p>
+                    <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+                        <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+                            <div onClick={() => handleProductClick(product)}>
+                                <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                             </div>
-                            <div className="grid gap-2 relative w-full">
-                                <div className="flex ">
-                                    <div
-                                        className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
-                                        onClick={handleDefaultImage}
-                                    >
-                                        <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2 object-contain' />
-                                    </div>
-                                    {firstVariant?.options?.map((option, index) => (
-                                        <div
-                                            key={index}
-                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
-                                            onClick={() => handleOptionSelect(index)}
-                                        >
-                                            <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
-                                        </div>
-                                    ))}
+                            <div className="px-5 w-full">
+                                <hr className="border-t-2" style={{ borderColor: borderColor }} />
+                                <div className=" py-2 " onClick={() => handleProductClick(product)}
+                                // className="prod-title mt-2 flex justify-between items-center"
+                                >
+                                    <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
+                                    <p className="my-1 font-bold text-[13px]" style={{ color: priceColor }}>Rs. {price}</p>
                                 </div>
-                                {/* <div className='absolute right-1 top-1'>
+                                <div className="grid gap-2 relative w-full">
+                                    <div className="flex ">
+                                        <div
+                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
+                                            onClick={handleDefaultImage}
+                                        >
+                                            <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2 object-contain' />
+                                        </div>
+                                        {firstVariant?.options?.map((option, index) => (
+                                            <div
+                                                key={index}
+                                                className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
+                                                onClick={() => handleOptionSelect(index)}
+                                            >
+                                                <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {/* <div className='absolute right-1 top-1'>
                                     <FaHeart style={{ color: heartColor }} size={15} />
                                 </div> */}
-                                <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
-                                    <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
-                                        <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
-                                            Learn More <IoIosArrowForward />
-                                        </div>
-                                    </button>
-                                    <button
-                                        style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
-                                        className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
-                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
-                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
-                                        onClick={() => {
-                                            const productToAdd = {
-                                                ...product,
-                                                selectedVariant: selectedOption ? [{ name: firstVariant?.name, options: { name: selectedOption?.name } }] : [{ name: 'default', options: { name: 'default' } }],
-                                                price
-                                            };
-                                            console.log(productToAdd); // Log the product with variant to the console
-                                            addToCart(productToAdd);
-                                        }}
-                                    >
-                                        Add to cart
-                                    </button>
+                                    <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
+                                        <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
+                                            <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
+                                                Learn More <IoIosArrowForward />
+                                            </div>
+                                        </button>
+                                        <button
+                                            style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
+                                            className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
+                                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
+                                            onClick={() => {
+                                                const productToAdd = {
+                                                    ...product,
+                                                    selectedVariant: selectedOption ? [{ name: firstVariant?.name, options: { name: selectedOption?.name } }] : [{ name: 'default', options: { name: 'default' } }],
+                                                    price
+                                                };
+                                                console.log(productToAdd); // Log the product with variant to the console
+                                                addToCart(productToAdd);
+                                            }}
+                                        >
+                                            Add to cart
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

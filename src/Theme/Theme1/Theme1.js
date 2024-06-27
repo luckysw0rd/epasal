@@ -40,7 +40,7 @@ const EStore = ({ Passedstore }) => {
     { id: 3, component: <AboutPage /> },
     { id: 4, component: <Editor /> },
     { id: 5, component: <T1SubProduct /> },
-    {id:6,component:<T1ThirdBanner/>},
+    { id: 6, component: <T1ThirdBanner /> },
     { id: 7, component: <T1NewProducts /> },
 
     { id: 8, component: <T1SecondaryBanner /> },
@@ -113,7 +113,7 @@ const EStore = ({ Passedstore }) => {
           className=" h-full overflow-auto"
           style={{ backgroundColor: store.color.backgroundThemeColor }}
         >
-          
+
           <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}
@@ -130,10 +130,10 @@ const EStore = ({ Passedstore }) => {
               {tasks.map((item, index) => {
                 return (
                   <div key={index} className="" style={{ width: "100%" }}>
-                      <Task
-                        id={tasks[index].id}
-                        component={tasks[index].component}
-                      />
+                    <Task
+                      id={tasks[index].id}
+                      component={tasks[index].component}
+                    />
                   </div>
                 );
               })}
