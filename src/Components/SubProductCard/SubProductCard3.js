@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const SubProductCard3 = ({ product, handleRemoveProduct, store }) => {
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
+    const navigate = useNavigate()
 
     useEffect(() => {
         setAddedToCart(false);
     }, [product.id]);
+
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store?.fetchedFromBackend && !store?.isEdit)
+            navigate("/productlanding", { state: { product, store } })
+    };
 
     const handleAddToCart = () => {
         setAddedToCart(true);
@@ -55,30 +65,28 @@ const SubProductCard3 = ({ product, handleRemoveProduct, store }) => {
                 <div className="px-4 py-3 w-72">
                     <span className="text-gray-400 mr-3 uppercase text-xs">{product.subcategories[0]}</span>
                     <p className="text-lg font-bold text-black truncate block capitalize">{product.name}</p>
-                    <div className="flex items-center">
-                        <p className="text-lg font-semibold text-black cursor-auto my-3" style={{ color: `${store.color.subProductColor.priceColor}` }}>Rs {product.price}</p>
-                        <del>
-                            <p className="text-sm text-gray-600 cursor-auto ml-2">Rs {product.originalPrice}</p>
-                        </del>
-                        <div className="ml-[100px]">
-                            {!addedToCart && (
-                                <button
-                                    className="py-2 px-6 rounded-full duration-300"
-                                    onClick={handleAddToCart}
-                                    style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
-                                >
-                                    <FaShoppingCart />
-                                </button>
-                            )}
-                            {addedToCart && (
-                                <button
-                                    className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
-                                    disabled
-                                    style={{ backgroundColor: store.color.subProductColor.priceColor, color: store.color.subProductColor.priceLetterColor }}
-                                >
-                                    <FaShoppingCart className="mr-1 " />
-                                </button>
-                            )}
+                    <div className="flex  items-center justify-between">
+                        <div  className=' flex justify-start items-center'>
+                            <p className="text-md text-nowrap font-semibold cursor-auto my-3" style={{ color: `${store.color.subProductColor.priceColor}` }}>
+                                Rs {product.price - product.discount}
+                            </p>
+                            {product.discount>0 &&
+                            <del>
+                                <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
+                            </del>}
+                        </div>
+                        <div className=" ">
+
+                            <button
+                                className="py-2 px-6 rounded-full duration-300"
+                                onClick={() => {
+                                    handleProductClick(product)
+                                }}
+                                style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
+                            >
+                                <FaShoppingCart />
+                            </button>
+
                         </div>
                     </div>
                 </div>

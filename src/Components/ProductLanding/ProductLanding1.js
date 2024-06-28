@@ -99,7 +99,7 @@ const ProjectLanding1 = () => {
         console.log(newCartItem);
         console.log(store);
 
-        toast("Product Added To Cart")
+        // toast("Product Added To Cart")
     };
 
 

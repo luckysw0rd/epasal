@@ -4,7 +4,7 @@ import ProductCard from './ProductCard';
 import { useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import StarRating from './StarRating'; // Import the StarRating component
-import { FaSearch } from 'react-icons/fa'; // Import the search icon
+import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -23,6 +23,7 @@ const AllProducts = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [name, setName] = useState(''); // State for the name filter input
+  const [isFilterVisible, setIsFilterVisible] = useState(false); // State for filter visibility
 
   useEffect(() => {
     if (storeName) {
@@ -41,7 +42,7 @@ const AllProducts = () => {
       const response = await axios.get(`http://localhost:8000/api/product/getStoreProducts/${storeName}`, {
         params: {
           page,
-          limit: 10,
+          limit: 12,
           ...filters,
           productName: name // Pass the name filter to the backend
         }
@@ -220,6 +221,10 @@ const AllProducts = () => {
     fetchProducts(); // Trigger the fetchProducts function on search button click
   };
 
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -229,67 +234,83 @@ const AllProducts = () => {
       <div className="flex flex-col mt-20">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
-        <div className="flex">
-          <div className="w-64 p-4 py-0 ml-2 h-screen -mt-4 bg-gray-100 rounded-lg shadow-md">
-            <h3 className="font-bold mb-4 text-lg text-blue-700">Filters</h3>
-            <div className="block mb-4">
-              <label className="block mb-2 text-gray-700">Price Range:</label>
-              <div className="flex items-center">
-                <input
-                  type="number"
-                  name="minPrice"
-                  value={minPrice}
-                  onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
-                  placeholder="Min"
-                  className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
-                />
-                <span className="text-gray-500">-</span>
-                <input
-                  type="number"
-                  name="maxPrice"
-                  value={maxPrice}
-                  onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
-                  placeholder="Max"
-                  className="mt-1 p-2 border rounded w-1/2 ml-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
-                />
-              </div>
-            </div>
-            <label className="block mb-4 text-gray-700">
-              Rating:
-              <StarRating
-                value={parseInt(filters.rating)}
-                onChange={handleRatingChange}
-              />
-            </label>
+        <div className="flex flex-col md:flex-row">
+          <button
+            onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
+            className="md:hidden px-4 py-2 bg-blue-500 text-white rounded m-2"
+          >
+            {isFilterVisible ? <FaTimes /> : <FaBars />}
+          </button>
 
-            {store?.subCategories && (
-              <div className="mb-4">
-                <h4 className="font-bold mb-2 text-gray-700">Subcategories:</h4>
-                {store.subCategories.map((subCategory, index) => (
-                  <div key={subCategory._id} className="flex items-center mb-2">
-                    <input
-                      type="checkbox"
-                      id={`subCategory-${index}`}
-                      name="category"
-                      value={subCategory.name}
-                      onChange={handleFilterChange}
-                      className="mr-2"
-                    />
-                    <label htmlFor={`subCategory-${index}`} className="text-gray-600">{subCategory.name}</label>
-                  </div>
-                ))}
-              </div>
-            )}
-            <button
-              onClick={handleSearch} // Handle click on search button
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+          {(isFilterVisible || window.innerWidth >= 768) && ( // Conditionally render the filter section based on visibility state or screen width
+            <div className="   relative top-8 md:left-5  w-full md:w-1/4 h-[688px]  my md:max-w-[250px] p-5 py-0   md:-mt-4 rounded-lg border-2  shadow-xl"
+              style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor }}
             >
-              Search
-            </button>
-          </div>
+              <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10  ">Filters</h3>
+              <div className="block mb-4">
+                <label className="block mb-2 font-semibold">Price Range:</label>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    name="minPrice"
+                    value={minPrice}
+                    onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
+                    placeholder="Min"
+                    className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
+                  />
+                  <span className="">-</span>
+                  <input
+                    type="number"
+                    name="maxPrice"
+                    value={maxPrice}
+                    onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
+                    placeholder="Max"
+                    className="mt-1 p-2 border rounded w-1/2 ml-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
+                  />
+                </div>
+              </div>
+              <label className="block mb-4  font-semibold ">
+                <div className=' mb-2'>
+                  Rating:
+                </div>
+                <StarRating
+                  className=' '
+                  value={parseInt(filters.rating)}
+                  onChange={handleRatingChange}
+                />
+              </label>
 
+              {store?.subCategories && (
+                <div className="mb-4">
+                  <h4 className=" mb-2 font-semibold">Subcategories:</h4>
+                  {store.subCategories.map((subCategory, index) => (
+                    <div key={subCategory._id} className="flex items-center mb-2">
+                      <input
+                        type="checkbox"
+                        id={`subCategory-${index}`}
+                        name="category"
+                        value={subCategory.name}
+                        onChange={handleFilterChange}
+                        className="mr-2"
+                      />
+                      <label htmlFor={`subCategory-${index}`} className="text-gray-600">{subCategory.name}</label>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <button
+                onClick={handleSearch} // Handle click on search button
+                className="px-4 py-1   rounded  transition ease-in-out duration-200  border-2"
+                style={
+                  { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
+                }
+              >
+                Search
+              </button>
+            </div>
+          )}
 
-          <div className="flex-grow p-4">
+          <div className="flex-grow p-4 W-full md:W-3/4">
             <div className="flex flex-wrap justify-center gap-4">
               <div className="flex items-center mb-4 w-full">
                 <input
@@ -298,7 +319,7 @@ const AllProducts = () => {
                   value={name}
                   onChange={handleNameFilterChange} // Handle change for name filter input
                   placeholder="Search by name"
-                  className="mt-1 p-2 border rounded w-2/3 md:w-1/6 ml-6"
+                  className="mt-1 p-2 border rounded w-2/3 md:w-1/6 ml-14"
                 />
 
                 <button
@@ -308,18 +329,20 @@ const AllProducts = () => {
                   <FaSearch />
                 </button>
               </div>
-              {products.map(product => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  productColor={color.productListColor}
-                  addToCart={addToCart}
-                  store={store}
-                />
-              ))}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+                {products.map(product => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    productColor={color.productListColor}
+                    addToCart={addToCart}
+                    store={store}
+                  />
+                ))}
+              </div>
             </div>
 
-            <div className="flex justify-center mt-4">
+            <div className="flex justify-center mt-8">
               <button
                 disabled={page <= 1}
                 onClick={() => handlePageChange(page - 1)}
@@ -327,9 +350,9 @@ const AllProducts = () => {
               >
                 Previous
               </button>
-              <span className="mx-2">Page {page} of {totalPages}</span>
+              <span className="mx-2 flex items-center text-center">Page {page} of {totalPages}</span>
               <button
-                disabled={page >= totalPages}
+                // disabled={page  totalPages}
                 onClick={() => handlePageChange(page + 1)}
                 className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
               >

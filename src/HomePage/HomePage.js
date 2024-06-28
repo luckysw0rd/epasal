@@ -22,7 +22,7 @@ function HomePage() {
         const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
         const viewportHeight = window.innerHeight;
         console.log("distancefromtop:", distanceFromTop, ", viewportHeight: 85 ", viewportHeight * 0.01)
-        if (distanceFromTop <= 160) {
+        if (distanceFromTop <= 200) {
             scrollableDiv.classList.add('overflow-scroll', 'sticky');
             //   scrollableDiv.style.top = `0px`;
         } else {
@@ -46,9 +46,19 @@ function HomePage() {
 
             </div>
             <div className='bg-white h-24 w-full z-10'></div>
-            <div id='scrollableDiv' className=' h-[75vh] bg-white pt-32 relative'>
+            <div id='scrollableDiv' className=' h-[82vh] bg-white pt-32 relative'>
 
                 <Landingpage />
+                <Landingpage />
+
+                <Landingpage />
+
+                <Landingpage />
+
+                <Landingpage />
+
+                <Landingpage />
+
             </div>
 
         </div>
