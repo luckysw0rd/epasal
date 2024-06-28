@@ -270,7 +270,7 @@ const ProjectLanding1 = () => {
                                     </div>
                                     <div className='flex my-3 md:my-5 lg:my-10 items-center gap-5'>
                                         <button className="text-xs md:text-sm lg:text-base hover:bg-[#898989] hover:text-white w-1/2 border cursor-pointer border-gray-600 py-2 rounded-md">Buy Now</button>
-                                        <div className='hover:bg-[#898989] hover:text-white border cursor-pointer border-gray-600 rounded-md p-2'><TbShoppingBagPlus onClick={() => addToCart(product)} size={20} /></div>
+                                        <div className='hover:bg-[#898989] hover:text-white border cursor-pointer border-gray-600 rounded-md p-2'><TbShoppingBagPlus  /></div>
                                     </div>
                                 </div>
                             </div>
