@@ -10,7 +10,8 @@ import ghost from '../Assets/Ghost.png'
 import { IoBagHandleOutline } from "react-icons/io5";
 
 
-
+import DomainSection from './DomainSection';
+import SkinSection from './SkinSelection';
 
 
 function HomePage() {
@@ -50,8 +51,11 @@ function HomePage() {
 
                 <Landingpage />
             </div>
-
+            <SkinSection />
+            <DomainSection />
+            
         </div>
+        
 
     );
 }
