@@ -8,6 +8,11 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
     const [scrolling, setScrolling] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const redirectToStore = () => {
+        if (store && store.name) {
+            window.location.href = `${process.env.REACT_APP_BASE_URL}/store/${store.name}`;
+        }
+    };
 
     // Function to delete item from cart
     const deleteFromCart = (product) => {
@@ -82,8 +87,12 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
                         className="h-8 mr-4"
                     />
                 </div>
-
-                <span className="text-xl font-bold">{store?.name}</span>
+                <span
+      className="text-xl font-bold cursor-pointer"
+      onClick={redirectToStore}
+    >
+      {store?.name}
+    </span>
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa'; // Importing star icons
-
-const ProductCard = ({ product, productColor, addToCart }) => {
+import { useNavigate } from 'react-router-dom';
+const ProductCard = ({ product, productColor, addToCart,store }) => {
   const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, buttonBorderColor } = productColor;
   console.log(productColor);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
   const [rating, setRating] = useState(4.5); // Dummy rating data
+const navigate = useNavigate();
 
+  const handleProductClick = (product) => {
+    localStorage.setItem('product', JSON.stringify(product));
+    localStorage.setItem('store', JSON.stringify(store));
+
+    if (store.fetchedFromBackend && !store.isEdit)
+        navigate("/productlanding", { state: { product, store } })
+};
   // Truncating function
   const getTruncateLength = (width) => {
     if (width < 640) return 50; // sm
@@ -106,13 +114,9 @@ const ProductCard = ({ product, productColor, addToCart }) => {
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                     onClick={() => {
-                      const productToAdd = {
-                        ...product,
-                        selectedVariant: selectedOption ? [{ name: firstVariant?.name, options: { name: selectedOption?.name } }] : [{ name: 'default', options: { name: 'default' } }],
-                        price
-                      };
-                      addToCart(productToAdd);
-                    }}
+                      handleProductClick(product)
+                    }
+                  }
                   >
                     Add to cart
                   </button>

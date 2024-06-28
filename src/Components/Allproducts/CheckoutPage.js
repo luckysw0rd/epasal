@@ -3,6 +3,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import useFetch from '../../Hooks/useFetch';
 import { AuthContext } from '../../Hooks/AuthContext';
 import PaymentConfirmation from '../CheckoutPage/PaymentConfirmation';
+import { toast } from 'react-toastify';
 const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [promoCode, setPromoCode] = useState('');
@@ -19,6 +20,11 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
 
     const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + expectedDeliveryPrice - discount;
 
+    const UnderlineSVG = () => (
+        <svg className="w-full h-2 absolute bottom-0" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 5H100" stroke="#3B82F6" strokeWidth="2" />
+        </svg>
+    );
     useEffect(() => {
         if (cart.length === 0) {
             onClose();
@@ -92,6 +98,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
+            toast.success(responseData.message || "Order made")
             console.log(responseData);
             if (responseData?.payment?.paymentMethod === 'esewa' || responseData?.paymentMethod === 'esewa') {
                 esewaCall(responseData.formData);
@@ -100,14 +107,16 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                 setOrderResponse(responseData);
             }
         } catch (error) {
+            toast.error(error.message || "Error Creating Order")
+
             console.log(error);
         }
     };
 
     const paymentOptions = [
-        { id: 'esewa', label: 'esewa', src: 'https://cdn.esewa.com.np/ui/images/esewa_og.png?111' },
-        { id: 'khalti', label: 'Khalti', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Khalti_Digital_Wallet_Logo.png.jpg/640px-Khalti_Digital_Wallet_Logo.png.jpg' },
-        { id: 'cod', label: 'CashOnDelivery', src: 'https://cdn.iconscout.com/icon/free/png-256/free-cash-on-delivery-1851649-1569374.png?f=webp' },
+        { id: 'esewa', label: 'esewa', src: 'https://cdn.esewa.com.np/ui/images/esewa_og.png?111https://www.nopbooster.com/images/thumbs/0000090_esewa-payment-plugin.webp' },
+        // { id: 'khalti', label: 'Khalti', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Khalti_Digital_Wallet_Logo.png.jpg/640px-Khalti_Digital_Wallet_Logo.png.jpg' },
+        { id: 'cod', label: 'CashOnDelivery', src: 'https://cdn-icons-png.flaticon.com/512/1554/1554401.png' },
     ];
 
     if (orderResponse) {
@@ -115,17 +124,17 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50 overflow-auto">
-            <div className="relative p-4 mt-24 flex flex-col lg:flex-row gap-4 bg-white shadow-md rounded-md max-h-full overflow-auto">
+        <div className="fixed font-Roboto  inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50 overflow-auto">
+            <div className="relative w-[1200px] p-4 mt-24 flex flex-col lg:flex-row gap-4 bg-white shadow-md rounded-md max-h-full overflow-auto">
                 <IoCloseCircleOutline
                     size={24}
                     className="absolute top-2 right-2 cursor-pointer text-gray-600 hover:text-gray-900"
                     onClick={onClose}
                 />
-                <div className="lg:w-2/5 p-4">
-                    <h1 className="text-2xl font-bold mb-4">CheckoutPage</h1>
+                <div className="lg:w-2/5 p-4 bg-gray-100 rounded-md shadow-md">
+                    <h1 className="text-2xl text-center font-bold mb-4 py-2 rounded-lg">CheckoutPage</h1>
                     <div className="flex flex-col h-full overflow-auto">
-                        <div>
+                        <div className=' border-b-2 border-gray-500 '>
                             <h2 className="text-xl font-bold mb-2">Cart Items</h2>
                             {cart.length > 0 ? (
                                 cart.map((item, index) => (
@@ -186,9 +195,9 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                         </div>
                     </div>
                 </div>
-                <div className="lg:w-3/5 p-4">
+                <div className="lg:w-3/5  p-4">
                     <h2 className="text-xl font-bold mb-2">Contact Information</h2>
-                    <form className="space-y-4">
+                    <form className="space-y-4 ">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div>
                                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full Name</label>
@@ -216,19 +225,40 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                         </div>
                         <hr className="my-6 border-gray-400 border-t-2 w-full" />
                         <p className="text-lg font-semibold mb-2">Payment Options</p>
-                        <div className="flex flex-col sm:flex-row gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2 mb-10">
                             {paymentOptions.map(option => (
                                 <div
                                     key={option.id}
-                                    className={`h-16 object-contain border border-gray-300 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.id ? 'border-4 border-blue-500' : ''
-                                        }`}
+                                    className={`relative h-[60px] mr-4  object-contain border border-gray-100 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-500' : 'border-gray-900'
+                                        } ${option.label === 'esewa' ? 'border-2 border-blue-500' : ''}`}
                                     onClick={() => setSelectedPayment(option.label)}
                                 >
                                     <img src={option.src} alt={option.label} className="h-full w-full" />
+                                    {option.label === 'esewa' && (
+                                        <span className="absolute top-0 right-0 px-1 bg-blue-500 text-white text-xs font-semibold rounded-bl-md">Popular</span>
+                                    )}
+                                    {selectedPayment === option.label && <UnderlineSVG className='w-[800px]' />}
+                                    <h3 className=' font-md text-center'>{option.label}</h3>
                                 </div>
                             ))}
                         </div>
+
+
                     </form>
+                    <div className="mt-16 text-sm font-semibold text-center text-gray-600">
+                        <p>
+                            Made by {' '}
+                            <a
+                                href="/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline"
+                            >
+                                Shop At Banau
+                            </a>
+                        </p>
+                        <p>Brought to you by Saika Nepal</p>
+                    </div>
                 </div>
             </div>
         </div>

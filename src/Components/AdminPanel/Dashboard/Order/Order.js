@@ -140,6 +140,24 @@ const Order = ({ store }) => {
     const handleModalSubmit = (code) => {
         handleEditSubmit(currentOrderId, code);
     };
+    const getOrderStatusColor = (status) => {
+        switch (status) {
+            case 'Processing':
+                return 'border-[#FFDBAA]'; // Example background color for Processing
+            case 'Confirmed':
+                return 'border-[#7AB2B2]'; // Example background color for Confirmed
+            case 'Being delivered':
+                return 'border-[#9376E0]'; // Example background color for Being delivered
+            case 'Delivered':
+                return 'border-[#7AA874]'; // Example background color for Delivered
+            case 'Cancelled':
+                return 'border-[#E78895]'; // Example background color for Cancelled
+            case 'Returned':
+                return 'border-[#939185]'; // Example background color for Returned
+            default:
+                return 'border-white'; // Default background color
+        }
+    };
 
     return (
         <div className="flex flex-col w-screen justify-start p-4 bg-gray-100">
@@ -160,8 +178,8 @@ const Order = ({ store }) => {
                 </button>
             </div>
             {orders.map((order) => (
-                <div key={order._id} className="bg-white xl:max-w-screen shadow-lg rounded-lg overflow-hidden 2xl:max-w-[1550px] mb-4">
-                    <div className="p-4 border-b flex justify-between items-center cursor-pointer">
+                <div key={order._id} className={` bg-white xl:max-w-screen shadow-lg rounded-lg overflow-hidden 2xl:max-w-[1550px] mb-4 border-[4px] ${getOrderStatusColor(order.status)}`}>
+                    <div className="p-4 w-full border-b flex justify-between items-center cursor-pointer">
                         <div>
                             {editId === order._id ? (
                                 <div>
@@ -207,8 +225,18 @@ const Order = ({ store }) => {
                                     </select>
                                 </div>
                             ) : (
-                                <div>
-                                    <h2 className="text-lg font-semibold">{order.fullName}</h2>
+                                <div className=' w-full'>
+                                    <div className=' flex flex-row w-full'>
+                                        <h2 className="text-lg font-semibold">{order.fullName}</h2>
+                                        {/* <div className="text-gray-600 absolute right-28 ml-20 font-semibold">
+                                        
+                                            <span className=" block">{new Date(order.updatedAt).toLocaleDateString(undefined, {
+                                                day: 'numeric',
+                                                month: 'short'
+                                            })}</span>
+                                            <span className="block">{new Date(order.updatedAt).toLocaleTimeString()}</span>
+                                        </div> */}
+                                    </div>
                                     <h2 className="text-md font-semibold">Order Number : {order._id}</h2>
                                     <div className="text-gray-600">{`Address: ${order.address}`}</div>
                                     <div className="text-gray-600">{`Landmark: ${order.landmark}`}</div>
@@ -220,8 +248,16 @@ const Order = ({ store }) => {
                                 </div>
                             )}
                         </div>
-                        <div className=' flex justify-end flex-col space-y-2'>
-                            <div className="text-gray-500 flex justify-end mr-1  mb-2 text-2xl" onClick={() => toggleExpand(order._id)}>
+                        <div className=' flex justify-end flex-col space-y-4'>
+                            <div className="text-gray-600  font-semibold">
+
+                                <span className=" block">{new Date(order.updatedAt).toLocaleDateString(undefined, {
+                                    day: 'numeric',
+                                    month: 'short'
+                                })}</span>
+                                <span className="block">{new Date(order.updatedAt).toLocaleTimeString()}</span>
+                            </div>
+                            <div className="text-gray-500 flex justify-end mx-auto  mb-2 text-2xl" onClick={() => toggleExpand(order._id)}>
                                 {expandedId === order._id ? <FaChevronUp /> : <FaChevronDown />}
                             </div>
                             <button

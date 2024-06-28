@@ -771,9 +771,6 @@ export const StoreProvider = ({ children, passedStore }) => {
     }));
   };
 
-  if (isLoading) {
-    return <div>is Loading</div>;
-  } else
     return (
       <StoreContext.Provider
         value={{

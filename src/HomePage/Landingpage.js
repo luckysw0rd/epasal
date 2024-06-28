@@ -62,7 +62,7 @@ function Landingpage() {
        <h2 className="text-xl font-bold">Follow some steps to create your website</h2>
         <p>Watch the video tutorial to get started</p>
         <button className="mt-2 px-4 py-2 bg-gray-700 rounded-full">More <span className="mx-2">&gt;</span></button>
-       </section>
+      </section>
       </div>
       <div className="bg-gray-800 p-4 rounded-lg">
         <div className="w-12 h-12 bg-gray-600 rounded-full my-2"></div>

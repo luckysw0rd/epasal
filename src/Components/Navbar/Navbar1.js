@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiMenu } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 // import CartDropdown from './CartDropDown';
 import CartDropdown from '../Allproducts/CartDropDown';
 
@@ -23,6 +24,7 @@ const Navbar1 = ({
     const [editableText, setEditableText] = useState("Ecom Template-2");
     const [isSearchClicked, setIsSearchClicked] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [cartItems, setCartItems] = useState([
         {
@@ -309,7 +311,9 @@ const Navbar1 = ({
                         />
                     </div>
                 )}
-                <span className="text-xl font-bold">{store.name}</span>
+                <span className="text-xl font-bold" onClick={() => window.location.reload()}>
+                    {store.name}
+                </span>
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
@@ -337,12 +341,13 @@ const Navbar1 = ({
                     )}
                 </button>
                 {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} store={store} setStore={setStore} />} {/* Conditionally render the CartDropdown */}
-                {(store.isEdit || !store.fetchedFromBackend) && <button
-                    onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
-                    className="bg-transparent border border-black px-2 py-1 rounded text-black"
-                >
-                    Preview
-                </button>}
+                {(store.isEdit || !store.fetchedFromBackend) && 
+           <button
+           onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
+           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200"
+         >
+           {store.previewMode ? 'Preview Mode' : 'Edit'}
+         </button>}
             </div>
 
             {isSidebarOpen && (

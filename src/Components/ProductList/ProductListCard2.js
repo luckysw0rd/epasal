@@ -4,14 +4,22 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
-
+import { useNavigate } from 'react-router-dom';
 const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store,productListProps }) => {
     const {addToCart}=productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
+    const navigate = useNavigate();
 
 
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store.fetchedFromBackend && !store.isEdit)
+            navigate("/productlanding", { state: { product, store } })
+    };
 
     useEffect(() => {
         setAddedToCart(false);
@@ -134,28 +142,14 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                 <button
                     className="py-2 px-6 rounded-full duration-300 mt-4"
                     onClick={() => {
-                        const productToAdd = {
-                            ...product,
-                            selectedVariant: null,
-                            price:product.originalPrice
-                        };
-                        console.log(productToAdd); // Log the product with variant to the console
-                        addToCart(productToAdd);
+                        handleProductClick(product);
                     }}
                     style={{ backgroundColor: `${store.color.productListColor.buttonBgColor}`, color: `${store.color.productListColor.buttonTextColor}` }}
                 >
                     Add to Cart
                 </button>
             )}
-            {addedToCart && (
-                <button
-                    className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
-                    disabled
-                    style={{ backgroundColor: store.color.productListColor.priceColor, color: store.color.productListColor.priceLetterColor, color: store.color.productListColor.textColor, border: `2px solid ${store.color.productListColor.ButtonBorderColor}` }}
-                >
-                    <FaShoppingCart className="mr-1 " />
-                </button>
-            )}
+           
         </motion.div>
     );
 }

@@ -69,7 +69,7 @@ const SubProduct1 = ({
     const subProductColor = store.color.subProductColor;
 
     return (
-        <div className='  h-[400px] mb-16' style={{ fontFamily: store?.fonts?.Categories ,backgroundColor: subProductColor.categoryColor}}>
+        <div className='   mb-16' style={{ fontFamily: store?.fonts?.Categories ,backgroundColor: subProductColor.categoryColor}}>
             <CategorySelector />
             <div className="px-20  pb-8 overflow-x-scroll" style={{
                 maxWidth: '100vw', 

@@ -10,7 +10,7 @@ import ProductReview from './ProductReview';
 import SimilarProducts from './SimilarProducts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../Allproducts/Navbar';
-
+import { toast } from 'react-toastify';
 const ProjectLanding1 = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -98,29 +98,46 @@ const ProjectLanding1 = () => {
 
         console.log(newCartItem);
         console.log(store);
-        alert("Product added to cart!");
+
+        toast("Product Added To Cart")
     };
 
 
 
 
     const calculateTotalPrice = () => {
-        if (!selectedProduct.variant || selectedProduct.variant.length === 0) {
-            // Handle products without variants
-            return parseFloat(selectedProduct.price) || 0;
+        if (!selectedProduct.variant || selectedProduct.variant.length === 0 || selectedVariants[0] < 0) {
+            // Handle products without variants or unselected variants
+            const basePrice = parseFloat(selectedProduct.price) || 0;
+            const discount = parseFloat(selectedProduct.discount) || 0;
+            console.log("hereerer")
+
+            return basePrice - discount;
         } else {
             // Handle products with variants
-            return selectedProduct.variant.reduce((total, variant, index) => {
-                const selectedOptionIndex = selectedVariants[index];
-                const selectedOption = variant.options[selectedOptionIndex];
-                const basePrice = parseFloat(selectedProduct.price) || 0;
-                const variantPrice = selectedOption ? parseFloat(selectedOption.price) : 0;
-                const discountedPrice = basePrice - (parseFloat(selectedProduct.discount) || 0);
-                const variantDiscountedPrice = variantPrice - (selectedOption && parseFloat(selectedOption.discount) || 0);
+            const selectedOptionIndex = selectedVariants[0];
+            const selectedVariant = selectedProduct.variant[selectedOptionIndex];
 
-                // Calculate the total price based on selected variants
-                return total + (variantDiscountedPrice > 0 ? variantDiscountedPrice : discountedPrice);
-            }, 0);
+            if (selectedVariant && selectedVariant.options && selectedVariant.options[selectedOptionIndex]?.price) {
+                return parseFloat(selectedVariant.options[selectedOptionIndex].price - selectedVariant.options[selectedOptionIndex].discount);
+            } else {
+                return selectedProduct.variant.reduce((total, variant, index) => {
+                    const selectedOptionIndex = selectedVariants[index];
+                    const selectedOption = variant.options[selectedOptionIndex];
+                    const basePrice = parseFloat(selectedProduct.price) || 0;
+                    const variantPrice = selectedOption ? parseFloat(selectedOption.price) : 0;
+                    const discount = parseFloat(selectedProduct.discount) || 0;
+                    const variantDiscount = selectedOption && parseFloat(selectedOption.discount) || 0;
+                    console.log(selectedOption);
+                    console.log(variantPrice);
+                    console.log(variantDiscount);
+                    // Calculate the effective price for the current variant selection
+                    const effectivePrice = variantPrice > 0 ? variantPrice - variantDiscount : basePrice - discount;
+
+                    // Add to the total price
+                    return total + effectivePrice;
+                }, 0);
+            }
         }
     };
 
@@ -154,19 +171,20 @@ const ProjectLanding1 = () => {
         window.scrollTo(0, 0);
     }, [selectedProduct]);
 
+    console.log(productCount);
     const totalPrice = calculateTotalPrice() * productCount;
+    console.log(totalPrice);
     const totalDiscount = calculateTotalDiscount() * productCount;
     const storeDetails = {
-        deliveryCharge: 100,
+        deliveryCharge: store.expectedDeliveryPrice,
         COD: "available",
-        deliveryTime: "2-3 Days",
-        warranty: "4 months",
-        returnPolicyTime: "14 days"
+        deliveryTime: store.expectedDeliveryTime,
+ 
     };
 
     return (
         <div>
-            <Navbar store={store} setStore={setStore} />
+            <Navbar store={store} setStore={setStore} color={store.color} />
             <div className="p-2 md:p-5 lg:p-16">
                 <div className='mt-5 flex flex-col gap-5'>
                     <div className="flex flex-col md:flex-row md:gap-5 lg:gap-10">
@@ -263,14 +281,19 @@ const ProjectLanding1 = () => {
                                 <FiClock className="w-5 h-5 text-[#555555]" />
                                 <span className="text-sm md:text-base lg:text-lg text-[#555555]">{storeDetails.returnPolicyTime} Return Policy</span>
                             </div>
-                            <div className="flex items-center gap-3">
+                            {/* <div className="flex items-center gap-3">
                                 <MdVerifiedUser className="w-5 h-5 text-[#555555]" />
                                 <span className="text-sm md:text-base lg:text-lg text-[#555555]">{storeDetails.warranty} Warranty</span>
-                            </div>
+                            </div> */}
                             <div className="flex items-center gap-3">
                                 <PiCreditCard className="w-5 h-5 text-[#555555]" />
                                 <span className="text-sm md:text-base lg:text-lg text-[#555555]">Secure Payment</span>
                             </div>
+                            {/* <div className="flex items-center gap-3">
+                                <PiCreditCard className="w-5 h-5 text-[#555555]" />
+                                <span className="text-sm md:text-base lg:text-lg text-[#555555]"> </span>
+                            </div> */}
+
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
