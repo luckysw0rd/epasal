@@ -32,7 +32,7 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
 
     return (
         <motion.div
-            className="w-62 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+            className="w-[300px] bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.newProductColor.backgroundColor, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.borderColor}` }}

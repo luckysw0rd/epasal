@@ -71,7 +71,11 @@ function App() {
       <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
         <div className="App">
           <Router>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback=
+            {
+            <div className=" bg-fuchsia-700 h-screen w-screen">
+              LOADING 
+            </div>}>
               <Routes>
                 {routes}
               </Routes>

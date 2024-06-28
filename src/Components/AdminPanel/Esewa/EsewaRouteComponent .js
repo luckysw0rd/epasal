@@ -121,6 +121,7 @@ const EsewaRouteComponent = () => {
     };
 
     return (
+        parsedData && 
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-5">
             <div className="bg-white p-10 rounded-lg shadow-lg text-center">
                 {isSuccess ? (

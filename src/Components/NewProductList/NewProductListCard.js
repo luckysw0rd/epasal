@@ -1,36 +1,44 @@
 
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
-
-const NewProductListCard = ({ productListProps, handleDeleteProduct, product  }) => {
-    const { productColor, previewMode, addToCart } = productListProps;
+import { useNavigate } from 'react-router-dom';
+const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) => {
+    const { productColor, previewMode, addToCart ,store } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
+    const navigate = useNavigate()
+    //truncating 
+    const getTruncateLength = (width) => {
+        if (width < 640) return 50; // sm
+        if (width < 1281) return 37; // md, lg
+        return 50; // xl, 2xl
+    };
+    const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
+    useEffect(() => {
+        const handleResize = () => {
+            setTruncateLength(getTruncateLength(window.innerWidth));
+        };
 
-//truncating 
-const getTruncateLength = (width) => {
-    if (width < 640) return 50; // sm
-    if (width < 1281) return 37; // md, lg
-    return 50; // xl, 2xl
-  };
-  const [truncateLength, setTruncateLength] = useState(getTruncateLength(window.innerWidth));
-  useEffect(() => {
-    const handleResize = () => {
-      setTruncateLength(getTruncateLength(window.innerWidth));
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store.fetchedFromBackend && !store.isEdit)
+            navigate("/productlanding", { state: { product, store } })
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const truncateName = (name) => {
-    return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
-  };
+    const truncateName = (name) => {
+        return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
+    };
     if (!product) return null;
 
     const { id, name, image, variant } = product;
@@ -65,15 +73,15 @@ const getTruncateLength = (width) => {
                         </button>
                     )} */}
                     <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-                        <div>
-                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
-                        </div>
+                        <button>
+                            <img  src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
+                        </button>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
                             <div className=" py-2 "
                             // className="prod-title mt-2 flex justify-between items-center"
                             >
-                                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
+                                <p  className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
                                 <p className="my-1 font-bold text-[13px]" style={{ color: priceColor }}>Rs. {price}</p>
                             </div>
                             <div className="grid gap-2 relative w-full">
@@ -107,13 +115,7 @@ const getTruncateLength = (width) => {
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                         onClick={() => {
-                                            const productToAdd = {
-                                                ...product,
-                                                selectedVariant: selectedOption ? [firstVariant?.name, selectedOption?.name] : null,
-                                                price
-                                            };
-                                            console.log(productToAdd); // Log the product with variant to the console
-                                            addToCart(productToAdd);
+                                            handleProductClick(product);
                                         }}>
                                         Add to cart
                                     </button>

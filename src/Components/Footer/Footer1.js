@@ -229,8 +229,8 @@ const Footer1 = ({
 
 
                 </div>
-                <div className='w-full flex justify-center text-sm mt-16'>
-                    <p>&copy;Copyright {new Date().getFullYear()}</p>
+                <div className='w-full  flex justify-center text-lg mt-16'>
+                    <p>&copy; Brought To You By Shop At Banau , By Nepal @ {new Date().getFullYear()}</p>
                 </div>
 
             </footer >
