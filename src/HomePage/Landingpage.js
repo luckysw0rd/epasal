@@ -70,7 +70,7 @@ function Landingpage() {
       </div>
     </div> */}
     <div className=" w-100 lg:w-1/2 text-white p-4 ">
-  <div className="mb-4 bg-gray-900 px-4 p-2 rounded-lg relative">
+  <div className="mb-4 bg-gray-900 px-4 p-2 rounded-2xl relative">
     <div
       className="absolute inset-0 bg-cover p-2 lg:p-4 bg-center rounded-2xl"
       style={{ backgroundImage: `url(${storepic2})` }}
