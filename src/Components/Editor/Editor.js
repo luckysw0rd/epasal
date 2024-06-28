@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import FontSelector from './FontSelector';
 import SaveStoreButton from '../../Theme/Theme1/SaveButton/SaveStoreButton';
 import { SketchPicker } from 'react-color';
-import {AnimatePresence, motion} from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FaCaretLeft } from "react-icons/fa";
 // List of fonts from your Tailwind configuration
 const fonts = [
@@ -1510,7 +1510,7 @@ const Editor = () => {
   return (
     <AnimatePresence>
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
-        <motion.div key='first' initial={{x:20}} exit={{x:500}} transition={{duration:0.3}} animate={{x:0}} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
+        <motion.div key='first' initial={{ x: 20 }} exit={{ x: 500 }} transition={{ duration: 0.3 }} animate={{ x: 0 }} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
 
           <div className='flex justify-between  font-Cinzel  mt-10 font-semibold text-[#6A6A6A] '>
@@ -1522,13 +1522,17 @@ const Editor = () => {
           </div>
           <div className='text-red-600 absolute top-[22px] right-2' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}>X</div>
           <div className='text-red-600 absolute top-[22px] right-10' onClick={(e) => { e.preventDefault(); setNavHide(false) }}>Hide</div>
-          
+
           {openType === 1 && (
             <div>
 
               <ul className='flex flex-col mt-10 gap-2 px-4'>
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-                  Navbar:<br />
+                <li className=' font-bold border-b-2  border-gray-200 pb-5'>
+                  <h1 className=' text-xl'>
+                  Navbar:
+                  </h1>
+                  <br />
+
                   <div>
                     <FontSelector section="Navbar" />
                   </div>
@@ -1672,7 +1676,7 @@ const Editor = () => {
                   </select>
                 </div>
 
-       
+
                 {Object.entries(color).map(([colorKey, colorValue], index) => {
                   if (typeof colorValue === 'object') {
                     return (
@@ -1738,7 +1742,7 @@ const Editor = () => {
           </div>
         </motion.div>
       ) : (
-        <motion.button key='second' initial={{x:-20}} exit={{x:20}} animate={{x:0}} className='fixed top-0 right-0 mt-24 bg-yellow-400 py-1 rounded-l z-20 text-4xl' onClick={(e) => { e.preventDefault(); setNavHide(true) }}><FaCaretLeft />
+        <motion.button key='second' initial={{ x: -20 }} exit={{ x: 20 }} animate={{ x: 0 }} className='fixed top-0 right-0 mt-24 bg-yellow-400 py-1 rounded-l z-20 text-4xl' onClick={(e) => { e.preventDefault(); setNavHide(true) }}><FaCaretLeft />
         </motion.button>
       ) : !store.fetchedFromBackend && (
         // <button className='fixed top-0 right-10 mt-20 bg-yellow-400 px-4 py-1 rounded z-20' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: false })) }}>Preview</button>

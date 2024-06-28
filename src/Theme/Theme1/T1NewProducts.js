@@ -15,11 +15,11 @@ const T1NewProducts = () => {
     const productListProps = { store, productColor, products: featuredProductList, previewMode, setStore, addToCart };
 
     var categoryType = 'default'
-    // if (store?.componentSkin[2]?.activeSkin && store?.componentSkin[2]?.activeSkin !== '') {
-    //     categoryType = store?.componentSkin[2]?.activeSkin || 'default';
-    // } else {
-    //     categoryType = 'default';
-    // }
+    if (store?.componentSkin[2]?.activeSkin && store?.componentSkin[2]?.activeSkin !== '') {
+        categoryType = store?.componentSkin[2]?.activeSkin || 'default';
+    } else {
+        categoryType = 'default';
+    }
 
 
     return (

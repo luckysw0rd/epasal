@@ -26,14 +26,14 @@ function HomePage() {
           scrollableDiv.classList.add('overflow-scroll','sticky');
         //   scrollableDiv.style.top = `0px`;
         } else {
-          scrollableDiv.classList.remove('overflow-scroll','sticky');
-        //   scrollableDiv.style.top = '';
+            scrollableDiv.classList.remove('overflow-scroll', 'sticky');
+            //   scrollableDiv.style.top = '';
         }
-      });
+    });
 
     return (
-        
-        <div className="flex flex-col relative h-full"> 
+
+        <div className="flex flex-col relative h-full">
             <Navbar navbarImage={navbarImage}></Navbar>
 
             <Heading setnavbarImage={setnavbarImage} />
@@ -59,7 +59,7 @@ function HomePage() {
                 <Landingpage/>
             </div>
 
-</div> 
+        </div>
 
     );
 }

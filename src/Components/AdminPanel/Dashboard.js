@@ -11,6 +11,7 @@ import Order from './Dashboard/Order/Order.js';
 import Product from "./Product/Product.js";
 import General from "./General/General.js";
 import Shop from "./Shop/Shop.js";
+import { toast } from "react-toastify";
 const Dashboard = () => {
   const auth = useContext(AuthContext);
   const [dashboardState, setDashboardState] = useState('General');
@@ -33,9 +34,12 @@ const Dashboard = () => {
         }
       );
       console.log(responseData); // Handle response data as needed
+      toast(responseData?.message)
       setStore(responseData.store);
     } catch (error) {
       // Handle error if needed
+      toast(error?.message)
+
       console.log(error);
     }
   };
