@@ -239,8 +239,6 @@ export default function ProductCards({ store }) {
 
     return (
         <div className="container  mx-auto px-5 py-8 flex flex-wrap">
-
-
             <div className="product-list flex  flex-wrap gap-4">
                 {productCardsArray.map((card, index) => (
                     <>
@@ -268,9 +266,7 @@ export default function ProductCards({ store }) {
                         </div>
                     </>
                 ))}
-
             </div>
-
         </div>
     );
 }

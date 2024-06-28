@@ -70,7 +70,7 @@ const navigate = useNavigate();
 
   return (
     <motion.div
-      className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
+      className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[320px] md:h-full mx-auto"
       style={{ borderColor: productColor.borderColor }}
       whileTap={{ scale: 0.98 }}
     >
@@ -78,7 +78,7 @@ const navigate = useNavigate();
         <div className="relative w-full">
           <div className="card cursor-pointer flex flex-col justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
             <div>
-              <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain mx-auto p-3" style={{ aspectRatio: '1/1' }} />
+              <img src={displayedImage} alt={name} className=" w-[180px] h-[160px] md:w-[252px] md:h-[196px] object-contain mx-auto p-3" style={{ aspectRatio: '1/1' }} />
             </div>
             <div className="px-5 w-full">
               <hr className="border-t-2" style={{ borderColor: borderColor }} />
@@ -89,10 +89,10 @@ const navigate = useNavigate();
               <div className="grid gap-2 relative w-full">
                 <div className="flex">
                   <div
-                    className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
+                    className={` h-[30px] w-[30px] md:h-[48px] md:w-[48px] cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
                     onClick={handleDefaultImage}
                   >
-                    <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2 object-contain' />
+                    <img src={image?.imageUrl} alt="Default" className='me-2 object-contain h-[30px] w-[30px] md:h-[48px] md:w-[48px]' />
                   </div>
                   {firstVariant?.options?.map((option, index) => (
                     <div
@@ -105,12 +105,12 @@ const navigate = useNavigate();
                   ))}
                 </div>
                 <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
-                  <div style={{ color: priceColor }} className="flex gap-1 items-center">
+                  <div style={{ color: priceColor }} className="flex gap-1 w-[60px] items-center">
                     {renderStars(product.rating)}
                   </div>
                   <button
                     style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
-                    className={`px-6 py-2 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                    className={` md:px-6 md:py-2 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                     onClick={() => {

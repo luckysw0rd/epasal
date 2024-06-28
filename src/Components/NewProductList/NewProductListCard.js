@@ -6,7 +6,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart ,store } = productListProps;
+    const { productColor, previewMode, addToCart, store } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
@@ -45,7 +45,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
     const firstVariant = variant[0]; // Considering only the first variant
     const selectedOption = selectedOptionIndex === -1 ? null : firstVariant?.options[selectedOptionIndex];
     const price = selectedOption ? selectedOption.price : product.price || 0;
-
+    const discount = selectedOption ? selectedOption.discount : product.discount || 0
     const handleOptionSelect = (index) => {
         setSelectedOptionIndex(index);
         setDisplayedImage(firstVariant?.options[index]?.image?.imageUrl);
@@ -74,15 +74,20 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                     )} */}
                     <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <button>
-                            <img  src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
+                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                         </button>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
                             <div className=" py-2 "
                             // className="prod-title mt-2 flex justify-between items-center"
                             >
-                                <p  className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
-                                <p className="my-1 font-bold text-[13px]" style={{ color: priceColor }}>Rs. {price}</p>
+                                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
+                              <div className=' flex flex-row space-x-2'>
+                                <p className="my-1 font-bold text-md" style={{ color: priceColor }}>Rs. {price - discount}</p>
+                                {discount > 0 &&
+                                    <del className='  text-sm    text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>Rs. {price}</del>
+                                }
+                                </div>
                             </div>
                             <div className="grid gap-2 relative w-full">
                                 <div className="flex ">

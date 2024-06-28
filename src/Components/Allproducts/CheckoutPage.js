@@ -225,15 +225,15 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                         </div>
                         <hr className="my-6 border-gray-400 border-t-2 w-full" />
                         <p className="text-lg font-semibold mb-2">Payment Options</p>
-                        <div className="flex flex-col sm:flex-row gap-2 mb-10">
+                        <div className="flex md:flex-row sm:flex-row gap-2 mb-10">
                             {paymentOptions.map(option => (
                                 <div
                                     key={option.id}
-                                    className={`relative h-[60px] mr-4  object-contain border border-gray-100 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-500' : 'border-gray-900'
+                                    className={` w-[80px]  relative h-[60px] mr-4  object-contain border border-gray-100 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-500' : 'border-gray-900'
                                         } ${option.label === 'esewa' ? 'border-2 border-blue-500' : ''}`}
                                     onClick={() => setSelectedPayment(option.label)}
                                 >
-                                    <img src={option.src} alt={option.label} className="h-full w-full" />
+                                    <img src={option.src} alt={option.label} className="  h-full w-full" />
                                     {option.label === 'esewa' && (
                                         <span className="absolute top-0 right-0 px-1 bg-blue-500 text-white text-xs font-semibold rounded-bl-md">Popular</span>
                                     )}

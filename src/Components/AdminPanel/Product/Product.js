@@ -84,24 +84,28 @@ const Product = ({ store }) => {
       const updatedEditProduct = { ...editProduct };
       updatedEditProduct.image.imageUrl = uploadedProductImage.img;
       updatedEditProduct.image.imageId = uploadedProductImage.id;
-
+  
       const updatedVariants = await Promise.all(
         updatedEditProduct.variant.map(async (variant) => {
           const updatedOptions = await Promise.all(
             variant.options.map(async (option) => {
               if (option.image && option.image.imageUrl) {
                 const uploadedVariantImage = await uploadImage(option.image.imageUrl);
-                return { ...option, image: { imageUrl: uploadedVariantImage.img, imageId: uploadedVariantImage.id } };
+                return {
+                  ...option,
+                  name: option.name || 'Default Option Name', // Set default option name
+                  image: { imageUrl: uploadedVariantImage.img, imageId: uploadedVariantImage.id },
+                };
               }
-              return option;
+              return { ...option, name: option.name || 'default' }; // Set default option name
             })
           );
-          return { ...variant, options: updatedOptions };
+          return { ...variant, name: variant.name || 'default', options: updatedOptions }; // Set default variant name
         })
       );
-
+  
       updatedEditProduct.variant = updatedVariants;
-
+  
       const updates = {
         name: updatedEditProduct.name,
         description: updatedEditProduct.description,
@@ -113,19 +117,18 @@ const Product = ({ store }) => {
         inventory: updatedEditProduct.inventory,
         soldQuantity: updatedEditProduct.soldQuantity,
         revenueGenerated: updatedEditProduct.revenueGenerated,
-        inventory:updatedEditProduct.inventory
       };
-
+  
       const response = await sendRequest(
         `product/updateProduct`,
         'PUT',
         JSON.stringify({ id: updatedEditProduct._id, updates }),
         {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + auth.token
+          'Authorization': 'Bearer ' + auth.token,
         }
       );
-
+  
       toast.success('Product updated successfully');
       const updatedProducts = [...products];
       updatedProducts[editProductIndex] = updatedEditProduct;
@@ -382,7 +385,7 @@ const Product = ({ store }) => {
                   type="number"
                   name="inventory"
                   value={editProduct.inventory}
-                  onChange={handleInputChange }
+                  onChange={handleInputChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>

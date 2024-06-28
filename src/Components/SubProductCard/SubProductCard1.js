@@ -131,10 +131,14 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                 <div className='h-[56px] py-1 text-xs overflow-hidden'>{truncateName1(product.description)}</div>
                 <div className="mt-1">
                     <div className="text-sm font-bold flex items-center gap-1 justify-between mx-2 sm:mx-0" >
-                        <div className=' h-10   text-base flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</div>
-
+                        <div className=' flex flex-col gap-0 '>
+                            {product.discount > 0 &&
+                                <del className='     text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</del>
+                            }
+                            <div className='     text-md flex text-nowrap items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price - product.discount}</div>
+                        </div>
                         <button
-                            className="text-xs h-8 w-[80px] rounded mr-1"
+                            className="text-xs h-8 w-[80px] rounded "
                             onClick={() => {
                                 handleProductClick(product)
                             }}
