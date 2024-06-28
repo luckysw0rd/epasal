@@ -1,8 +1,5 @@
 import React, { Suspense, useContext } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import HomePage from "./HomePage/HomePage";
-import Navbar from "./HomePage/Navbar";
-import SignInPage from "./Login/SignInPage";
 import { AuthContext } from "./Hooks/AuthContext";
 import { useAuth } from "./Hooks/useAuth";
 import { PrimeReactProvider } from 'primereact/api';
@@ -10,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
+import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
 
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
@@ -23,8 +22,7 @@ const GoogleOAuthCustom = React.lazy(() => import('./Components/Google-OAuth/Goo
 const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductForm'));
 const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Home'));
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
-const Allproducts = React.lazy(()=>  import('./Components/Allproducts/Allproducts'));import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
-import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
+const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
 
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -49,7 +47,7 @@ function App() {
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
-        <Route path="/settings" element={<SettingPage />} />
+        {/* <Route path="/settings" element={<SettingPage />} /> */}
       </React.Fragment>
     );
   } else {
