@@ -225,8 +225,8 @@ const EsewaRouteComponent = () => {
                 ) : (
                     <div>
                         <h2 className="text-3xl font-bold mb-4">Processing Payment...</h2>
-                        {isLoading && <p className="text-blue-500">Loading...</p>}
-                        {error && <p className="text-red-500">Error: {error.toString()}</p>}
+                        {/* {isLoading && <p className="text-blue-500">Loading...</p>}
+                        {error && <p className="text-red-500">Error: {error.toString()}</p>} */}
                         <h2> Please Refresh The Page </h2>
                     </div>
                 )}
