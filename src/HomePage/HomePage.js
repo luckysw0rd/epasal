@@ -5,7 +5,7 @@ import './Homepage.css'
 
 import Heading from './Header/Heading';
 import Landingpage from './Landingpage';
-
+import SubscriptionPlans from './SubscriptionPlans ';
 import ghost from '../Assets/Ghost.png'
 import { IoBagHandleOutline } from "react-icons/io5";
 
@@ -34,7 +34,7 @@ function HomePage() {
 
     return (
 
-        <div className="flex flex-col relative h-full">
+        <div className="flex flex-col font-Poppins relative h-full">
             <Navbar navbarImage={navbarImage}></Navbar>
 
             <Heading setnavbarImage={setnavbarImage} />
@@ -49,18 +49,19 @@ function HomePage() {
                 <div>
                     <div className=' w-[110px] h-[110px] bg-[#8E410A] -mt-[30px] border border-8 border-white rounded-full flex flex-col items-center justify-center text-center font-bold text-white'>
                         <IoBagHandleOutline className='text-3xl mb-2' />
-                        <p className='text-sm font-light'>Build</p>
+                        <p className='text-sm font-semibold'>Build</p>
                     </div>
                 </div>
 
             </div>
             <div className='bg-white h-4 w-full mt-6 z-10'></div>
-            <div id='scrollableDiv' className={` h-[87vh] 2xl:h-[90vh] bg-white pt-16 relative bg-black`}>
-
+            <div id='scrollableDiv' className={` h-[87vh] xl:h-[120vh] 2xl:h-[120vh] bg-white pt-16 relative bg-black`}>
                 <Landingpage />
             </div>
             <SkinSection />
             <DomainSection />
+            <SubscriptionPlans></SubscriptionPlans>
+
 
         </div>
 

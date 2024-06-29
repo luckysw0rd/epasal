@@ -66,14 +66,14 @@ const SubProductCard3 = ({ product, handleRemoveProduct, store }) => {
                     <span className="text-gray-400 mr-3 uppercase text-xs">{product.subcategories[0]}</span>
                     <p className="text-lg font-bold text-black truncate block capitalize">{product.name}</p>
                     <div className="flex  items-center justify-between">
-                        <div  className=' flex justify-start items-center'>
+                        <div className=' flex justify-start items-center'>
                             <p className="text-md text-nowrap font-semibold cursor-auto my-3" style={{ color: `${store.color.subProductColor.priceColor}` }}>
                                 Rs {product.price - product.discount}
                             </p>
-                            {product.discount>0 &&
-                            <del>
-                                <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
-                            </del>}
+                            {product.discount > 0 &&
+                                <del>
+                                    <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
+                                </del>}
                         </div>
                         <div className=" ">
 
