@@ -126,9 +126,10 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     </ul>
                 </div>
             </div>
-            <div className="flex items-center mt-2">
-                <p className="text-lg font-semibold " style={{ color: `${store.color.newProductColor.priceColor}` }} >Rs {product.price}</p>
-                <del className="ml-2 "> Rs {product.originalPrice}</del>
+            <div className="flex flex-col items-center mt-2">
+                <p className="text-lg font-semibold " style={{ color: `${store.color.newProductColor.priceColor}` }} >Rs {product.price - product.discount}</p>
+
+                <del className="ml-2 "> Rs {product.price}</del>
             </div>
             {/* <div className="flex mb-2 justify-center md:justify-start">
                 {[...Array(5)].map((_, index) => {
@@ -147,9 +148,9 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                 Add to Cart
             </button> */}
             <button
-                style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}`,  }}
+                style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}`, }}
                 className="py-2 px-6 rounded-full duration-300 mt-4"
-               
+
                 onClick={() => {
                     handleProductClick(product)
                 }}

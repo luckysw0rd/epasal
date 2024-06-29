@@ -138,15 +138,15 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                             <h2 className="text-xl font-bold mb-2">Cart Items</h2>
                             {cart.length > 0 ? (
                                 cart.map((item, index) => (
-                                    <div className="flex items-center justify-between mb-4" key={index}>
-                                        <div className="flex items-center">
+                                    <div className="flex   items-center justify-between mb-4" key={index}>
+                                        <div className="flex max-w-[250px] items-center">
                                             <div>
                                                 <p className="font-semibold">{item.productName}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center text-xl flex-1 justify-between">
                                             <span className="mx-auto text-center">{item.count}</span>
-                                            <span className='mr-4'>रु {item.price}</span>
+                                            <span className='mr-4 '>रु {item.price}</span>
                                             <IoCloseCircleOutline size={20} onClick={() => handleDeleteFromCart(index)} />
                                         </div>
                                     </div>
@@ -246,18 +246,9 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
 
                     </form>
                     <div className="mt-16 text-sm font-semibold text-center text-gray-600">
-                        <p>
-                            Made by {' '}
-                            <a
-                                href="/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="underline"
-                            >
-                                Shop At Banau
-                            </a>
-                        </p>
-                        <p>Brought to you by Saika Nepal</p>
+                    <p>
+                        &copy; Brought To You By <a href="/" target="_blank" className=" underline hover:text-orange-200">Shop At Banau</a>, By <a href="https://www.saikanepal.com" target="_blank" className=" underline hover:text-blue-300">Saika Nepal</a> @ {new Date().getFullYear()}
+                    </p>
                     </div>
                 </div>
             </div>

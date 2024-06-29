@@ -18,7 +18,7 @@ const DashboardWrapper = ({ children, store, setDashboardState }) => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
-        <SharedNavbar storeName={store.name} open={open} setOpen={setOpen} />
+        <SharedNavbar storeLogo={store.logo.logoUrl} storeName={store.name} open={open} setOpen={setOpen} />
         <div>{children}</div>
       </div>
     </div>

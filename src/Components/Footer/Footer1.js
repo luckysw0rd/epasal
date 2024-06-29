@@ -63,7 +63,7 @@ const Footer1 = ({
     console.log(previewMode);
     if (!previewMode) {
         return (
-            <footer style={{ backgroundColor: bgColor, color: textColor,fontFamily:store?.fonts?.Footer }} className="px-10 lg:px-16 py-10">
+            <footer style={{ backgroundColor: bgColor, color: textColor, fontFamily: store?.fonts?.Footer }} className="px-10 lg:px-16 py-10">
                 <div className='flex flex-col md:flex-row gap-7 justify-between'>
                     <div className='flex flex-col justify-center gap-3 lg:w-1/3'>
                         <div className="flex flex-col">
@@ -169,7 +169,7 @@ const Footer1 = ({
         );
     } else {
         return (
-            <footer style={{ backgroundColor: bgColor, color: textColor ,fontFamily:store?.fonts?.Footer}} className="lg:px-16 md:px-8  px-1 pt-14 pb-4">
+            <footer style={{ backgroundColor: bgColor, color: textColor, fontFamily: store?.fonts?.Footer }} className="lg:px-16 md:px-8  px-1 pt-14 pb-4">
                 <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 justify-center px-4 gap-10 md:gap-14 lg:gap-32 ">
                     <div className="mb-4">
                         <span className='font-bold text-lg lg:text-xl'>{store.name}</span>
@@ -229,10 +229,11 @@ const Footer1 = ({
 
 
                 </div>
-                <div className='w-full  flex justify-center text-lg mt-16'>
-                    <p>&copy; Brought To You By Shop At Banau , By Nepal @ {new Date().getFullYear()}</p>
+                <div className='w-full flex justify-center text-lg mt-16'>
+                    <p>
+                        &copy; Brought To You By <a href="/" target="_blank" className=" underline hover:text-orange-200">Shop At Banau</a>, By <a href="https://www.saikanepal.com" target="_blank" className=" underline hover:text-blue-300">Saika Nepal</a> @ {new Date().getFullYear()}
+                    </p>
                 </div>
-
             </footer >
         );
     }
