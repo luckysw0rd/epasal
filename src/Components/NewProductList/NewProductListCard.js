@@ -35,10 +35,13 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
         if (store.fetchedFromBackend && !store.isEdit)
             navigate("/productlanding", { state: { product, store } })
     };
-
-    const truncateName = (name) => {
-        return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
+    const truncateName = (name, charLimit) => {
+        if (name.length > charLimit) {
+            return name.slice(0, charLimit) + '...';
+        }
+        return name;
     };
+
     if (!product) return null;
 
     const { id, name, image, variant } = product;
@@ -81,12 +84,12 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                             <div className=" py-2 "
                             // className="prod-title mt-2 flex justify-between items-center"
                             >
-                                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
-                              <div className=' flex flex-row space-x-2'>
-                                <p className="my-1 font-bold text-md" style={{ color: priceColor }}>Rs. {price - discount}</p>
-                                {discount > 0 &&
-                                    <del className='  text-sm    text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>Rs. {price}</del>
-                                }
+                                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
+                                <div className=' flex flex-row space-x-2'>
+                                    <p className="my-1 font-bold text-md" style={{ color: priceColor }}>Rs. {price - discount}</p>
+                                    {discount > 0 &&
+                                        <del className='  text-sm    text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>Rs. {price}</del>
+                                    }
                                 </div>
                             </div>
                             <div className="grid gap-2 relative w-full">

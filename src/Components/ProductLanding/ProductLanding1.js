@@ -185,19 +185,19 @@ const ProjectLanding1 = () => {
     return (
         <div>
             <Navbar store={store} setStore={setStore} color={store.color} />
-            <div className="p-2 md:p-5 lg:p-16">
+            <div className="p-2 mt-10 md:mt-0 md:p-5 lg:p-16">
                 <div className='mt-5 flex flex-col gap-5'>
                     <div className="flex flex-col md:flex-row md:gap-5 lg:gap-10">
                         <div className="w-full md:w-[75%] flex flex-col gap-10 p-5 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
                             <div className="flex flex-col md:flex-row gap-3 md:gap-5 lg:gap-10">
-                                <div className="flex flex-row md:flex-col gap-5 md:w-[250px] md:h-[250px] lg:w-[400px] lg:h-[400px]">
+                                <div className="flex  flex-col md:flex-col gap-5 md:w-[250px] md:h-[250px] lg:w-[400px] lg:h-[400px]">
                                     <img
                                         src={displayedImage}
                                         alt={selectedProduct?.name}
                                         className="w-full h-auto rounded"
                                         style={{ aspectRatio: '1/1' }}
                                     />
-                                    <div className="flex flex-row">
+                                    <div className="flex  md:flex-row">
                                         {selectedProduct.image && (
                                             <div
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
@@ -207,7 +207,8 @@ const ProjectLanding1 = () => {
                                             </div>
                                         )}
                                         {selectedProduct.variant.map((variant, variantIndex) => (
-                                            variant.options.map((option, optionIndex) => (
+                                            variantIndex == 0 && 
+                                            selectedProduct.variant[0].options.map((option, optionIndex) => (
                                                 <div
                                                     key={`${variantIndex}-${optionIndex}`}
                                                     className={`cursor-pointer text-sm lg:text-base ${selectedVariants[variantIndex] === optionIndex ? 'font-bold' : ''} rounded-md`}

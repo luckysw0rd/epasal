@@ -128,10 +128,15 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     </ul>
                 </div>
             </div>
-            <div className="flex items-center mt-2">
+            <div className="flex flex-col items-center mt-2">
+                <p className="text-lg font-semibold " style={{ color: `${store.color.subProductColor.priceColor}` }} >Rs {product.price - product.discount}</p>
+
+                <del className="ml-2 "> Rs {product.price}</del>
+            </div>
+            {/* <div className="flex items-center mt-2">
                 <p className="text-lg font-semibold " style={{ color: `${store.color.subProductColor.priceColor}` }} >Rs {product.price}</p>
                 <del className="ml-2 "> Rs {product.originalPrice}</del>
-            </div>
+            </div> */}
             {/* <div className="flex mb-2 justify-center md:justify-start">
                 {[...Array(5)].map((_, index) => {
                     if (index < product.rating)
