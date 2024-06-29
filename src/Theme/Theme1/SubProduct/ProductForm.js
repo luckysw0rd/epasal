@@ -137,12 +137,28 @@ export default function ProductForm({ onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
+        const updatedVariants = formState.variant.map((variant, variantIndex) => {
+            const updatedOptions = variant.options.map((option, optionIndex) => ({
+                ...option,
+                name: option.name || `default`
+            }));
+    
+            return {
+                ...variant,
+                name: variant.name || `default`,
+                options: updatedOptions
+            };
+        });
+    
+        setFormState(prevFormState => ({
+            ...prevFormState,
+            variant: updatedVariants
+        }));
+    
         if (store.isEdit) {
-            console.log("Is inside edit");
             try {
                 const productImg = await uploadImage(formState?.image?.imageUrl);
     
-                // Update product image
                 setFormState(prev => ({
                     ...prev,
                     image: {
@@ -151,58 +167,42 @@ export default function ProductForm({ onClose }) {
                         imageID: productImg.id
                     }
                 }));
-                if(formState.variant[0]){
+    
                 for (let i = 0; i < formState.variant[0].options.length; i++) {
                     const optionImage = await uploadImage(formState.variant[0].options[i].image.imageUrl);
     
                     setFormState(prev => {
-                        // Create a copy of the previous state
                         const formState = { ...prev };
-    
-                        // Navigate to the specific variant
                         const variant = { ...formState.variant[0] };
-    
-                        // Navigate to the specific option
                         const option = { ...variant.options[i] };
     
-                        // Update the image URL and ID in the option
                         option.image = {
                             ...option.image,
                             imageUrl: optionImage.img,
                             imageID: optionImage.id
                         };
     
-                        // Update the option in the variant
                         variant.options[i] = option;
-    
-                        // Update the variant in the new state
                         formState.variant[0] = variant;
     
-                        // Return the updated state
                         return formState;
                     });
                 }
-            }
     
-                // Ensure the state update is complete before proceeding
                 await new Promise(resolve => setTimeout(resolve, 0));
                 setOnEditDataUpload(prev => !prev);
-                console.log("i am behind upload");
             } catch (err) {
                 toast("error uploading variant images ");
             }
         } else {
             const newProduct = {
                 ...formState,
-                id: Math.random().toString(36).substr(2, 9), // Generates a random id
+                id: Math.random().toString(36).substr(2, 9),
             };
-            console.log("product is ", newProduct);
-            console.log("store is ", store);
             setStore(prevStore => ({
                 ...prevStore,
                 products: [...prevStore.products, newProduct]
             }));
-            console.log(store);
             setFormState(initialState);
             onClose();
         }

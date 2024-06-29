@@ -84,24 +84,28 @@ const Product = ({ store }) => {
       const updatedEditProduct = { ...editProduct };
       updatedEditProduct.image.imageUrl = uploadedProductImage.img;
       updatedEditProduct.image.imageId = uploadedProductImage.id;
-
+  
       const updatedVariants = await Promise.all(
         updatedEditProduct.variant.map(async (variant) => {
           const updatedOptions = await Promise.all(
             variant.options.map(async (option) => {
               if (option.image && option.image.imageUrl) {
                 const uploadedVariantImage = await uploadImage(option.image.imageUrl);
-                return { ...option, image: { imageUrl: uploadedVariantImage.img, imageId: uploadedVariantImage.id } };
+                return {
+                  ...option,
+                  name: option.name || 'Default Option Name', // Set default option name
+                  image: { imageUrl: uploadedVariantImage.img, imageId: uploadedVariantImage.id },
+                };
               }
-              return option;
+              return { ...option, name: option.name || 'default' }; // Set default option name
             })
           );
-          return { ...variant, options: updatedOptions };
+          return { ...variant, name: variant.name || 'default', options: updatedOptions }; // Set default variant name
         })
       );
-
+  
       updatedEditProduct.variant = updatedVariants;
-
+  
       const updates = {
         name: updatedEditProduct.name,
         description: updatedEditProduct.description,
@@ -112,19 +116,19 @@ const Product = ({ store }) => {
         discount: updatedEditProduct.discount,
         inventory: updatedEditProduct.inventory,
         soldQuantity: updatedEditProduct.soldQuantity,
-        revenueGenerated: updatedEditProduct.revenueGenerated
+        revenueGenerated: updatedEditProduct.revenueGenerated,
       };
-
+  
       const response = await sendRequest(
         `product/updateProduct`,
         'PUT',
         JSON.stringify({ id: updatedEditProduct._id, updates }),
         {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + auth.token
+          'Authorization': 'Bearer ' + auth.token,
         }
       );
-
+  
       toast.success('Product updated successfully');
       const updatedProducts = [...products];
       updatedProducts[editProductIndex] = updatedEditProduct;
@@ -298,6 +302,8 @@ const Product = ({ store }) => {
                     <p className="text-gray-700 mb-2">Price: ${product.price}</p>
                     <p className="text-gray-700 mb-2">Discount: {product.discount}</p>
                     <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
+                    <p className="text-gray-700 mb-2">Inventory: {product.inventory}</p>
+
                   </div>
                 </div>
                 <button
@@ -369,6 +375,16 @@ const Product = ({ store }) => {
                   type="number"
                   name="discount"
                   value={editProduct.discount}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Inventory</label>
+                <input
+                  type="number"
+                  name="inventory"
+                  value={editProduct.inventory}
                   onChange={handleInputChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />

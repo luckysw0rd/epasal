@@ -7,8 +7,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
+
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
+import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
 
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
@@ -23,6 +25,7 @@ const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductFo
 const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Home'));
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
 const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
+const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
 
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -47,7 +50,9 @@ function App() {
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
-        {/* <Route path="/settings" element={<SettingPage />} /> */}
+        <Route path="/productlanding" element={<ProjectLanding1 />} />
+        <Route path="/settings" element={<SettingPage />} />
+
       </React.Fragment>
     );
   } else {
@@ -56,7 +61,6 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignInPage />}></Route>
         {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
-
       </React.Fragment>
     );
   }
@@ -66,16 +70,20 @@ function App() {
       <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout }}>
         <div className="App">
           <Router>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback=
+            {
+            <div className=" bg-fuchsia-700 h-screen w-screen">
+              LOADING 
+            </div>}>
               <Routes>
                 {routes}
               </Routes>
             </Suspense>
           </Router>
-        </div>
+        </div >
         <ToastContainer />
-      </AuthContext.Provider>
-    </PrimeReactProvider>
+      </AuthContext.Provider >
+    </PrimeReactProvider >
   );
 }
 

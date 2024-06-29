@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaUser, FaDollarSign, FaExclamationCircle, FaHourglassHalf, FaEdit } from 'react-icons/fa';
+import { FaEdit, FaMapMarkerAlt, FaUser, FaDollarSign, FaHourglassHalf, FaPhone, FaEye, FaEnvelope, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { store } from '../../AdminPanel/Dashboard/Home/homeStore';
 import { IoMedalOutline } from "react-icons/io5";
 import { IoMedalSharp } from "react-icons/io5";
-import { FaEye } from 'react-icons/fa';
+// import { FaEye } from 'react-icons/fa';
 import { esewaIcon, fonepayIcon, khaltiIcon } from '../../../Assets/icons';
 
 const Stores = () => {
@@ -298,6 +298,42 @@ const Stores = () => {
     //         break;
     // }
 
+    const enableDisableStoreFunction = async (store, flag = true) => {
+        try {
+            let route = ``;
+            if (flag == false)
+                route = `store/disable/store/${store._id}`;
+            else
+                route = `store/activate/store/${store._id}`;
+            const responseData = await sendRequest(
+                route,
+                'PUT',
+                null,
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token,
+                }
+            );
+            if (!responseData)
+                throw new Error("[-] Something went wrong while store enable disable mechanism");
+            toast.success(responseData?.message);
+
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+    const handleEnable = (store) => {
+        // Implement your logic for enabling the store
+        console.log('Enabling store', store);
+        enableDisableStoreFunction(store, true);
+    };
+
+    const handleDisable = (store) => {
+        // Implement your logic for disabling the store
+        console.log('Disabling store', store);
+        enableDisableStoreFunction(store, false);
+    };
 
     return (
         <div className="min-h-screen p-4">
@@ -305,7 +341,7 @@ const Stores = () => {
             <div >
                 <div className="mb-4 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
                     <input
-                        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                        className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                         type="text"
                         placeholder="Search"
                         value={search}
@@ -315,7 +351,7 @@ const Stores = () => {
                         }}
                     />
                     <input
-                        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                        className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                         type="text"
                         placeholder="Owner Name"
                         value={ownername}
@@ -325,7 +361,7 @@ const Stores = () => {
                         }}
                     />
                     <input
-                        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                        className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                         type="text"
                         placeholder="Staff Name"
                         value={staffname}
@@ -339,11 +375,12 @@ const Stores = () => {
                 {/* 
                 * * This is For the Filter types
                  */}
+                 {/* FilterType */}
                 <div className="mb-4 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
                     <div className="flex items-center">
                         <label className="mr-1">{"Filter"}</label>
                         <select
-                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                            className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                             value={filterType}
                             onChange={(e) => setFilterType(e.target.value)}
                         >
@@ -354,7 +391,7 @@ const Stores = () => {
                     <div className="flex items-center">
                         {/* <label className="mr-2">Filter <br/> by:</label> */}
                         <select
-                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                            className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                             value={orderType}
                             onChange={(e) => setOrderType(e.target.value)}
                         >
@@ -363,13 +400,14 @@ const Stores = () => {
                         </select>
                     </div>
                 </div>
+                {/* Input for filters */}
                 <div className="mb-4 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
                     {filterType === 'pendingAmount' ? (
                         <>
                             {/* <label className="mr-1">{"Min Pending Amount"}</label> */}
 
                             <input
-                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                                 type='number'
                                 placeholder="Min Pending Amount"
                                 value={minPendingAmount}
@@ -379,7 +417,7 @@ const Stores = () => {
                                 }}
                             />
                             <input
-                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                                 type='number'
                                 placeholder="Max Pending Amount"
                                 value={maxPendingAmount}
@@ -392,7 +430,7 @@ const Stores = () => {
                     ) : (
                         <>
                             <input
-                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                                 type='number'
                                 value={minDueAmount}
                                 onChange={(e) => {
@@ -401,7 +439,7 @@ const Stores = () => {
                                 }}
                             />
                             <input
-                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                                 type='number'
                                 value={maxDueAmount}
                                 onChange={(e) => {
@@ -424,7 +462,7 @@ const Stores = () => {
                     storesArr.map((store) => (
                         <div key={store._id} className="bg-white p-6 text-sm rounded-xl shadow-lg transform transition duration-500 hover:scale-105 w-full h-64 md:h-96 lg:h-96 overflow-auto">
                             <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-3 py-1 rounded">
+                                <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-2 py-1 rounded">
                                     {store.name.toUpperCase()}
                                 </h2>
                                 <button
@@ -476,7 +514,7 @@ const Stores = () => {
                                 </div> */}
                                 {/* <div>
                                     <button
-                                        className="flex items-center text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 w-full"
+                                        className="flex items-center text-sm bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 w-full"
                                         onClick={() => console.log({ store })}
                                     >
                                         <FaEye className="mr-2" />
@@ -485,7 +523,7 @@ const Stores = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="flex items-center text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 w-full"
+                                        className="flex items-center text-sm bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 w-full"
                                         onClick={() => console.log({ esewa: store.esewa })}
                                     >
                                         <img src={esewaIcon} alt="icon" className="mr-2 w-4 h-4 " />
@@ -494,7 +532,7 @@ const Stores = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="flex items-center text-sm bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-700 w-full"
+                                        className="flex items-center text-sm bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 w-full"
                                         onClick={() => console.log({ khalti: store.khalti })}
                                     >
                                         <img src={khaltiIcon} alt="icon" className="mr-2 w-4 h-4 " />
@@ -503,7 +541,7 @@ const Stores = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="flex items-center text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700 w-full"
+                                        className="flex items-center text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full"
                                         onClick={() => console.log({ khalti: store.bank })}
                                     >
                                         <img src={fonepayIcon} alt="icon" className="mr-2 w-4 h-4 " />
@@ -521,7 +559,7 @@ const Stores = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-5">
                                 <div>
                                     <button
-                                        className="flex items-center text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 w-full"
+                                        className="flex items-center text-sm bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 w-full"
                                         onClick={() => console.log({ store })}
                                     >
                                         <FaEye className="mr-2" />
@@ -530,7 +568,7 @@ const Stores = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="flex items-center text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 w-full"
+                                        className="flex items-center text-sm bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 w-full"
                                         onClick={() => {
                                             console.log({ esewa: store.esewa });
                                             openPaymentModal(
@@ -550,7 +588,7 @@ const Stores = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="flex items-center text-sm bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-700 w-full"
+                                        className="flex items-center text-sm bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 w-full"
                                         onClick={() => {
                                             console.log({ khalti: store.khalti });
                                             openPaymentModal(
@@ -570,7 +608,7 @@ const Stores = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="flex items-center text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700 w-full"
+                                        className="flex items-center text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full"
                                         onClick={() => {
                                             console.log({ khalti: store.bank });
                                             openPaymentModal(
@@ -609,6 +647,26 @@ const Stores = () => {
                                     </ul>
                                 </div>
                             )}
+                            {/* Enable and disable store*/}
+                            <div className="flex justify-end mt-2">
+                                {store.isDisabled ? (
+                                    <button
+                                        className="flex items-center text-sm bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 w-full md:w-auto"
+                                        onClick={(e) => handleEnable(store)}
+                                    >
+                                        <FaToggleOn className="mr-2" />
+                                        Enable
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="flex items-center text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full md:w-auto"
+                                        onClick={(e) => handleDisable(store)}
+                                    >
+                                        <FaToggleOff className="mr-2" />
+                                        Disable
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     ))
                 ) : (
@@ -618,7 +676,7 @@ const Stores = () => {
             </div>
             <div className="mt-4 flex justify-between sm:justify-between md:justify-start lg:justify-start items-center space-x-4">
                 <button
-                    className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+                    className="px-2 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
                     onClick={handlePrevPage}
                     disabled={page === 1}
                 >
@@ -626,7 +684,7 @@ const Stores = () => {
                 </button>
                 <span className="text-xl">{page}</span>
                 <button
-                    className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+                    className="px-2 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
                     onClick={handleNextPage}
                     disabled={!hasNextPage}
                 >
@@ -638,7 +696,7 @@ const Stores = () => {
              */}
             {modalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 text-sm">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[50vh] md:h-[70vh] lg:h-[90vh] overflow-auto">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[85vh] md:h-[70vh] lg:h-[90vh] overflow-auto">
                         <h2 className="text-xl font-bold mb-4">Edit Store</h2>
                         {selectedStore && (
                             <form>
@@ -649,7 +707,7 @@ const Stores = () => {
                                         name="name"
                                         value={selectedStore.name}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -659,7 +717,7 @@ const Stores = () => {
                                         name="location"
                                         value={selectedStore.location}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -669,7 +727,7 @@ const Stores = () => {
                                         name="phoneNumber"
                                         value={selectedStore.phoneNumber}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -679,7 +737,7 @@ const Stores = () => {
                                         name="pendingAmount"
                                         value={selectedStore.pendingAmount}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -689,7 +747,7 @@ const Stores = () => {
                                         name="dueAmount"
                                         value={selectedStore.dueAmount}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
 
@@ -701,7 +759,7 @@ const Stores = () => {
                                         name="employee"
                                         value={transactionLogs.employee}
                                         onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 {/* <div className="mb-4">
@@ -711,7 +769,7 @@ const Stores = () => {
                                         name="pendingAmount"
                                         value={transactionLogs.pendingAmount}
                                         onChange={handleTransactionLogChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div> */}
                                 {/* <div className="mb-4">
@@ -721,7 +779,7 @@ const Stores = () => {
                                         name="dueAmount"
                                         value={transactionLogs.dueAmount}
                                         onChange={handleTransactionLogChange}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div> */}
                                 <div className="mb-4">
@@ -732,7 +790,7 @@ const Stores = () => {
                                         value={transactionLogs.paymentReceived}
                                         // onChange={handleTransactionLogChange}
                                         onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -743,7 +801,7 @@ const Stores = () => {
                                         value={transactionLogs.paymentGiven}
                                         // onChange={handleTransactionLogChange}
                                         onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -753,7 +811,7 @@ const Stores = () => {
                                         value={transactionLogs.subscriptionStatus}
                                         // onChange={handleTransactionLogChange}
                                         onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     >
                                         <option value="Silver">Silver</option>
                                         <option value="Gold">Gold</option>
@@ -767,7 +825,7 @@ const Stores = () => {
                                         value={duration.duration}
                                         // onChange={handleTransactionLogChange}
                                         onChange={(e) => handleInputChangev1(e, setDuration)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     >
 
                                         <option value="">None</option>
@@ -783,7 +841,7 @@ const Stores = () => {
                                         value={transactionLogs.logDescription}
                                         // onChange={handleTransactionLogChange}
                                         onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     ></textarea>
                                 </div>
                                 <div className="mb-4">
@@ -793,7 +851,7 @@ const Stores = () => {
                                         name="customerName"
                                         value={transactionLogs.customerName}
                                         onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -802,7 +860,7 @@ const Stores = () => {
                                         name="paymentMethod"
                                         value={transactionLogs.paymentMethod}
                                         onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     >
                                         <option value="Cash">Cash</option>
                                         <option value="Bank">Bank</option>
@@ -814,7 +872,7 @@ const Stores = () => {
                                 <div className="flex justify-end">
                                     <button
                                         type="button"
-                                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors mr-2"
+                                        className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition-colors mr-2"
                                         disabled={updatingStore}
                                         onClick={() => {
                                             setModalOpen(false);
@@ -825,7 +883,7 @@ const Stores = () => {
                                     </button>
                                     <button
                                         type="button"
-                                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+                                        className="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600 transition-colors"
                                         onClick={handleUpdate}
                                         disabled={updatingStore}
                                     >
@@ -833,7 +891,7 @@ const Stores = () => {
                                     </button>
                                     {/* <button
                                         type="button"
-                                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors ml-2"
+                                        className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 transition-colors ml-2"
                                         onClick={logTransactionState}
                                     >
                                         Log Transaction State
@@ -848,11 +906,11 @@ const Stores = () => {
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-sm">
                     <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 h-[50vh] md:h-[70vh] lg:h-[80vh] overflow-auto transform transition duration-500 hover:scale-105">
                         <div className='flex items-center justify-between'>
-                            <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-3 py-1 rounded">
+                            <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-2 py-1 rounded">
                                 {paymentMethodDetails.store.name.toUpperCase()}
                             </h2>
                             <button
-                                className={`text-sm md:text-xl lg:text-xl font-bold px-3 py-1 rounded flex items-center ${paymentMethodDetails?.paymentMethod === 'Esewa'
+                                className={`text-sm md:text-xl lg:text-xl font-bold px-2 py-1 rounded flex items-center ${paymentMethodDetails?.paymentMethod === 'Esewa'
                                     ? 'text-green-600 bg-green-100'
                                     : paymentMethodDetails?.paymentMethod === 'Khalti'
                                         ? 'text-indigo-600 bg-indigo-100'
@@ -892,8 +950,8 @@ const Stores = () => {
                                 value={transactionLogs.paymentGiven}
                                 // onChange={handleTransactionLogChange}
                                 onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                // className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                                // className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
                             />
                         </div>
 
@@ -905,7 +963,7 @@ const Stores = () => {
                                 value={transactionLogs.logDescription}
                                 // onChange={handleTransactionLogChange}
                                 onChange={(e) => handleInputChangev1(e, setTransactionLogs)}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             ></textarea>
 
                         </div>

@@ -13,7 +13,6 @@ const EsewaRouteComponent = () => {
     const [updatedOrder, setUpdatedOrder] = useState(null);
     const location = useLocation();
     const { field } = useParams();
-
     const updateStoreSubscription = async (data) => {
         try {
             console.log("Data to be sent:", data);
@@ -31,6 +30,8 @@ const EsewaRouteComponent = () => {
         } catch (error) {
             console.error("Error message:", error.message);
             console.error("Error details:", error);
+            // Handle error state here
+            setIsSuccess(false); // Set success state to false
         }
     };
 
@@ -51,10 +52,13 @@ const EsewaRouteComponent = () => {
         } catch (error) {
             console.error("Error message:", error.message);
             console.error("Error details:", error);
+            // Handle error state here
+            setIsSuccess(false); // Set success state to false
         }
     };
 
     const updateOrder = async (data) => {
+        //TODO CHECK ESEWA API CONFIRMATION FIRST
         try {
             console.log("Data to be sent:", data);
             const responseData = await sendRequest(
@@ -72,6 +76,31 @@ const EsewaRouteComponent = () => {
         } catch (error) {
             console.error("Error message:", error.message);
             console.error("Error details:", error);
+            // Handle error state here
+            setIsSuccess(false); // Set success state to false
+        }
+    };
+
+    const updateDueAMount = async (data) => {
+        //TODO CHECK ESEWA API CONFIRMATION FIRST
+        try {
+            console.log("Data to be sent:", data);
+            const responseData = await sendRequest(
+                'store/payDue/' + data.transaction_uuid,
+                'PATCH',
+                JSON.stringify({ status: 'Confirmed' }),
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token
+                }
+            );
+            console.log("Response data:", responseData);
+            setIsSuccess(true);
+        } catch (error) {
+            console.error("Error message:", error.message);
+            console.error("Error details:", error);
+            // Handle error state here
+            setIsSuccess(false); // Set success state to false
         }
     };
 
@@ -100,6 +129,11 @@ const EsewaRouteComponent = () => {
                 console.log("order update");
                 updateOrder(parsedJson);
             }
+
+            if (field === 'dueAmount' && parsedJson) {
+                console.log('Paying Due Amount');
+                updateDueAMount(parsedJson);
+            }
         }
     }, [location.search, field]);
 
@@ -114,6 +148,7 @@ const EsewaRouteComponent = () => {
     };
 
     return (
+        parsedData &&
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-5">
             <div className="bg-white p-10 rounded-lg shadow-lg text-center">
                 {isSuccess ? (
@@ -191,7 +226,8 @@ const EsewaRouteComponent = () => {
                     <div>
                         <h2 className="text-3xl font-bold mb-4">Processing Payment...</h2>
                         {isLoading && <p className="text-blue-500">Loading...</p>}
-                        {error && <p className="text-red-500">Error: {error}</p>}
+                        {error && <p className="text-red-500">Error: {error.toString()}</p>}
+                        <h2> Please Refresh The Page </h2>
                     </div>
                 )}
             </div>

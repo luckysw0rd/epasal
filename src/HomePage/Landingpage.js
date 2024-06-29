@@ -62,7 +62,7 @@ function Landingpage() {
        <h2 className="text-xl font-bold">Follow some steps to create your website</h2>
         <p>Watch the video tutorial to get started</p>
         <button className="mt-2 px-4 py-2 bg-gray-700 rounded-full">More <span className="mx-2">&gt;</span></button>
-       </section>
+      </section>
       </div>
       <div className="bg-gray-800 p-4 rounded-lg">
         <div className="w-12 h-12 bg-gray-600 rounded-full my-2"></div>
@@ -70,7 +70,7 @@ function Landingpage() {
       </div>
     </div> */}
     <div className=" w-100 lg:w-1/2 text-white p-4 ">
-  <div className="mb-4 bg-gray-900 px-4 p-2 rounded-lg relative">
+  <div className="mb-4 bg-gray-900 px-4 p-2 rounded-2xl relative">
     <div
       className="absolute inset-0 bg-cover p-2 lg:p-4 bg-center rounded-2xl"
       style={{ backgroundImage: `url(${storepic2})` }}

@@ -34,7 +34,7 @@ export const useFetch = () => {
             if (!response.ok) {
                 const error = new Error(responseData.message || 'Request failed');
                 error.response = responseData;
-            setIsLoading(false);
+                setIsLoading(false);
                 throw error;
             }
 
@@ -44,7 +44,7 @@ export const useFetch = () => {
             if (error.name === 'AbortError') {
                 // If the error is an abort error, we don't set the error state
                 console.log('Fetch aborted');
-            setIsLoading(false);
+                setIsLoading(false);
 
             } else {
                 setError(error);
@@ -53,7 +53,7 @@ export const useFetch = () => {
 
             }
             setIsLoading(false);
-            // throw error;
+            throw error;
         }
     }, []);
 

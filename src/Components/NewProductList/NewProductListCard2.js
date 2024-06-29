@@ -4,13 +4,22 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
 
 const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
+    const navigate = useNavigate()
 
 
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store.fetchedFromBackend && !store.isEdit)
+            navigate("/productlanding", { state: { product, store } })
+    };
 
     useEffect(() => {
         setAddedToCart(false);
@@ -39,7 +48,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
 
     return (
         <motion.div
-            className="product-card w-full  rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
+            className="product-card w-[300px]  rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.newProductColor.cardBackground, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.borderColor}` }}
@@ -81,7 +90,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     className="object-cover w-[180px] h-[180px]"
                 />
                 <div
-                    className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
+                    className="tooltips absolute top-0 left-0 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
                 >
                     <p
                         className=" pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
@@ -89,7 +98,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                             color: store.color.newProductColor.categoryColor,
                         }}
                     >
-                        {product.category}
+                        {product.subcategories[0]}
                     </p>
                     <ul className="flex flex-col items-start gap-2">
                         <li
@@ -129,16 +138,25 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                         return <StarIcon className='w-4 h-4 ' key={index} />
                 })}
             </div> */}
-            {!addedToCart && (
-                <button
-                    className="py-2 px-6 rounded-full duration-300 mt-4"
-                    onClick={handleAddToCart}
-                    style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}` }}
-                >
-                    Add to Cart
-                </button>
-            )}
-            {addedToCart && (
+            {/* 
+            <button
+                className="py-2 px-6 rounded-full duration-300 mt-4"
+                onClick={handleProductClick(product)}
+                style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}` }}
+            >
+                Add to Cart
+            </button> */}
+            <button
+                style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}`,  }}
+                className="py-2 px-6 rounded-full duration-300 mt-4"
+               
+                onClick={() => {
+                    handleProductClick(product)
+                }}
+            >
+                Add to cart
+            </button>
+            {/* {addedToCart && (
                 <button
                     className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
                     disabled
@@ -146,7 +164,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                 >
                     <FaShoppingCart className="mr-1 " />
                 </button>
-            )}
+            )} */}
         </motion.div>
     );
 }
