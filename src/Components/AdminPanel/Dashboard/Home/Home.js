@@ -27,7 +27,7 @@ const Home = ({ data }) => {
       store: data._id
     };
 
-    const success_url = 'http://localhost:3000/esewa/dueAmount';
+    const success_url = process.env.REACT_APP_BASE_URL+'/esewa/dueAmount';
     try {
       const responseData = await sendRequest(
         'store/duepay/' + data._id,

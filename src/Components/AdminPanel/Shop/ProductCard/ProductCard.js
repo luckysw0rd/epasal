@@ -135,7 +135,7 @@ export default function ProductCards({ store }) {
             payment_method: 'esewa',
             store: store._id,
         };
-        const success_url = 'http://localhost:3000/esewa/skin';
+        const success_url = process.env.REACT_APP_BASE_URL+'/esewa/skin';
         try {
             const responseData = await sendRequest(
                 'payment/create',
