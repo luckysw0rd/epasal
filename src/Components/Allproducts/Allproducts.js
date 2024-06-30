@@ -129,6 +129,32 @@ const AllProducts = () => {
     });
   };
 
+  const generatePageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (page > 3) {
+        pages.push('...');
+      }
+      const startPage = Math.max(2, page - 1);
+      const endPage = Math.min(totalPages - 1, page + 1);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (page < totalPages - 2) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
+  const pageNumbers = generatePageNumbers();
+
   const deleteFromCart = (product) => {
     const { price, selectedVariant } = product;
     const name = product.product;
@@ -225,6 +251,8 @@ const AllProducts = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
   };
 
+  
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -234,7 +262,9 @@ const AllProducts = () => {
       <div className="flex flex-col mt-20">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row"
+          style={{ backgroundColor: color.productListColor.backgroundColor }}
+        >
           <button
             onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
             className="md:hidden px-4 py-2 bg-blue-500 text-white rounded m-2"
@@ -243,7 +273,7 @@ const AllProducts = () => {
           </button>
 
           {(isFilterVisible || window.innerWidth >= 768) && ( // Conditionally render the filter section based on visibility state or screen width
-            <div className="   relative top-8 md:left-5  w-full md:w-1/4 h-[688px]  my md:max-w-[250px] p-5 py-0   md:-mt-4 rounded-lg border-2  shadow-xl"
+            <div className="   relative top-8 md:left-12  w-full md:w-1/4 h-[688px]  my md:max-w-[250px] p-5 py-0   md:-mt-4 rounded-lg border-2  shadow-xl"
               style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor }}
             >
               <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10  ">Filters</h3>
@@ -310,26 +340,25 @@ const AllProducts = () => {
             </div>
           )}
 
-          <div className="flex-grow p-4 W-full md:W-3/4">
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex items-center mb-4 w-full">
+          <div className="md:ml-16 flex-grow p-4 w-full md:w-3/4">
+            <div className="flex flex-wrap justify-start gap-4">
+              <div className="flex items-center space-x-2 mb-4 ml-0 w-full">
                 <input
                   type="text"
                   name="productName"
                   value={name}
                   onChange={handleNameFilterChange} // Handle change for name filter input
-                  placeholder="Search by name"
-                  className="mt-1 p-2 border rounded w-2/3 md:w-1/6 ml-14"
+                  placeholder="Search..."
+                  className="p-2 border border-gray-300 rounded-sm w-[144px] h-[28px] max-w-md"
                 />
-
                 <button
                   onClick={handleSearch} // Handle click on search button
-                  className="p-2 bg-blue-500 text-white rounded ml-2"
+                  className="p-2 bg-gray-300 border h-[28px] border-l-0 border-gray-300 rounded-r-lg flex items-center justify-center"
                 >
-                  <FaSearch />
+                  <FaSearch className="text-gray-500" />
                 </button>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+              <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-8 md:w-[900px]  2xl:w-[1500px]">
                 {products.map(product => (
                   <ProductCard
                     key={product.id}
@@ -343,22 +372,33 @@ const AllProducts = () => {
             </div>
 
             <div className="flex justify-center mt-8">
-              <button
-                disabled={page <= 1}
-                onClick={() => handlePageChange(page - 1)}
-                className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
-              >
-                Previous
-              </button>
-              <span className="mx-2 flex items-center text-center">Page {page} of {totalPages}</span>
-              <button
-                // disabled={page  totalPages}
-                onClick={() => handlePageChange(page + 1)}
-                className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
-              >
-                Next
-              </button>
-            </div>
+      <button
+        disabled={page <= 1}
+        onClick={() => handlePageChange(page - 1)}
+        className={`px-4 py-2 rounded ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-white text-gray-700 border border-gray-300'}`}
+      >
+        &lt;
+      </button>
+
+      {[...Array(totalPages)].map((_, index) => (
+        <button
+        disabled
+          key={index + 1}
+          className={`mx-1 px-4 py-2 rounded  bg-white text-gray-700 border border-gray-300`}
+          onClick={() => handlePageChange(index + 1)}
+        >
+          {page}
+        </button>
+      ))}
+
+      <button
+        // disabled={page >= totalPages}
+        onClick={() => handlePageChange(page + 1)}
+        className={`px-4 py-2 roundedbg-white text-gray-700 border border-gray-300`}
+      >
+        &gt;
+      </button>
+    </div>
           </div>
         </div>
       </div>

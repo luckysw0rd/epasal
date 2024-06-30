@@ -5,7 +5,7 @@ import storepic2 from "../Assets/storedesign2.png";
 
 function Landingpage() {
   return (
-    <div className="lg:flex h-screen ">
+    <div className="lg:flex  max-h-[800px] ">
       <div className="w-100 md:w-full lg:w-1/2 flex justify-between p-4">
         <div className="xl:pl-8">
           <h1 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#878787]">
@@ -67,8 +67,8 @@ function Landingpage() {
               </button>
             </div>
 
-            <div className="  flex shadow-lg justify-center my-auto">
-              <button className="  px-4 py-2 bg-orange-500 text-white text-lg font-bold rounded-full hover:bg-orange-600 transition-colors duration-300">
+            <div className=" w-[200px]  flex shadow-lg justify-center my-auto">
+              <button className="  px-4 py-2 md:px-4 md:py-2 bg-orange-500 text-white text-sm  break-words md:text-lg font-bold rounded-full hover:bg-orange-600 transition-colors duration-300">
                 Watch Now
               </button>
             </div>

@@ -23,8 +23,8 @@ const plans = [
     {
         name: 'Gold',
         priceMonthly: 999,
-        priceQuarterly: 2499,
-        priceYearly: 8999,
+        priceQuarterly: 1999,
+        priceYearly: 6999,
         description: '8500 per year',
         features: [
             { name: 'Customization', value: 'Advanced', color: 'text-indigo-600' },
@@ -38,9 +38,9 @@ const plans = [
     },
     {
         name: 'Platinum',
-        priceMonthly: 2499,
-        priceQuarterly: 6499,
-        priceYearly: 24999,
+        priceMonthly: 1999,
+        priceQuarterly: 4499,
+        priceYearly: 15999,
         description: 'Only at 20,000 per Year',
         features: [
             { name: 'Customization', value: 'Advanced', color: 'text-blue-600' },
