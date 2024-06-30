@@ -17,6 +17,14 @@ const navigate = useNavigate();
     if (store.fetchedFromBackend && !store.isEdit)
         navigate("/productlanding", { state: { product, store } })
 };
+
+const truncateName = (name, charLimit) => {
+  if (name.length > charLimit) {
+      return name.slice(0, charLimit) + '...';
+  }
+  return name;
+};
+
   // Truncating function
   const getTruncateLength = (width) => {
     if (width < 640) return 50; // sm
@@ -33,9 +41,7 @@ const navigate = useNavigate();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const truncateName = (name) => {
-    return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
-  };
+
 
   if (!product) return null;
 
@@ -83,7 +89,7 @@ const navigate = useNavigate();
             <div className="px-5 w-full">
               <hr className="border-t-2" style={{ borderColor: borderColor }} />
               <div className="py-2">
-                <p className="text-xl font-bold" style={{ color: textColor }}>{truncateName(name)}</p>
+              <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
                 <p className="my-1 font-bold text-[13px]" style={{ color: priceColor }}>Rs. {price}</p>
               </div>
               <div className="grid gap-2 relative w-full">

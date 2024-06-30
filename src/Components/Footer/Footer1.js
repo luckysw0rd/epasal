@@ -202,11 +202,11 @@ const Footer1 = ({
                     <div className='text-xs lg:text-sm flex flex-col gap-3 '>
                         <p style={{ color: linkHeaderColor }} className="font-bold text-sm lg:text-lg">Products</p>
                         <div style={{ color: linkColor }} className="flex flex-col items-start gap-2">
-                            <Link to="/" className=" sm:transition-colors duration-300">All Products</Link>
+                            <Link to="" className=" sm:transition-colors duration-300">All Products</Link>
                             <Link to="/" className=" transition-colors duration-300">Featured</Link>
-                            <Link to="/" className=" transition-colors duration-300">Perfumes</Link>
+                            {/* <Link to="/" className=" transition-colors duration-300">Perfumes</Link>
                             <Link to="/" className=" transition-colors duration-300">Skin Care</Link>
-                            <Link to="/" className=" transition-colors duration-300">Others</Link>
+                            <Link to="/" className=" transition-colors duration-300">Others</Link> */}
                         </div>
                     </div>
                     <div className='text-xs lg:text-sm flex flex-col gap-3 '>

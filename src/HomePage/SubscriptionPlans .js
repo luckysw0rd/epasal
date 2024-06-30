@@ -27,7 +27,7 @@ const plans = {
         },
         {
             name: "Platinum",
-            price: 2499,
+            price: 1999,
             customization: "Advanced",
             products: 10000,
             staff: 10,
@@ -51,7 +51,7 @@ const plans = {
         },
         {
             name: "Gold",
-            price: 2499,
+            price: 1999,
             customization: "Advanced",
             products: 1000,
             staff: 5,
@@ -63,7 +63,7 @@ const plans = {
         },
         {
             name: "Platinum",
-            price: 6499,
+            price: 4499,
             customization: "Advanced",
             products: 10000,
             staff: 10,
@@ -87,7 +87,7 @@ const plans = {
         },
         {
             name: "Gold",
-            price: 8999,
+            price: 6999,
             customization: "Advanced",
             products: 1000,
             staff: 5,
@@ -99,7 +99,7 @@ const plans = {
         },
         {
             name: "Platinum",
-            price: 24999,
+            price: 15999,
             customization: "Advanced",
             products: 10000,
             staff: 10,
@@ -127,7 +127,7 @@ const SubscriptionPlans = () => {
 
     return (
         <div className="bg-[#FFFFFF] font-Poppins py-12 px-4">
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-[1200px] max-h-[1000px] mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold text-gray-800">Subscription Plans</h2>
                     <p className="text-lg text-gray-600 mt-2">Start Free, Upgrade as You Grow! Choose one that works for you the best.</p>

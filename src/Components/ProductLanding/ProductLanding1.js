@@ -72,7 +72,7 @@ const ProjectLanding1 = () => {
                 image: variant.options[selectedVariants[index]]?.image?.imageUrl
             }
         }));
-
+        console.log(selectedProduct);
         const newCartItem = {
             product: selectedProduct._id || product._id,
             productName: selectedProduct.name,
@@ -179,7 +179,7 @@ const ProjectLanding1 = () => {
         deliveryCharge: store.expectedDeliveryPrice,
         COD: "available",
         deliveryTime: store.expectedDeliveryTime,
- 
+
     };
 
     return (
@@ -207,7 +207,7 @@ const ProjectLanding1 = () => {
                                             </div>
                                         )}
                                         {selectedProduct.variant.map((variant, variantIndex) => (
-                                            variantIndex == 0 && 
+                                            variantIndex == 0 &&
                                             selectedProduct.variant[0].options.map((option, optionIndex) => (
                                                 <div
                                                     key={`${variantIndex}-${optionIndex}`}
