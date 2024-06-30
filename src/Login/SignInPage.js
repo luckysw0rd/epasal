@@ -2,21 +2,27 @@ import React, { useState, useContext } from 'react';
 import useFetch from '../Hooks/useFetch';
 import Overlay from './Overlay';
 import { AuthContext } from '../Hooks/AuthContext';
+
 const SignInPage = () => {
     const [isSignIn, setIsSignIn] = useState(true);
-    const [showOverlay, setShowOverlay] = useState(false)
+    const [showOverlay, setShowOverlay] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         confirmPassword: ''
     });
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+    const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+    const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [otp, setOtp] = useState('');
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
+    const auth = useContext(AuthContext);
 
     const toggleForm = () => {
         setIsSignIn(!isSignIn);
     };
-    const auth = useContext(AuthContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,6 +31,7 @@ const SignInPage = () => {
             [name]: value
         }));
     };
+
     const handleSignIn = async () => {
         try {
             const responseData = await sendRequest(
@@ -40,19 +47,19 @@ const SignInPage = () => {
             );
             console.log(responseData); // Handle response data as needed
 
-            auth.login(responseData.user.id,responseData.token);
+            auth.login(responseData.user.id, responseData.token);
             window.location.href = "/";
 
         } catch (error) {
             console.log(error.message);
-            // Check if the error message contains "`user `not verified" (case insensitive)
             if (error?.message === 'User not verified') {
-                setShowOverlay(true); // Set showOverlay to true if the error message contains "user not verified"
+                setShowOverlay(true);
             } else {
                 console.error('Sign-in request failed:', error);
             }
         }
     };
+
     const handleSignUp = async () => {
         try {
             const responseData = await sendRequest(
@@ -80,11 +87,22 @@ const SignInPage = () => {
         }
     };
 
+    const handleForgotPassword = () => {
+        console.log(forgotPasswordEmail);
+        setShowForgotPasswordModal(false);
+        setShowUpdatePasswordModal(true);
+    };
+
+    const handleUpdatePassword = () => {
+        console.log({ otp, newPassword });
+        setShowUpdatePasswordModal(false);
+    };
+
     return (
         <>
             {showOverlay && <Overlay email={formData.email} setShowOverlay={setShowOverlay} />}
 
-            <div className="flex  items-center justify-center min-h-screen bg-[#EEEEEE]">
+            <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
                 <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
                     {/* left side */}
                     <div className="flex flex-col justify-center p-8 md:p-14">
@@ -145,8 +163,8 @@ const SignInPage = () => {
                             </>
                         )}
                         {isSignIn ? (
-                            <div className="flex  justify-between w-full py-4">
-                                <span onClick={() => { console.log("forgot") }} className=" font-semibold text-md">Forgot password</span>
+                            <div className="flex justify-between w-full py-4">
+                                <span onClick={() => setShowForgotPasswordModal(true)} className="font-semibold text-md cursor-pointer">Forgot password</span>
                             </div>
                         ) : null}
                         <button
@@ -156,7 +174,7 @@ const SignInPage = () => {
                             {isSignIn ? 'Sign in' : 'Sign up'}
                         </button>
 
-                        <div className=" cursor-pointer text-center flex flex-col text-gray-400" onClick={toggleForm}>
+                        <div className="cursor-pointer text-center flex flex-col text-gray-400" onClick={toggleForm}>
                             {isSignIn ? "Don't have an account?" : "Already have an account?"}
                             <span className="font-bold text-black">
                                 {isSignIn ? 'Sign up for free' : 'Sign in'}
@@ -181,9 +199,57 @@ const SignInPage = () => {
                     </div>
                 </div>
             </div>
+
+            {showForgotPasswordModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-8 rounded-lg shadow-lg">
+                        <h2 className="text-xl font-semibold mb-4">Forgot Password</h2>
+                        <input
+                            type="email"
+                            className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                            placeholder="Enter your email"
+                            value={forgotPasswordEmail}
+                            onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                        />
+                        <button
+                            className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                            onClick={handleForgotPassword}
+                        >
+                            Send OTP
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {showUpdatePasswordModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-8 rounded-lg shadow-lg">
+                        <h2 className="text-xl font-semibold mb-4">Update Password</h2>
+                        <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                            placeholder="Enter OTP"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                            placeholder="Enter new password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <button
+                            className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                            onClick={handleUpdatePassword}
+                        >
+                            Update Password
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
     );
-
 };
 
 export default SignInPage;

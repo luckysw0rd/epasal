@@ -61,7 +61,6 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignInPage />}></Route>
         {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
-
       </React.Fragment>
     );
   }
