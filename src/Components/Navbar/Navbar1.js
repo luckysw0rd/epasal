@@ -311,7 +311,7 @@ const Navbar1 = ({
                         />
                     </div>
                 )}
-                <span className="text-xl font-bold" onClick={() => window.location.reload()}>
+                <span className="text-xl font-bold" onClick={() => navigate('./')}>
                     {store.name}
                 </span>
             </div>
