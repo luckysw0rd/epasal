@@ -70,7 +70,7 @@ const SalesGraph = ({ storeId }) => {
 
     return (
         <div className=''>
-            <div className="flex px-6 pb-6 items-center justify-between">
+            {/* <div className="flex px-6 pb-6 items-center justify-between">
                 <h3 className="text-lg font-semibold text-[#888888] sm:ml-10">Sales Overview</h3>
                 <div className='flex gap-10'>
 
@@ -89,7 +89,7 @@ const SalesGraph = ({ storeId }) => {
                 </div>
 
                 {/* DROPDOWN  */}
-                <select
+                {/* <select
                     id="timePeriod"
                     value={selectedPeriod}
                     onChange={handleChange}
@@ -100,20 +100,24 @@ const SalesGraph = ({ storeId }) => {
                             {option.label}
                         </option>
                     ))}
-                </select>
+                </select> */}
 
-            </div>
+            {/* </div>  */}
 
             {/* GRAPH  */}
-            <ResponsiveContainer width="100%" height={chartDimensions.height}>
+            {/* <ResponsiveContainer width="100%" height={chartDimensions.height}>
                 <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                     <Line type="monotone" dataKey="totalRevenue" stroke="#000000" strokeWidth={2} />
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                     <XAxis dataKey="periodKey" />
                     <YAxis />
                     <Tooltip />
+                    
+
                 </LineChart>
-            </ResponsiveContainer>
+                
+            </ResponsiveContainer> */}
+            <div className="flex mx-auto my-auto justify-center items-center text-xl lg:text-3xl font-bold">......MORE TO COME.........</div>
 
         </div>  
     );

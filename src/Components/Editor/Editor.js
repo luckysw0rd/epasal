@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStore } from '../../Theme/Theme1/T1Context';
 import ProductForm from '../../Theme/Theme1/SubProduct/ProductForm';
 import ImageDrop from './ImageDrop';
+import { RxCrossCircled } from "react-icons/rx";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FontSelector from './FontSelector';
@@ -9,6 +10,7 @@ import SaveStoreButton from '../../Theme/Theme1/SaveButton/SaveStoreButton';
 import { SketchPicker } from 'react-color';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaCaretLeft } from "react-icons/fa";
+import { BiSolidHide } from "react-icons/bi";
 // List of fonts from your Tailwind configuration
 const fonts = [
   "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
@@ -1520,37 +1522,37 @@ const Editor = () => {
               <button className={`flex-1 text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
             }
           </div>
-          <div className='text-red-600 absolute top-[22px] right-2' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}>X</div>
-          <div className='text-red-600 absolute top-[22px] right-10' onClick={(e) => { e.preventDefault(); setNavHide(false) }}>Hide</div>
+          <div className='text-red-600 absolute top-[26px] right-2 text-[20px]' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><  RxCrossCircled  /></div>
+          <div className='text-red-600 absolute top-[26px] right-10 text-[20px]' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><BiSolidHide /></div>
 
           {openType === 1 && (
             <div>
 
               <ul className='flex flex-col mt-10 gap-2 px-4'>
-                <li className=' font-bold border-b-2  border-gray-200 pb-5'>
+                <li className=' font-bold border-b-2  border-gray-200 pb-4'>
                   <h1 className=' text-xl'>
                   Navbar:
                   </h1>
                   <br />
 
-                  <div>
-                    <FontSelector section="Navbar" />
+                  <div >
+                    <FontSelector  section="Navbar" />
                   </div>
 
                   <div className='font-normal'>
                     <label className='text-[10px]'>Shop Name</label><br />
-                    <input type='text' className='border border-[#6A6A6A] h-[24px] rounded px-2' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
+                    <input type='text' className='border  border-2 border-gray-300 h-[24px] rounded px-2 py-2 w-[100%]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
                   </div>
                   <div className='font-normal mt-2'>
                     <label className='text-[10px]'>logo:</label>
-                    <ImageDrop setStore={setStore} imageData='logo.logoUrl' />
+                    <ImageDrop setStore={setStore} className=" " imageData='logo.logoUrl' />
                   </div>
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Hero Section:<br />
                   <div className='font-normal'>
                     <label className='text-[10px]'>Title</label><br />
-                    <input type='text' className='border border-[#6A6A6A] rounded px-2' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
+                    <input type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
                   </div>
                   <div>
                     <div className="font-normal mt-2">
@@ -1567,8 +1569,8 @@ const Editor = () => {
                   <div className='font-normal'>
                     <label className='text-[10px]'>Title</label><br />
                     <div className='flex'>
-                      <input type='text' className='border border-[#6A6A6A] rounded mr-2 px-2' value={categoryData} onChange={e => setCategoryData(e.target.value)} ></input>
-                      <button className='px-2 text-[10px] border border-black rounded' onClick={handleAddCategory}>Add +</button>
+                      <input type='text' className=' border-2 border-gray-300 rounded mr-2 px-2' value={categoryData} onChange={e => setCategoryData(e.target.value)} ></input>
+                      <button className='px-2 text-[10px]  border-2 border-gray-300 rounded' onClick={handleAddCategory}>Add +</button>
                     </div>
                   </div>
                   <ul className='font-normal list-disc ml-10 mt-2'>
@@ -1581,9 +1583,9 @@ const Editor = () => {
                     <FontSelector section="Banner1" />
                   </div>
                   <label className='text-[10px]'>Title</label><br />
-                  <input value={store.thirdBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }} ></input><br />
+                  <input value={store.thirdBannerText.heading} type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }} ></input><br />
                   <label className='text-[10px]'>Description</label><br />
-                  <textarea value={store.thirdBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }} ></textarea><br />
+                  <textarea value={store.thirdBannerText.paragraph} type='text' className=' border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }} ></textarea><br />
                   <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
@@ -1592,9 +1594,9 @@ const Editor = () => {
                     <FontSelector section="Banner2" />
                   </div>
                   <label className='text-[10px]'>Title</label><br />
-                  <input value={store.secondaryBannerText.heading} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }} ></input><br />
+                  <input value={store.secondaryBannerText.heading} type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }} ></input><br />
                   <label className='text-[10px]'>Description</label><br />
-                  <textarea value={store.secondaryBannerText.paragraph} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }} ></textarea><br />
+                  <textarea value={store.secondaryBannerText.paragraph} type='text' className=' border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }} ></textarea><br />
                   <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
@@ -1603,17 +1605,17 @@ const Editor = () => {
                     <FontSelector section="Banner3" />
                   </div>
                   <label className='text-[10px]'>Title</label><br />
-                  <input value={store.offerBannerText.para1} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }} ></input><br />
+                  <input value={store.offerBannerText.para1} type='text' className='border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }} ></input><br />
                   <label className='text-[10px]'>Description</label><br />
-                  <textarea value={store.offerBannerText.para2} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para2: e.target.value } })) }} ></textarea><br />
+                  <textarea value={store.offerBannerText.para2} type='text' className='border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para2: e.target.value } })) }} ></textarea><br />
                   <label className='text-[10px]'>Description</label><br />
-                  <textarea value={store.offerBannerText.para3} type='text' className='border border-[#6A6A6A] rounded px-2 h-[80px]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para3: e.target.value } })) }} ></textarea><br />
+                  <textarea value={store.offerBannerText.para3} type='text' className='border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para3: e.target.value } })) }} ></textarea><br />
                   <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   Add Products<br />
                   <div className='mt-2'>
-                    <button className='px-2 text-[10px] border border-black' onClick={handleAddProduct}>Add +</button>
+                    <button className='px-2 text-[10px] border-2 border-gray-300' onClick={handleAddProduct}>Add +</button>
                   </div>
                 </li>
                 <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
@@ -1628,7 +1630,7 @@ const Editor = () => {
                     <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
                       {store.products.map((n, i) => (<option value={i} key={i}>{n.name}</option>))}
                     </select>
-                    <button className='px-2 text-[10px] border border-black' onClick={handleAddFeaturedProduct}>Add +</button>
+                    <button className='px-2 text-[10px] border-2 border-gray-300' onClick={handleAddFeaturedProduct}>Add +</button>
                   </div>
                 </li>
 
@@ -1638,20 +1640,20 @@ const Editor = () => {
                     <FontSelector section="Footer" />
                   </div>
                   <label className='text-[10px]'>Location</label><br />
-                  <input value={store.location} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
+                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
                   <label className='text-[10px]'>Email</label><br />
-                  <input value={store.email} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
+                  <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
                   <label className='text-[10px]'>Phone Number</label><br />
-                  <input value={store.phoneNumber} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
+                  <input value={store.phoneNumber} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
                   <div className='mt-3'>Social Media Links</div>
                   <label className='text-[10px]'>Facebook</label><br />
-                  <input value={store.socialMediaLinks.facebook} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.facebook} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
                   <label className='text-[10px]'>Twitter</label><br />
-                  <input value={store.socialMediaLinks.twitter} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.twitter} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
                   <label className='text-[10px]'>Instagram</label><br />
-                  <input value={store.socialMediaLinks.instagram} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.instagram} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
                   <label className='text-[10px]'>linkedIn</label><br />
-                  <input value={store.socialMediaLinks.linkedin} type='text' className='border border-[#6A6A6A] rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.linkedin} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
 
                 </li>
               </ul>
@@ -1683,14 +1685,18 @@ const Editor = () => {
                       <div key={index} className=' border-b-2 border-t-2 spac-y-2'>
                         <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
+<<<<<<< HEAD
                           <div key={nestedIndex} className="flex  flex-row justify-around items-start items-center">
+=======
+                          <div key={nestedIndex} className="flex flex-row justify-around items-start items-center border-grey-300 border-b-2 ">
+>>>>>>> aee653b8824c8757260597a4360a07a76b990d28
                             <label className="text-gray-700 w-24 flex-grow">{nestedFriendlyNames[nestedKey]}</label>
                             <div className="flex mt-2 md:flex-row items-center justify-center ml-4">
                               <input
                                 type="color"
                                 value={nestedValue}
                                 onChange={(e) => handleColorChange(e.target.value, nestedKey, colorKey)}
-                                className="rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
+                                className="rounded-full px-1 border border-gray-300 shadow-md focus:outline-none mb-1"
                               />
                             </div>
                           </div>
@@ -1701,14 +1707,14 @@ const Editor = () => {
                     return (
                       <div key={index}>
                         <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between border-grey-300 border-b-2">
                           <label className="flex-grow text-gray-700 w-24">Default</label>
                           <div className="flex items-center ml-4">
                             <input
                               type="color"
                               value={colorValue}
                               onChange={(e) => handleSingleColorChange(e, colorKey)}
-                              className="rounded-full px-1 border border-gray-300 shadow-md focus:outline-none"
+                              className="rounded-full px-1 border-2 border-gray-300 shadow-md focus:outline-none mb-1"
                             />
                           </div>
                         </div>
@@ -1728,7 +1734,7 @@ const Editor = () => {
                 <li key={index} className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   {component.component}:<br />
                   <label className='text-[10px]'>Active Skin</label><br />
-                  <select value={component.activeSkin} onChange={e => handleActiveSkinChange(e, index)} className='border border-[#6A6A6A] rounded px-2'>
+                  <select value={component.activeSkin} onChange={e => handleActiveSkinChange(e, index)} className='border-2 border-gray-300 rounded px-2'>
                     {component.skinInventory.map((skin, idx) => (
                       <option key={idx} value={skin}>{skin}</option>
                     ))}
