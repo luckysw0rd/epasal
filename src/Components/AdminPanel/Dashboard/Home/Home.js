@@ -174,7 +174,7 @@ const Home = ({ data }) => {
           </div>
         </div>
         {/* Graph Section  */}
-        <div className='-mx-6 sm:mx-0 md:col-span-2'>
+        <div className='-mx-6 sm:mx-0 md:col-span-2 flex items-center justify-center'>
           <div className="bg-white rounded-lg">
             <SalesGraph storeId={data._id} />
           </div>
