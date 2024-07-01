@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Header/Navbar';
 import SearchPage from '../SearchPage/SearchPage';
+import DragdropSection from './DragDrop/DragdropSection';
 import './Homepage.css'
 
 import Heading from './Header/Heading';
@@ -8,6 +9,12 @@ import Landingpage from './Landingpage';
 import SubscriptionPlans from './SubscriptionPlans ';
 import ghost from '../Assets/Ghost.png'
 import { IoBagHandleOutline } from "react-icons/io5";
+import Card from "./Cards/Card"
+import BanauTheme from './BanauTheme/BanauTheme';
+
+
+
+
 import ProgressBar from './ProgressBar';
 import Footer from './Footer';
 import DomainSection from './DomainSection';
@@ -57,7 +64,6 @@ function HomePage() {
                         <p className='text-sm font-semibold'>Build</p>
                     </div>
                 </div>
-
             </div>
             <div className='bg-white h-4 w-screen  z-10'></div>
             
@@ -65,6 +71,9 @@ function HomePage() {
                 <div id='scrollableDiv' className={` h-[77vh] xl:h-[120vh] 2xl:h-[120vh] bg-white pt-16 relative bg-black`}>
                     <Landingpage />
                 </div>
+                <DragdropSection />
+                <Card />
+                <BanauTheme />
                 <SkinSection />
                 <DomainSection />
                 <SubscriptionPlans></SubscriptionPlans>
