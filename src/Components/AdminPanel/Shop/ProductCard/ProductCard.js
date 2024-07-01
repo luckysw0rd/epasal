@@ -3,7 +3,7 @@ import cosmetic from '../../../../Assets/cosmetic.webp';
 import esewa from '../../../../Assets/esewa.webp';
 import useFetch from '../../../../Hooks/useFetch';
 const ProductCard2 = () => (
-    <div className="w-62 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+    <div className="w-62 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <a href="#">
             <img
                 src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -43,7 +43,7 @@ const ProductCard2 = () => (
 );
 
 const ProductCard3 = () => (
-    <div className="product-card w-62 rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <div className="para uppercase text-center leading-none z-40">
             <p
                 style={{
@@ -59,7 +59,7 @@ const ProductCard3 = () => (
             </p>
         </div>
         <div
-            className="w-[180px] aspect-square relative z-20 after:absolute after:h-1 after:w-full flex justify-center flex-col items-center after:opacity-0 after:bg-[#7b956a] after:top-8 after:left-0 after:group-hover:opacity-100 after:translate-x-1/2 after:translate-y-1/2 after:-z-20 after:group-hover:w-full flex justify-center flex-col items-center after:transition-all after:duration-300 after:group-hover:origin-right after:group-hover:-translate-x-1/2 group-hover:translate-x-1/2 transition-all duration-300"
+            className="w-[200px] aspect-square relative z-20 after:absolute after:h-1 after:w-full flex justify-center flex-col items-center after:opacity-0 after:bg-[#7b956a] after:top-8 after:left-0 after:group-hover:opacity-100 after:translate-x-1/2 after:translate-y-1/2 after:-z-20 after:group-hover:w-full flex justify-center flex-col items-center after:transition-all after:duration-300 after:group-hover:origin-right after:group-hover:-translate-x-1/2 group-hover:translate-x-1/2 transition-all duration-300"
         >
             <img
                 src={cosmetic}
@@ -238,7 +238,7 @@ export default function ProductCards({ store }) {
     };
 
     return (
-        <div className="container  mx-auto px-5 py-8 flex flex-wrap">
+        <div className="container  mx-auto px-5 py-8 flex flex-wrap h-[550px]">
 
 
             <div className="product-list flex  flex-wrap gap-4">
