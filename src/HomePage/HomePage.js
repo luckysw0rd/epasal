@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Header/Navbar';
 import SearchPage from '../SearchPage/SearchPage';
 import './Homepage.css'
@@ -9,12 +9,17 @@ import SubscriptionPlans from './SubscriptionPlans ';
 import ghost from '../Assets/Ghost.png'
 import { IoBagHandleOutline } from "react-icons/io5";
 import ProgressBar from './ProgressBar';
-
+import Footer from './Footer';
 import DomainSection from './DomainSection';
 import SkinSection from './SkinSelection';
 import SliderNavbar from './SliderNavbar';
 
 function HomePage() {
+
+    useEffect(() => {
+
+        abc();
+    }, [])
 
     const [navbarImage, setnavbarImage] = useState(false);
     const viewportHeight = window.innerHeight;
@@ -23,7 +28,7 @@ function HomePage() {
         const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
 
         console.log("distancefromtop:", distanceFromTop, ", viewportHeight: 85 ", viewportHeight)
-        if (distanceFromTop <= 300) {
+        if (distanceFromTop <= 100) {
             scrollableDiv.classList.add('overflow-scroll', 'sticky');
             //   scrollableDiv.style.top = `0px`;
         } else {
@@ -35,9 +40,9 @@ function HomePage() {
     return (
 
         <div className="flex flex-col font-Poppins relative h-full">
-            <Navbar navbarImage={navbarImage}></Navbar>
+            <Navbar navbarImage={navbarImage} setnavbarImage={setnavbarImage}></Navbar>
 
-            {/* <Heading setnavbarImage={setnavbarImage} /> */}
+            {/* <Heading setNavbarImage={setnavbarImage} /> */}
             <div className='relative flex justify-center -mb-16 z-50'>
                 {/* <img src={ghost} className='-mt-[50px] h-[80px] absolute -z-10 h-40' /> */}
                 <div className='-mt-[37px] h-[77vh] absolute -z-10 h-40'>
@@ -55,7 +60,7 @@ function HomePage() {
 
             </div>
             <div className='bg-white h-4 w-full mt-6 z-10'></div>
-            <div id='scrollableDiv' className={` h-[95vh] xl:h-[120vh] 2xl:h-[120vh] bg-white pt-16 relative bg-black`}>
+            <div id='scrollableDiv' className={` h-[77vh] xl:h-[120vh] 2xl:h-[120vh] bg-white pt-16 relative bg-black`}>
                 <Landingpage />
             </div>
             <div className=' md:mt-0'>
@@ -64,11 +69,11 @@ function HomePage() {
 
             <DomainSection />
             <SubscriptionPlans></SubscriptionPlans>
-            <div className=' mt-[800px] md:mt-0'>
+            <div className=' mt-[850px] md:mt-0'>
                 <SliderNavbar></SliderNavbar>
                 <ProgressBar></ProgressBar>
             </div>
-
+            <Footer></Footer>
         </div>
 
 
@@ -80,6 +85,17 @@ export default HomePage;
 
 
 
+function abc(liveChatSource) {
+
+    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+    s1.async = true;
+    // https://embed.tawk.to/66759d429d7f358570d20570/1i0tmsjtn
+    s1.src = 'https://embed.tawk.to/66827eb5eaf3bd8d4d16c22f/1i1mrtts8';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+
+};
 
 {/* <div className="">
           

@@ -40,7 +40,7 @@ const plans = {
     quarterly: [
         {
             name: "Silver",
-            price: 0, // Quarterly price, which is 0 for the free plan
+            price: 0,
             customization: "Advanced",
             products: 30,
             staff: 2,
@@ -76,7 +76,7 @@ const plans = {
     yearly: [
         {
             name: "Silver",
-            price: 0, // Yearly price, which is 0 for the free plan
+            price: 0,
             customization: "Advanced",
             products: 30,
             staff: 2,
@@ -122,6 +122,12 @@ const getMonthlyEquivalent = (price, duration) => {
     }
 };
 
+const getPercentageSavings = (monthlyPrice, durationPrice, duration) => {
+    const fullPrice = monthlyPrice * (duration === 'quarterly' ? 3 : 12);
+    const savings = fullPrice - durationPrice;
+    return ((savings / fullPrice) * 100).toFixed(2);
+};
+
 const SubscriptionPlans = () => {
     const [duration, setDuration] = useState('monthly');
 
@@ -157,7 +163,9 @@ const SubscriptionPlans = () => {
                         const monthlyEquivalent = getMonthlyEquivalent(plan.price, duration);
                         const monthlyPlan = plans['monthly'].find(p => p.name === plan.name);
                         const savings = monthlyPlan.price > 0 ? (monthlyPlan.price * (duration === 'quarterly' ? 3 : 12) - plan.price) : 0;
-                        const savingsText = savings > 0 ? `Saving Rs. ${savings} ` : null;
+                        const savingsPercentage = monthlyPlan.price > 0 ? getPercentageSavings(monthlyPlan.price, plan.price, duration) : 0;
+                        const isDeal = duration !== 'monthly' && plan.name !== 'Silver' && (plan.name === 'Gold' || plan.name === 'Platinum');
+                        const fullPrice = monthlyPlan.price * (duration === 'quarterly' ? 3 : 12);
 
                         return (
                             <div
@@ -173,10 +181,12 @@ const SubscriptionPlans = () => {
                                     <h3 className="text-2xl font-semibold text-gray-800 mb-2">{plan.name}</h3>
                                     <div className="text-4xl font-extrabold text-gray-900 mb-4">Rs. {plan.price}</div>
                                     <p className="text-sm text-gray-600 mb-4">{duration.charAt(0).toUpperCase() + duration.slice(1)}</p>
-                                    {/* {savingsText && (
-                                        <p className="text-sm text-green-600 font-semibold">{savingsText}</p>
-                                    )} */}
-                                    {/* <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">Pay Now</button> */}
+                                    {isDeal && savings > 0 && (
+                                        <div>
+                                            <p className="text-sm text-green-600 font-semibold">Limited Deal! Save {savingsPercentage}%</p>
+                                            <p className="text-sm text-gray-500 line-through">Original Price: Rs. {fullPrice}</p>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="bg-gray-50 p-6">
                                     <ul className="space-y-4 mb-6 text-gray-700">
