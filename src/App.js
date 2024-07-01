@@ -7,11 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
-
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
 import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
-
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
 const Navbar = React.lazy(() => import('./HomePage/Navbar'));
@@ -26,6 +24,8 @@ const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Hom
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
 const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
 const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
+const PrivacyPolicy = React.lazy(() => import('./HomePage/PrivacyOverlay'));
+const TermsAndConditions = React.lazy(() => import('./HomePage/TermsAndConditions'));
 
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -52,6 +52,9 @@ function App() {
         <Route path="/adminhome" element={<Home />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
         <Route path="/settings" element={<SettingPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+
 
       </React.Fragment>
     );
@@ -59,9 +62,11 @@ function App() {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+
         <Route path="/login" element={<SignInPage />}></Route>
         {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
-
       </React.Fragment>
     );
   }

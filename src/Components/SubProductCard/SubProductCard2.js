@@ -4,11 +4,13 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
 
 const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
+    const navigate = useNavigate()
 
 
 
@@ -18,6 +20,14 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
 
     const handleAddToCart = () => {
         setAddedToCart(true);
+    };
+
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store.fetchedFromBackend && !store.isEdit)
+            navigate("/productlanding", { state: { product, store } })
     };
 
     const handleDeleteProduct = async () => {
@@ -118,10 +128,15 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     </ul>
                 </div>
             </div>
-            <div className="flex items-center mt-2">
+            <div className="flex flex-col items-center mt-2">
+                <p className="text-lg font-semibold " style={{ color: `${store.color.subProductColor.priceColor}` }} >Rs {product.price - product.discount}</p>
+
+                <del className="ml-2 "> Rs {product.price}</del>
+            </div>
+            {/* <div className="flex items-center mt-2">
                 <p className="text-lg font-semibold " style={{ color: `${store.color.subProductColor.priceColor}` }} >Rs {product.price}</p>
                 <del className="ml-2 "> Rs {product.originalPrice}</del>
-            </div>
+            </div> */}
             {/* <div className="flex mb-2 justify-center md:justify-start">
                 {[...Array(5)].map((_, index) => {
                     if (index < product.rating)
@@ -130,16 +145,24 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                         return <StarIcon className='w-4 h-4 ' key={index} />
                 })}
             </div> */}
-            {!addedToCart && (
-                <button
-                    className="py-2 px-6 rounded-full duration-300 mt-4"
-                    onClick={handleAddToCart}
-                    style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
-                >
-                    Add to Cart
-                </button>
-            )}
-            {addedToCart && (
+
+            {/* <button
+                className="py-2 px-6 rounded-full duration-300 mt-4"
+                onClick={handleAddToCart}
+                style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
+            >
+                Add to Cart
+            </button> */}
+            <button
+                className="py-2 px-6 rounded-full duration-300 mt-4"
+                style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
+                onClick={() => {
+                    handleProductClick(product)
+                }}
+            >
+                Add to cart
+            </button>
+            {/* {addedToCart && (
                 <button
                     className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
                     disabled
@@ -147,7 +170,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                 >
                     <FaShoppingCart className="mr-1 " />
                 </button>
-            )}
+            )} */}
         </motion.div>
     );
 }

@@ -1,26 +1,21 @@
 import React from 'react'
+import esewa from "../../Assets/esewa.png"
+import fonepay from "../../Assets/fonepayfull.png"
+
 
 const Card = () => {
     return (
         <div className='bg-white p-8 md:p-10 lg:p-16'>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:p-4 ">
                 <div className="h-[200px] bg-gray-800 border-none text-white py-4 px-8 rounded-xl flex  justify-between">
-                    <div className='flex flex-col gap-5'>
-                        <h2 className="text-lg md:text-xl lg:text-2xl md:w-[65%] font-bold tracking-wider">Payment Gateway Integration</h2>
-                        {/* <div className="flex gap-2 ">
-                            <div className='w-[20%] bg-white rounded-lg text-black'>
-                                <img src="https://via.placeholder.com/50" alt="eSewa" className="mr-2" />
-                                hello
-                            </div>
-                            <div className='w-[20%] bg-white rounded-lg text-black'>
-                                hello
-                                <img src="https://via.placeholder.com/50" alt="fonepay" />
-                            </div>
-                        </div> */}
+                    <div className='flex flex-col justify-between'>
+                        <h2 className="text-lg md:text-xl lg:text-2xl md:w-[61%] font-bold tracking-wider">Payment Gateway <h1> Integration</h1></h2>
+                        <div className="flex gap-5 mb-5 ">
+                            <img src={esewa} alt="esewa" className='w-36 h-10 lg:w-48 lg:h-16' />
+                            <img src={fonepay} alt="fonepay" className='w-36 h-10 lg:w-48 lg:h-16' />
+                        </div>
                     </div>
-                    {/* <div>
-                        <button className="text-2xl w-[60%]">&gt;</button>
-                    </div> */}
+
                 </div>
 
                 <div className="h-[200px]  text-gray-800 border-2 border-gray-700 py-4 px-8 rounded-xl flex ">
@@ -28,9 +23,7 @@ const Card = () => {
                         <h2 className="text-lg md:text-xl lg:text-2xl md:w-[60%] font-bold tracking-wider">Analytics</h2>
                         <p className="mt-1">Visualize your data for the ease of use. Stay up to date with your product info.</p>
                     </div>
-                    <div className="ml-auto">
-                        <img src="https://via.placeholder.com/100x50" alt="Analytics Graph" />
-                    </div>
+
                 </div>
 
                 <div className="h-[200px] bg-white border-2 border-gray-700 text-black py-4 px-8 rounded-xl flex">

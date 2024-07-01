@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaPlay } from "react-icons/fa";
-import './BanauTheme.css'; 
+import './BanauTheme.css';
 
 const BanauTheme = () => {
     return (
@@ -18,43 +18,51 @@ const BanauTheme = () => {
                 </div>
                 <div className="hidden md:flex">
                     <div className="flex items-center h-80 lg:h-96 space-x-4">
-                        <div className="w-[130px] lg:w-[200px] md:h-[302px] lg:h-[382px] rounded-xl bg-[#E6E6FA] flex items-center justify-center card hover:card-flip">
+                        <div className="w-[130px] lg:w-[210px] md:h-[302px] lg:h-[382px] rounded-lg lg:rounded-xl bg-[#E6E6FA] flex card hover:card-flip">
                             <div className="card-inner">
                                 <div className="card-front flex items-center justify-center">
-                                    <span className="text-sm lg:text-base text-gray-800">Lavender</span>
+                                    <span className="text-sm lg:text-base text-[#575799] font-semibold">Lavender</span>
                                 </div>
-                                <div className="card-back flex items-center justify-center bg-[#E6E6FA] rounded-xl">
-                                    <span className="text-sm lg:text-base text-gray-800">Lavender Details</span>
+                                <div className="card-back p-4 flex flex-col bg-[#E6E6FA] text-[#575799] gap-2 rounded-lg lg:rounded-xl">
+                                    <h1 className="text-sm lg:text-lg font-semibold">Lavender </h1>
+                                    <h1 className='text-xs'>wellness, beauty, and premium products.</h1>
+                                    <p className='text-xs flex-grow mt-5'>Lavender signifies calmness, elegance, and luxury, making it ideal for e-commerce products like beauty and wellness items, high-end fashion, and home decor.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-[130px] lg:w-[200px] md:h-[224px] lg:h-[304px] rounded-xl bg-[#F6E0B5] flex items-center justify-center card hover:card-flip">
+                        <div className="w-[130px] lg:w-[210px] md:h-[224px] lg:h-[304px] rounded-lg lg:rounded-xl bg-[#F6E0B5] flex items-center justify-center card hover:card-flip">
                             <div className="card-inner">
                                 <div className="card-front flex items-center justify-center">
-                                    <span className="text-sm lg:text-base text-gray-800">Wheat Yellow</span>
+                                    <span className="text-sm lg:text-base text-[#796D55] font-semibold">Wheat Yellow</span>
                                 </div>
-                                <div className="card-back flex items-center justify-center bg-[#F6E0B5] rounded-xl">
-                                    <span className="text-sm lg:text-base text-gray-800">Wheat Yellow Details</span>
+                                <div className="card-back p-4 flex flex-col bg-[#F6E0B5] text-[#796D55] gap-2 rounded-lg lg:rounded-xl">
+                                    <h1 className="text-sm lg:text-lg font-semibold">Wheat Yellow </h1>
+                                    <h1 className='text-xs'>home decor, organic food and neutral clothing products.</h1>
+                                    <p className='text-xs  flex-grow mt-5'>Wheat Yellow signifies calmness, elegance, and luxury, making it ideal for e-commerce products like beauty and wellness items, high-end fashion, and home decor.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-[130px] lg:w-[200px] md:h-[150px] lg:h-[230px] rounded-xl bg-gray-200 flex items-center justify-center card hover:card-flip">
+                        <div className="w-[130px] lg:w-[210px] md:h-[150px] lg:h-[230px] rounded-lg lg:rounded-xl bg-gray-200 flex items-center justify-center card hover:card-flip">
                             <div className="card-inner">
                                 <div className="card-front flex items-center justify-center">
-                                    <span className="text-sm lg:text-base text-gray-800">Ash Beige</span>
+                                    <span className="text-sm lg:text-base text-[#796D55] font-semibold">Ash Beige</span>
                                 </div>
-                                <div className="card-back flex items-center justify-center rounded-xl bg-gray-200">
-                                    <span className="text-sm lg:text-base text-gray-800">Ash Beige Details</span>
+                                <div className="card-back p-4 flex flex-col bg-gray-200 text-[#796D55] gap-2 rounded-lg lg:rounded-xl">
+                                    <h1 className="text-sm lg:text-lg font-semibold">Ash Beige </h1>
+                                    <h1 className='text-xs'>clothing home decor, beauty products.</h1>
+                                    <p className='text-xs flex-grow mt-5'>Ash beige, with its neutral and calming tones, is perfect for showcasing clothing, home decor and beauty products, enhancing their elegance and apeal</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-[130px] lg:w-[200px] md:h-[302px] lg:h-[382px] rounded-xl bg-[#AFCBD5] flex items-center justify-center card hover:card-flip">
+                        <div className="w-[130px] lg:w-[210px] md:h-[302px] lg:h-[382px] rounded-lg lg:rounded-xl bg-[#AFCBD5] flex items-center justify-center card hover:card-flip">
                             <div className="card-inner">
                                 <div className="card-front flex items-center justify-center">
-                                    <span className="text-sm lg:text-base text-gray-800">Fresh Blue</span>
+                                    <span className="text-sm lg:text-base text-[#40545B] font-semibold">Fresh Blue</span>
                                 </div>
-                                <div className="card-back flex items-center justify-center bg-[#AFCBD5] rounded-xl">
-                                    <span className="text-sm lg:text-base text-gray-800">Fresh Blue Details</span>
+                                <div className="card-back p-4 flex flex-col bg-[#AFCBD5] text-[#40545B] gap-2 rounded-lg lg:rounded-xl">
+                                    <h1 className="text-sm lg:text-lg font-semibold">Fresh Blue </h1>
+                                    <h1 className='text-xs'>Tech gadgets, fitness apparel, sports equipment and wellness products.</h1>
+                                    <p className='text-xs flex-grow mt-5'>Fresh blue, with its vibrant and refreshing hue, is ideal for highlighting items that convey a sense of innovation and energy.</p>
                                 </div>
                             </div>
                         </div>

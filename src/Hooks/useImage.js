@@ -1,14 +1,15 @@
 import { toast } from "react-toastify";
 
 export const useImage = () => {
-     // Helper function to check if a string is a Cloudinary URL
+    // Helper function to check if a string is a Cloudinary URL
     const isCloudinaryUrl = (url) => {
         const cloudinaryUrlPattern = /^https:\/\/res\.cloudinary\.com\/dcrcc9b4h\/image\/upload\/v\d+\/.+/;
         return cloudinaryUrlPattern.test(url);
     };
+
     const uploadImage = async (image) => {
         try {
-            if (!image || '') {
+            if (!image || image === '') {
                 return {
                     img: "",
                     id: "",
@@ -39,7 +40,10 @@ export const useImage = () => {
                         id: "",
                     };
                 }
-            } else if (image instanceof File && (image.type === 'image/jpeg' || image.type === 'image/png' || image.type === 'image/jpg')) {
+            } else if (
+                image instanceof File &&
+                (image.type === 'image/jpeg' || image.type === 'image/png' || image.type === 'image/jpg' || image.type === 'image/gif')
+            ) {
                 // If image is a File object
                 data = new FormData();
                 data.append("file", image);
@@ -71,8 +75,6 @@ export const useImage = () => {
             };
         }
     };
-
-
 
     return { uploadImage };
 };

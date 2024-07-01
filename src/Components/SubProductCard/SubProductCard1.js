@@ -107,9 +107,9 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             )}
 
 
-            <div className="relative w-1/2  md:w-[160px] h-[139px] flex ml-2 mt-5 md:mt-0">
+            <div className="relative w-[140px]  md:w-[240px] h-[139px] flex ml-2 mt-5 md:mt-0">
                 <motion.img
-                    className="w-full h-[80px] sm:h-full object-contain "
+                    className="w-full h-[120px] sm:h-full object-contain "
                     src={product?.image?.imageUrl}
                     alt={product.name}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -118,9 +118,9 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                 />
             </div>
 
-            <div className="px-10 py-4 w-[280px]">
-                <div className="font-bold text-base mt-3">{truncateName(product.name)}</div>
-                <div className='flex mb-2 justify-center md:justify-start'>
+            <div className="px-10 md:py-4 w-[280px]">
+                <div className="font-bold text-base mt-2 md:mt-3">{truncateName(product.name)}</div>
+                <div className='flex mb-1 md:mb-2 justify-center md:justify-start'>
                     {[...Array(5)].map((_, index) => {
                         if (index < product.rating)
                             return <StarIcon className='w-4 h-4' style={{ color: store.color.subProductColor.starColor }} />
@@ -128,13 +128,17 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                             return <StarIcon className='w-4 h-4 text-[#959595]' />
                     })}
                 </div>
-                <div className='h-[56px] py-1 text-xs overflow-hidden'>{truncateName1(product.description)}</div>
+                <div className=' md:h-[56px] py-1 text-xs overflow-hidden'>{truncateName1(product.description)}</div>
                 <div className="mt-1">
                     <div className="text-sm font-bold flex items-center gap-1 justify-between mx-2 sm:mx-0" >
-                        <div className=' h-10   text-base flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</div>
-
+                        <div className=' flex flex-col gap-0 '>
+                            {product.discount > 0 &&
+                                <del className=' text-[12px] md:text-sm     text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</del>
+                            }
+                            <div className=' text-[14px] md:text-md  flex text-nowrap items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price - product.discount}</div>
+                        </div>
                         <button
-                            className="text-xs h-8 w-[80px] rounded mr-1"
+                            className="text-xs h-8 w-[80px] rounded "
                             onClick={() => {
                                 handleProductClick(product)
                             }}

@@ -4,12 +4,19 @@ import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { useSiderBar } from "./SiderBarContext";
 
-const SharedNavbar = ({storeName,open,setOpen}) => {
+const SharedNavbar = ({ storeLogo, storeName, open, setOpen }) => {
   console.log(storeName);
   return (
-    <div className=" w-full font-Roboto t-0 bg-white z-10  px-6  flex items-center justify-between h-14 text-black">
-      <div className="  flex items-center">
+    <div className=" w-full font-Roboto t-0 bg-white shadow-md z-10  px-6  flex items-center justify-between h-14 text-black">
+      <div className=" flex flex-row">
+        <img
+          src={storeLogo}
+          alt="Logo"
+          className="h-8 mr-4"
+        />
+        <div className=" font-bold text-xl bg-gra  flex items-center">
           {storeName}
+        </div>
       </div>
       <div
         className={` 
