@@ -1680,10 +1680,10 @@ const Editor = () => {
                 {Object.entries(color).map(([colorKey, colorValue], index) => {
                   if (typeof colorValue === 'object') {
                     return (
-                      <div key={index}>
+                      <div key={index} className=' border-b-2 border-t-2 spac-y-2'>
                         <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
-                          <div key={nestedIndex} className="flex flex-row justify-around items-start items-center">
+                          <div key={nestedIndex} className="flex  flex-row justify-around items-start items-center">
                             <label className="text-gray-700 w-24 flex-grow">{nestedFriendlyNames[nestedKey]}</label>
                             <div className="flex mt-2 md:flex-row items-center justify-center ml-4">
                               <input

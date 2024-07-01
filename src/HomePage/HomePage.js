@@ -69,11 +69,13 @@ function HomePage() {
 
             <DomainSection />
             <SubscriptionPlans></SubscriptionPlans>
-            <div className=' mt-[850px] md:mt-0'>
+            <div className=' mt-[850px] md:mt-0 space-y-20'>
                 <SliderNavbar></SliderNavbar>
                 <ProgressBar></ProgressBar>
             </div>
-            <Footer></Footer>
+            <div className=' mt-20'>
+                <Footer></Footer>
+            </div>
         </div>
 
 
