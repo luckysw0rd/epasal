@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { FaPlay } from "react-icons/fa";
-
+import './BanauTheme.css'; 
 
 const BanauTheme = () => {
     return (
-
         <div className="p-8 md:p-4 lg:p-8">
             <div className="flex gap-5 lg:gap-10 p-8 lg:p-16 bg-gray-800 rounded-lg text-white">
                 <div className="flex flex-col gap-5 lg:gap-10">
@@ -17,25 +16,53 @@ const BanauTheme = () => {
                         <FaPlay />
                     </button>
                 </div>
-                <div className='hidden md:flex '>
+                <div className="hidden md:flex">
                     <div className="flex items-center h-80 lg:h-96 space-x-4">
-                        <div className="w-[130px] lg:w-[200px] md:h-[302px] lg:h-[382px] rounded-xl bg-purple-200 flex items-center justify-center ">
-                            <span className="text-sm lg:text-base text-gray-800">Lavender</span>
+                        <div className="w-[130px] lg:w-[200px] md:h-[302px] lg:h-[382px] rounded-xl bg-[#E6E6FA] flex items-center justify-center card hover:card-flip">
+                            <div className="card-inner">
+                                <div className="card-front flex items-center justify-center">
+                                    <span className="text-sm lg:text-base text-gray-800">Lavender</span>
+                                </div>
+                                <div className="card-back flex items-center justify-center bg-[#E6E6FA] rounded-xl">
+                                    <span className="text-sm lg:text-base text-gray-800">Lavender Details</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="w-[130px] lg:w-[200px] md:h-[224px] lg:h-[304px] rounded-xl bg-yellow-200 flex items-center justify-center ">
-                            <span className="text-sm lg:text-base text-gray-800">Wheat Yellow</span>
+                        <div className="w-[130px] lg:w-[200px] md:h-[224px] lg:h-[304px] rounded-xl bg-[#F6E0B5] flex items-center justify-center card hover:card-flip">
+                            <div className="card-inner">
+                                <div className="card-front flex items-center justify-center">
+                                    <span className="text-sm lg:text-base text-gray-800">Wheat Yellow</span>
+                                </div>
+                                <div className="card-back flex items-center justify-center bg-[#F6E0B5] rounded-xl">
+                                    <span className="text-sm lg:text-base text-gray-800">Wheat Yellow Details</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="w-[130px] lg:w-[200px] md:h-[150px] lg:h-[230px] rounded-xl bg-gray-200 flex items-center justify-center ">
-                            <span className="text-sm lg:text-base text-gray-800">Ash Beige</span>
+                        <div className="w-[130px] lg:w-[200px] md:h-[150px] lg:h-[230px] rounded-xl bg-gray-200 flex items-center justify-center card hover:card-flip">
+                            <div className="card-inner">
+                                <div className="card-front flex items-center justify-center">
+                                    <span className="text-sm lg:text-base text-gray-800">Ash Beige</span>
+                                </div>
+                                <div className="card-back flex items-center justify-center rounded-xl bg-gray-200">
+                                    <span className="text-sm lg:text-base text-gray-800">Ash Beige Details</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="w-[130px] lg:w-[200px] md:h-[302px] lg:h-[382px] rounded-xl bg-blue-200 flex items-center justify-center ">
-                            <span className="text-sm lg:text-base text-gray-800">Fresh Blue</span>
+                        <div className="w-[130px] lg:w-[200px] md:h-[302px] lg:h-[382px] rounded-xl bg-[#AFCBD5] flex items-center justify-center card hover:card-flip">
+                            <div className="card-inner">
+                                <div className="card-front flex items-center justify-center">
+                                    <span className="text-sm lg:text-base text-gray-800">Fresh Blue</span>
+                                </div>
+                                <div className="card-back flex items-center justify-center bg-[#AFCBD5] rounded-xl">
+                                    <span className="text-sm lg:text-base text-gray-800">Fresh Blue Details</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default BanauTheme
+export default BanauTheme;
