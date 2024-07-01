@@ -22,9 +22,9 @@ const plans = [
     },
     {
         name: 'Gold',
-        priceMonthly: 1000,
-        priceQuarterly: 2500,
-        priceYearly: 8500,
+        priceMonthly: 999,
+        priceQuarterly: 1999,
+        priceYearly: 6999,
         description: '8500 per year',
         features: [
             { name: 'Customization', value: 'Advanced', color: 'text-indigo-600' },
@@ -38,9 +38,9 @@ const plans = [
     },
     {
         name: 'Platinum',
-        priceMonthly: 2500,
-        priceQuarterly: 7000,
-        priceYearly: 20000,
+        priceMonthly: 1999,
+        priceQuarterly: 4499,
+        priceYearly: 15999,
         description: 'Only at 20,000 per Year',
         features: [
             { name: 'Customization', value: 'Advanced', color: 'text-blue-600' },
@@ -62,7 +62,8 @@ export default function Subscription({ store }) {
     const handleBuy = async (plan, duration) => {
         console.log(store);
         console.log(duration);
-        console.log(plan.name);
+        console.log(plan);
+
         const price = duration === 'monthly' ? plan.priceMonthly :
             duration === 'quarterly' ? plan.priceQuarterly : plan.priceYearly;
         const data = {
@@ -120,7 +121,7 @@ export default function Subscription({ store }) {
 
     return (
         <section className="text-gray-900 body-font overflow-hidden border-t border-gray-200">
-            <div className="container  py-8 mx-2 flex justify-center ">
+            <div className="container  py-8 px-2 flex justify-center ">
                 <div className=" lg:w-[300px] lg:my-20 xl:my-0 xl:mt-48 hidden lg:block">
                     <div className="mt-[10px]  border-t border-gray-300 border-b border-l rounded-tl-lg rounded-bl-lg overflow-hidden">
                         <p className={`text-white h-12 text-center px-4 flex items-center justify-start bg-gray-800 `}>
@@ -136,7 +137,7 @@ export default function Subscription({ store }) {
                         </div>
                     </div>
                 </div>
-                <div className="flex w-screen   md:w-screen lg:w-[650px] xl:w-[700px] 2xl:w-[1000px] 3xl:w-[1000px]  flex-wrap lg:border border-gray-300 rounded-lg">
+                <div className="flex w-screen   md:w-screen lg:w-[500px] xl:w-[700px] 2xl:w-[1230px] 3xl:w-[1200px]  flex-wrap lg:border border-gray-300 rounded-lg">
                     {plans.map((plan, planIndex) => (
                         <div
                             key={planIndex}
@@ -148,7 +149,7 @@ export default function Subscription({ store }) {
 
                             <div className="px-2 text-center h-48 flex flex-col items-center justify-center">
                                 <h3 className="tracking-widest">{plan.name}</h3>
-                                <h2 className="text-5xl text-gray-900 font-medium leading-none mb-4 mt-2">
+                                <h2 className="text-5xl lg:text-3xl xl:text-5xl text-gray-900 font-medium leading-none mb-4 mt-2">
                                     Rs {selectedDurations[planIndex] === 'monthly' ? plan.priceMonthly :
                                         selectedDurations[planIndex] === 'quarterly' ? plan.priceQuarterly : plan.priceYearly}
                                 </h2>
@@ -213,7 +214,7 @@ export default function Subscription({ store }) {
                                     </span>
                                 </div>
                             ))}
-                            <div className={`p-6 lg:p-2 xl:p-6 text-center ${plan.name === 'Silver' ? 'rounded-bl-lg' : 'border-t border-gray-300'}`}>
+                            <div className={`p-6 lg:p-0 lg:py-1 xl:p-6 text-center ${plan.name === 'Silver' ? 'rounded-bl-lg' : 'border-t border-gray-300'}`}>
                                 <button
                                     className="flex items-center justify-center  mt-auto text-green-800 bg-gray-300 border-0 py-2 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
                                     onClick={() => handleBuy(plan, selectedDurations[planIndex])}

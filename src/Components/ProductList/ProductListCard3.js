@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
+const ProductListcard3 = ({ product, handleRemoveProduct, store ,productListProps}) => {
+    const {addToCart}=productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
+    const navigate = useNavigate()
 
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store?.fetchedFromBackend && !store?.isEdit)
+            navigate("/productlanding", { state: { product, store } })
+    };
     useEffect(() => {
         setAddedToCart(false);
     }, [product.id]);
@@ -46,7 +56,7 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
                     <FaTimes />
                 </button>
             )}
-            <a href="#">
+            <a >
                 <img
                     src={product.image.imageUrl}
                     alt={product.name}
@@ -54,8 +64,32 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
                 />
                 <div className="px-4 py-3 w-72">
                     <span className="text-gray-400 mr-3 uppercase text-xs">{product.subcategories[0]}</span>
-                    <p className="text-lg font-bold text-black truncate block capitalize">{product.name}</p>
-                    <div className="flex items-center">
+                    <p className="text-lg font-bold  truncate block capitalize">{product.name}</p>
+                    <div className="flex  items-center justify-between">
+                        <div  className=' flex justify-start items-center'>
+                            <p className="text-md text-nowrap font-semibold cursor-auto my-3" style={{ color: `${store.color.productListColor.priceColor}` }}>
+                                Rs {product.price - product.discount}
+                            </p>
+                            {product.discount>0 &&
+                            <del>
+                                <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
+                            </del>}
+                        </div>
+                        <div className=" ">
+
+                            <button
+                                className="py-2 px-6 rounded-full duration-300"
+                                onClick={() => {
+                                    handleProductClick(product)
+                                }}
+                                style={{ backgroundColor: `${store.color.productListColor.priceColor}`, color: `${store.color.productListColor.priceLetterColor}` }}
+                            >
+                                <FaShoppingCart />
+                            </button>
+
+                        </div>
+                    </div>
+                    {/* <div className="flex items-center">
                         <p className="text-lg font-semibold text-black cursor-auto my-3" style={{ color: `${store.color.productListColor.priceColor}` }}>Rs {product.price}</p>
                         <del>
                             <p className="text-sm text-gray-600 cursor-auto ml-2">Rs {product.originalPrice}</p>
@@ -64,7 +98,16 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
                             {!addedToCart && (
                                 <button
                                     className="py-2 px-6 rounded-full duration-300"
-                                    onClick={handleAddToCart}
+                                    onClick={() => {
+                                        const productToAdd = {
+                                            ...product,
+                                            selectedVariant: null,
+                                            price:product.originalPrice
+                                        };
+                                        console.log("productToAdd"); // Log the product with variant to the console
+                                        addToCart(productToAdd);
+
+                                    }}
                                     style={{ backgroundColor: `${store.color.productListColor.priceColor}`, color: `${store.color.productListColor.priceLetterColor}` }}
                                 >
                                     <FaShoppingCart />
@@ -80,7 +123,7 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store }) => {
                                 </button>
                             )}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </a>
         </motion.div>

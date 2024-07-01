@@ -3,10 +3,11 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { useStore } from '../../Theme/Theme1/T1Context';
 import useFetch from '../../Hooks/useFetch';
 import { AuthContext } from '../../Hooks/AuthContext';
-const Checkout = ({ cart, onClose, deleteItem }) => {
-    const { store, setStore } = useStore(); // Assuming useStore provides methods to update store
-    const { isLoading, error, sendRequest, onCloseError } = useFetch();
+import PaymentConfirmation from './PaymentConfirmation';
 
+const Checkout = ({ cart, onClose, deleteItem }) => {
+    const { store, setStore } = useStore();
+    const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [promoCode, setPromoCode] = useState('');
     const [selectedPayment, setSelectedPayment] = useState('');
     const [fullName, setFullName] = useState('');
@@ -15,11 +16,12 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
     const [address, setAddress] = useState('');
     const [landmark, setLandmark] = useState('');
     const { expectedDeliveryPrice } = store || 10;
-    const [discount, setDiscount] = useState(0); // Discount amount
+    const [discount, setDiscount] = useState(0);
+    const [orderResponse, setOrderResponse] = useState(null);
     const auth = useContext(AuthContext);
-    // Calculate total amount whenever cart or discount changes
+
     const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + expectedDeliveryPrice - discount;
-    // Close checkout if cart is empty
+
     useEffect(() => {
         if (cart.length === 0) {
             onClose();
@@ -27,45 +29,17 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
     }, [cart, onClose]);
 
     const handleApplyCode = () => {
-        // Implement the logic to apply the promo code
         alert(`Promo code ${promoCode} applied!`);
     };
 
     const handleDeleteFromCart = (index) => {
         const updatedCart = cart.filter((_, i) => i !== index);
-        setStore(updatedCart); // Assuming setStore updates the cart in context
+        setStore(updatedCart);
         localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
-    // const handleEsewBuy = async (plan, duration) => {
-
-
-
-    //     try {
-    //         const responseData = await sendRequest(
-    //             'payment/create',
-    //             'POST',
-    //             JSON.stringify({
-    //                 data
-    //             }),
-    //             {
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         );
-    //         console.log(responseData); // Handle response data as needed
-    //         if (responseData.payment.payment_method === 'esewa') {
-    //             // esewaCall(responseData.formData);
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-
-
     const esewaCall = (formData) => {
-        console.log(formData);
         var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
-
         var form = document.createElement("form");
         form.setAttribute("method", "POST");
         form.setAttribute("action", path);
@@ -77,16 +51,11 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
             hiddenField.setAttribute("value", formData[key]);
             form.appendChild(hiddenField);
         }
-
         document.body.appendChild(form);
         form.submit();
     };
 
-
     const handleSubmitOrder = async () => {
-
-
-        console.log(cart);
         const orderData = {
             fullName,
             phoneNumber,
@@ -98,7 +67,7 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
                 price: item.price,
                 discountAmount: discount,
                 count: item.count,
-                selectedVariant: item.variant,
+                selectedVariant: item.selectedVariant,
             })),
             price: cart.reduce((total, item) => total + item.price * item.count, 0),
             deliveryCharge: expectedDeliveryPrice,
@@ -108,53 +77,50 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
             address,
             landmark,
             paymentMethod: selectedPayment || 'CashOnDelivery',
-            esewaTransactionID: null, // This would be set if the payment method is eSewa
+            esewaTransactionID: null,
             deliveryCode: null,
         };
-        const success_url = 'http://localhost:3000/esewa/order';
+        const success_url = process.env.REACT_APP_BASE_URL+'/esewa/order';
 
         try {
             const responseData = await sendRequest(
                 'order/create/' + store._id,
                 'POST',
-                JSON.stringify({ orderData ,success:success_url }),
+                JSON.stringify({ orderData, success: success_url }),
                 {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData); // Handle response data as needed
-            if (responseData.payment.paymentMethod === 'esewa') {
+            if (responseData?.payment?.paymentMethod === 'esewa' || responseData?.paymentMethod === 'esewa') {
                 esewaCall(responseData.formData);
             }
+            if (responseData.paymentMethod === 'CashOnDelivery') {
+                setOrderResponse(responseData);
+            }
         } catch (error) {
-            // Handle error if needed
             console.log(error);
         }
-        console.log('Order Data:', orderData);
-
-        // Here you can add the logic to send orderData to your backend
     };
 
     const paymentOptions = [
         { id: 'esewa', label: 'esewa', src: 'https://cdn.esewa.com.np/ui/images/esewa_og.png?111' },
         { id: 'khalti', label: 'Khalti', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Khalti_Digital_Wallet_Logo.png.jpg/640px-Khalti_Digital_Wallet_Logo.png.jpg' },
-        { id: 'cod', label: 'Cash on Delivery', src: 'https://cdn.iconscout.com/icon/free/png-256/free-cash-on-delivery-1851649-1569374.png?f=webp' },
+        { id: 'cod', label: 'CashOnDelivery', src: 'https://cdn.iconscout.com/icon/free/png-256/free-cash-on-delivery-1851649-1569374.png?f=webp' },
     ];
 
-
+    if (orderResponse) {
+        return <PaymentConfirmation order={orderResponse} onClose={onClose} />;
+    }
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50 overflow-auto">
             <div className="relative p-4 mt-24 flex flex-col lg:flex-row gap-4 bg-white shadow-md rounded-md max-h-full overflow-auto">
-                {/* Close button */}
                 <IoCloseCircleOutline
                     size={24}
                     className="absolute top-2 right-2 cursor-pointer text-gray-600 hover:text-gray-900"
                     onClick={onClose}
                 />
-
-                {/* Checkout Section (2/5 width on larger screens) */}
                 <div className="lg:w-2/5 p-4">
                     <h1 className="text-2xl font-bold mb-4">Checkout</h1>
                     <div className="flex flex-col h-full overflow-auto">
@@ -164,16 +130,14 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
                                 cart.map((item, index) => (
                                     <div className="flex items-center justify-between mb-4" key={index}>
                                         <div className="flex items-center">
-                                            {/* Uncomment and use if the image URL is valid */}
-                                            {/* <img src={item.variant[0].options[0].image.imageUrl} alt={item.product} className="h-12 w-12 mr-4" /> */}
                                             <div>
                                                 <p className="font-semibold">{item.product}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center text-xl flex-1 justify-between">
-                                            <span className="mx-auto text-center">{item.count}</span> {/* Quantity centered */}
-                                            <span className='mr-4'>रु {item.price}</span> {/* Item price on the left */}
-                                            <IoCloseCircleOutline size={20} onClick={() => deleteItem(item)} /> {/* Delete icon on the right */}
+                                            <span className="mx-auto text-center">{item.count}</span>
+                                            <span className='mr-4'>रु {item.price}</span>
+                                            <IoCloseCircleOutline size={20} onClick={() => deleteItem(item)} />
                                         </div>
                                     </div>
                                 ))
@@ -221,7 +185,6 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
                         </div>
                     </div>
                 </div>
-                {/* Contact Information Section (3/5 width on larger screens) */}
                 <div className="lg:w-3/5 p-4">
                     <h2 className="text-xl font-bold mb-2">Contact Information</h2>
                     <form className="space-y-4">

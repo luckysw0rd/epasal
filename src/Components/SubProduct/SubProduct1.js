@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 const SubProduct1 = ({
     products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
-}) => {
+,addToCart}) => {
     const ref = useRef();
     const containerRef = useRef(null);
     const { events } = useDraggable(ref);
@@ -69,10 +69,10 @@ const SubProduct1 = ({
     const subProductColor = store.color.subProductColor;
 
     return (
-        <div className=' mt-20  h-[400px]' style={{ fontFamily: store?.fonts?.Categories }}>
+        <div className='   mb-16' style={{ fontFamily: store?.fonts?.Categories ,backgroundColor: subProductColor.categoryColor}}>
             <CategorySelector />
             <div className="px-20  pb-8 overflow-x-scroll" style={{
-                maxWidth: '100vw', backgroundColor: subProductColor.categoryColor
+                maxWidth: '100vw', 
             }}
                 {...events}
                 ref={ref}
@@ -99,6 +99,7 @@ const SubProduct1 = ({
                                 handleStyleSelect={handleStyleSelect}
                                 handleRemoveProduct={handleRemoveProduct}
                                 store={store}
+                                addToCart={addToCart}
                             />
                         </div>
                     ))}

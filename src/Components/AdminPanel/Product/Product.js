@@ -4,7 +4,7 @@ import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { toast } from 'react-toastify';
 import { useImage } from '../../../Hooks/useImage';
-
+import { FaDollarSign, FaPercent, FaChartLine, FaBox, FaEdit } from 'react-icons/fa';
 const Product = ({ store }) => {
   const initialProducts = [];
 
@@ -16,6 +16,8 @@ const Product = ({ store }) => {
   const [newVariant, setNewVariant] = useState({ name: '', options: [{ name: '', price: undefined, discount: undefined, count: undefined }] });
   const auth = useContext(AuthContext);
 
+  const [page, setPage] = useState(1);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,11 +26,10 @@ const Product = ({ store }) => {
   const [minPrice, setMinPrice] = useState(''); // Added state for minPrice
   const [maxPrice, setMaxPrice] = useState(''); // Added state for maxPrice
 
-
-  const fetchProducts = async (page = 1, limit = 10, search = '', sortOrder = 'asc') => {
+  const fetchProducts = async (limit = 10, search = '', sortOrder = 'asc') => {
     try {
       const response = await sendRequest(
-        `product/getAllProduct/${store._id}?page=${page}&limit=${limit}&search=${search}&sortOrder=${sortOrder}` +
+        `product/getAllProduct/${store._id}?page=${page}&limit=${limit}&search=${searchQuery}&sortOrder=${sortOrder}` +
         `${minPrice ? `&minPrice=${minPrice}` : ''}` +
         `${maxPrice ? `&maxPrice=${maxPrice}` : ''}`,
         'GET',
@@ -38,18 +39,19 @@ const Product = ({ store }) => {
           'Authorization': 'Bearer ' + auth.token
         }
       );
+      console.log(response);
       setProducts(response.products);
       setTotalProducts(response.totalProducts);
       setTotalPages(response.totalPages);
-      setCurrentPage(response.currentPage);
+
     } catch (error) {
-      // toast.error(error.message);
+      toast.error(error.message);
     }
   };
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [page, totalPages, currentPage]);
 
   const handleEditClick = (productIndex) => {
     setEditProductIndex(productIndex);
@@ -70,6 +72,15 @@ const Product = ({ store }) => {
     });
   };
 
+  const truncateDescription = (description, wordLimit) => {
+    const words = description.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return description;
+  };
+
+
   const handleDeleteVariant = (variantIndex) => {
     const updatedVariants = editProduct.variant.filter((variant, vIndex) => vIndex !== variantIndex);
     setEditProduct({
@@ -80,23 +91,34 @@ const Product = ({ store }) => {
 
   const handleSaveClick = async () => {
     try {
-      const uploadedProductImage = await uploadImage(editProduct.image.imageUrl);
-      const updatedEditProduct = { ...editProduct };
-      updatedEditProduct.image.imageUrl = uploadedProductImage.img;
-      updatedEditProduct.image.imageId = uploadedProductImage.id;
+      console.log(editProduct);
+      let updatedEditProduct = { ...editProduct };
+      console.log(updatedEditProduct);
+      // Check if the product image URL is empty and retain the existing image
+      if (updatedEditProduct.image.imageUrl) {
+        const uploadedProductImage = await uploadImage(updatedEditProduct.image.imageUrl);
+        updatedEditProduct.image.imageUrl = uploadedProductImage.img;
+        updatedEditProduct.image.imageID = uploadedProductImage.id;
+      }
 
       const updatedVariants = await Promise.all(
         updatedEditProduct.variant.map(async (variant) => {
           const updatedOptions = await Promise.all(
             variant.options.map(async (option) => {
               if (option.image && option.image.imageUrl) {
-                const uploadedVariantImage = await uploadImage(option.image.imageUrl);
-                return { ...option, image: { imageUrl: uploadedVariantImage.img, imageId: uploadedVariantImage.id } };
+                if (option.image.imageUrl) {
+                  const uploadedVariantImage = await uploadImage(option.image.imageUrl);
+                  return {
+                    ...option,
+                    name: option.name || 'Default Option Name', // Set default option name
+                    image: { imageUrl: uploadedVariantImage.img, imageID: uploadedVariantImage.id },
+                  };
+                }
               }
-              return option;
+              return { ...option, name: option.name || 'default' }; // Set default option name
             })
           );
-          return { ...variant, options: updatedOptions };
+          return { ...variant, name: variant.name || 'default', options: updatedOptions }; // Set default variant name
         })
       );
 
@@ -109,10 +131,10 @@ const Product = ({ store }) => {
         rating: updatedEditProduct.rating,
         image: updatedEditProduct.image,
         variant: updatedEditProduct.variant,
-        discount:updatedEditProduct.discount,
+        discount: updatedEditProduct.discount,
         inventory: updatedEditProduct.inventory,
         soldQuantity: updatedEditProduct.soldQuantity,
-        revenueGenerated: updatedEditProduct.revenueGenerated
+        revenueGenerated: updatedEditProduct.revenueGenerated,
       };
 
       const response = await sendRequest(
@@ -121,7 +143,7 @@ const Product = ({ store }) => {
         JSON.stringify({ id: updatedEditProduct._id, updates }),
         {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + auth.token
+          'Authorization': 'Bearer ' + auth.token,
         }
       );
 
@@ -135,6 +157,7 @@ const Product = ({ store }) => {
       toast.error(error.message);
     }
   };
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -150,9 +173,9 @@ const Product = ({ store }) => {
       if (vIndex === variantIndex) {
         const updatedOptions = variant.options.map((option, oIndex) => {
           if (oIndex === optionIndex) {
-            
-              return { ...option, [name]: value };
-           
+
+            return { ...option, [name]: value };
+
           }
           return option;
         });
@@ -210,16 +233,17 @@ const Product = ({ store }) => {
     });
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    fetchProducts(page, 10, searchQuery, sortOrder);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
-  const handleSearchButton=(e)=>{
+
+  const handleSearchButton = (e) => {
     fetchProducts(1, 10, searchQuery, sortOrder);
   }
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    
+    console.log("search query", searchQuery);
   };
 
   const handleSortChange = (event) => {
@@ -253,7 +277,7 @@ const Product = ({ store }) => {
               type="text"
               placeholder="Search products..."
               value={searchQuery}
-              onChange={handleSearchChange}
+              onChange={(event) => handleSearchChange(event)}
               className="border p-2 px-3 h-10 flex-grow"
             />
             <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
@@ -283,220 +307,244 @@ const Product = ({ store }) => {
             >
               Apply Filters
             </button>
-            </div>
+          </div>
         </div>
-        <div className="flex flex-wrap grow-0 gap-12 p-4">
+        <div className="flex flex-wrap gap-8 p-4 justify-center">
           {products.map((product, productIndex) => (
-            <div key={productIndex} className="bg-white shadow-lg pb-5 h-100 rounded-lg overflow-hidden transform transition-transform hover:scale-105">
-              
-                <div className=" capitalize">
-                  <img className="flex justify-center mx-auto w-80 h-60" src={product.image.imageUrl} alt={product.name} />
-                  <h2 className="text-xl font-bold my-2 pl-2">{product.name}</h2>
-                  <div className='flex gap-2 '>
-                  <p className="text-gray-700 mb-2 pl-2 flex-grow">{product.description}</p>
-                    <div className='text-xs pr-2'>
-                      <p className="text-gray-700 mb-2">Price: ${product.price}</p>
-                      <p className="text-gray-700 mb-2">Discount: {product.discount}</p>
-                      <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
-                    </div>
-                  </div>
-                  <button
-                    className="bg-blue-500 text-white ml-2 px-4 py-2 rounded mt-3"
-                    onClick={() => {console.log(productIndex,"product Index");handleEditClick(productIndex)}}
-                  >
-                    Edit
-                  </button>
+            <div
+              key={productIndex}
+              className="bg-white max-w-[400px] shadow-lg p-5 rounded-lg overflow-hidden transform transition-transform hover:scale-105"
+            >
+              <div className="text-center border-b pb-4 mb-4">
+                <img className="w-80 h-60 mx-auto mb-4 rounded-md" src={product.image.imageUrl} alt={product.name} />
+                <h2 className="text-xl font-bold mb-2">{product.name}</h2>
+              </div>
+              <p className="text-gray-700 mb-4">
+                {truncateDescription(product.description, 15)}
+              </p>
+              <div className="flex flex-col gap-2 text-sm text-gray-700 mb-4">
+                <div className="flex items-center border-b pb-2">
+                  <FaDollarSign className="mr-2 text-blue-500" />
+                  <span>Price: ${product.price}</span>
                 </div>
-              
+                <div className="flex items-center border-b pb-2">
+                  <FaPercent className="mr-2 text-blue-500" />
+                  <span>Discount: {product.discount}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaChartLine className="mr-2 text-blue-500" />
+                  <span>Revenue: ${product.revenueGenerated}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaBox className="mr-2 text-blue-500" />
+                  <span>Inventory: {product.inventory}</span>
+                </div>
+              </div>
+              <button
+                className="bg-blue-500 text-white flex items-center justify-center gap-2 px-4 py-2 rounded transition-colors hover:bg-blue-600"
+                onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex); }}
+              >
+                <FaEdit />
+                Edit
+              </button>
             </div>
           ))}
         </div>
         <div className="flex justify-between items-center mt-6">
           <button
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-            className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+            onClick={() => handlePageChange(page - 1)} disabled={page <= 1}
+            className={`px-4 py-2 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
           >
             Previous
           </button>
-          <span>Page {currentPage} of {totalPages}</span>
+          <span>Page {page} of {totalPages}</span>
           <button
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
+            onClick={() => handlePageChange(page + 1)}
+            //  disabled={currentPage === totalPages}
             className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
           >
             Next
           </button>
         </div>
-        {editProductIndex!==null && (
-                <div className="  fixed top-0 left-0 w-full h-screen z-50 flex justify-center">
-                  <div className='absolute bg-black opacity-50 w-screen top-0 left-0 h-screen'></div>
-                  <div className='absolute w-[80%] mt-10 bg-white p-12 h-[80%] overflow-y-scroll'>
-                    <div className='absolute top-3 right-5 text-red-500 cursor-pointer' onClick={()=>{handleEditClick(null)}}>X</div>
-                  <div className="mb-4">
-                    <h2 className='text-2xl font-bold mb-4'>Edit Product</h2>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={editProduct.name}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
-                    <textarea
-                      name="description"
-                      value={editProduct.description}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
-                    <input
-                      type="number"
-                      name="price"
-                      value={editProduct.price}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Discount</label>
-                    <input
-                      type="number"
-                      name="discount"
-                      value={editProduct.discount}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
-                    <ProductImageDropzone
-                      imageUrl={editProduct.image.imageUrl}
-                      setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
-                      className="w-10 h-10"
-                    />
-                  </div>
+        {editProductIndex !== null && (
+          <div className="  fixed top-0 left-0 w-full h-screen z-50 flex justify-center">
+            <div className='absolute bg-black opacity-50 w-screen top-0 left-0 h-screen'></div>
+            <div className='absolute w-[80%] mt-10 bg-white p-12 h-[80%] overflow-y-scroll'>
+              <div className='absolute top-3 right-5 text-red-500 cursor-pointer' onClick={() => { handleEditClick(null) }}>X</div>
+              <div className="mb-4">
+                <h2 className='text-2xl font-bold mb-4'>Edit Product</h2>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={editProduct.name}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                <textarea
+                  name="description"
+                  value={editProduct.description}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={editProduct.price}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+                <input
+                  type="number"
+                  name="discount"
+                  value={editProduct.discount}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Inventory</label>
+                <input
+                  type="number"
+                  name="inventory"
+                  value={editProduct.inventory}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+                <ProductImageDropzone
+                  imageUrl={editProduct.image.imageUrl}
+                  setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
+                  className="w-10 h-10"
+                />
+              </div>
 
-                  {editProduct.variant.map((variant, variantIndex) => (
-                    <div key={variantIndex} className="mb-4">
+              {editProduct.variant.map((variant, variantIndex) => (
+                <div key={variantIndex} className="mb-4">
+                  <div className="flex justify-between items-center">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
+                    <button
+                      className="bg-red-500 text-white px-2 py-1 rounded mb-2"
+                      onClick={() => handleDeleteVariant(variantIndex)}
+                    >
+                      Delete Variant
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    value={variant.name}
+                    onChange={(event) => handleVariantNameChange(event, variantIndex)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                    placeholder="Variant Name"
+                  />
+                  {variant.options.map((option, optionIndex) => (
+                    <div key={optionIndex} className="mb-4">
                       <div className="flex justify-between items-center">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
                         <button
                           className="bg-red-500 text-white px-2 py-1 rounded mb-2"
-                          onClick={() => handleDeleteVariant(variantIndex)}
+                          onClick={() => handleDeleteOption(variantIndex, optionIndex)}
                         >
-                          Delete Variant
+                          Delete Option
                         </button>
                       </div>
+
                       <input
                         type="text"
-                        value={variant.name}
-                        onChange={(event) => handleVariantNameChange(event, variantIndex)}
+                        name="name"
+                        value={option.name}
+                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                        placeholder="Variant Name"
+                        placeholder="Option Name"
                       />
-                      {variant.options.map((option, optionIndex) => (
-                        <div key={optionIndex} className="mb-4">
-                          <div className="flex justify-between items-center">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
-                            <button
-                              className="bg-red-500 text-white px-2 py-1 rounded mb-2"
-                              onClick={() => handleDeleteOption(variantIndex, optionIndex)}
-                            >
-                              Delete Option
-                            </button>
-                          </div>
-
+                      {variantIndex === 0 && (
+                        <>
                           <input
-                            type="text"
-                            name="name"
-                            value={option.name}
+                            type="number"
+                            name="price"
+                            value={option.price}
                             onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                            placeholder="Option Name"
+                            placeholder="Option Price"
                           />
-                          {variantIndex === 0 && (
-                            <>
-                              <input
-                                type="number"
-                                name="price"
-                                value={option.price}
-                                onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                                placeholder="Option Price"
-                              />
-                              <input
-                                type="number"
-                                name="discount"
-                                value={option.discount}
-                                onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                                placeholder="Option Discount"
-                              />
-                              <input
-                                type="number"
-                                name="count"
-                                value={option.count}
-                                onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                                placeholder="Option Count"
-                              />
-                            </>
-                          )}
-                          {variantIndex === 0 && (
-                            <ProductImageDropzone
-                              imageUrl={option.image?.imageUrl}
-                              setImageUrl={(url) =>
-                                setEditProduct((prev) => {
-                                  const updatedVariants = [...prev.variant];
-                                  updatedVariants[variantIndex].options[optionIndex].image = {
-                                    ...updatedVariants[variantIndex].options[optionIndex].image,
-                                    imageUrl: url
-                                  };
-                                  return { ...prev, variant: updatedVariants };
-                                })
-                              }
-                            />
-                          )}
-                        </div>
-                      ))}
-                      <button
-                        className="bg-blue-500 text-white px-2 py-1 rounded"
-                        onClick={() => handleAddOption(variantIndex)}
-                      >
-                        Add Option
-                      </button>
+                          <input
+                            type="number"
+                            name="discount"
+                            value={option.discount}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Discount"
+                          />
+                          <input
+                            type="number"
+                            name="count"
+                            value={option.count}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Count"
+                          />
+                        </>
+                      )}
+                      {variantIndex === 0 && (
+                        <ProductImageDropzone
+                          imageUrl={option.image?.imageUrl}
+                          setImageUrl={(url) =>
+                            setEditProduct((prev) => {
+                              const updatedVariants = [...prev.variant];
+                              updatedVariants[variantIndex].options[optionIndex].image = {
+                                ...updatedVariants[variantIndex].options[optionIndex].image,
+                                imageUrl: url
+                              };
+                              return { ...prev, variant: updatedVariants };
+                            })
+                          }
+                        />
+                      )}
                     </div>
                   ))}
                   <button
-                    className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-                    onClick={handleAddVariant}
+                    className="bg-blue-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleAddOption(variantIndex)}
                   >
-                    Add Variant
+                    Add Option
                   </button>
-                  <div className="mt-4">
-                    <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                      onClick={handleSaveClick}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className="bg-gray-500 text-white px-4 py-2 rounded"
-                      onClick={() => setEditProductIndex(null)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                  </div>
                 </div>
-              )}
-             
+              ))}
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded mt-4"
+                onClick={handleAddVariant}
+              >
+                Add Variant
+              </button>
+              <div className="mt-4">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                  onClick={handleSaveClick}
+                >
+                  Save
+                </button>
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 rounded"
+                  onClick={() => setEditProductIndex(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     )
   );

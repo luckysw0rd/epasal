@@ -4,13 +4,22 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
-
-const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
+import { useNavigate } from 'react-router-dom';
+const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store,productListProps }) => {
+    const {addToCart}=productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
+    const navigate = useNavigate();
 
 
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
+
+        if (store.fetchedFromBackend && !store.isEdit)
+            navigate("/productlanding", { state: { product, store } })
+    };
 
     useEffect(() => {
         setAddedToCart(false);
@@ -117,10 +126,15 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                     </ul>
                 </div>
             </div>
-            <div className="flex items-center mt-2">
+            <div className="flex flex-col items-center mt-2">
+                <p className="text-lg font-semibold " style={{ color: `${store.color.productListColor.priceColor}` }} >Rs {product.price - product.discount}</p>
+
+                <del className="ml-2 "> Rs {product.price}</del>
+            </div>
+            {/* <div className="flex items-center mt-2">
                 <p className="text-lg font-semibold " style={{ color: `${store.color.productListColor.priceColor}` }} >Rs {product.price}</p>
                 <del className="ml-2 "> Rs {product.originalPrice}</del>
-            </div>
+            </div> */}
             {/* <div className="flex mb-2 justify-center md:justify-start">
                 {[...Array(5)].map((_, index) => {
                     if (index < product.rating)
@@ -132,21 +146,15 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
             {!addedToCart && (
                 <button
                     className="py-2 px-6 rounded-full duration-300 mt-4"
-                    onClick={handleAddToCart}
+                    onClick={() => {
+                        handleProductClick(product);
+                    }}
                     style={{ backgroundColor: `${store.color.productListColor.buttonBgColor}`, color: `${store.color.productListColor.buttonTextColor}` }}
                 >
                     Add to Cart
                 </button>
             )}
-            {addedToCart && (
-                <button
-                    className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
-                    disabled
-                    style={{ backgroundColor: store.color.productListColor.priceColor, color: store.color.productListColor.priceLetterColor, color: store.color.productListColor.textColor, border: `2px solid ${store.color.productListColor.ButtonBorderColor}` }}
-                >
-                    <FaShoppingCart className="mr-1 " />
-                </button>
-            )}
+           
         </motion.div>
     );
 }
