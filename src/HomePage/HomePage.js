@@ -30,26 +30,26 @@ function HomePage() {
 
     const [navbarImage, setnavbarImage] = useState(false);
     const viewportHeight = window.innerHeight;
-    window.addEventListener('scroll', function () {
-        const scrollableDiv = document.getElementById('scrollableDiv');
-        const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
-        const viewportHeight = window.innerHeight;
+    // window.addEventListener('scroll', function () {
+    //     const scrollableDiv = document.getElementById('scrollableDiv');
+    //     const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
+    //     const viewportHeight = window.innerHeight;
 
 
-        console.log("distancefromtop:", distanceFromTop, ", viewportHeight: 85 ", viewportHeight)
-        if (distanceFromTop <= 100) {
-            scrollableDiv.classList.add('overflow-scroll', 'sticky');
-            //   scrollableDiv.style.top = `0px`;
-        } else {
-            scrollableDiv.classList.remove('overflow-scroll', 'sticky');
-            //   scrollableDiv.style.top = '';
-        }
-    });
+    //     console.log("distancefromtop:", distanceFromTop, ", viewportHeight: 85 ", viewportHeight)
+    //     if (distanceFromTop <= 100) {
+    //         scrollableDiv.classList.add('overflow-scroll', 'sticky');
+    //         //   scrollableDiv.style.top = `0px`;
+    //     } else {
+    //         scrollableDiv.classList.remove('overflow-scroll', 'sticky');
+    //         //   scrollableDiv.style.top = '';
+    //     }
+    // });
 
     return (
 
         <div className="flex flex-col font-Poppins relative h-full">
-            <Navbar navbarImage={navbarImage} setnavbarImage={setnavbarImage}></Navbar>
+            {/* <Navbar navbarImage={navbarImage} setnavbarImage={setnavbarImage}></Navbar> */}
 
             {/* <Heading setNavbarImage={setnavbarImage} /> */}
             <div className='relative flex justify-center -mb-16 z-50'>
@@ -69,16 +69,17 @@ function HomePage() {
             </div>
             <div className='bg-white h-4 w-full mt-6 z-10'></div>
             <div id='scrollableDiv' className={` h-[77vh] xl:h-[120vh] 2xl:h-[120vh] bg-white pt-16 relative bg-black`}>
-                <Landingpage />
-                <DragdropSection />
-                <Card />
-                <BanauTheme />
+
             </div>
             <div className=' md:mt-0'>
                 <SkinSection />
             </div>
-
-            <DomainSection />
+                      <DomainSection />
+            <Landingpage />
+            <DragdropSection />
+            <Card />
+            <BanauTheme />
+  
             <SubscriptionPlans></SubscriptionPlans>
             <div className=' mt-[850px] md:mt-0 space-y-20'>
                 <SliderNavbar></SliderNavbar>

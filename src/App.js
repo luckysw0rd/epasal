@@ -10,6 +10,7 @@ import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
 import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
+// import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
 const Navbar = React.lazy(() => import('./HomePage/Navbar'));
