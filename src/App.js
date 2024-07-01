@@ -77,10 +77,10 @@ function App() {
         <div className="App">
           <Router>
             <Suspense fallback=
-            {
-            <div className=" bg-fuchsia-700 h-screen w-screen">
-              LOADING 
-            </div>}>
+              {
+                <div className=" bg-fuchsia-700 h-screen w-screen">
+                  LOADING
+                </div>}>
               <Routes>
                 {routes}
               </Routes>
