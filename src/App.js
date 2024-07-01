@@ -8,8 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
-import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
-import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
+// import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
 const Navbar = React.lazy(() => import('./HomePage/Navbar'));
@@ -26,6 +25,7 @@ const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproduct
 const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
 const PrivacyPolicy = React.lazy(() => import('./HomePage/PrivacyOverlay'));
 const TermsAndConditions = React.lazy(() => import('./HomePage/TermsAndConditions'));
+const ProjectLanding1 = React.lazy(() => import('./Components/ProductLanding/ProductLanding1'));
 
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();

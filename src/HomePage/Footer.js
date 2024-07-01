@@ -5,8 +5,8 @@ import logo from '../Assets/banau.png'; // Adjust the path to your logo image
 
 const Footer = () => {
     return (
-        <footer className="bg-[#141414] text-white py-10 px-4">
-            <div className="max-w-[1200px] xl:max-w-screen-2xl mx-[60px] 2xl:mx-auto flex flex-col md:flex-row justify-between">
+        <footer className="bg-[#141414] xl:min-h-[400px]   text-white py-10 px-4">
+            <div className="max-w-[1200px] xl:mt-10 xl:max-w-screen-2xl  mx-[60px] 2xl:mx-auto flex flex-col md:flex-row justify-between">
                 <div className="flex-1 mb-1 md:mb-0 mr-8">
                     <img src={logo} alt="Company Logo" className="h-12 mb-2" />
                     <h3 className=" mt-5 text-lg xl:text-3xl font-bold">Shop At Banau</h3>

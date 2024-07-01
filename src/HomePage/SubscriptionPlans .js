@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaClock, FaStar } from 'react-icons/fa';
 
 const plans = {
     monthly: [
@@ -11,7 +12,8 @@ const plans = {
             liveChat: false,
             analytics: "Basic",
             seo: "Basic",
-            customDomain: false
+            customDomain: false,
+            limitedOffer: true
         },
         {
             name: "Gold",
@@ -23,7 +25,8 @@ const plans = {
             analytics: "Intermediate",
             seo: "Intermediate",
             customDomain: true,
-            popular: true
+            popular: true,
+            limitedOffer: true
         },
         {
             name: "Platinum",
@@ -34,7 +37,8 @@ const plans = {
             liveChat: true,
             analytics: "Advanced",
             seo: "Advanced",
-            customDomain: true
+            customDomain: true,
+            limitedOffer: true
         }
     ],
     quarterly: [
@@ -47,7 +51,8 @@ const plans = {
             liveChat: false,
             analytics: "Basic",
             seo: "Basic",
-            customDomain: false
+            customDomain: false,
+            limitedOffer: true
         },
         {
             name: "Gold",
@@ -59,7 +64,8 @@ const plans = {
             analytics: "Intermediate",
             seo: "Intermediate",
             customDomain: true,
-            popular: true
+            popular: true,
+            limitedOffer: true
         },
         {
             name: "Platinum",
@@ -70,7 +76,8 @@ const plans = {
             liveChat: true,
             analytics: "Advanced",
             seo: "Advanced",
-            customDomain: true
+            customDomain: true,
+            limitedOffer: true
         }
     ],
     yearly: [
@@ -83,7 +90,8 @@ const plans = {
             liveChat: false,
             analytics: "Basic",
             seo: "Basic",
-            customDomain: false
+            customDomain: false,
+            limitedOffer: true
         },
         {
             name: "Gold",
@@ -95,7 +103,8 @@ const plans = {
             analytics: "Intermediate",
             seo: "Intermediate",
             customDomain: true,
-            popular: true
+            popular: true,
+            limitedOffer: true
         },
         {
             name: "Platinum",
@@ -106,7 +115,8 @@ const plans = {
             liveChat: true,
             analytics: "Advanced",
             seo: "Advanced",
-            customDomain: true
+            customDomain: true,
+            limitedOffer: true
         }
     ]
 };
@@ -170,7 +180,7 @@ const SubscriptionPlans = () => {
                         return (
                             <div
                                 key={index}
-                                className={`flex-1 bg-white border rounded-lg shadow-lg overflow-hidden relative ${plan.popular ? 'border-green-500' : 'border-gray-200'}`}
+                                className={`flex-1 bg-white max-h-[518px] border rounded-lg shadow-lg overflow-hidden relative ${plan.popular ? 'border-green-500' : 'border-gray-200'}`}
                             >
                                 {plan.popular && (
                                     <div className="absolute top-0 right-0 mt-4 mr-4 px-2 py-1 bg-purple-600 text-white text-xs font-bold rounded-full shadow-md">
@@ -188,11 +198,26 @@ const SubscriptionPlans = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div className="bg-gray-50 p-6">
+                                <div className="p-6 relative ">
                                     <ul className="space-y-4 mb-6 text-gray-700">
-                                        <li className="flex items-center justify-between">
+                                        <li className="flex  items-center justify-between  ">
                                             <span>Customization:</span>
-                                            <span>{plan.customization}</span>
+                                            <span>
+                                                {plan.limitedOffer ? (
+                                                    <>
+                                                        {/* <FaClock className="text-red-500 mr-2" /> */}
+                                                        Unlimited 
+                                                    </>
+                                                ) : (
+                                                    plan.customization
+                                                )}
+                                            </span>
+                                            {plan.limitedOffer && (
+                                                <div className="absolute -top-2 right-3 mt-2 mr-2 mb-2 flex items-center">
+                                                    <FaStar className="text-orange-700" />
+                                                    <span className="ml-1 text-xs text-orange-500 font-semibold">Limited Offer</span>
+                                                </div>
+                                            )}
                                         </li>
                                         <li className="flex items-center justify-between">
                                             <span>Products:</span>

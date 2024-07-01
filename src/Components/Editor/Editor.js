@@ -1682,7 +1682,7 @@ const Editor = () => {
                 {Object.entries(color).map(([colorKey, colorValue], index) => {
                   if (typeof colorValue === 'object') {
                     return (
-                      <div key={index}>
+                      <div key={index} className=' border-b-2 border-t-2 spac-y-2'>
                         <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
                           <div key={nestedIndex} className="flex flex-row justify-around items-start items-center border-grey-300 border-b-2 ">

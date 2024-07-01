@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdOutlineQuestionMark } from 'react-icons/md';
 import { IoCloseSharp } from 'react-icons/io5';
-
+import { Link, useNavigate } from 'react-router-dom';
 const DragdropSection = () => {
     const styles = {
         color: 'transparent',
@@ -10,6 +10,7 @@ const DragdropSection = () => {
         WebkitBackgroundClip: 'text',
     };
 
+    const navigate = useNavigate();
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
@@ -57,9 +58,9 @@ const DragdropSection = () => {
                 <div className="hidden md:flex flex-col gap-2 lg:gap-4 bg-[#793A00] w-[70%] lg:w-[55%] rounded-2xl absolute top-[18%] -right-[25%] text-white py-4 px-6 lg:px-12">
                     <h3 className="text-xs md:text-sm lg:text-base font-bold">FREEDOM IS YOURS</h3>
                     <p className="text-xs lg:text-sm">Have fun customizing your digital store.</p>
-                    <button className="border border-white hover:bg-white hover:text-[#793A00] p-1 rounded-md lg:rounded-xl text-xs lg:text-sm lg:w-2/3">
+                    <Link to="/buildstore"  className="border border-white hover:bg-white hover:text-[#793A00] p-1 rounded-md lg:rounded-xl text-xs lg:text-sm lg:w-2/3">
                         Build yours now
-                    </button>
+                    </Link>
                 </div>
 
                 <div

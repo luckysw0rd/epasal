@@ -29,20 +29,7 @@ function HomePage() {
     }, [])
 
     const [navbarImage, setnavbarImage] = useState(false);
-    // const viewportHeight = window.innerHeight;
-    // window.addEventListener('scroll', function() {
-    //     const scrollableDiv = document.getElementById('scrollableDiv');
-    //     const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
-        
-    //     console.log("distancefromtop:",distanceFromTop,", viewportHeight: 85 ",viewportHeight)
-    //     if (distanceFromTop <= 200) { 
-    //       scrollableDiv.classList.add('overflow-scroll','sticky');
-    //     //   scrollableDiv.style.top = `0px`;
-    //     } else {
-    //         scrollableDiv.classList.remove('overflow-scroll', 'sticky');
-    //         //   scrollableDiv.style.top = '';
-    //     }
-    // });
+
 
     return (
 
@@ -66,11 +53,11 @@ function HomePage() {
                 </div>
             </div>
             <div className='bg-white h-4 w-screen  z-10'></div>
-            
+
             <div className=' md:mt-0 w-full bg-white'>
-            
-                    <Landingpage />
-                
+
+                <Landingpage />
+
                 <DragdropSection />
                 <Card />
                 <BanauTheme />
@@ -78,15 +65,15 @@ function HomePage() {
                 <DomainSection />
                 <SubscriptionPlans></SubscriptionPlans>
                 <div className=' mt-[850px] md:mt-0'>
-                <SliderNavbar></SliderNavbar>
-                <ProgressBar></ProgressBar>
+                    <SliderNavbar></SliderNavbar>
+                    <ProgressBar></ProgressBar>
                 </div>
                 <Footer></Footer>
             </div>
 
-            
-            
-            
+
+
+
         </div>
 
 
@@ -109,19 +96,3 @@ function abc(liveChatSource) {
     s0.parentNode.insertBefore(s1, s0);
 
 };
-
-{/* <div className="">
-          
-          <div className='sticky top-0 h-[30px] bg-blue-500 navbar'>Navbar</div>
-          <div className='h-[90vh] overflow-scroll'>
-              <div className=''>
-                  <div className='h-screen bg-red-400'>Hello</div>
-             
-                  <div className='h-[3000px] bg-green-400 w-screen'></div>
-              <div className='h-10 bg-gray-500 w-screen'></div>
-              <div className='h-10 bg-gray-500 w-screen'></div> 
-              </div>
-          </div>
-        
-          <div className='h-screen bg-slate-200'>Another Section</div>
-      </div> */}
