@@ -1,12 +1,12 @@
 import React from 'react';
 import rec from '../Assets/rec.svg';
 import { FiSearch } from 'react-icons/fi';
-import image from '../Assets/image.png';
+import image from '../Assets/section.png';
 
 const DomainSection = () => {
   return (
-    <div className="flex justify-center items-center bg-white p-4 md:p-10">
-      <div className="bg-gray-800 text-white p-6 md:p-12 flex flex-col md:flex-row items-center w-full md:w-11/12 rounded-2xl">
+    <div className="flex justify-center items-center bg-white p-4 md:py-10">
+      <div className="bg-gray-800 text-white p-6 md:p-12 flex flex-col lg:flex-row items-center w-full rounded-2xl">
 
         {/* Domain Section */}
         <div className="flex flex-col items-center md:items-start mb-4 md:mb-0 md:w-1/2 md:ml-10">
@@ -28,7 +28,7 @@ const DomainSection = () => {
         </div>
 
         {/* Image Section */}
-        <img src={image} alt="Image" className="rounded-xl h-64 md:h-96 w-full object-contain" />
+        <img src={image} alt="Image" className="rounded-xl h-48 w-full md:h-64 lg:h-96 object-contain" />
 
       </div>
     </div>
