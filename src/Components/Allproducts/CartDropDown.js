@@ -69,7 +69,7 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
                             <div className="flex items-center">
                                 <button
                                     className="bg-gray-300 px-2 py-1 rounded-l hover:bg-gray-400 transition duration-200"
-                                    onClick={() => handleDecreaseQuantity(index)}
+                                    onClick={() => handleDeleteFromCart(index)}
                                 >
                                     -
                                 </button>
@@ -81,12 +81,12 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
                                     +
                                 </button>
                             </div>
-                            <button
+                            {/* <button
                                 className="text-red-500 ml-4 hover:text-red-700 transition duration-200"
                                 onClick={() => handleDeleteFromCart(index)}
                             >
                                 <FaTrashAlt />
-                            </button>
+                            </button> */}
                         </div>
                     ))
                 )}

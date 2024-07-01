@@ -1,18 +1,74 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { TbReportAnalytics } from "react-icons/tb";
 import { RiUserFollowLine } from "react-icons/ri";
 import { FiDollarSign } from "react-icons/fi";
 import { TbBrandShopee } from "react-icons/tb";
 import { LuWallet } from "react-icons/lu";
-
+import useFetch from '../../../../Hooks/useFetch';
 import { store } from "./homeStore";
 import SalesGraph from './SalesGraph';
+import { AuthContext } from '../../../../Hooks/AuthContext';
 
 //store 1 needs to be store
 const Home = ({ data }) => {
+  const { isLoading, error, sendRequest, onCloseError } = useFetch();
+  const auth = useContext(AuthContext);
   const { revenueGenerated, salesChange, orders, dueAmount, pendingAmount, customers, balance, mostSold } = store;
   console.log({ home: data });
+
+  const handleBuyNow = async () => {
+
+    console.log(data);
+    // Function to handle the purchase action with this card's details
+    const bodyData = {
+      amount: data?.dueAmount,
+      payment_method: 'esewa',
+      store: data._id
+    };
+
+    const success_url = process.env.REACT_APP_BASE_URL+'/esewa/dueAmount';
+    try {
+      const responseData = await sendRequest(
+        'store/duepay/' + data._id,
+        'PATCH',
+        JSON.stringify({
+          data: bodyData, success: success_url
+        }),
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token
+        }
+      );
+      console.log(responseData); // Handle response data as needed
+      if (responseData.payment.payment_method === 'esewa') {
+        esewaCall(responseData.formData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const esewaCall = (formData) => {
+    console.log(formData);
+    var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action", path);
+
+    for (var key in formData) {
+      var hiddenField = document.createElement("input");
+      hiddenField.setAttribute("type", "hidden");
+      hiddenField.setAttribute("name", key);
+      hiddenField.setAttribute("value", formData[key]);
+      form.appendChild(hiddenField);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+  };
   return (
     <div className="grid gap-8 bg-white w-full p-6 rounded-lg">
       <div className="grid grid-cols-1 w-full sm:grid-cols-3 justify-between gap-6">
@@ -83,7 +139,7 @@ const Home = ({ data }) => {
 
                 <div className="text-sm text-[#888888]">Amount you need to pay to Banau </div>
                 <button className='w-[60%] border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-xl py-2 text-green-600'>
-                  <div className="flex items-center text-bold justify-center gap-2">
+                  <div onClick={() => { handleBuyNow() }} className="flex items-center text-bold justify-center gap-2">
                     Pay Now <LuWallet size={20} />
                   </div>
                 </button>
@@ -111,7 +167,7 @@ const Home = ({ data }) => {
             </div>
             <div className="p-4 flex items-center justify-between">
               <div className='flex flex-col gap-5'>
-                <div className="text-2xl font-semibold">{data?.mostSoldItem || 'Nothing'}</div>
+                <div className="text-2xl font-semibold">{data?.mostSoldItem?.name || 'Nothing'}</div>
                 <div className='text-[#888888]'><span className="text-sm text-green-600">+ {salesChange} </span> from previous month</div>
               </div>
             </div>
@@ -127,5 +183,6 @@ const Home = ({ data }) => {
     </div>
   );
 };
+
 
 export default Home;

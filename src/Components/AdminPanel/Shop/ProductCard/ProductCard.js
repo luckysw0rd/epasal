@@ -12,11 +12,11 @@ const ProductCard2 = () => (
             />
             <div className="px-4 py-3 w-72">
                 <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">Product Name</p>
+                <p className="text-lg font-bold text-black truncate block capitalize">Modern Minimalistic</p>
                 <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
+                    <p className="text-lg font-semibold text-black cursor-auto my-3"> Rs 149</p>
                     <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
+                        <p className="text-sm text-gray-600 cursor-auto ml-2"> Rs 199</p>
                     </del>
                     <div className="ml-[100px]">
                         <svg
@@ -43,7 +43,7 @@ const ProductCard2 = () => (
 );
 
 const ProductCard3 = () => (
-    <div className="product-card w-62 rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="product-card w-62  rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <div className="para uppercase text-center leading-none z-40">
             <p
                 style={{
@@ -55,7 +55,7 @@ const ProductCard3 = () => (
                 New Product
             </p>
             <p className="font-bold text-xl tracking-wider text-[#495c48] z-30">
-                Product Name
+             Slider 
             </p>
         </div>
         <div
@@ -95,72 +95,11 @@ const ProductCard3 = () => (
                         </svg>
                         <p className="text-xs break-words font-semibold  text-[#495c48]">          l orem lorem lorem loremlorem loremasdasldjsadlorem loremasdkajdaskldalorem loremasdsadasdasd</p>
                     </li>
-                    {/* <li
-                        className="inline-flex gap-2 items-center justify-center group-hover:delay-300 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                    >
-                        <svg
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="3"
-                            className="stroke-[#495c48]"
-                            stroke="#000000"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="10"
-                            width="10"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <p className="text-xs font-semibold text-[#495c48]">
-                            Protect Skin Barrier
-                        </p>
-                    </li>
-                    <li
-                        className="inline-flex gap-2 items-center justify-center group-hover:delay-400 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                    >
-                        <svg
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="3"
-                            className="stroke-[#495c48]"
-                            stroke="#000000"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="10"
-                            width="10"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <p className="text-xs font-semibold text-[#495c48]">Reduce Wrinkles</p>
-                    </li>
-                    <li
-                        className="inline-flex gap-2 items-center justify-center group-hover:delay-500 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
-                    >
-                        <svg
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="3"
-                            className="stroke-[#495c48]"
-                            stroke="#000000"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="10"
-                            width="10"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <p className="text-xs font-semibold text-[#495c48]">Anti Inflammatory</p>
-                    </li> */}
+     
                 </ul>
             </div>
         </div>
-        <div className="flex items-center mt-2">
+        <div className="flex flex-col items-center mt-2">
             <p className="text-lg font-semibold text-black">Rs 149</p>
             <del className="ml-2 text-gray-600"> Rs 500</del>
         </div>
@@ -196,7 +135,7 @@ export default function ProductCards({ store }) {
             payment_method: 'esewa',
             store: store._id,
         };
-        const success_url = 'http://localhost:3000/esewa/skin';
+        const success_url = process.env.REACT_APP_BASE_URL+'/esewa/skin';
         try {
             const responseData = await sendRequest(
                 'payment/create',
@@ -239,8 +178,6 @@ export default function ProductCards({ store }) {
 
     return (
         <div className="container  mx-auto px-5 py-8 flex flex-wrap">
-
-
             <div className="product-list flex  flex-wrap gap-4">
                 {productCardsArray.map((card, index) => (
                     <>
@@ -268,9 +205,7 @@ export default function ProductCards({ store }) {
                         </div>
                     </>
                 ))}
-
             </div>
-
         </div>
     );
 }

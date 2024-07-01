@@ -2,6 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
+    backdropFilter: {
+      none: 'none',
+      blur: 'blur(30px)', // Adjust blur value as needed
+    },
     extend: {
       fontFamily: {
         anta: ["Anta", "sans-serif"],
@@ -17,7 +21,9 @@ module.exports = {
         Roboto: ["Roboto", "sans-serif"],
         Sanchez: ["Sanchez", "serif"],
         "DM-Serif-Text" :["DM Serif Text","serif"],
-        "Zen-Tokyo-Zoo":["Zen Tokyo Zoo","serif"]
+        "Zen-Tokyo-Zoo":["Zen Tokyo Zoo","serif"],
+        "Poppins":["Poppins","sans-serif"],
+
       },
       
     },

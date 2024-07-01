@@ -4,7 +4,7 @@ import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { toast } from 'react-toastify';
 import { useImage } from '../../../Hooks/useImage';
-
+import { FaDollarSign, FaPercent, FaChartLine, FaBox, FaEdit } from 'react-icons/fa';
 const Product = ({ store }) => {
   const initialProducts = [];
 
@@ -16,6 +16,8 @@ const Product = ({ store }) => {
   const [newVariant, setNewVariant] = useState({ name: '', options: [{ name: '', price: undefined, discount: undefined, count: undefined }] });
   const auth = useContext(AuthContext);
 
+  const [page, setPage] = useState(1);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,11 +26,10 @@ const Product = ({ store }) => {
   const [minPrice, setMinPrice] = useState(''); // Added state for minPrice
   const [maxPrice, setMaxPrice] = useState(''); // Added state for maxPrice
 
-
-  const fetchProducts = async (page = 1, limit = 10, search = '', sortOrder = 'asc') => {
+  const fetchProducts = async (limit = 10, search = '', sortOrder = 'asc') => {
     try {
       const response = await sendRequest(
-        `product/getAllProduct/${store._id}?page=${page}&limit=${limit}&search=${search}&sortOrder=${sortOrder}` +
+        `product/getAllProduct/${store._id}?page=${page}&limit=${limit}&search=${searchQuery}&sortOrder=${sortOrder}` +
         `${minPrice ? `&minPrice=${minPrice}` : ''}` +
         `${maxPrice ? `&maxPrice=${maxPrice}` : ''}`,
         'GET',
@@ -38,18 +39,19 @@ const Product = ({ store }) => {
           'Authorization': 'Bearer ' + auth.token
         }
       );
+      console.log(response);
       setProducts(response.products);
       setTotalProducts(response.totalProducts);
       setTotalPages(response.totalPages);
-      setCurrentPage(response.currentPage);
+
     } catch (error) {
-      // toast.error(error.message);
+      toast.error(error.message);
     }
   };
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [page, totalPages, currentPage]);
 
   const handleEditClick = (productIndex) => {
     setEditProductIndex(productIndex);
@@ -70,6 +72,15 @@ const Product = ({ store }) => {
     });
   };
 
+  const truncateDescription = (description, wordLimit) => {
+    const words = description.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return description;
+  };
+
+
   const handleDeleteVariant = (variantIndex) => {
     const updatedVariants = editProduct.variant.filter((variant, vIndex) => vIndex !== variantIndex);
     setEditProduct({
@@ -80,23 +91,34 @@ const Product = ({ store }) => {
 
   const handleSaveClick = async () => {
     try {
-      const uploadedProductImage = await uploadImage(editProduct.image.imageUrl);
-      const updatedEditProduct = { ...editProduct };
-      updatedEditProduct.image.imageUrl = uploadedProductImage.img;
-      updatedEditProduct.image.imageId = uploadedProductImage.id;
+      console.log(editProduct);
+      let updatedEditProduct = { ...editProduct };
+      console.log(updatedEditProduct);
+      // Check if the product image URL is empty and retain the existing image
+      if (updatedEditProduct.image.imageUrl) {
+        const uploadedProductImage = await uploadImage(updatedEditProduct.image.imageUrl);
+        updatedEditProduct.image.imageUrl = uploadedProductImage.img;
+        updatedEditProduct.image.imageID = uploadedProductImage.id;
+      }
 
       const updatedVariants = await Promise.all(
         updatedEditProduct.variant.map(async (variant) => {
           const updatedOptions = await Promise.all(
             variant.options.map(async (option) => {
               if (option.image && option.image.imageUrl) {
-                const uploadedVariantImage = await uploadImage(option.image.imageUrl);
-                return { ...option, image: { imageUrl: uploadedVariantImage.img, imageId: uploadedVariantImage.id } };
+                if (option.image.imageUrl) {
+                  const uploadedVariantImage = await uploadImage(option.image.imageUrl);
+                  return {
+                    ...option,
+                    name: option.name || 'Default Option Name', // Set default option name
+                    image: { imageUrl: uploadedVariantImage.img, imageID: uploadedVariantImage.id },
+                  };
+                }
               }
-              return option;
+              return { ...option, name: option.name || 'default' }; // Set default option name
             })
           );
-          return { ...variant, options: updatedOptions };
+          return { ...variant, name: variant.name || 'default', options: updatedOptions }; // Set default variant name
         })
       );
 
@@ -113,7 +135,6 @@ const Product = ({ store }) => {
         inventory: updatedEditProduct.inventory,
         soldQuantity: updatedEditProduct.soldQuantity,
         revenueGenerated: updatedEditProduct.revenueGenerated,
-        inventory:updatedEditProduct.inventory
       };
 
       const response = await sendRequest(
@@ -122,7 +143,7 @@ const Product = ({ store }) => {
         JSON.stringify({ id: updatedEditProduct._id, updates }),
         {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + auth.token
+          'Authorization': 'Bearer ' + auth.token,
         }
       );
 
@@ -136,6 +157,7 @@ const Product = ({ store }) => {
       toast.error(error.message);
     }
   };
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -211,16 +233,17 @@ const Product = ({ store }) => {
     });
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    fetchProducts(page, 10, searchQuery, sortOrder);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
+
   const handleSearchButton = (e) => {
     fetchProducts(1, 10, searchQuery, sortOrder);
   }
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-
+    console.log("search query", searchQuery);
   };
 
   const handleSortChange = (event) => {
@@ -254,7 +277,7 @@ const Product = ({ store }) => {
               type="text"
               placeholder="Search products..."
               value={searchQuery}
-              onChange={handleSearchChange}
+              onChange={(event) => handleSearchChange(event)}
               className="border p-2 px-3 h-10 flex-grow"
             />
             <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
@@ -286,46 +309,58 @@ const Product = ({ store }) => {
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap grow-0 gap-12 p-4">
+        <div className="flex flex-wrap gap-8 p-4 justify-center">
           {products.map((product, productIndex) => (
-            <div key={productIndex} className="bg-white shadow-lg pb-5 h-100 rounded-lg overflow-hidden transform transition-transform hover:scale-105">
-
-              <div className=" capitalize">
-                <img className="flex justify-center mx-auto w-80 h-60" src={product.image.imageUrl} alt={product.name} />
-                <h2 className="text-xl font-bold my-2 pl-2">{product.name}</h2>
-                <div className='flex gap-2 '>
-                  <p className="text-gray-700 mb-2 pl-2 flex-grow">{product.description}</p>
-                  <div className='text-xs pr-2'>
-                    <p className="text-gray-700 mb-2">Price: ${product.price}</p>
-                    <p className="text-gray-700 mb-2">Discount: {product.discount}</p>
-                    <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
-                    <p className="text-gray-700 mb-2">Inventory: {product.inventory}</p>
-
-                  </div>
-                </div>
-                <button
-                  className="bg-blue-500 text-white ml-2 px-4 py-2 rounded mt-3"
-                  onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex) }}
-                >
-                  Edit
-                </button>
+            <div
+              key={productIndex}
+              className="bg-white max-w-[400px] shadow-lg p-5 rounded-lg overflow-hidden transform transition-transform hover:scale-105"
+            >
+              <div className="text-center border-b pb-4 mb-4">
+                <img className="w-80 h-60 mx-auto mb-4 rounded-md" src={product.image.imageUrl} alt={product.name} />
+                <h2 className="text-xl font-bold mb-2">{product.name}</h2>
               </div>
-
+              <p className="text-gray-700 mb-4">
+                {truncateDescription(product.description, 15)}
+              </p>
+              <div className="flex flex-col gap-2 text-sm text-gray-700 mb-4">
+                <div className="flex items-center border-b pb-2">
+                  <FaDollarSign className="mr-2 text-blue-500" />
+                  <span>Price: ${product.price}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaPercent className="mr-2 text-blue-500" />
+                  <span>Discount: {product.discount}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaChartLine className="mr-2 text-blue-500" />
+                  <span>Revenue: ${product.revenueGenerated}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaBox className="mr-2 text-blue-500" />
+                  <span>Inventory: {product.inventory}</span>
+                </div>
+              </div>
+              <button
+                className="bg-blue-500 text-white flex items-center justify-center gap-2 px-4 py-2 rounded transition-colors hover:bg-blue-600"
+                onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex); }}
+              >
+                <FaEdit />
+                Edit
+              </button>
             </div>
           ))}
         </div>
         <div className="flex justify-between items-center mt-6">
           <button
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-            className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+            onClick={() => handlePageChange(page - 1)} disabled={page <= 1}
+            className={`px-4 py-2 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
           >
             Previous
           </button>
-          <span>Page {currentPage} of {totalPages}</span>
+          <span>Page {page} of {totalPages}</span>
           <button
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
+            onClick={() => handlePageChange(page + 1)}
+            //  disabled={currentPage === totalPages}
             className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
           >
             Next
@@ -382,7 +417,7 @@ const Product = ({ store }) => {
                   type="number"
                   name="inventory"
                   value={editProduct.inventory}
-                  onChange={handleInputChange }
+                  onChange={handleInputChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>

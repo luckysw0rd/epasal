@@ -56,17 +56,16 @@ const SideBar = ({ setDashboardState }) => {
             </div>
             <hr className="mt-4 border-gray-400 px-8 w-[175px]  ml-9"></hr>
             <Link
-              onClick={() => {
-                setDashboardState("Shop")
-              }}
-              className={`flex mt-0 w-full items-center ml-5  text-lg gap-4 font-medium p-3   hover:bg-green-200 rounded-md transition-colors duration-200 `}
-            >
-              
-              <span className="pl-2 ml-7   hover:box-border   text-2xl font-Cinzel">Shop</span>
-              {React.createElement(MdShop2, { size: 20 })}
-            </Link>
+  onClick={() => {
+    setDashboardState("Shop");
+  }}
+  className={`flex mt-0 w-full items-center ml-5 text-lg gap-4 font-medium p-3 hover:bg-green-300  rounded-sm transition-colors duration-200 shadow-lg transform hover:scale-105`}
+>
+  <span className="pl-2 ml-7 text-2xl font-Cinzel text-green-800">Shop</span>
+  {React.createElement(MdShop2, { size: 24, className: "text-green-500" })}
+</Link>
             <hr className="mt-0 border-gray-400 px-8 w-[175px]  ml-9"></hr>
-            
+
             <div className="mt-[60px] flex flex-col justify-center gap-4 text-gray-700">
               {menus.map((menu, i) => (
                 <Link

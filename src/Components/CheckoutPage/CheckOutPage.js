@@ -80,7 +80,7 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
             esewaTransactionID: null,
             deliveryCode: null,
         };
-        const success_url = 'http://localhost:3000/esewa/order';
+        const success_url = process.env.REACT_APP_BASE_URL+'/esewa/order';
 
         try {
             const responseData = await sendRequest(
