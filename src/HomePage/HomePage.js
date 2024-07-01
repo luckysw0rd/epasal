@@ -16,28 +16,28 @@ import { IoBagHandleOutline } from "react-icons/io5";
 function HomePage() {
 
     const [navbarImage, setnavbarImage] = useState(false);
-    const viewportHeight = window.innerHeight;
-    window.addEventListener('scroll', function() {
-        const scrollableDiv = document.getElementById('scrollableDiv');
-        const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
+    // const viewportHeight = window.innerHeight;
+    // window.addEventListener('scroll', function() {
+    //     const scrollableDiv = document.getElementById('scrollableDiv');
+    //     const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
         
-        console.log("distancefromtop:",distanceFromTop,", viewportHeight: 85 ",viewportHeight)
-        if (distanceFromTop <= 200) { 
-          scrollableDiv.classList.add('overflow-scroll','sticky');
-        //   scrollableDiv.style.top = `0px`;
-        } else {
-            scrollableDiv.classList.remove('overflow-scroll', 'sticky');
-            //   scrollableDiv.style.top = '';
-        }
-    });
+    //     console.log("distancefromtop:",distanceFromTop,", viewportHeight: 85 ",viewportHeight)
+    //     if (distanceFromTop <= 200) { 
+    //       scrollableDiv.classList.add('overflow-scroll','sticky');
+    //     //   scrollableDiv.style.top = `0px`;
+    //     } else {
+    //         scrollableDiv.classList.remove('overflow-scroll', 'sticky');
+    //         //   scrollableDiv.style.top = '';
+    //     }
+    // });
 
     return (
 
-        <div className="flex flex-col relative h-full">
+        <div className="flex flex-col relative h-full items-center">
             <Navbar navbarImage={navbarImage}></Navbar>
 
             <Heading setnavbarImage={setnavbarImage} />
-            <div className='relative flex justify-center -mb-16 z-50'>
+            <div className='relative flex justify-center -mb-16 z-40'>
                 {/* <img src={ghost} className='-mt-[50px] h-[80px] absolute -z-10 h-40' /> */}
                 <div className='-mt-[37px] h-[120px] absolute -z-10 h-40'>
                 <svg height="80" viewBox="0 0 192 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +54,7 @@ function HomePage() {
                 
             </div> 
             <div className='bg-white h-4 w-full mt-6 z-10'></div>
-            <div id='scrollableDiv' className={` h-[87vh] 2xl:h-[90vh] bg-white pt-16 relative bg-black`}> 
+            <div id='scrollableDiv' className={` bg-white pt-16 relative bg-black`}> 
                 
                 <Landingpage/>
             </div>
