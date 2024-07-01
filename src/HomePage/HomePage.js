@@ -96,19 +96,3 @@ function abc(liveChatSource) {
     s0.parentNode.insertBefore(s1, s0);
 
 };
-
-{/* <div className="">
-          
-          <div className='sticky top-0 h-[30px] bg-blue-500 navbar'>Navbar</div>
-          <div className='h-[90vh] overflow-scroll'>
-              <div className=''>
-                  <div className='h-screen bg-red-400'>Hello</div>
-             
-                  <div className='h-[3000px] bg-green-400 w-screen'></div>
-              <div className='h-10 bg-gray-500 w-screen'></div>
-              <div className='h-10 bg-gray-500 w-screen'></div> 
-              </div>
-          </div>
-        
-          <div className='h-screen bg-slate-200'>Another Section</div>
-      </div> */}
