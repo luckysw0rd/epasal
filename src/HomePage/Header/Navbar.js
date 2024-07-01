@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Hooks/AuthContext';
 import useFetch from '../../Hooks/useFetch';
-const Navbar = ({ navbarImage }) => {
+import { Link } from 'react-router-dom';
+const Navbar = ({ navbarImage, setStores }) => {
     const [isRotated, setIsRotated] = useState(false);
     const [isStoreOpen, setIsStoreOpen] = useState(false)
     const [mouseHover, setMouseHover] = useState(false);
@@ -50,21 +51,48 @@ const Navbar = ({ navbarImage }) => {
             );
             console.log(responseData.stores, "response Data"); // Handle response data as needed
             setUserStore(responseData.stores);
+            setStores(responseData.stores);
         } catch (error) {
             // Handle error if needed
 
             console.log(error);
         }
     }
-    useEffect(() => {
-        fetchUserInfo()
 
+    const fetchTrendingStore = async () => {
+        try {
+            const responseData = await sendRequest(
+                'banau/trendingStore/',
+                'GET',
+                null,
+                {
+                    'Content-Type': 'application/json',
+                    // Authorization: 'Bearer ' + auth.token,
+                }
+            );
+            console.log(responseData.stores, "response Data"); // Handle response data as needed
+            // setUserStore(responseData.stores);
+            setStores(responseData.stores);
+        } catch (error) {
+            // Handle error if needed
+
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        if (auth.isLoggedIn) {
+            fetchUserInfo()
+        } else {
+            fetchTrendingStore()
+        }
     }, [])
 
     const searchStore = async () => {
         try {
+            console.log(searchTerm);
             const responseData = await sendRequest(
-                `store/getstorebyfilter?limit=${4}?search=${searchTerm}`,
+                `store/getstorebyfilter?limit=${4}&search=${searchTerm}`,
                 'GET',
                 null,
                 {
@@ -83,26 +111,8 @@ const Navbar = ({ navbarImage }) => {
 
     return (
         <div className={`py-3 absolute z-50 top-0 left-0  w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl`} >
-            {/* <img
-  src="https://s3-alpha-sig.figma.com/img/833c/2be1/8639d391de67ec6164fb417caca83280?Expires=1720396800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZXhi3C1L8GlNDE~yIkBb8QoUPW5sF1r6GEgvzlTM23MINSr0xdn3v1jeyAXlTENTzqDstUC0FPc0ogYh8SbNeklrTQn5WccmXmcWBKceCZZPOk5kS~lSNWHZ~etHTsJAaB8cmqJ3oucBGMO5fNrYWtO0aDV8kWUojBQJ86NmTtYPRJRPGr8NjFKQ9crFGugo~pn-saSPWqghEK~aUexX~jeEvffHd2rGlHEEmalNzTuqxhYp6yD22r6sVkg-5jkJpkoQKdQpSQnxX7jYyAo8X5HpHwGoPgzLuE8HujniYrjWWhs6o6RujvXYVig7KsxPJNY7muMOc6Ov-Zm6y34ryg__"
-  alt="Background"
-  className="absolute bg-opacity-50 top-0 left-1/2 transform -translate-x-1/2 w-full h-full object-cover object-top -z-20 rounded-xl "
-/> */}
 
 
-            {/* <div className="fixed w-[98%] h-20 opacity-70 -z-10 top-2 left-1/2 transform -translate-x-1/2 rounded-xl " style={{backdropFilter:' blur(80px) saturate(10%)'}}></div> */}
-
-            {/* {navbarImage && (
-                <>
-                    <img
-                        src="https://s3-alpha-sig.figma.com/img/833c/2be1/8639d391de67ec6164fb417caca83280?Expires=1720396800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZXhi3C1L8GlNDE~yIkBb8QoUPW5sF1r6GEgvzlTM23MINSr0xdn3v1jeyAXlTENTzqDstUC0FPc0ogYh8SbNeklrTQn5WccmXmcWBKceCZZPOk5kS~lSNWHZ~etHTsJAaB8cmqJ3oucBGMO5fNrYWtO0aDV8kWUojBQJ86NmTtYPRJRPGr8NjFKQ9crFGugo~pn-saSPWqghEK~aUexX~jeEvffHd2rGlHEEmalNzTuqxhYp6yD22r6sVkg-5jkJpkoQKdQpSQnxX7jYyAo8X5HpHwGoPgzLuE8HujniYrjWWhs6o6RujvXYVig7KsxPJNY7muMOc6Ov-Zm6y34ryg__"
-                        alt="Background"
-                        className="absolute top-2 left-1/2 transform -translate-x-1/2 w-full h-full  object-cover object-top -z-20"
-                        style={{ objectPosition: '0px 0px' }}
-                    />
-                    <div className=" fixed  w-[98%]  h-20 bg-black opacity-70 -z-10 top-2 left-1/2 transform -translate-x-1/2 rounded-xl"></div>
-                </>
-            )} */}
             <div className='relative z-20 mx-auto w-full md:w-[90%] flex justify-between'>
                 {/* <div><img src={Logo} alt="Logo" /></div> */}
                 <div className='flex items-center gap-10'>
@@ -125,7 +135,8 @@ const Navbar = ({ navbarImage }) => {
                     </svg>
                     <div >
                         <div className={`h-10 ${searchData.length > 0 ? 'rounded-t-3xl' : 'rounded-3xl'} bg-white items-center px-2 hidden md:flex`}>
-                            <input type='text' className='max-w-[160px] appearance-none border border-none rounded pl-2 focus:outline-none focus:border-none' />
+
+                            <input onChange={(e) => { setSearchTerm(e.target.value) }} type='text' value={searchTerm} className='max-w-[160px] appearance-none border border-none rounded pl-2 focus:outline-none focus:border-none' />
                             <button className='p-2 rounded-full bg-[#F38825] text-white' onClick={searchStore}>
                                 <FaSearch />
                             </button>
@@ -133,9 +144,13 @@ const Navbar = ({ navbarImage }) => {
                         {searchData.length > 0 && <div className='relative hidden md:flex'>
                             <div className='absolute top-0 bg-white w-full rounded-b-3xl py-3 pl-3'>
                                 {searchData.map((n, i) => {
-                                    return <div className='flex gap-2 items-center'>
-                                        <img className='h-8 w-8 rounded-full border border-2 border-gray-700' src={n.logo.logoUrl} />
-                                        <div>{n.name}</div>
+                                    return <div className='flex gap-4 py-1 items-center'>
+                                        <Link to={`/store/${n.name}`}>
+                                            <div className=' flex flex-row gap-4 items-center'>
+                                                <img className='h-8 w-8 rounded-full border border-2 border-gray-700' src={n.logo.logoUrl} />
+                                                <div>{n.name}</div>
+                                            </div>
+                                        </Link>
                                     </div>
                                 })}
 
@@ -149,7 +164,9 @@ const Navbar = ({ navbarImage }) => {
 
                     <div className='flex items-center gap-1 text-white hidden md:flex'>
                         <div className='h-10 relative rounded-full w-10 bg-[#F38825] flex items-center justify-center text-lg' onMouseEnter={() => { setMouseHover(true) }} onMouseLeave={() => { setMouseHover(false) }}>
-                            <IoBagHandleOutline />
+                            <Link to='/buildstore'>
+                                <IoBagHandleOutline />
+                            </Link>
                             {
                                 mouseHover && <motion.div
                                     className="absolute -bottom-14 w-20 rounded text-center text-xs bg-black px-3 py-2"
@@ -164,9 +181,9 @@ const Navbar = ({ navbarImage }) => {
                         {/* <p>Build Your Store</p> */}
                     </div>
                     <div className='relative'>
-                        {auth.isLoggedIn && <motion.div onClick={handleClick} className=' px-4 h-10 rounded-lg bg-[#F38825] text-white hidden  flex-col items-center md:flex justify-center'>
+                        {/* {auth.isLoggedIn && <motion.div onClick={handleClick} className=' px-4 h-10 rounded-lg bg-[#F38825] text-white hidden  flex-col items-center md:flex justify-center'>
                             My Store
-                        </motion.div>}
+                        </motion.div>} */}
                         <AnimatePresence>
                             {isRotated && (
                                 <motion.div
@@ -213,7 +230,7 @@ const Navbar = ({ navbarImage }) => {
                                     className='w-32 py-2 pr-4 rounded text-right block md:hidden text-white h-30 absolute top-10 right-0  bg-[#F38825]'
                                 >
                                     <ul>
-                                        <li><button onClick={handleClickStore}>My Store</button></li>
+                                        {/* <li><button onClick={handleClickStore}>My Store</button></li> */}
                                         {isStoreOpen && <motion.div
                                             initial={{ opacity: 0, y: -10 }}
                                             animate={{ opacity: 1, y: 0 }}
