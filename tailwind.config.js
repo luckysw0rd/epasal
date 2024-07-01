@@ -2,6 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
+    backdropFilter: {
+      none: 'none',
+      blur: 'blur(30px)', // Adjust blur value as needed
+    },
     extend: {
       fontFamily: {
         anta: ["Anta", "sans-serif"],
