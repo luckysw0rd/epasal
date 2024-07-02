@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import esewa from "../../Assets/esewa.png";
 import fonepay from "../../Assets/fonepayfull.png";
+import graph from '../../Assets/graph.png'
 
 const Card = () => {
     const [ref, inView] = useInView({
@@ -48,7 +49,10 @@ const Card = () => {
                     <div>
                         <h2 className="text-lg md:text-xl lg:text-2xl md:w-[60%] font-bold tracking-wider">Analytics</h2>
                         <p className="mt-1">Visualize your data for the ease of use. Stay up to date with your product info.</p>
+                  
                     </div>
+                    <img className=' w-[200px] relative top-0' src={graph}>
+                    </img>
                 </motion.div>
 
                 <motion.div
