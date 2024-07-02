@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Hooks/AuthContext';
 import useFetch from '../../Hooks/useFetch';
+import { IoLogOut } from "react-icons/io5";
+import { IoIosLogIn } from "react-icons/io";
 import { Link } from 'react-router-dom';
 const Navbar = ({ navbarImage, setStores }) => {
     const [isRotated, setIsRotated] = useState(false);
@@ -27,16 +29,6 @@ const Navbar = ({ navbarImage, setStores }) => {
     const [scrolledFromTop, setScrolledFromTop] = useState(false);
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
-    // useEffect(() => {
-    //   const handleScroll = () => {
-    //     const scrollY = window.scrollY;
-    //     setScrolledFromTop(scrollY > 0); // Update state when scrolled past the top
-    //   };
-
-    //   window.addEventListener('scroll', handleScroll);
-
-    //   return () => window.removeEventListener('scroll', handleScroll); // Cleanup
-    // }, []);
 
     const fetchUserInfo = async () => {
         try {
@@ -146,7 +138,8 @@ const Navbar = ({ navbarImage, setStores }) => {
                                 {searchData.map((n, i) => {
                                     return <div className='flex gap-4 py-1 items-center'>
                                         <Link to={`/store/${n.name}`}>
-                                            <div className=' flex flex-row gap-4 items-center'>
+                                            <div className=' font-bold flex flex-row gap-4 items-center' 
+                                            >
                                                 <img className='h-8 w-8 rounded-full border border-2 border-gray-700' src={n.logo.logoUrl} />
                                                 <div>{n.name}</div>
                                             </div>
@@ -203,8 +196,13 @@ const Navbar = ({ navbarImage, setStores }) => {
                             )}
                         </AnimatePresence>
                     </div>
-                    {!auth.isLoggedIn && <div onClick={() => { navigate('/login') }} className=' px-5 h-10 rounded-lg bg-[#F38825] text-white hidden  flex-col items-center md:flex justify-center '>
+                    {!auth.isLoggedIn && <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
                         Login
+                        <IoIosLogIn className=' text-xl font-bold  ml-2 items-center' />
+                    </div>}
+                    {auth.isLoggedIn && <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
+                        Logout
+                        <IoLogOut className=' font-bold ml-2 items-center' />
                     </div>}
 
 
@@ -244,8 +242,16 @@ const Navbar = ({ navbarImage, setStores }) => {
 
                                             </ul>
                                         </motion.div>}
-                                        <li>Login</li>
-                                        <li>Bye</li>
+
+                                        <li>
+                                            {!auth.isLoggedIn && <div onClick={() => { navigate('/login') }} >
+                                                Login
+                                            </div>}
+                                            {auth.isLoggedIn && <div onClick={() => { auth.logout(); }} >
+                                                Logout
+                                            </div>}
+                                        </li>
+                                        {/* <li>Bye</li> */}
 
                                     </ul>
                                 </motion.div>

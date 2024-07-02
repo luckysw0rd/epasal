@@ -1,7 +1,7 @@
-import { useState,useCallback,useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
+
 let logoutTimer;
 export const useAuth = () => {
-
     const [token, setToken] = useState(null);
     const [userID, setUserId] = useState(null);
     const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
@@ -23,6 +23,7 @@ export const useAuth = () => {
         setUserId(null);
         setTokenExpirationDate(null);
         localStorage.removeItem('userData');
+        window.location.href = '/';
     }, []);
 
     useEffect(() => {
@@ -41,5 +42,5 @@ export const useAuth = () => {
             };
         }
     }, [token, tokenExpirationDate, logout]);
-    return {token,login,logout,userID};
+    return { token, login, logout, userID };
 }

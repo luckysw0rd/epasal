@@ -55,7 +55,7 @@ function App() {
         <Route path="/settings" element={<SettingPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-
+        <Route path="*" element={<Navigate to="/" replace />} />
 
       </React.Fragment>
     );
@@ -69,6 +69,7 @@ function App() {
         <Route path="/store/:storeID" element={<Theme />} />
 
         <Route path="/login" element={<SignInPage />}></Route>
+        <Route path="*" element={<Navigate to="/login" replace />} />
         {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
       </React.Fragment>
     );
