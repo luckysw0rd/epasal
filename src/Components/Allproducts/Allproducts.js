@@ -259,7 +259,7 @@ const AllProducts = () => {
 
   return (
     color && products && store && (
-      <div className="flex flex-col mt-20">
+      <div className="flex flex-col mt-16 ">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
         <div className="flex flex-col lg:flex-row px-3 md:px-5 lg:px-0"

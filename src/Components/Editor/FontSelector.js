@@ -4,8 +4,9 @@ import { useStore } from "../../Theme/Theme1/T1Context";
 const FontSelector = ({ section }) => {
     const { store, updateFont } = useStore();
     const fonts = [
-        "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
-        "Genos", "Orbitron", "Cinzel", "Exo 2", "Roboto", "Sanchez", "DM Serif Text"
+
+        "Anta","Saira", "VT323", "Kode Mono","Open Sans", "Open Sans","Sixtyfour", "Oleo Script", "Mansalva","Inter"
+        ,"Genos", "Orbitron", "Cinzel", "Exo 2", "Roboto", "Sanchez", "DM Serif Text","Zen Tokyo Zoo","Poppins",,,"Plus Jakarta Sans","Source Serif 4", "Mohave","Asap"
     ];
 
     const handleFontChange =  async(event) => {

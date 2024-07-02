@@ -51,7 +51,7 @@ const HeroSection1 = ({ previewMode, store, setStore }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{
-                    backgroundImage: `url(${store.banner.bannerUrl})`,  //Currently using the imported banner cause of the missing context otherwise use store.banner
+                    backgroundImage: `url(${store?.banner?.bannerUrl})`,  //Currently using the imported banner cause of the missing context otherwise use store.banner
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',

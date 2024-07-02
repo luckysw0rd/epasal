@@ -27,7 +27,7 @@ const AddCategoryModal = ({ onClose }) => {
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 200, damping: 20 }}
             >
-                <h2 className="text-2xl font-semibold mb-4">Add New Subcategory</h2>
+                <h2 className="text-2xl font-semibold mb-4">Add New Category</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
                         type="text"
