@@ -6,12 +6,12 @@ function Landingpage() {
   return (
     <div className="lg:flex max-h-[800px]">
       <div className="w-full lg:w-1/2 flex justify-between p-4">
-        <div className="xl:pl-8">
-          <h1 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#878787]">
+        <div className="xl:pl-8 flex flex-col justify-center items-center md:items-start">
+          <h1 className="text-2xl md:ml-20 font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#878787]">
             WHY BANAU ?
           </h1>
           <div className="flex flex-col lg:flex-row mb-4 justify-between">
-            <div className="w-full lg:w-1/2">
+            <div className="w-full lg:w-1/2 flex flex-col">
               <img src={bannar} alt="Banau" className="mb-4" />
               <p className="text-xs mb-4 text-[#828282] p-4 md:px-10 text-justify">
                 Choose Banau for a seamless, customizable e-commerce solution that requires no coding,
@@ -21,7 +21,7 @@ function Landingpage() {
                 <button className="px-6 py-2 border text-xs border-black rounded-full">Get Started</button>
               </div>
             </div>
-            <div className="w-full lg:w-1/2 lg:pl-8">
+            <div className="w-full lg:w-1/2 lg:pl-8 flex flex-col justify-center items-center md:items-start mt-10">
               <ul className="space-y-4 text-base font-extrabold text-gray-500 list-disc list-inside dark:text-gray-400 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#878787]">
                 <li className="flex items-center">
                   <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#303030]"></span> Order Management
@@ -51,7 +51,7 @@ function Landingpage() {
           </div>
         </div>
       </div>
-      <div className="w-full lg:w-1/2 text-white p-4">
+      <div className="w-full   lg:w-1/2 text-white p-4">
         <div className="mb-4 bg-gray-900 p-6 rounded-2xl relative">
           <div
             className="absolute inset-0 bg-cover bg-center rounded-2xl"

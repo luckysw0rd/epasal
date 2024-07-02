@@ -1522,7 +1522,7 @@ const Editor = () => {
               <button className={`flex-1 text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
             }
           </div>
-          <div className='text-red-600 absolute top-[26px] right-2 text-[20px]' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><  RxCrossCircled  /></div>
+          <div className='text-red-600 absolute top-[26px] right-2 text-[20px]' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><  RxCrossCircled /></div>
           <div className='text-red-600 absolute top-[26px] right-10 text-[20px]' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><BiSolidHide /></div>
 
           {openType === 1 && (
@@ -1531,12 +1531,12 @@ const Editor = () => {
               <ul className='flex flex-col mt-10 gap-2 px-4'>
                 <li className=' font-bold border-b-2  border-gray-200 pb-4'>
                   <h1 className=' text-xl'>
-                  Navbar:
+                    Navbar:
                   </h1>
                   <br />
 
                   <div >
-                    <FontSelector  section="Navbar" />
+                    <FontSelector section="Navbar" />
                   </div>
 
                   <div className='font-normal'>
@@ -1682,17 +1682,17 @@ const Editor = () => {
                 {Object.entries(color).map(([colorKey, colorValue], index) => {
                   if (typeof colorValue === 'object') {
                     return (
-                      <div key={index} className=' border-b-2 border-t-2 spac-y-2'>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
+                      <div key={index} className=' spac-y-2'>
+                        <h4 className="text-lg font-semibold mt-5 mb-2  border-b-2 ">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
-                          <div key={nestedIndex} className="flex flex-row justify-around items-start items-center border-grey-300 border-b-2 ">
+                          <div key={nestedIndex} className="flex flex-row justify-around items-start items-center ">
                             <label className="text-gray-700 w-24 flex-grow">{nestedFriendlyNames[nestedKey]}</label>
                             <div className="flex mt-2 md:flex-row items-center justify-center ml-4">
                               <input
                                 type="color"
                                 value={nestedValue}
                                 onChange={(e) => handleColorChange(e.target.value, nestedKey, colorKey)}
-                                className="rounded-full px-1 border border-gray-300 shadow-md focus:outline-none mb-1"
+                                className="rounded-full px-1 shadow-md focus:outline-none mb-1"
                               />
                             </div>
                           </div>

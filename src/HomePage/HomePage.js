@@ -35,12 +35,10 @@ function HomePage() {
 
         <div className="flex flex-col relative h-full items-center">
             <Navbar setStores={setStores} navbarImage={navbarImage}></Navbar>
-
             <Heading setnavbarImage={setnavbarImage} />
-
-            <div className='relative flex justify-center   z-40 bg-white w-full'>
+            <div className='relative flex justify-center  bg-white w-full'>
                 {/* <img src={ghost} className='-mt-[50px] h-[80px] absolute -z-10 h-40' /> */}
-                <div className="-mt-[76px] absolute -z-10 h-40 pointer-events-none">
+                <div className="-mt-[76px] absolute -z-10 h-40 ">
                     <Link to='/buildstore' className='h-[120px] pointer-events-auto' target='_blank'>
                         <svg onClick={() => { console.log("object") }} height="80" viewBox="0 0 192 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M191.977 60C191.996 59.4258 192.006 58.8499 192.006 58.2724C165.852 58.2724 155.128 43.766 144.382 29.2289C133.589 14.63 122.774 0 96.286 0C69.1176 0 57.0831 15.3909 45.3837 30.3531C34.3184 44.5044 23.5529 58.2724 0.566406 58.2724C0.566406 58.8499 0.576045 59.4258 0.595213 60H191.977Z" fill="white" />
@@ -48,10 +46,10 @@ function HomePage() {
                     </Link>
                 </div>
                 <div>
-                    <div className=' w-[110px] h-[110px] bg-orange-500 -mt-[60px] border border-8 border-white rounded-full flex flex-col items-center justify-center text-center font-bold text-white'>
+                    <Link to='/buildstore' className=' w-[110px] h-[110px] pointer-events-auto bg-orange-500 -mt-[60px] border border-8 border-white rounded-full flex flex-col items-center justify-center text-center font-bold text-white'>
                         <IoBagHandleOutline className='text-3xl mb-2' />
                         <p className='text-sm font-semibold'>Build</p>
-                    </div>
+                    </Link>
                 </div>
             </div>
             <div className='bg-white h-4 w-screen  z-10'></div>
@@ -62,9 +60,9 @@ function HomePage() {
                 <Landingpage />
 
                 <div className=' mt-60 md:mt-0'>
-                <DragdropSection
-                 />
-                 </div>
+                    <DragdropSection
+                    />
+                </div>
                 <Card />
                 <BanauTheme />
                 <SkinSection />
