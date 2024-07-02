@@ -95,7 +95,7 @@ export default function Subscription({ store }) {
 
     const esewaCall = (formData) => {
         console.log(formData);
-        var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+        var path = process.env.REACT_APP_ESEWA_URL;
 
         var form = document.createElement("form");
         form.setAttribute("method", "POST");
