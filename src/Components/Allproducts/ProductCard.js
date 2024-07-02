@@ -123,7 +123,7 @@ const ProductCard = ({ product, productColor, addToCart, store }) => {
                   </div>
                   <button
                     style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
-                    className={`px-6 py-1 md:py-2 text-xs transition ease-in duration-200 border-solid border rounded-md focus:outline-none addToCartBtn`}
+                    className={`px-6 md:px-2 lg:px-6 py-1 md:py-2 text-xs transition ease-in duration-200 border-solid border rounded-md focus:outline-none addToCartBtn`}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                     onClick={() => {
