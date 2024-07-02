@@ -52,7 +52,7 @@ const Home = ({ data }) => {
 
   const esewaCall = (formData) => {
     console.log(formData);
-    var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+    var path = process.env.REACT_APP_ESEWA_URL;
 
     var form = document.createElement("form");
     form.setAttribute("method", "POST");
@@ -174,7 +174,7 @@ const Home = ({ data }) => {
           </div>
         </div>
         {/* Graph Section  */}
-        <div className='-mx-6 sm:mx-0 md:col-span-2'>
+        <div className='-mx-6 sm:mx-0 md:col-span-2 flex items-center justify-center'>
           <div className="bg-white rounded-lg">
             <SalesGraph storeId={data._id} />
           </div>

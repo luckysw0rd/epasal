@@ -37,6 +37,7 @@ const Dashboard = () => {
       toast(responseData?.message)
       setStore(responseData.store);
     } catch (error) {
+      console.log(error);
       // Handle error if needed
       toast(error?.message)
 
