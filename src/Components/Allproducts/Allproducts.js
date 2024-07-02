@@ -251,7 +251,7 @@ const AllProducts = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
   };
 
-  
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -372,33 +372,33 @@ const AllProducts = () => {
             </div>
 
             <div className="flex justify-center mt-8">
-      <button
-        disabled={page <= 1}
-        onClick={() => handlePageChange(page - 1)}
-        className={`px-4 py-2 rounded ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-white text-gray-700 border border-gray-300'}`}
-      >
-        &lt;
-      </button>
+              <button
+                disabled={page <= 1}
+                onClick={() => handlePageChange(page - 1)}
+                className={`px-4 py-2 rounded ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-white text-gray-700 border border-gray-300'}`}
+              >
+                &lt;
+              </button>
 
-      {[...Array(totalPages)].map((_, index) => (
-        <button
-        disabled
-          key={index + 1}
-          className={`mx-1 px-4 py-2 rounded  bg-white text-gray-700 border border-gray-300`}
-          onClick={() => handlePageChange(index + 1)}
-        >
-          {page}
-        </button>
-      ))}
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  disabled
+                  key={index + 1}
+                  className={`mx-1 px-4 py-2 rounded  bg-white text-gray-700 border border-gray-300`}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {page}
+                </button>
+              ))}
 
-      <button
-        // disabled={page >= totalPages}
-        onClick={() => handlePageChange(page + 1)}
-        className={`px-4 py-2 roundedbg-white text-gray-700 border border-gray-300`}
-      >
-        &gt;
-      </button>
-    </div>
+              <button
+                // disabled={page >= totalPages}
+                onClick={() => handlePageChange(page + 1)}
+                className={`px-4 py-2 roundedbg-white text-gray-700 border border-gray-300`}
+              >
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       </div>
