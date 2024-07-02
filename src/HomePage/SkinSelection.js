@@ -9,32 +9,39 @@ const SkinSection = () => {
     <div className="flex flex-col items-center bg-white p-4 md:p-10">
       <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">Skins for your components</h1>
       
-      {/* First section */}
-      <div className="flex flex-col lg:flex-row w-full justify-start items-center lg:items-start mb-8 space-y-6 lg:space-y-0 lg:space-x-4">
-        <img src={Card1} alt="Card 1" className="w-48 h-auto lg:w-1/6 lg:h-1/6 object-contain" />
-        
-        <div className="flex flex-col items-center lg:items-start w-full lg:w-80 h-auto lg:h-44 p-6 bg-[#526560] rounded-lg">
-          <h2 className="text-2xl lg:text-3xl font-bold mb-2 text-white text-center lg:text-left">Design as you like</h2>
-          <button className="bg-gray-800 text-white p-2 rounded-lg text-lg mt-4">Get Started</button>
+      <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:items-start space-y-8 lg:space-y-0 lg:space-x-8">
+        {/* First column */}
+        <div className="flex flex-col items-center lg:items-start">
+          <img src={Card1} alt="Card 1" className="w-48 h-auto lg:w-full max-w-[200px] object-contain" />
         </div>
         
-        <div className="flex items-center justify-center lg:justify-start w-full lg:w-auto ">
-          <p className="text-lg text-gray-800 w-full lg:w-2/3 text-center lg:text-center">"Transform your online store with Banau's stunning skins, featuring customizable design cards and banners—some free, some premium!"</p>
+        {/* Second column */}
+        <div className="flex flex-col items-center lg:items-start space-y-4">
+          <div className="w-full lg:w-[200px] bg-[#526560] rounded-lg p-4">
+            <h2 className="text-xl lg:text-2xl font-bold mb-2 text-white text-center lg:text-left">Design as you like</h2>
+            <button className="bg-gray-800 text-white p-2 rounded-lg text-sm mt-2 w-full">Get Started</button>
+          </div>
+          <img src={Card2} alt="Card 2" className="w-48 h-auto lg:w-full max-w-[200px] object-contain hidden lg:block" />
         </div>
         
-        <img src={ManFrame} alt="Man Frame" className="w-48 h-auto lg:w-1/4 object-contain" />
-      </div>
-      
-      {/* Second section */}
-      <div className="flex flex-col lg:flex-row w-full justify-start items-center lg:items-start mb-8 space-y-6 lg:space-y-0 lg:space-x-4 mt-8 lg:mt-0">
-        <img src={Card2} alt="Card 2" className="w-48 h-auto lg:w-1/6 lg:h-1/6 object-contain" />
-        
-        <div className="flex flex-col items-center lg:items-start w-full lg:w-1/2 p-4 shadow-lg">
-          <h2 className="text-2xl font-bold mb-4 text-center lg:text-left">Design banners</h2>
-          <p className="text-lg mb-4 text-center lg:text-left">Enhance your e-commerce site with Banau's beautiful banner skins, offering both free and premium options for a captivating look!</p>
+        {/* Third column */}
+        <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col lg:flex-row lg:space-x-60 space-y-4 lg:space-y-0">
+            <div className="w-full lg:w-1/2">
+              <p className="text-lg text-gray-800 text-center lg:text-left mb-10">"Transform your online store with Banau's stunning skins, featuring customizable design cards and banners—some free, some premium!"</p>
+            </div>
+            <img src={ManFrame} alt="Man Frame" className="w-48 h-auto lg:w-1/2 max-w-[150px] object-contain mx-auto lg:mx-0 hidden lg:block" />
+          </div>
+          <div className="w-full flex flex-col lg:flex-row lg:space-y-0">
+            <div className="w-full lg:w-1/2 flex items-stretch p-4 bg-gray-100 rounded-lg mb-10">
+              <div className="flex flex-col justify-between mb-10">
+                <h2 className="text-xl font-bold mb-2 text-center lg:text-left">Design banners</h2>
+                <p className="text-sm text-center lg:text-left">Enhance your e-commerce site with Banau's beautiful banner skins, offering both free and premium options for a captivating look!</p>
+              </div>
+            </div>
+            <img src={NewCollection} alt="New Fashion Collection" className="w-full lg:w-auto lg:flex-1 h-auto max-h-[300px] object-contain rounded-lg mx-auto lg:mx-0" />
+          </div>
         </div>
-        
-        <img src={NewCollection} alt="New Fashion Collection" className="w-64 h-64 lg:w-1/2 lg:h-96 object-contain rounded-lg" />
       </div>
     </div>
   );
