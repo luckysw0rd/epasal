@@ -67,8 +67,11 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/store/:storeID" element={<Theme />} />
-
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/login" element={<SignInPage />}></Route>
+        <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
+        <Route path="/googleoauth" element={<GoogleOAuth />} />
+        <Route path="/productlanding" element={<ProjectLanding1 />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
         {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
       </React.Fragment>
