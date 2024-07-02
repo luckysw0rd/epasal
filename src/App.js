@@ -48,8 +48,6 @@ function App() {
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
-
-        {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
         <Route path="/settings" element={<SettingPage />} />
@@ -65,15 +63,15 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/store/:storeID" element={<Theme />} />
+        {/* <Route path="/adminpanel/:storeName" element={<Dashboard />} /> */}
+        {/* <Route path="/buildstore" element={<Theme />} /> */}
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/login" element={<SignInPage />}></Route>
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
-        {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
       </React.Fragment>
     );
   }

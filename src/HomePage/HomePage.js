@@ -23,17 +23,20 @@ import SliderNavbar from './SliderNavbar';
 import StoreList from './StoreList';
 function HomePage() {
     const [stores, setStores] = useState([]);
-    useEffect(() => {
+    const [livechatUrl, setLiveUrl] = useState('');
 
-        abc();
-    }, [])
+    useEffect(() => {
+        if (window.location.pathname === '/') {
+            abc();
+        }
+    }, [window.location.pathname])
 
     const [navbarImage, setnavbarImage] = useState(false);
 
 
     return (
 
-        <div className="flex flex-col relative h-full items-center">
+        <div className="flex flex-col  relative h-full items-center">
             <Navbar setStores={setStores} navbarImage={navbarImage}></Navbar>
             <Heading setnavbarImage={setnavbarImage} />
             <div className='relative flex justify-center  bg-white w-full'>
@@ -46,7 +49,7 @@ function HomePage() {
                     </Link>
                 </div>
                 <div>
-                    <Link to='/buildstore' className=' w-[110px] h-[110px] pointer-events-auto bg-orange-500 -mt-[60px] border border-8 border-white rounded-full flex flex-col items-center justify-center text-center font-bold text-white'>
+                    <Link to='/buildstore' target='_blank' className=' w-[110px] h-[110px] pointer-events-auto bg-orange-500 -mt-[60px] border border-8 border-white rounded-full flex flex-col items-center justify-center text-center font-bold text-white'>
                         <IoBagHandleOutline className='text-3xl mb-2' />
                         <p className='text-sm font-semibold'>Build</p>
                     </Link>
@@ -57,9 +60,10 @@ function HomePage() {
             <div className=' md:mt-0 w-full bg-white'>
                 {stores &&
                     <StoreList stores={stores}></StoreList>}
-                <Landingpage />
-
-                <div className=' mt-60 md:mt-0'>
+                <div className=' md:mt-40'>
+                    <Landingpage />
+                </div>
+                <div className=' mt-80 md:mt-0'>
                     <DragdropSection
                     />
                 </div>
