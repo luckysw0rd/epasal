@@ -344,7 +344,7 @@ const Navbar1 = ({
                 {(store.isEdit || !store.fetchedFromBackend) && 
            <button
            onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
-           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200"
+           className="bg-black hover:bg-white text-white hover:text-black hover:border-black hover:border-1 font-bold py-2 px-4 text-sm rounded transition duration-200"
          >
            {store.previewMode ? 'Preview Mode' : 'Edit'}
          </button>}

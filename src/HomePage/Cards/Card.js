@@ -30,7 +30,7 @@ const Card = () => {
                     animate={inView ? "visible" : "hidden"}
                     variants={cardVariants}
                 >
-                    <div className='flex flex-col justify-between h-full'>
+                    <div className='flex flex-col justify-between  '>
                         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">
                             Payment Gateway Integration
                         </h2>

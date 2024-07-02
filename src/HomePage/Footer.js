@@ -5,8 +5,8 @@ import logo from '../Assets/banau.png'; // Adjust the path to your logo image
 
 const Footer = () => {
     return (
-        <footer className="bg-[#141414] xl:min-h-[400px]   text-white py-10 px-4">
-            <div className="max-w-[1200px] xl:mt-10 xl:max-w-screen-2xl  mx-[60px] 2xl:mx-auto flex flex-col md:flex-row justify-between">
+        <footer className="bg-[#141414] xl:min-h-[400px]   text-white py-10 px-4 ">
+            <div className="max-w-[1200px] xl:mt-10 xl:max-w-screen-2xl   sm:mx-0 lg:mx-[60px] 2xl:mx-auto flex flex-col md:flex-row lg:justify-between">
                 <div className="flex-1 mb-1 md:mb-0 mr-8">
                 <svg width="200" height="80" viewBox="0 0 730 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 333.884V63.3499C0 44.5341 23.6191 36.1297 35.5046 50.7164L146.753 187.248C152.791 194.657 152.742 205.303 146.637 212.656L35.3881 346.659C23.4278 361.066 0 352.609 0 333.884Z" fill="#F4BD8A" />
@@ -28,11 +28,11 @@ const Footer = () => {
                     <h3 className=" mt-5 text-lg xl:text-3xl font-bold">Shop At Banau</h3>
                     <p className="text-sm xl:text-lg mt-2">&copy; 2024 <a href="https://www.saikanepal.com" target="_blank" className=" underline hover:text-blue-300">Saika Nepal</a> All rights reserved.</p>
                 </div>
-                <h4 className="text-lg max-w-[200px] font-semibold border-b-2 md:border-r-2 border-[#FF7C1D] pb-2 mr-[60px] mb-4 inline-block w-80 md:w-0" > </h4>
+                <h4 className="text-lg max-w-[200px] font-semibold border-b-2 md:border-r-2 border-[#FF7C1D] pb-2 md:mr-[20px] lg:mr-[60px] mb-4 inline-block w-[100%] md:w-0" > </h4>
 
                 <div className="flex-1 hidden md:block mb-6 mt-5 md:mt-0 md:mb-0">
-                    <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-40">Features</h4>
-                    <ul className="space-y-2 text-sm xl:text-lg">
+                    <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-[100%]">Features</h4>
+                    <ul className="space-y-2 text-sm  xl:text-lg">
                         <li>Ecommerce Building Platform</li>
                         <li>Unlimited Customization</li>
                         <li>Order Management</li>
@@ -40,8 +40,8 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="flex-1 mb-6 md:mb-0 mt-5 md:mt-0">
-                    <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-40">About Us</h4>
-                    <ul className="space-y-2 text-sm xl:text-lg">
+                    <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-[100%]">About Us</h4>
+                    <ul className="space-y-2 text-sm  xl:text-lg">
                         <li>
                             <Link to="/terms-and-conditions" target="_blank" className="hover:text-gray-400">
                                 Terms and Conditions
@@ -54,14 +54,14 @@ const Footer = () => {
                         </li>
                     </ul>
                 </div>
-                <div className="flex-1">
-                    <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-40">Contact Us</h4>
-                    <p className="text-sm xl:text-lg">
+                <div className="flex-1 ">
+                    <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-[100%]">Contact Us</h4>
+                    <p className="text-sm md:text xl:text-lg w-[50%]">
                         Phone: (+977) 9702781000<br />
                         Email: shopatbanau@gmail.com<br />
                         Address: Imadol, Naya Basti, Mahalaxmi
                     </p>
-                    <div className="flex space-x-4 mt-4">
+                    <div className="flex space-x-4 mt-4 w-[80%]">
                         <a href="https://www.facebook.com/profile.php?id=61561384844442" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-400">
                             <FaFacebookF className="h-6 w-6 bg-orange-500 rounded-full p-1" />
                         </a>

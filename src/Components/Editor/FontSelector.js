@@ -15,9 +15,10 @@ const FontSelector = ({ section }) => {
     };
 
     return (
-        <div className="flex flex-col my-3">
-            <label htmlFor={`${section}-font`}>{section} Font:</label>
+        <div className="flex flex-col my-1 font-Ubuntu text-[12px]">
+            <label htmlFor={`${section}-font`}>{section} Font :</label>
             <select
+            className="font-Ubuntu text-[14px] py-1"
                 id={`${section}-font`}
                 value={store?.fonts[section] || ""}
                 onChange={handleFontChange}
