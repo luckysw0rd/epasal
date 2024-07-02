@@ -187,3 +187,23 @@
 ::-webkit-scrollbar-thumb {
   @apply bg-gray-500 dark:bg-green-400;
 }
+
+
+.letter {
+  animation: fade 3s infinite;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

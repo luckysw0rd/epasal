@@ -5,7 +5,7 @@ import './BanauTheme.css';
 const BanauTheme = () => {
     return (
         <div className="p-8 md:p-4 lg:p-8">
-            <div className="flex gap-5 lg:gap-10 p-8 lg:p-16 bg-gray-800 rounded-lg text-white">
+            <div className="flex gap-5 lg:gap-10 p-8 xl:p-16 bg-gray-800 rounded-lg text-white">
                 <div className="flex flex-col gap-5 lg:gap-10">
                     <h1 className="text-2xl lg:text-3xl font-bold">Banau <span className="text-blue-400">Themes</span></h1>
                     <p className="md:text-xs lg:text-base mt-2">

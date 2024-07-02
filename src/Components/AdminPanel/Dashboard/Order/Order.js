@@ -4,6 +4,8 @@ import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import DeliveryCodeModal from './DeliveryCodeModal.js';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../../Hooks/AuthContext.js';
+import Loading from "../../../Loading/Loading"
+
 
 
 const Order = ({ store }) => {
@@ -160,75 +162,77 @@ const Order = ({ store }) => {
     };
 
     return (
-        <div className="flex flex-col w-screen justify-start p-4 bg-gray-100">
-            <div className="w-full max-w-md mb-4 flex">
-                <input
-                    type="text"
-                    placeholder="Search by any field, separated by commas"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    onKeyDown={handleKeyPress}
-                    className="w-full p-2 border rounded shadow"
-                />
-                <button
-                    onClick={handleSearch}
-                    className="ml-2 px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                    Search
-                </button>
-            </div>
-            {orders.map((order) => (
-                <div key={order._id} className={` bg-white xl:max-w-screen shadow-lg rounded-lg overflow-hidden 2xl:max-w-[1550px] mb-4 border-[4px] ${getOrderStatusColor(order.status)}`}>
-                    <div className="p-4 w-full border-b flex justify-between items-center cursor-pointer">
-                        <div>
-                            {editId === order._id ? (
-                                <div>
-                                    <input
-                                        type="text"
-                                        name="fullName"
-                                        value={editOrder.fullName}
-                                        onChange={handleEditChange}
-                                        className="w-full p-2 border rounded"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="address"
-                                        value={editOrder.address}
-                                        onChange={handleEditChange}
-                                        className="w-full p-2 border rounded"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="landmark"
-                                        value={editOrder.landmark}
-                                        onChange={handleEditChange}
-                                        className="w-full p-2 border rounded"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="phoneNumber"
-                                        value={editOrder.phoneNumber}
-                                        onChange={handleEditChange}
-                                        className="w-full p-2 border rounded"
-                                    />
-                                    <select
-                                        name="status"
-                                        value={editOrder.status}
-                                        onChange={handleEditChange}
-                                        className="w-full p-2 border rounded"
-                                    >
-                                        {statusOptions.map((status) => (
-                                            <option key={status} value={status}>
-                                                {status}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            ) : (
-                                <div className=' w-full'>
-                                    <div className=' flex flex-row w-full'>
-                                        <h2 className="text-lg font-semibold">{order.fullName}</h2>
-                                        {/* <div className="text-gray-600 absolute right-28 ml-20 font-semibold">
+        isLoading ? <Loading /> :
+
+            <div className="flex flex-col w-screen justify-start p-4 bg-gray-100">
+                <div className="w-full max-w-md mb-4 flex">
+                    <input
+                        type="text"
+                        placeholder="Search by any field, separated by commas"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        onKeyDown={handleKeyPress}
+                        className="w-full p-2 border rounded shadow"
+                    />
+                    <button
+                        onClick={handleSearch}
+                        className="ml-2 px-4 py-2 bg-blue-500 text-white rounded"
+                    >
+                        Search
+                    </button>
+                </div>
+                {orders.map((order) => (
+                    <div key={order._id} className={` bg-white xl:max-w-screen shadow-lg rounded-lg overflow-hidden 2xl:max-w-[1550px] mb-4 border-[4px] ${getOrderStatusColor(order.status)}`}>
+                        <div className="p-4 w-full border-b flex justify-between items-center cursor-pointer">
+                            <div>
+                                {editId === order._id ? (
+                                    <div>
+                                        <input
+                                            type="text"
+                                            name="fullName"
+                                            value={editOrder.fullName}
+                                            onChange={handleEditChange}
+                                            className="w-full p-2 border rounded"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="address"
+                                            value={editOrder.address}
+                                            onChange={handleEditChange}
+                                            className="w-full p-2 border rounded"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="landmark"
+                                            value={editOrder.landmark}
+                                            onChange={handleEditChange}
+                                            className="w-full p-2 border rounded"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="phoneNumber"
+                                            value={editOrder.phoneNumber}
+                                            onChange={handleEditChange}
+                                            className="w-full p-2 border rounded"
+                                        />
+                                        <select
+                                            name="status"
+                                            value={editOrder.status}
+                                            onChange={handleEditChange}
+                                            className="w-full p-2 border rounded"
+                                        >
+                                            {statusOptions.map((status) => (
+                                                <option key={status} value={status}>
+                                                    {status}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ) : (
+                                    <div className=' w-full'>
+                                        <div className=' flex flex-row w-full'>
+                                            <h2 className="text-lg font-semibold">{order.fullName}</h2>
+                                            {/* <div className="text-gray-600 absolute right-28 ml-20 font-semibold">
                                         
                                             <span className=" block">{new Date(order.updatedAt).toLocaleDateString(undefined, {
                                                 day: 'numeric',
@@ -236,107 +240,107 @@ const Order = ({ store }) => {
                                             })}</span>
                                             <span className="block">{new Date(order.updatedAt).toLocaleTimeString()}</span>
                                         </div> */}
+                                        </div>
+                                        <h2 className="text-md font-semibold">Order Number : {order._id}</h2>
+                                        <div className="text-gray-600">{`Address: ${order.address}`}</div>
+                                        <div className="text-gray-600">{`Landmark: ${order.landmark}`}</div>
+                                        <div className="text-gray-600">{`Status: ${order.status}`}</div>
+                                        <div className="text-gray-600 flex items-center">
+                                            {`Phone Number: `}
+                                            <a href={`tel:${order.phoneNumber}`} className="ml-2 text-blue-500 underline">{order.phoneNumber}</a>
+                                        </div>
                                     </div>
-                                    <h2 className="text-md font-semibold">Order Number : {order._id}</h2>
-                                    <div className="text-gray-600">{`Address: ${order.address}`}</div>
-                                    <div className="text-gray-600">{`Landmark: ${order.landmark}`}</div>
-                                    <div className="text-gray-600">{`Status: ${order.status}`}</div>
-                                    <div className="text-gray-600 flex items-center">
-                                        {`Phone Number: `}
-                                        <a href={`tel:${order.phoneNumber}`} className="ml-2 text-blue-500 underline">{order.phoneNumber}</a>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                        <div className=' flex justify-end flex-col space-y-4'>
-                            <div className="text-gray-600  font-semibold">
+                                )}
+                            </div>
+                            <div className=' flex justify-end flex-col space-y-4'>
+                                <div className="text-gray-600  font-semibold">
 
-                                <span className=" block">{new Date(order.updatedAt).toLocaleDateString(undefined, {
-                                    day: 'numeric',
-                                    month: 'short'
-                                })}</span>
-                                <span className="block">{new Date(order.updatedAt).toLocaleTimeString()}</span>
-                            </div>
-                            <div className="text-gray-500 flex justify-end mx-auto  mb-2 text-2xl" onClick={() => toggleExpand(order._id)}>
-                                {expandedId === order._id ? <FaChevronUp /> : <FaChevronDown />}
-                            </div>
-                            <button
-                                onClick={() => toggleEdit(order)}
-                                className="text-sm p-4 py-2 bg-gray-600 text-white rounded"
-                            >
-                                {editId === order._id ? 'Cancel' : 'Edit'}
-                            </button>
-                            {editId === order._id && (
+                                    <span className=" block">{new Date(order.updatedAt).toLocaleDateString(undefined, {
+                                        day: 'numeric',
+                                        month: 'short'
+                                    })}</span>
+                                    <span className="block">{new Date(order.updatedAt).toLocaleTimeString()}</span>
+                                </div>
+                                <div className="text-gray-500 flex justify-end mx-auto  mb-2 text-2xl" onClick={() => toggleExpand(order._id)}>
+                                    {expandedId === order._id ? <FaChevronUp /> : <FaChevronDown />}
+                                </div>
                                 <button
-                                    onClick={() => handleEditSubmit(order._id)}
-                                    className="px-4 py-2 bg-blue-500 text-white rounded"
+                                    onClick={() => toggleEdit(order)}
+                                    className="text-sm p-4 py-2 bg-gray-600 text-white rounded"
                                 >
-                                    Submit
+                                    {editId === order._id ? 'Cancel' : 'Edit'}
                                 </button>
-                            )}
+                                {editId === order._id && (
+                                    <button
+                                        onClick={() => handleEditSubmit(order._id)}
+                                        className="px-4 py-2 bg-blue-500 text-white rounded"
+                                    >
+                                        Submit
+                                    </button>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                    {expandedId === order._id && (
-                        <div className="p-4">
-                            <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-md font-semibold">Products Ordered</h3>
-                                <h3 className="text-md font-semibold">Order Details</h3>
-                            </div>
-                            <div>
-                                {order.cart.map((item, index) => (
-                                    
-                                    <div key={item.product._id} className="mb-4">
-                                        <p className="font-medium">{`Product: ${item.productName || item.product.name}`}</p>
-                                        <p className="text-gray-600">{`Product ID: ${item.product._id}`}</p>
-                                        <p className="text-gray-600">{`Quantity: ${item.count}`}</p>
-                                        {item.selectedVariant.map((variant, idx) => (
-                                            <div key={idx} className="text-gray-600">
-                                                <p>{`${variant.name}: ${variant.options.name}`}</p>
-                                            </div>
-                                        ))}
-                                        <p className="text-gray-600">{`Price After Discount: Nrs ${item.price} per unit`}</p>
-                                        <hr className="w-full border-gray-300 mt-2" />
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="mt-4">
+                        {expandedId === order._id && (
+                            <div className="p-4">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-md font-semibold">Products Ordered</h3>
+                                    <h3 className="text-md font-semibold">Order Details</h3>
+                                </div>
                                 <div>
-                                    <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
-                                    <p className="text-gray-600">Price : Nrs {order.price}</p>
-                                    <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
-                                    <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
-                                    <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>
+                                    {order.cart.map((item, index) => (
+
+                                        <div key={item.product._id} className="mb-4">
+                                            <p className="font-medium">{`Product: ${item.productName || item.product.name}`}</p>
+                                            <p className="text-gray-600">{`Product ID: ${item.product._id}`}</p>
+                                            <p className="text-gray-600">{`Quantity: ${item.count}`}</p>
+                                            {item.selectedVariant.map((variant, idx) => (
+                                                <div key={idx} className="text-gray-600">
+                                                    <p>{`${variant.name}: ${variant.options.name}`}</p>
+                                                </div>
+                                            ))}
+                                            <p className="text-gray-600">{`Price After Discount: Nrs ${item.price} per unit`}</p>
+                                            <hr className="w-full border-gray-300 mt-2" />
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="mt-4">
+                                    <div>
+                                        <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
+                                        <p className="text-gray-600">Price : Nrs {order.price}</p>
+                                        <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
+                                        <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
+                                        <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
-                </div>
-            ))}
-            {hasMore && (
-                <div className="flex justify-center mt-4">
-                    <button
-                        onClick={loadMoreOrders}
-                        disabled={isLoading}
-                        className="px-4 py-2 bg-blue-500 text-white rounded"
-                    >
-                        {isLoading ? 'Loading...' : 'Load More Orders'}
-                    </button>
-                </div>
-            )}
-            {error && (
-                <div className="fixed bottom-0 left-0 right-0 p-4 bg-red-500 text-white text-center">
-                    {error.message || 'An error occurred'}
-                    <button onClick={onCloseError} className="ml-4 px-2 py-1 bg-red-700 rounded">
-                        Close
-                    </button>
-                </div>
-            )}
-            <DeliveryCodeModal
-                isOpen={showDeliveryCodeModal}
-                onClose={handleModalClose}
-                onSubmit={handleModalSubmit}
-            />
-        </div>
+                        )}
+                    </div>
+                ))}
+                {hasMore && (
+                    <div className="flex justify-center mt-4">
+                        <button
+                            onClick={loadMoreOrders}
+                            disabled={isLoading}
+                            className="px-4 py-2 bg-blue-500 text-white rounded"
+                        >
+                            {isLoading ? 'Loading...' : 'Load More Orders'}
+                        </button>
+                    </div>
+                )}
+                {error && (
+                    <div className="fixed bottom-0 left-0 right-0 p-4 bg-red-500 text-white text-center">
+                        {error.message || 'An error occurred'}
+                        <button onClick={onCloseError} className="ml-4 px-2 py-1 bg-red-700 rounded">
+                            Close
+                        </button>
+                    </div>
+                )}
+                <DeliveryCodeModal
+                    isOpen={showDeliveryCodeModal}
+                    onClose={handleModalClose}
+                    onSubmit={handleModalSubmit}
+                />
+            </div>
     );
 };
 

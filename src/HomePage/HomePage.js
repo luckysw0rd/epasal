@@ -59,10 +59,7 @@ function HomePage() {
                     <StoreList stores={stores}></StoreList>}
                 <Landingpage />
 
-                <div className=' mt-60 md:mt-0'>
-                    <DragdropSection
-                    />
-                </div>
+                <DragdropSection />
                 <Card />
                 <BanauTheme />
                 <SkinSection />

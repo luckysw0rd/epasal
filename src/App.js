@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import Loader from "./Components/Loading/Loading";
 // import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
@@ -85,9 +86,8 @@ function App() {
           <Router>
             <Suspense fallback=
               {
-                <div className=" bg-fuchsia-700 h-screen w-screen">
-                  LOADING
-                </div>}>
+                <Loader />
+              }>
               <Routes>
                 {routes}
               </Routes>
