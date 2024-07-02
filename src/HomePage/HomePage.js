@@ -69,7 +69,7 @@ function HomePage() {
                     <SliderNavbar></SliderNavbar>
                     <ProgressBar></ProgressBar>
                 </div>
-                <Footer></Footer>
+                {/* <Footer></Footer> */}
             </div>
 
 
