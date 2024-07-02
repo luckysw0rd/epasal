@@ -298,17 +298,18 @@ const Navbar1 = ({
                         <img
                             src={store?.logo?.logoUrl}
                             alt="Logo"
-                            className="h-8 mr-4"
+                            className="h-12 w-12 rounded-full object-cover mr-4"
                         />
                     )
                 ) : (
                     <div {...getRootProps()} className="cursor-pointer flex items-center">
                         <input {...getInputProps()} />
                         <img
-                            src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
-                            alt="Logo"
-                            className="h-8 mr-4"
-                        />
+  src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
+  alt="Logo"
+  className="h-12 w-12 rounded-full object-cover mr-4"
+/>
+
                     </div>
                 )}
                 <span className="text-xl font-bold" onClick={() => navigate('./')}>
