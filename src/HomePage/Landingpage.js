@@ -7,7 +7,7 @@ function Landingpage() {
     <div className="lg:flex max-h-[800px]">
       <div className="w-full lg:w-1/2 flex justify-between p-4">
         <div className="xl:pl-8 flex flex-col justify-center items-center md:items-start">
-          <h1 className="text-2xl md:ml-20 font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#383737]">
+          <h1 className="text-2xl md:ml-20  lg:ml-10 xl:ml-[78px] 2xl:ml-[150px] font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#383737]">
             WHY BANAU ?
           </h1>
           <div className="flex flex-col lg:flex-row mb-4 justify-between">

@@ -120,7 +120,7 @@ const EStore = ({ Passedstore }) => {
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              disabled={true}
+              
               items={tasks}
               strategy={horizontalListSortingStrategy}
             >

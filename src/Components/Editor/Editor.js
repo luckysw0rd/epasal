@@ -270,6 +270,93 @@ const Editor = () => {
       },
     },
     {
+      name:'Blue Voyage',
+      color:{
+        backgroundThemeColor: "#ffffff",
+        navColor: {
+          backgroundnavColor: "#9fc3de",
+          storeNameTextColor: "#0f1035",
+          categoryTextColor: "#638897",
+          searchBarColor: "#EDEDED"
+        },
+        subcategoryColor: {
+          background: "#FFFFFF",
+          text: "#0f1035"
+        },
+        subProductColor: {
+          categoryColor: "#FFFFFF",
+          backgroundColor: "#dbf0ff",
+          textColor: "#0f1035",
+          borderColor: "#dbf0ff",
+          priceColor: "#0f1035",
+          priceLetterColor: "#EDEDED",
+          scrollbarColor: "#8ba6bb",
+          starColor: "#0f1035"
+        },
+        firstBannerColor: {
+          backgroundThemeColor1: "#FFFFFF",
+          backgroundThemeColor2: "#EDEDED",
+          textColor: "#2f464a",
+          buttonColor: "#32454b",
+          buttonText: "#ffffff"
+        },
+        newProductColor: {
+          backgroundColor: "#FFFFFF",
+          cardBackground: "#FFFFFF",
+          borderColor: "#dcf2f1",
+          headerColor: "#2f464a",
+          textColor: "#2f464a",
+          priceColor: "#2f4655",
+          heartColor: "#FF7D00",
+          buttonTextColor: "#2f464a",
+          buttonBgColor: "#FFFFFF",
+          buttonBorderColor: "#2f464a",
+          buttonBgColorOnHover: "#dcf2f1"
+        },
+        secondaryBannerColor: {
+          backgroundThemeColor1: "#FFFFFF",
+          backgroundThemeColor2: "#EDEDED",
+          textColor: "#2d4147",
+          buttonColor: "#2d4147",
+          buttonText: "#ffffff"
+        },
+        offerBannerColor: {
+          backgroundBoxThemeColor1: "#ffffff",
+          backgroundThemeColor: "#eaf3f6",
+          textColor: "#2a4140",
+          buttonColor: "#2a4140",
+          buttonText: "#EDEDED"
+        },
+        headerColor: {
+          headerText: "#EDEDED",
+          headerBackground: "#6B5A5A"
+        },
+        productSection: "#FFFFFF",
+        productListColor: {
+          backgroundColor: "#FFFFFF",
+          cardBackground: "#FFFFFF",
+          borderColor: "#dcf2f1",
+          headerColor: "#2f464a",
+          textColor: "#2f464a",
+          priceColor: "#2f4661",
+          heartColor: "#FF7D00",
+          buttonTextColor: "#ffffff",
+          buttonBgColor: "#2a4140",
+          buttonBorderColor: "#2a4140",
+          buttonBgColorOnHover: "#2a4140"
+        },
+        footerColor: {
+          bgColor: "#dcf2f1",
+          textColor: "#075985",
+          linkHeaderColor: "#075d88",
+          linkColor: "#075985",
+          btnBgColor: "#075985",
+          btnText: "#07547d",
+          btnBgColorOnHover: "#0891b2"
+        }
+      }
+    },
+    {
       name: 'Lavender Dream',
       color: {
         backgroundThemeColor: "#E6E6FA", // Lavender

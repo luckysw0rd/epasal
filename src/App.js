@@ -64,8 +64,8 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/store/:storeID" element={<Theme />} />
-        {/* <Route path="/adminpanel/:storeName" element={<Dashboard />} /> */}
-        {/* <Route path="/buildstore" element={<Theme />} /> */}
+        <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="/buildstore" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/login" element={<SignInPage />}></Route>
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
