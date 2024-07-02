@@ -2,28 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa'; // Importing star icons
 import { useNavigate } from 'react-router-dom';
-const ProductCard = ({ product, productColor, addToCart,store }) => {
+const ProductCard = ({ product, productColor, addToCart, store }) => {
   const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, buttonBorderColor } = productColor;
   console.log(productColor);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
   const [rating, setRating] = useState(4.5); // Dummy rating data
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleProductClick = (product) => {
     localStorage.setItem('product', JSON.stringify(product));
     localStorage.setItem('store', JSON.stringify(store));
 
     if (store.fetchedFromBackend && !store.isEdit)
-        navigate("/productlanding", { state: { product, store } })
-};
+      navigate("/productlanding", { state: { product, store } })
+  };
 
-const truncateName = (name, charLimit) => {
-  if (name.length > charLimit) {
+  const truncateName = (name, charLimit) => {
+    if (name.length > charLimit) {
       return name.slice(0, charLimit) + '...';
-  }
-  return name;
-};
+    }
+    return name;
+  };
 
   // Truncating function
   const getTruncateLength = (width) => {
@@ -49,6 +49,8 @@ const truncateName = (name, charLimit) => {
   const firstVariant = variant[0]; // Considering only the first variant
   const selectedOption = selectedOptionIndex === -1 ? null : firstVariant?.options[selectedOptionIndex];
   const price = selectedOption ? selectedOption.price : product.price || 0;
+  const discount = selectedOption ? selectedOption.discount : product.discount || 0
+
 
   const handleOptionSelect = (index) => {
     setSelectedOptionIndex(index);
@@ -76,7 +78,7 @@ const truncateName = (name, charLimit) => {
 
   return (
     <motion.div
-      className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[320px] md:h-full mx-auto"
+      className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[300px] md:h-full mx-auto"
       style={{ borderColor: productColor.borderColor }}
       whileTap={{ scale: 0.98 }}
     >
@@ -89,11 +91,16 @@ const truncateName = (name, charLimit) => {
             <div className="px-5 w-full">
               <hr className="border-t-2" style={{ borderColor: borderColor }} />
               <div className="py-2">
-              <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
-                <p className="my-1 font-bold text-[13px]" style={{ color: priceColor }}>Rs. {price}</p>
+                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
+                <div className='flex gap-3'>
+                  <p className="my-1 font-bold text-sm" style={{ color: priceColor }}>Rs. {price - discount}</p>
+                  {discount > 0 &&
+                    <del className=' text-sm text-nowrap flex items-center text-[#838383]'>Rs. {price}</del>
+                  }
+                </div>
               </div>
               <div className="grid gap-2 relative w-full">
-                <div className="flex">
+                <div className="hidden md:flex">
                   <div
                     className={` h-[30px] w-[30px] md:h-[48px] md:w-[48px] cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
                     onClick={handleDefaultImage}
@@ -110,19 +117,19 @@ const truncateName = (name, charLimit) => {
                     </div>
                   ))}
                 </div>
-                <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
-                  <div style={{ color: priceColor }} className="flex gap-1 w-[60px] items-center">
+                <div className="flex flex-col gap-3 text-xl font-bold md:flex-row text-gray-900 mb-5">
+                  <div style={{ color: priceColor }} className="flex gap-1 w-[80px] items-center">
                     {renderStars(product.rating)}
                   </div>
                   <button
                     style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
-                    className={` md:px-6 md:py-2 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                    className={`px-6 md:px-2 lg:px-6 py-1 md:py-2 text-xs transition ease-in duration-200 border-solid border rounded-md focus:outline-none addToCartBtn`}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                     onClick={() => {
                       handleProductClick(product)
                     }
-                  }
+                    }
                   >
                     Add to cart
                   </button>
