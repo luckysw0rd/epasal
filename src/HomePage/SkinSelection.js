@@ -12,14 +12,14 @@ const SkinSection = () => {
       <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:items-start space-y-8 lg:space-y-0 lg:space-x-8">
         {/* First column */}
         <div className="flex flex-col items-center lg:items-start">
-          <img src={Card1} alt="Card 1" className="w-48 h-auto lg:w-full max-w-[200px] object-contain" />
+          <img src={Card1} alt="Card 1" className="w-full h-auto lg:w-full max-w-[250px] object-contain " />
         </div>
         
         {/* Second column */}
         <div className="flex flex-col items-center lg:items-start space-y-4">
           <div className="w-full lg:w-[200px] bg-[#526560] rounded-lg p-4">
             <h2 className="text-xl lg:text-2xl font-bold mb-2 text-white text-center lg:text-left">Design as you like</h2>
-            <button className="bg-gray-800 text-white p-2 rounded-lg text-sm mt-2 w-full">Get Started</button>
+            <button className="bg-gray-800 text-white p-2 rounded-lg text-sm mt-2 w-full"><a href="/buildstore" target="_blank" rel="noopener noreferrer" className="bg-gray-800 text-white p-2 rounded-lg text-sm mt-2 w-full text-center block">Get Started</a></button>
           </div>
           <img src={Card2} alt="Card 2" className="w-48 h-auto lg:w-full max-w-[200px] object-contain hidden lg:block" />
         </div>
