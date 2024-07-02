@@ -3,7 +3,10 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import esewa from "../../Assets/esewa.png";
 import fonepay from "../../Assets/fonepayfull.png";
-import graph from '../../Assets/graph.png'
+import graph from '../../Assets/graph.png';
+import productIcon from '../../Assets/shirt.webp';  // Assuming you have these icons
+import staffIcon from '../../Assets/employee.png';     // Assuming you have these icons
+import COD from '../../Assets/COD.png';
 
 const Card = () => {
     const [ref, inView] = useInView({
@@ -18,28 +21,30 @@ const Card = () => {
 
     return (
         <div className='bg-white p-8 md:p-10 lg:p-16'>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:p-4" ref={ref}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" ref={ref}>
                 <motion.div
-                    className="h-[200px] bg-gradient-to-r bg-[#3C3C3C] text-white py-4 px-8 rounded-xl flex justify-between"
+                    className="h-[200px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-xl flex  justify-between items-center  shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
                     variants={cardVariants}
                 >
-                    <div className='flex flex-col justify-between'>
-                        <h2 className="text-lg md:text-xl lg:text-2xl md:w-[61%] font-bold tracking-wider">
+                    <div className='flex flex-col justify-between h-full'>
+                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">
                             Payment Gateway Integration
                         </h2>
-                        <div className="flex gap-5 mb-5">
-                            <img src={esewa} alt="esewa" className=' w-[140px] h-[56px]' />
-                            <img src={fonepay} alt="fonepay" className=' w-[140px] h-[56px]' />
+                        <div className="flex gap-5 mt-4">
+                            <img src={esewa} alt="esewa" className='w-[120px] h-[50px] object-contain' />
+                            <img src={fonepay} alt="fonepay" className='w-[120px] h-[50px] object-contain' />
                         </div>
                     </div>
+                    <img src={COD} alt="product" className='w-[80px] md:w-[120px] object-contain mb-[90px] md:mb-0' />
+
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] bg-gradient-to-r bg-[#FFFFFF] text-gray-800 border-2 border-gray-700 py-4 px-8 rounded-xl flex"
+                    className="h-[200px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
@@ -47,34 +52,40 @@ const Card = () => {
                     variants={cardVariants}
                 >
                     <div>
-                        <h2 className="text-lg md:text-xl lg:text-2xl md:w-[60%] font-bold tracking-wider">Analytics</h2>
-                        <p className="mt-1">Visualize your data for the ease of use. Stay up to date with your product info.</p>
-                  
+                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">Analytics</h2>
+                        <p className="mt-2 text-sm md:text-base lg:text-lg">Visualize your data with ease. Stay up to date with your product info.</p>
                     </div>
-                    <img className=' w-[80px] h-[160px] md:w-[200px]  relative top-0' src={graph}>
-                    </img>
+                    <img src={graph} alt="graph" className='w-[80px] md:w-[120px] object-contain' />
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] bg-gradient-to-r bg-[#FFFFFF] text-black border-2 border-gray-700 py-4 px-8 rounded-xl flex"
+                    className="h-[200px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
                     variants={cardVariants}
                 >
-                    <h2 className="text-lg md:text-xl lg:text-2xl md:w-[60%] font-bold tracking-wider">Manage Product and Inventory</h2>
+                    <div>
+                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">Manage Product and Inventory</h2>
+                        <p className="mt-2 text-sm md:text-base lg:text-lg">Keep track of your products and inventory levels effortlessly.</p>
+                    </div>
+                    <img src={productIcon} alt="product" className='w-[80px] md:w-[120px] object-contain' />
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] bg-gradient-to-r bg-[#3C3C3C] text-white py-4 px-8 rounded-xl flex"
+                    className="h-[200px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-xl flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
                     variants={cardVariants}
                 >
-                    <h2 className="text-lg md:text-xl lg:text-2xl md:w-[60%] font-bold tracking-wider">Manage Employee and Staff</h2>
+                    <div>
+                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">Manage Employee and Staff</h2>
+                        <p className="mt-2 text-sm md:text-base lg:text-lg">Effectively Organize and manage your team with role based access effectively.</p>
+                    </div>
+                    <img src={staffIcon} alt="staff" className='w-[80px] md:w-[120px] object-contain' />
                 </motion.div>
             </div>
         </div>
