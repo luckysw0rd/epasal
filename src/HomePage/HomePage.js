@@ -67,10 +67,9 @@ function HomePage() {
             </div>
             <div className='bg-white h-4 w-screen  z-10'></div>
             
-            <div className=' md:mt-0 w-full'>
-                <div id='scrollableDiv' className={` h-[77vh] xl:h-[120vh] 2xl:h-[120vh] bg-white pt-16 relative bg-black`}>
-                    <Landingpage />
-                </div>
+            <div className=' md:mt-0 w-full bg-white'>
+                
+                <Landingpage />
                 <DragdropSection />
                 <Card />
                 <BanauTheme />
