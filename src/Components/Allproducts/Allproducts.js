@@ -251,7 +251,7 @@ const AllProducts = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
   };
 
-  
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -259,10 +259,10 @@ const AllProducts = () => {
 
   return (
     color && products && store && (
-      <div className="flex flex-col mt-20">
+      <div className="flex flex-col mt-16 ">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
-        <div className="flex flex-col md:flex-row"
+        <div className="flex flex-col h-screen md:flex-row"
           style={{ backgroundColor: color.productListColor.backgroundColor }}
         >
           <button
@@ -273,10 +273,10 @@ const AllProducts = () => {
           </button>
 
           {(isFilterVisible || window.innerWidth >= 768) && ( // Conditionally render the filter section based on visibility state or screen width
-            <div className="   relative top-8 md:left-12  w-full md:w-1/4 h-[688px]  my md:max-w-[250px] p-5 py-0   md:-mt-4 rounded-lg border-2  shadow-xl"
+            <div className="   relative top-0 md:top-8 md:left-12  w-full md:w-1/4 h-[688px]  my md:max-w-[250px] p-5 py-0   md:-mt-4 rounded-lg border-2  shadow-xl"
               style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor }}
             >
-              <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10  ">Filters</h3>
+              <h3 className="font-bold mb-4 text-xl border-b-2  text-center item-start py-2 md:mt-10  ">Filters</h3>
               <div className="block mb-4">
                 <label className="block mb-2 font-semibold">Price Range:</label>
                 <div className="flex items-center">
@@ -330,7 +330,7 @@ const AllProducts = () => {
               )}
               <button
                 onClick={handleSearch} // Handle click on search button
-                className="px-4 py-1   rounded  transition ease-in-out duration-200  border-2"
+                className="px-4 py-1 mb-2   rounded  transition ease-in-out duration-200  border-2"
                 style={
                   { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
                 }
@@ -372,33 +372,33 @@ const AllProducts = () => {
             </div>
 
             <div className="flex justify-center mt-8">
-      <button
-        disabled={page <= 1}
-        onClick={() => handlePageChange(page - 1)}
-        className={`px-4 py-2 rounded ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-white text-gray-700 border border-gray-300'}`}
-      >
-        &lt;
-      </button>
+              <button
+                disabled={page <= 1}
+                onClick={() => handlePageChange(page - 1)}
+                className={`px-4 py-2 rounded ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-white text-gray-700 border border-gray-300'}`}
+              >
+                &lt;
+              </button>
 
-      {[...Array(totalPages)].map((_, index) => (
-        <button
-        disabled
-          key={index + 1}
-          className={`mx-1 px-4 py-2 rounded  bg-white text-gray-700 border border-gray-300`}
-          onClick={() => handlePageChange(index + 1)}
-        >
-          {page}
-        </button>
-      ))}
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  disabled
+                  key={index + 1}
+                  className={`mx-1 px-4 py-2 rounded  bg-white text-gray-700 border border-gray-300`}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {page}
+                </button>
+              ))}
 
-      <button
-        // disabled={page >= totalPages}
-        onClick={() => handlePageChange(page + 1)}
-        className={`px-4 py-2 roundedbg-white text-gray-700 border border-gray-300`}
-      >
-        &gt;
-      </button>
-    </div>
+              <button
+                // disabled={page >= totalPages}
+                onClick={() => handlePageChange(page + 1)}
+                className={`px-4 py-2 roundedbg-white text-gray-700 border border-gray-300`}
+              >
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       </div>

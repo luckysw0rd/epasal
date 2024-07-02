@@ -8,8 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
-import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
-import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
+// import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
 const Navbar = React.lazy(() => import('./HomePage/Navbar'));
@@ -26,6 +25,7 @@ const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproduct
 const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
 const PrivacyPolicy = React.lazy(() => import('./HomePage/PrivacyOverlay'));
 const TermsAndConditions = React.lazy(() => import('./HomePage/TermsAndConditions'));
+const ProjectLanding1 = React.lazy(() => import('./Components/ProductLanding/ProductLanding1'));
 
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -48,13 +48,14 @@ function App() {
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
+
         {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
         <Route path="/settings" element={<SettingPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-
+        <Route path="*" element={<Navigate to="/" replace />} />
 
       </React.Fragment>
     );
@@ -64,8 +65,14 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
+        <Route path="/store/:storeID" element={<Theme />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/login" element={<SignInPage />}></Route>
+        <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
+        <Route path="/googleoauth" element={<GoogleOAuth />} />
+        <Route path="/productlanding" element={<ProjectLanding1 />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
         {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
       </React.Fragment>
     );
@@ -77,10 +84,10 @@ function App() {
         <div className="App">
           <Router>
             <Suspense fallback=
-            {
-            <div className=" bg-fuchsia-700 h-screen w-screen">
-              LOADING 
-            </div>}>
+              {
+                <div className=" bg-fuchsia-700 h-screen w-screen">
+                  LOADING
+                </div>}>
               <Routes>
                 {routes}
               </Routes>

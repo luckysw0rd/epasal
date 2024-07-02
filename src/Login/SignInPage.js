@@ -34,8 +34,9 @@ const SignInPage = () => {
 
     const handleSignIn = async () => {
         try {
+            console.log(process.env.REACT_APP_BACKEND_URL+'users/signin')
             const responseData = await sendRequest(
-                'users/signin',
+            'users/signin',
                 'POST',
                 JSON.stringify({
                     email: formData.email,
