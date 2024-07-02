@@ -71,9 +71,9 @@ const DragdropSection = () => {
                         <>
                             <h3 className="text-xs md:text-sm lg:text-base font-bold">FREEDOM IS YOURS</h3>
                             <p className="text-xs lg:text-sm">Have fun customizing your digital store.</p>
-                            <button className="border border-white hover:bg-white hover:text-[#793A00] p-1 rounded-md text-xs w-1/2">
+                            <Link to="/buildstore"  className="border border-white hover:bg-white hover:text-[#793A00] p-1 rounded-md text-xs w-1/2">
                                 Build yours now
-                            </button>
+                            </Link>
                         </>
                     )}
                 </div>

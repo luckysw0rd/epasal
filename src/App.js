@@ -65,6 +65,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
+        <Route path="/store/:storeID" element={<Theme />} />
 
         <Route path="/login" element={<SignInPage />}></Route>
         {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}

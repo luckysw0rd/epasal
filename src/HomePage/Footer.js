@@ -12,7 +12,7 @@ const Footer = () => {
                     <h3 className=" mt-5 text-lg xl:text-3xl font-bold">Shop At Banau</h3>
                     <p className="text-sm xl:text-lg mt-2">&copy; 2024 <a href="https://www.saikanepal.com" target="_blank" className=" underline hover:text-blue-300">Saika Nepal</a> All rights reserved.</p>
                 </div>
-                <h4 className="text-lg font-semibold border-b-2 md:border-r-2 border-[#FF7C1D] pb-2 mr-[60px] mb-4 inline-block w-80 md:w-0" > </h4>
+                <h4 className="text-lg max-w-[200px] font-semibold border-b-2 md:border-r-2 border-[#FF7C1D] pb-2 mr-[60px] mb-4 inline-block w-80 md:w-0" > </h4>
 
                 <div className="flex-1 hidden md:block mb-6 mt-5 md:mt-0 md:mb-0">
                     <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-40">Features</h4>
