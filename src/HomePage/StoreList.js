@@ -5,8 +5,8 @@ import { AuthContext } from '../Hooks/AuthContext';
 const StoreCard = ({ store, auth }) => {
 
     return (
-        <div className="max-w-sm rounded-lg overflow-hidden shadow-lg m-4 relative">
-            <img className="w-[384px] h-64 object-cover text-center items-center font-bold" src={store?.banner?.bannerUrl} alt={store.name} />
+        <div className="max-w-md rounded-lg overflow-hidden shadow-lg m-4 relative border-4 border-gray-900">
+            <img className="w-[500px] h-[320px] object-cover text-center items-center font-bold" src={store?.banner?.bannerUrl} alt={store.name} />
             <div className="absolute top-0 left-0 bg-black bg-opacity-50 text-white p-2 rounded-tr-lg">
                 {store.name}
             </div>

@@ -51,7 +51,7 @@ const Card = () => {
                         <p className="mt-1">Visualize your data for the ease of use. Stay up to date with your product info.</p>
                   
                     </div>
-                    <img className=' w-[200px] relative top-0' src={graph}>
+                    <img className=' w-[80px] h-[160px] md:w-[200px]  relative top-0' src={graph}>
                     </img>
                 </motion.div>
 

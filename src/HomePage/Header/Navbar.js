@@ -115,7 +115,7 @@ const Navbar = ({ navbarImage, setStores }) => {
 
             <div className='relative z-20 mx-auto w-full md:w-[90%] flex justify-between'>
                 {/* <div><img src={Logo} alt="Logo" /></div> */}
-                <div className='flex items-center gap-10'>
+                <div className='flex items-center gap-10 pl-4 md:pl-0'>
                     <svg width="103" height="56" viewBox="0 0 730 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 333.884V63.3499C0 44.5341 23.6191 36.1297 35.5046 50.7164L146.753 187.248C152.791 194.657 152.742 205.303 146.637 212.656L35.3881 346.659C23.4278 361.066 0 352.609 0 333.884Z" fill="#F4BD8A" />
                         <path d="M190.59 171.429H155.947C149.924 171.429 144.222 168.715 140.425 164.04L33.638 32.6119C23.0183 19.5416 32.3195 0 49.1603 0H219.266C225.166 0 230.764 2.60464 234.564 7.11723L274.959 55.0858C281.187 62.4809 281.233 73.2719 275.069 80.72L205.998 164.18C202.199 168.771 196.55 171.429 190.59 171.429Z" fill="url(#paint0_linear_342_32)" />

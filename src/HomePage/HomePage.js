@@ -6,7 +6,7 @@ import './Homepage.css'
 
 import Heading from './Header/Heading';
 import Landingpage from './Landingpage';
-import SubscriptionPlans from './SubscriptionPlans ';
+import SubscriptionPlans from './SubscriptionPlans';
 import ghost from '../Assets/Ghost.png'
 import { IoBagHandleOutline } from "react-icons/io5";
 import Card from "./Cards/Card"
@@ -61,11 +61,14 @@ function HomePage() {
                     <StoreList stores={stores}></StoreList>}
                 <Landingpage />
 
-                <DragdropSection />
+                <div className=' mt-60 md:mt-0'>
+                <DragdropSection
+                 />
+                 </div>
                 <Card />
                 <BanauTheme />
                 <SkinSection />
-                <DomainSection />
+                {/* <DomainSection /> */}
                 <SubscriptionPlans></SubscriptionPlans>
                 <div className=' mt-[850px] md:mt-0'>
                     <SliderNavbar></SliderNavbar>
