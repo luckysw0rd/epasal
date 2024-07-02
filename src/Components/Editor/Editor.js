@@ -1513,11 +1513,11 @@ const Editor = () => {
     <AnimatePresence>
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
         <motion.div key='first' initial={{ x: 20 }} exit={{ x: 500 }} transition={{ duration: 0.3 }} animate={{ x: 0 }} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
-          <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-6 w-full px-4'>Design your Website</h1>
+          <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Ubuntu'>Design Your Website </h1>
 
-          <div className='flex justify-between  font-Cinzel  mt-10 font-semibold text-[#6A6A6A] '>
-            <button className={`flex-1 text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content</button>
-            <button className={`flex-1 text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
+          <div className='flex justify-between  font-Orbitron  mt-5 font-semibold text-[#6A6A6A] '>
+            <button className={`flex-1 text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>ContenT</button>
+            <button className={`flex-1 text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>DesigN</button>
             {store.isEdit &&
               <button className={`flex-1 text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
             }
@@ -1526,99 +1526,99 @@ const Editor = () => {
           <div className='text-red-600 absolute top-[26px] right-10 text-[20px]' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><BiSolidHide /></div>
 
           {openType === 1 && (
-            <div>
+            <div >
 
               <ul className='flex flex-col mt-10 gap-2 px-4'>
-                <li className=' font-bold border-b-2  border-gray-200 pb-4'>
-                  <h1 className=' text-xl'>
-                    Navbar:
+                <li className=' font-bold border-b-2  border-gray-200 pb-4 hover:bg-gray-50 '>
+                  <h1 className=' text-lg font-Ubuntu'>
+                    Navbar :
                   </h1>
-                  <br />
+                
 
                   <div >
                     <FontSelector section="Navbar" />
                   </div>
 
                   <div className='font-normal'>
-                    <label className='text-[10px]'>Shop Name</label><br />
-                    <input type='text' className='border  border-2 border-gray-300 h-[24px] rounded px-2 py-2 w-[100%]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
+                    <label className='text-[12px] font-Ubuntu '>Shop Name</label><br />
+                    <input type='text' className='  border-2 border-gray-300 h-[24px] rounded px-2 text-[12px] w-[100%]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
                   </div>
                   <div className='font-normal mt-2'>
-                    <label className='text-[10px]'>logo:</label>
-                    <ImageDrop setStore={setStore} className=" " imageData='logo.logoUrl' />
+                    <label className='text-[12px]  font-Ubuntu'>Logo:</label>
+                    <ImageDrop setStore={setStore} className=" text-[10px]" imageData='logo.logoUrl' />
                   </div>
                 </li>
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-                  Hero Section:<br />
+                <li className='text-md font-semibold border-b-2 border-gray-200 pb-5 font-Ubuntu  hover:bg-gray-50'>
+                  Hero Section :<br />
                   <div className='font-normal'>
-                    <label className='text-[10px]'>Title</label><br />
-                    <input type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
+                    <label className='text-[12px]  font-Ubuntu'>Title</label><br />
+                    <input type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%] text-[14px]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
                   </div>
                   <div>
                     <div className="font-normal mt-2">
-                      <label className='text-[10px]'>Background:</label>
+                      <label className='text-[12px]  font-Ubuntu'>Background:</label>
                       <ImageDrop setStore={setStore} imageData='banner.bannerUrl' />
                     </div>
                   </div>
                 </li >
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
-                  Categories:<br />
-                  <div>
+                <li className='text-md font-bold font-Ubuntu border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
+                  Categories :<br />
+                  <div className="text-[14px] font-VT323">
                     <FontSelector section="Categories" />
                   </div>
                   <div className='font-normal'>
-                    <label className='text-[10px]'>Title</label><br />
-                    <div className='flex'>
-                      <input type='text' className=' border-2 border-gray-300 rounded mr-2 px-2' value={categoryData} onChange={e => setCategoryData(e.target.value)} ></input>
-                      <button className='px-2 text-[10px]  border-2 border-gray-300 rounded' onClick={handleAddCategory}>Add +</button>
+                    <label className='text-[12px]  font-Ubuntu'>Title</label><br />
+                    <div className='flex h-[26px]'>
+                      <input type='text' className=' border-2 border-gray-300  w-[95%]  rounded mr-2 px-2 ' value={categoryData} onChange={e => setCategoryData(e.target.value)} ></input>
+                      <button className='px-2 text-[12px]  font-Ubuntu  border-2 border-gray-300 rounded  w-[25%] ' onClick={handleAddCategory}>Add +</button>
                     </div>
                   </div>
-                  <ul className='font-normal list-disc ml-10 mt-2'>
+                  <ul className='font-normal list-disc ml-8 mt-2 text-sm'>
                     {store.subCategories.map(item => (<li key={item.name}>{item.name}</li>))}
                   </ul>
                 </li>
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                <li className='text-md font-semibold border-b-2 border-gray-200 pb-5 font-Ubuntu  hover:bg-gray-50'>
                   Banner #1<br />
                   <div>
                     <FontSelector section="Banner1" />
                   </div>
-                  <label className='text-[10px]'>Title</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Title</label><br />
                   <input value={store.thirdBannerText.heading} type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }} ></input><br />
-                  <label className='text-[10px]'>Description</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
                   <textarea value={store.thirdBannerText.paragraph} type='text' className=' border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
+                  <label className='text-[12px]  font-Ubuntu'>Image:</label> <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
                 </li>
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
                   Banner #2<br />
                   <div>
                     <FontSelector section="Banner2" />
                   </div>
-                  <label className='text-[10px]'>Title</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Title</label><br />
                   <input value={store.secondaryBannerText.heading} type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }} ></input><br />
-                  <label className='text-[10px]'>Description</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
                   <textarea value={store.secondaryBannerText.paragraph} type='text' className=' border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
+                  <label className='text-[12px]  font-Ubuntu'>Image:</label> <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
                 </li>
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
                   Banner #3<br />
                   <div>
                     <FontSelector section="Banner3" />
                   </div>
-                  <label className='text-[10px]'>Title</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Title</label><br />
                   <input value={store.offerBannerText.para1} type='text' className='border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }} ></input><br />
-                  <label className='text-[10px]'>Description</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
                   <textarea value={store.offerBannerText.para2} type='text' className='border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para2: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[10px]'>Description</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
                   <textarea value={store.offerBannerText.para3} type='text' className='border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para3: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[10px]'>Image:</label> <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
+                  <label className='text-[12px]  font-Ubuntu'>Image:</label> <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
                 </li>
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
                   Add Products<br />
                   <div className='mt-2'>
-                    <button className='px-2 text-[10px] border-2 border-gray-300' onClick={handleAddProduct}>Add +</button>
+                    <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddProduct}>Add +</button>
                   </div>
                 </li>
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
                   Featured Products<br />
                   <div>
                     <FontSelector section="Featured" />
@@ -1630,29 +1630,29 @@ const Editor = () => {
                     <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
                       {store.products.map((n, i) => (<option value={i} key={i}>{n.name}</option>))}
                     </select>
-                    <button className='px-2 text-[10px] border-2 border-gray-300' onClick={handleAddFeaturedProduct}>Add +</button>
+                    <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddFeaturedProduct}>Add +</button>
                   </div>
                 </li>
 
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
+                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
                   Footer<br />
                   <div>
                     <FontSelector section="Footer" />
                   </div>
-                  <label className='text-[10px]'>Location</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Location</label><br />
                   <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
-                  <label className='text-[10px]'>Email</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Email</label><br />
                   <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
-                  <label className='text-[10px]'>Phone Number</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Phone Number</label><br />
                   <input value={store.phoneNumber} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
                   <div className='mt-3'>Social Media Links</div>
-                  <label className='text-[10px]'>Facebook</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Facebook</label><br />
                   <input value={store.socialMediaLinks.facebook} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
-                  <label className='text-[10px]'>Twitter</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Twitter</label><br />
                   <input value={store.socialMediaLinks.twitter} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
-                  <label className='text-[10px]'>Instagram</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Instagram</label><br />
                   <input value={store.socialMediaLinks.instagram} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
-                  <label className='text-[10px]'>linkedIn</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>linkedIn</label><br />
                   <input value={store.socialMediaLinks.linkedin} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
 
                 </li>
@@ -1729,7 +1729,7 @@ const Editor = () => {
               {store?.componentSkin?.map((component, index) => (
                 <li key={index} className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   {component.component}:<br />
-                  <label className='text-[10px]'>Active Skin</label><br />
+                  <label className='text-[12px]  font-Ubuntu'>Active Skin</label><br />
                   <select value={component.activeSkin} onChange={e => handleActiveSkinChange(e, index)} className='border-2 border-gray-300 rounded px-2'>
                     {component.skinInventory.map((skin, idx) => (
                       <option key={idx} value={skin}>{skin}</option>
