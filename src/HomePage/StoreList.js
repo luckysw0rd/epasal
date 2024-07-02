@@ -2,20 +2,20 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Hooks/AuthContext';
 
-const StoreCard = ({ store ,auth}) => {
+const StoreCard = ({ store, auth }) => {
 
     return (
         <div className="max-w-sm rounded-lg overflow-hidden shadow-lg m-4 relative">
-            <img className="w-[384px] h-64 object-cover text-center items-center font-bold" src={store.banner.bannerUrl} alt={store.name} />
+            <img className="w-[384px] h-64 object-cover text-center items-center font-bold" src={store?.banner?.bannerUrl} alt={store.name} />
             <div className="absolute top-0 left-0 bg-black bg-opacity-50 text-white p-2 rounded-tr-lg">
                 {store.name}
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white px-4 py-4 flex justify-between items-center ">
-            {auth.isLoggedIn && (
-                <Link to={`/adminpanel/${store.name}`} className="">
-                    Dashboard
-                </Link>)
-            }
+                {auth.isLoggedIn && (
+                    <Link to={`/adminpanel/${store.name}`} className="">
+                        Dashboard
+                    </Link>)
+                }
                 <Link to={`/store/${store.name}`} className="">
                     Go to Store ➔
                 </Link>
