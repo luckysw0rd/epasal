@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import StarRating from './StarRating'; // Import the StarRating component
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
+import Loader from '../Loading/Loading';
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -254,7 +255,7 @@ const AllProducts = () => {
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />
   }
 
   return (

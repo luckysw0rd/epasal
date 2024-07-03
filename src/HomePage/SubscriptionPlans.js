@@ -142,12 +142,12 @@ const SubscriptionPlans = () => {
     const [duration, setDuration] = useState('monthly');
 
     return (
-        <div className="bg-[#FFFFFF] font-Poppins py-12 px-4">
+        <div className="bg-[#FFFFFF] font-Poppins py-8 md:py-10 lg:py-20 px-4">
             <div className="max-w-[1200px] max-h-[1000px] mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold text-gray-800">Subscription Plans</h2>
                     <p className="text-lg text-gray-600 mt-2">Start Free, Upgrade as You Grow! Choose one that works for you the best.</p>
-                    <div className="mt-4">
+                    <div className="my-4">
                         <button
                             className={`px-4 py-2 mx-2 rounded ${duration === 'monthly' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
                             onClick={() => setDuration('monthly')}
@@ -168,7 +168,7 @@ const SubscriptionPlans = () => {
                         </button>
                     </div>
                 </div>
-                <div className="flex flex-col md:flex-row gap-6 justify-center">
+                <div className="flex flex-col md:flex-row gap-10 md:gap-6 justify-center">
                     {plans[duration].map((plan, index) => {
                         const monthlyEquivalent = getMonthlyEquivalent(plan.price, duration);
                         const monthlyPlan = plans['monthly'].find(p => p.name === plan.name);
@@ -206,7 +206,7 @@ const SubscriptionPlans = () => {
                                                 {plan.limitedOffer ? (
                                                     <>
                                                         {/* <FaClock className="text-red-500 mr-2" /> */}
-                                                        Unlimited 
+                                                        Unlimited
                                                     </>
                                                 ) : (
                                                     plan.customization

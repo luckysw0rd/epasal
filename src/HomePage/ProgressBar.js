@@ -33,13 +33,13 @@ const ProgressBar = () => {
 
     return (
         <div className='bg-white p-4'>
-            <div className="flex flex-col md:flex-row items-center justify-between mx-auto p-4 space-y-8 md:space-y-0 md:space-x-8">
-                <div className="hidden 2xl:block">
+            <div className="flex flex-col md:flex-row items-center justify-between mx-auto md:p-4 gap-5 space-y-4 md:space-y-0 md:space-x-8">
+                <div className="mt-4 md:mt-0 hidden 2xl:block">
                     <div className="relative w-full max-w-sm h-96 p-4 mx-auto">
                         <img src={slider} alt="Decorative" className="w-full h-full object-cover" />
                     </div>
                 </div>
-                <div className="flex flex-col justify-center items-center md:items-start space-y-4 w-full md:w-auto">
+                <div className="flex flex-col justify-center items-center md:items-start gap-5 w-full md:w-auto">
                     <h2 className="font-bold text-2xl  mr-24 text-orange-500 mb-4 md:text-left 
                      sm:mr-0">Get Started</h2>
                     <div className="flex flex-col items-start space-y-2 md:space-y-0 lg:space-y-2">

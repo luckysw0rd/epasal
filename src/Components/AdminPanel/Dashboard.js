@@ -12,6 +12,7 @@ import Product from "./Product/Product.js";
 import General from "./General/General.js";
 import Shop from "./Shop/Shop.js";
 import { toast } from "react-toastify";
+import Loading from "../Loading/Loading"
 const Dashboard = () => {
   const auth = useContext(AuthContext);
   const [dashboardState, setDashboardState] = useState('General');
@@ -98,19 +99,20 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      {store && (
-        <div className=""> {/* Apply overflow styling here */}
-          <SiderBarProvider className="overflow-hidden">
-            <DashboardWrapper setDashboardState={setDashboardState} store={store}>
-              <div className="text-black p-2 py-4 mt-8 overflow-hidden">
-                {renderDashboardContent(store)}
-              </div>
-            </DashboardWrapper>
-          </SiderBarProvider>
-        </div >
-      )}
-    </>
+    isLoading ? <Loading /> :
+      <>
+        {store && (
+          <div className=""> {/* Apply overflow styling here */}
+            <SiderBarProvider className="overflow-hidden">
+              <DashboardWrapper setDashboardState={setDashboardState} store={store}>
+                <div className="text-black p-2 py-4 mt-8 overflow-hidden">
+                  {renderDashboardContent(store)}
+                </div>
+              </DashboardWrapper>
+            </SiderBarProvider>
+          </div >
+        )}
+      </>
   );
 };
 
