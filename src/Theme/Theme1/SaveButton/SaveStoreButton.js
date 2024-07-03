@@ -5,11 +5,14 @@ import Loading from '../Loading/Loading';
 import useFetch from "../../../Hooks/useFetch";
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const SaveStoreButton = () => {
     const { uploadImage } = useImage();
     const auth = useContext(AuthContext);
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
+    const [storeMade,setStoreMade]=useState(false);
+    const navigate=useNavigate();
     var storeNewImage = {};
     const { previewMode } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -110,7 +113,7 @@ const SaveStoreButton = () => {
     const PostData = async () => {
         try {
             console.log(store, "store my")
-            if (!store.isEdit) {
+            if (!store.isEdit && !storeMade) {
                 const responseData = await sendRequest(
                     'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
                     'POST',
@@ -120,8 +123,11 @@ const SaveStoreButton = () => {
                         Authorization: 'Bearer ' + auth.token,
                     }
                 );
+                setStoreMade(true)
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
+  
+                navigate('/')
             } else {
                 const responseData = await sendRequest(
                     `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
@@ -134,6 +140,7 @@ const SaveStoreButton = () => {
                 );
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
+                navigate('/')
             }
         } catch (error) {
             console.error('Error saving store data:', error);

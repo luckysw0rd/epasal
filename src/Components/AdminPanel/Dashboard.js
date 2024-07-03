@@ -75,7 +75,13 @@ const Dashboard = () => {
   const renderDashboardContent = (store) => {
     switch (dashboardState) {
       case 'Home':
-        return <Home data={store} />;
+        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+          console.log('Store:', store);
+          return <Home data={store} />;
+        } else {
+          return <Order store={store}></Order>
+        }
+        
       case 'Employee':
         if (role === 'Admin' || role === 'Owner') {
           console.log('Store:', store);
@@ -84,17 +90,39 @@ const Dashboard = () => {
           return <Home data={store} />;
         }
       case 'Edit Store':
-        return <EditStore store={store} />;
+        if (role === 'Admin' || role === 'Owner') {
+          console.log('Store:', store);
+          return <EditStore store={store} />;
+        } else {
+          return <Home data={store} />;
+        }
       case 'Order':
         return <Order store={store}></Order>
       case 'Product':
-        return <Product store={store}></Product>
+        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+          console.log('Store:', store);
+          return <Product store={store}></Product>
+        } else {
+          return <Home data={store} />;
+        }
       case 'General':
-        return <General store={store} setDashboardState={setDashboardState}></General>
+        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+          console.log('Store:', store);
+          return <General store={store} setDashboardState={setDashboardState}></General>
+        } else {
+          return <Order store={store} />;
+        }
+        
       case 'Shop':
-        return <Shop store={store} ></Shop>
+          return <Shop store={store} ></Shop>
       default:
-        return <Home />;
+        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+          console.log('Store:', store);
+          return <Home data={store}/>;
+        } else {
+          return <Order store={store}></Order>
+        }
+        
     }
   };
 
