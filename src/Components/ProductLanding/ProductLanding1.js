@@ -11,6 +11,7 @@ import SimilarProducts from './SimilarProducts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../Allproducts/Navbar';
 import { toast } from 'react-toastify';
+
 const ProjectLanding1 = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -99,7 +100,11 @@ const ProjectLanding1 = () => {
         console.log(newCartItem);
         console.log(store);
 
-        // toast("Product Added To Cart")
+        toast.success("Product Added To Cart", {
+            position: "top-center",
+            pauseOnFocusLoss: false,
+            pauseOnHover: false
+        })
     };
 
 
@@ -272,23 +277,23 @@ const ProjectLanding1 = () => {
                             <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-[#555555]">Store Details</h2>
                             <div className="flex items-center gap-3">
                                 <LiaShippingFastSolid className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base lg:text-lg text-[#555555]">{storeDetails.deliveryTime}</span>
+                                <span className="text-sm md:text-base text-[#555555]">{storeDetails.deliveryTime}</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <TbCash className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base lg:text-lg text-[#555555]">COD {storeDetails.COD}</span>
+                                <span className="text-sm md:text-base text-[#555555]">COD {storeDetails.COD}</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <FiClock className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base lg:text-lg text-[#555555]">{storeDetails.returnPolicyTime} Return Policy</span>
+                                <span className="text-sm md:text-base text-[#555555]">{storeDetails.returnPolicyTime} Return Policy</span>
                             </div>
                             {/* <div className="flex items-center gap-3">
                                 <MdVerifiedUser className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base lg:text-lg text-[#555555]">{storeDetails.warranty} Warranty</span>
+                                <span className="text-sm md:text-base text-[#555555]">{storeDetails.warranty} Warranty</span>
                             </div> */}
                             <div className="flex items-center gap-3">
                                 <PiCreditCard className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base lg:text-lg text-[#555555]">Secure Payment</span>
+                                <span className="text-sm md:text-base text-[#555555]">Secure Payment</span>
                             </div>
                             {/* <div className="flex items-center gap-3">
                                 <PiCreditCard className="w-5 h-5 text-[#555555]" />
