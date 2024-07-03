@@ -12,7 +12,7 @@ const ProductReview = ({ product }) => {
     const [reviews, setReviews] = useState([]);
     const [ratingsCount, setRatingsCount] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
     const auth = useContext(AuthContext);
-    const { sendRequest } = useFetch();
+    const { isLoading, sendRequest } = useFetch();
 
     const totalRating = reviews?.reduce((acc, review) => acc + review.rating, 0);
     const averageRating = totalRating / reviews?.length || 0;

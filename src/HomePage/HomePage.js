@@ -78,14 +78,10 @@ function HomePage() {
                 </div>
             </div>
             <div className="bg-white h-4 w-screen z-10"></div>
-            <div className="md:mt-0 w-full bg-white">
+            <div className="w-full flex flex-col gap-2 bg-white">
                 {stores && <StoreList stores={stores} />}
-                <div className="md:mt-40">
-                    <Landingpage />
-                </div>
-                <div className="mt-80 md:mt-0">
-                    <DragdropSection />
-                </div>
+                <Landingpage />
+                <DragdropSection />
                 <Card />
                 <BanauTheme />
                 <SkinSection />
