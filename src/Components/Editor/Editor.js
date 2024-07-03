@@ -123,6 +123,12 @@ const Editor = () => {
       handleColorChange(hexCode, field);
     }
   };
+  const handleRemoveCategory = (index) => {
+    setStore((prevStore) => ({
+      ...prevStore,
+      subCategories: prevStore.subCategories.filter((_, i) => i !== index),
+    }));
+  };
 
   const handleAddProduct = (e) => {
     e.preventDefault();
@@ -1683,9 +1689,19 @@ const Editor = () => {
                       </button>
                     </div>
                   </div>
-                  <ul className='font-normal list-disc ml-8 mt-4 text-sm'>
-                    {store.subCategories.map(item => (<li key={item.name}>{item.name}</li>))}
-                  </ul>
+                  <ul className="font-normal list-disc ml-8 mt-4 text-sm">
+  {store.subCategories.map((item, index) => (
+    <li key={item.name} className="flex justify-between">
+      {item.name}
+      <button
+        onClick={() => handleRemoveCategory(index)}
+        className="ml-4 text-black px-2 py-1 rounded"
+      >
+        -
+      </button>
+    </li>
+  ))}
+</ul>
                 </li>
 
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
