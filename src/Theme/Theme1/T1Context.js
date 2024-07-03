@@ -337,12 +337,14 @@ export const StoreProvider = ({ children, passedStore }) => {
         borderColor: "#ffffff",
         priceColor: "#3d3d3d",
         priceLetterColor: "#ffffff",
+         buttonColor:"#3d3d3d",
         scrollbarColor: "#1f1f1e",
         starColor: "#3d3d3d",
+       
       },
       firstBannerColor: {
         backgroundThemeColor1: "#fafafa",
-        backgroundThemeColor2: "#fcf3f3",
+        // backgroundThemeColor2: "#fcf3f3",
         textColor: "#1f1f1e",
         buttonColor: "#3d3d3d",
         buttonText: "#ffffff",
@@ -362,21 +364,10 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       secondaryBannerColor: {
         backgroundThemeColor1: "#fafafa",
-        backgroundThemeColor2: "#fafafa",
+        // backgroundThemeColor2: "#fafafa",
         textColor: "#1f1f1e",
         buttonColor: "#3d3d3d",
         buttonText: "#ffffff",
-      },
-      offerBannerColor: {
-        backgroundBoxThemeColor1: "#ffffff",
-        backgroundThemeColor: "#eeeeee",
-        textColor: "#4E3E34",
-        buttonColor: "#401a12",
-        buttonText: "#3e1818",
-      },
-      headerColor: {
-        headerText: "#ffffff",
-        headerBackground: "#7a5C5c",
       },
       productSection: "#ffffff",
       productListColor: {
@@ -392,6 +383,13 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonBorderColor: "#4F3100",
         buttonBgColorOnHover: "#4F3100",
       },
+      offerBannerColor: {
+        backgroundBoxThemeColor1: "#ffffff",
+        backgroundThemeColor: "#eeeeee",
+        textColor: "#4E3E34",
+        buttonColor: "#401a12",
+        buttonText: "#3e1818",
+      },
       footerColor: {
         bgColor: "#1e1e20",
         textColor: "#ffffff",
@@ -401,6 +399,12 @@ export const StoreProvider = ({ children, passedStore }) => {
         btnText: "#fafafa",
         btnBgColorOnHover: "#4F3100",
       },
+      headerColor: {
+        headerText: "#ffffff",
+        headerBackground: "#7a5C5c",
+      },
+   
+     
     },
     offerBanner: { offerBannerUrl: `${b3}`, offerBannerID: '' },
     offerBannerText: {

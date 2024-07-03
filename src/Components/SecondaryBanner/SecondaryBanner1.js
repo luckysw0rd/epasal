@@ -103,14 +103,16 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 import { useDropzone } from "react-dropzone";
 import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as necessary
 import { useImage } from "../../Hooks/useImage";
-const SecondaryBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
+import { Link } from "react-router-dom";
+const SecondaryBanner1 = ({ previewMode,isEdit, defaultBgImage,storeName }) => {
   const { store, setStore } = useStore();
   const { color, secondaryBannerText } = store;
   const { uploadImage } = useImage();
-
+  const navigate = useNavigate();
   const onDropBackground = (acceptedFiles) => {
     const backgroundImage = acceptedFiles[0];
     const reader = new FileReader();
@@ -128,7 +130,14 @@ const SecondaryBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
     };
     reader.readAsDataURL(backgroundImage);
   };
+const handleExploreClick=(e)=>{
 
+  if (store.fetchedFromBackend && !store.isEdit){
+    navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
+    
+  }
+  
+}
   const handleTextChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -213,16 +222,25 @@ const SecondaryBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
               />
             </>
           )}
-          <button
-            className="mt-4 md:mt-2 lg:mt-8 inline-block h-12 rounded-lg border-2 border-success px-6 py-auto text-xs md:text-xs lg:text-base font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:border-2"
+
+
+            <button
+
+            className={`mt-4 md:mt-2 py-auto lg:mt-8  h-12 rounded-lg border-2 border-success px-6 py-auto text-xs md:text-xs lg:text-base font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:border-2 flex items-center
+               ${
+              !previewMode ? "cursor-not-allowed opacity-50" : ""
+            }`}
             style={{
               color: color.secondaryBannerColor.buttonText,
               backgroundColor: color.secondaryBannerColor.buttonColor,
             }}
+          
+            onClick={handleExploreClick}
           >
             Explore More
             <span className="text-lg ml-3 my-auto">&gt;</span>
-          </button>
+            </button>
+         
         </div>
         {(!previewMode) && (
           <div className="absolute top-0 left-0 mt-10 mr-2">
