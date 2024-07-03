@@ -11,6 +11,9 @@ import { SketchPicker } from 'react-color';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaCaretLeft } from "react-icons/fa";
 import { BiSolidHide } from "react-icons/bi";
+import { FaPlus, FaUpload } from 'react-icons/fa';
+import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
+import { CiTextAlignJustify } from "react-icons/ci";
 // List of fonts from your Tailwind configuration
 const fonts = [
   "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
@@ -268,6 +271,93 @@ const Editor = () => {
           btnBgColorOnHover: "#00FFFF", // Aqua
         },
       },
+    },
+    {
+      name:'Blue Voyage',
+      color:{
+        backgroundThemeColor: "#ffffff",
+        navColor: {
+          backgroundnavColor: "#9fc3de",
+          storeNameTextColor: "#0f1035",
+          categoryTextColor: "#638897",
+          searchBarColor: "#EDEDED"
+        },
+        subcategoryColor: {
+          background: "#FFFFFF",
+          text: "#0f1035"
+        },
+        subProductColor: {
+          categoryColor: "#FFFFFF",
+          backgroundColor: "#dbf0ff",
+          textColor: "#0f1035",
+          borderColor: "#dbf0ff",
+          priceColor: "#0f1035",
+          priceLetterColor: "#EDEDED",
+          scrollbarColor: "#8ba6bb",
+          starColor: "#0f1035"
+        },
+        firstBannerColor: {
+          backgroundThemeColor1: "#FFFFFF",
+          backgroundThemeColor2: "#EDEDED",
+          textColor: "#2f464a",
+          buttonColor: "#32454b",
+          buttonText: "#ffffff"
+        },
+        newProductColor: {
+          backgroundColor: "#FFFFFF",
+          cardBackground: "#FFFFFF",
+          borderColor: "#dcf2f1",
+          headerColor: "#2f464a",
+          textColor: "#2f464a",
+          priceColor: "#2f4655",
+          heartColor: "#FF7D00",
+          buttonTextColor: "#2f464a",
+          buttonBgColor: "#FFFFFF",
+          buttonBorderColor: "#2f464a",
+          buttonBgColorOnHover: "#dcf2f1"
+        },
+        secondaryBannerColor: {
+          backgroundThemeColor1: "#FFFFFF",
+          backgroundThemeColor2: "#EDEDED",
+          textColor: "#2d4147",
+          buttonColor: "#2d4147",
+          buttonText: "#ffffff"
+        },
+        offerBannerColor: {
+          backgroundBoxThemeColor1: "#ffffff",
+          backgroundThemeColor: "#eaf3f6",
+          textColor: "#2a4140",
+          buttonColor: "#2a4140",
+          buttonText: "#EDEDED"
+        },
+        headerColor: {
+          headerText: "#EDEDED",
+          headerBackground: "#6B5A5A"
+        },
+        productSection: "#FFFFFF",
+        productListColor: {
+          backgroundColor: "#FFFFFF",
+          cardBackground: "#FFFFFF",
+          borderColor: "#dcf2f1",
+          headerColor: "#2f464a",
+          textColor: "#2f464a",
+          priceColor: "#2f4661",
+          heartColor: "#FF7D00",
+          buttonTextColor: "#ffffff",
+          buttonBgColor: "#2a4140",
+          buttonBorderColor: "#2a4140",
+          buttonBgColorOnHover: "#2a4140"
+        },
+        footerColor: {
+          bgColor: "#dcf2f1",
+          textColor: "#075985",
+          linkHeaderColor: "#075d88",
+          linkColor: "#075985",
+          btnBgColor: "#075985",
+          btnText: "#07547d",
+          btnBgColorOnHover: "#0891b2"
+        }
+      }
     },
     {
       name: 'Lavender Dream',
@@ -1513,160 +1603,184 @@ const Editor = () => {
     <AnimatePresence>
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
         <motion.div key='first' initial={{ x: 20 }} exit={{ x: 500 }} transition={{ duration: 0.3 }} animate={{ x: 0 }} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
-          <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Ubuntu'>Design Your Website </h1>
+          <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Poppins'>Design Your Website </h1>
 
-          <div className='flex justify-between  font-Orbitron  mt-5 font-semibold text-[#6A6A6A] '>
-            <button className={`flex-1 text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>ContenT</button>
-            <button className={`flex-1 text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>DesigN</button>
+          <div className='flex justify-between  font-Poppins  mt-5 font-semibold text-[#6A6A6A] '>
+            <button className={`flex-1   text-lg text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content </button>
+            <button className={`flex-1  text-lg text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
             {store.isEdit &&
-              <button className={`flex-1 text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
+              <button className={`flex-1  text-lg text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
             }
           </div>
           <div className='text-red-600 absolute top-[26px] right-2 text-[20px]' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><  RxCrossCircled /></div>
           <div className='text-red-600 absolute top-[26px] right-10 text-[20px]' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><BiSolidHide /></div>
-
           {openType === 1 && (
-            <div >
+  <motion.div 
+    initial={{ opacity: 0 }} 
+    animate={{ opacity: 1 }} 
+    transition={{ duration: 0.5 }}
+  >
+    <ul className='flex flex-col mt-10 gap-4 px-4'>
+      <li className='font-bold border-b-2 border-gray-200 pb-4 hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+        <h1 className='text-2xl font-Poppins flex flex-row text-center items-center mb-4'>
+          Navbar
+        </h1>
+        <div>
+          <FontSelector section="Navbar" />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Shop Name</label>
+          <input 
+            type='text' 
+            className='border-2 border-gray-300 h-10 rounded-lg px-4 text-sm w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.name} 
+            onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Logo:</label>
+          <ImageDrop setStore={setStore} className="text-sm" imageData='logo.logoUrl' />
+        </div>
+      </li>
 
-              <ul className='flex flex-col mt-10 gap-2 px-4'>
-                <li className=' font-bold border-b-2  border-gray-200 pb-4 hover:bg-gray-50 '>
-                  <h1 className=' text-lg font-Ubuntu'>
-                    Navbar :
-                  </h1>
-                
+      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+        <h1 className='text-2xl font-Poppins mb-4'>Hero Section</h1>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Title</label>
+          <input 
+            type='text' 
+            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 text-sm transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.name} 
+            onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Background:</label>
+          <ImageDrop setStore={setStore} imageData='banner.bannerUrl' />
+        </div>
+      </li>
 
-                  <div >
-                    <FontSelector section="Navbar" />
-                  </div>
+      <li className='font-bold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+        <h1 className='text-2xl font-Poppins mb-4'>Categories</h1>
+        <div className="font-VT323 text-sm mb-4">
+          <FontSelector section="Categories" />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Title</label>
+          <div className='flex h-10'>
+            <input 
+              type='text' 
+              className='border-2 border-gray-300 w-full rounded-lg mr-2 px-4 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+              value={categoryData} 
+              onChange={e => setCategoryData(e.target.value)} 
+            />
+            <button 
+              className='px-4 text-sm font-Poppins border-2 border-gray-300 rounded-lg flex items-center justify-center transition duration-300 hover:bg-blue-400 hover:text-white' 
+              onClick={handleAddCategory}
+            >
+              Add <FaPlus className="ml-1"/>
+            </button>
+          </div>
+        </div>
+        <ul className='font-normal list-disc ml-8 mt-4 text-sm'>
+          {store.subCategories.map(item => (<li key={item.name}>{item.name}</li>))}
+        </ul>
+      </li>
 
-                  <div className='font-normal'>
-                    <label className='text-[12px] font-Ubuntu '>Shop Name</label><br />
-                    <input type='text' className='  border-2 border-gray-300 h-[24px] rounded px-2 text-[12px] w-[100%]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
-                  </div>
-                  <div className='font-normal mt-2'>
-                    <label className='text-[12px]  font-Ubuntu'>Logo:</label>
-                    <ImageDrop setStore={setStore} className=" text-[10px]" imageData='logo.logoUrl' />
-                  </div>
-                </li>
-                <li className='text-md font-semibold border-b-2 border-gray-200 pb-5 font-Ubuntu  hover:bg-gray-50'>
-                  Hero Section :<br />
-                  <div className='font-normal'>
-                    <label className='text-[12px]  font-Ubuntu'>Title</label><br />
-                    <input type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%] text-[14px]' value={store.name} onChange={e => setStore(n => ({ ...n, name: e.target.value }))}></input>
-                  </div>
-                  <div>
-                    <div className="font-normal mt-2">
-                      <label className='text-[12px]  font-Ubuntu'>Background:</label>
-                      <ImageDrop setStore={setStore} imageData='banner.bannerUrl' />
-                    </div>
-                  </div>
-                </li >
-                <li className='text-md font-bold font-Ubuntu border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
-                  Categories :<br />
-                  <div className="text-[14px] font-VT323">
-                    <FontSelector section="Categories" />
-                  </div>
-                  <div className='font-normal'>
-                    <label className='text-[12px]  font-Ubuntu'>Title</label><br />
-                    <div className='flex h-[26px]'>
-                      <input type='text' className=' border-2 border-gray-300  w-[95%]  rounded mr-2 px-2 ' value={categoryData} onChange={e => setCategoryData(e.target.value)} ></input>
-                      <button className='px-2 text-[12px]  font-Ubuntu  border-2 border-gray-300 rounded  w-[25%] ' onClick={handleAddCategory}>Add +</button>
-                    </div>
-                  </div>
-                  <ul className='font-normal list-disc ml-8 mt-2 text-sm'>
-                    {store.subCategories.map(item => (<li key={item.name}>{item.name}</li>))}
-                  </ul>
-                </li>
-                <li className='text-md font-semibold border-b-2 border-gray-200 pb-5 font-Ubuntu  hover:bg-gray-50'>
-                  Banner #1<br />
-                  <div>
-                    <FontSelector section="Banner1" />
-                  </div>
-                  <label className='text-[12px]  font-Ubuntu'>Title</label><br />
-                  <input value={store.thirdBannerText.heading} type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
-                  <textarea value={store.thirdBannerText.paragraph} type='text' className=' border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[12px]  font-Ubuntu'>Image:</label> <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
-                </li>
-                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
-                  Banner #2<br />
-                  <div>
-                    <FontSelector section="Banner2" />
-                  </div>
-                  <label className='text-[12px]  font-Ubuntu'>Title</label><br />
-                  <input value={store.secondaryBannerText.heading} type='text' className=' border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
-                  <textarea value={store.secondaryBannerText.paragraph} type='text' className=' border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[12px]  font-Ubuntu'>Image:</label> <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
-                </li>
-                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
-                  Banner #3<br />
-                  <div>
-                    <FontSelector section="Banner3" />
-                  </div>
-                  <label className='text-[12px]  font-Ubuntu'>Title</label><br />
-                  <input value={store.offerBannerText.para1} type='text' className='border-2 border-gray-300 rounded px-2 w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
-                  <textarea value={store.offerBannerText.para2} type='text' className='border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para2: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[12px]  font-Ubuntu'>Description</label><br />
-                  <textarea value={store.offerBannerText.para3} type='text' className='border-2 border-gray-300 rounded px-2 h-[80px] w-[100%]' onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para3: e.target.value } })) }} ></textarea><br />
-                  <label className='text-[12px]  font-Ubuntu'>Image:</label> <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
-                </li>
-                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
-                  Add Products<br />
-                  <div className='mt-2'>
-                    <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddProduct}>Add +</button>
-                  </div>
-                </li>
-                <li className='text-md font-Ubuntu font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
-                  Featured Products<br />
-                  <div>
-                    <FontSelector section="Featured" />
-                  </div>
-                  <div>
-                    <FontSelector section="NewProduct" />
-                  </div>
-                  <div className='mt-2 flex '>
-                    <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
-                      {store.products.map((n, i) => (<option value={i} key={i}>{n.name}</option>))}
-                    </select>
-                    <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddFeaturedProduct}>Add +</button>
-                  </div>
-                </li>
+      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+        <h1 className='text-2xl font-Poppins mb-4'>Banner #1</h1>
+        <div className='mt-4'>
+          <FontSelector section="Banner1" />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Title</label>
+          <input 
+            type='text' 
+            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.thirdBannerText.heading} 
+            onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }} 
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Description</label>
+          <textarea 
+            className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.thirdBannerText.paragraph} 
+            onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }} 
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Image:</label>
+          <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
+        </div>
+      </li>
 
-                <li className='text-sm font-semibold border-b-2 border-gray-200 pb-5  hover:bg-gray-50'>
-                  Footer<br />
-                  <div>
-                    <FontSelector section="Footer" />
-                  </div>
-                  <label className='text-[12px]  font-Ubuntu'>Location</label><br />
-                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>Email</label><br />
-                  <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>Phone Number</label><br />
-                  <input value={store.phoneNumber} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
-                  <div className='mt-3'>Social Media Links</div>
-                  <label className='text-[12px]  font-Ubuntu'>Facebook</label><br />
-                  <input value={store.socialMediaLinks.facebook} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>Twitter</label><br />
-                  <input value={store.socialMediaLinks.twitter} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>Instagram</label><br />
-                  <input value={store.socialMediaLinks.instagram} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
-                  <label className='text-[12px]  font-Ubuntu'>linkedIn</label><br />
-                  <input value={store.socialMediaLinks.linkedin} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
+      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+        <h1 className='text-2xl font-Poppins mb-4'>Banner #2</h1>
+        <div className='mt-4'>
+          <FontSelector section="Banner2" />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Title</label>
+          <input 
+            type='text' 
+            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.secondaryBannerText.heading} 
+            onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }} 
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Description</label>
+          <textarea 
+            className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.secondaryBannerText.paragraph} 
+            onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }} 
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Image:</label>
+          <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
+        </div>
+      </li>
 
-                </li>
-              </ul>
-              {addProductForm && <ProductForm onClose={() => setAddProductForm(!addProductForm)} />}
-            </div>
-          )}
+      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+        <h1 className='text-2xl font-Poppins mb-4'>Banner #3</h1>
+        <div className='mt-4'>
+          <FontSelector section="Banner3" />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Title</label>
+          <input 
+            type='text' 
+            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.offerBannerText.para1} 
+            onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }} 
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Description</label>
+          <textarea 
+            className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
+            value={store.offerBannerText.heading} 
+            onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, heading: e.target.value } })) }} 
+          />
+        </div>
+        <div className='font-normal mt-4'>
+          <label className='text-sm font-Poppins mb-2 block'>Image:</label>
+          <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
+        </div>
+      </li>
+    </ul>
+  </motion.div>
+)}
+
 
           {openType === 2 && (
             <div className="mt-5 px-4 capitalize">
               <div className="flex flex-col gap-4">
 
                 <div className="mb-4">
-                  <h4 className="text-lg font-semibold mb-2">Select Preset</h4>
+                  <h4 className="text-xl font-semibold mb-2">Select Preset</h4>
                   <select
                     className="border border-gray-300 rounded-md py-2 px-4 w-full"
                     onChange={handlePresetChange}
@@ -1683,7 +1797,7 @@ const Editor = () => {
                   if (typeof colorValue === 'object') {
                     return (
                       <div key={index} className=' spac-y-2'>
-                        <h4 className="text-lg font-semibold mt-5 mb-2  border-b-2 ">{friendlyNames[colorKey]}</h4>
+                        <h4 className="text-xl font-semibold mt-5 mb-2  border-b-2 ">{friendlyNames[colorKey]}</h4>
                         {Object.entries(colorValue).map(([nestedKey, nestedValue], nestedIndex) => (
                           <div key={nestedIndex} className="flex flex-row justify-around items-start items-center ">
                             <label className="text-gray-700 w-24 flex-grow">{nestedFriendlyNames[nestedKey]}</label>
@@ -1702,7 +1816,7 @@ const Editor = () => {
                   } else {
                     return (
                       <div key={index}>
-                        <h4 className="text-lg font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
+                        <h4 className="text-xl font-semibold mt-5 mb-2">{friendlyNames[colorKey]}</h4>
                         <div className="flex justify-between border-grey-300 border-b-2">
                           <label className="flex-grow text-gray-700 w-24">Default</label>
                           <div className="flex items-center ml-4">
@@ -1729,7 +1843,7 @@ const Editor = () => {
               {store?.componentSkin?.map((component, index) => (
                 <li key={index} className='text-sm font-semibold border-b-2 border-gray-200 pb-5'>
                   {component.component}:<br />
-                  <label className='text-[12px]  font-Ubuntu'>Active Skin</label><br />
+                  <label className='text-[12px]  font-Poppins'>Active Skin</label><br />
                   <select value={component.activeSkin} onChange={e => handleActiveSkinChange(e, index)} className='border-2 border-gray-300 rounded px-2'>
                     {component.skinInventory.map((skin, idx) => (
                       <option key={idx} value={skin}>{skin}</option>
