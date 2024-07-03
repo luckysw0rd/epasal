@@ -193,91 +193,95 @@ const Editor = () => {
 
   const presets = [
     {
-      name: 'Aqua and Black',
+      name: 'Graphite Gray',
       color: {
-        backgroundThemeColor: "#000000", // Black
+        backgroundThemeColor: "#ffffff",
         navColor: {
-          backgroundnavColor: "#00FFFF", // Aqua
-          storeNameTextColor: "#FFFFFF", // White for contrast
-          categoryTextColor: "#00FFFF", // Aqua
-          searchBarColor: "#000000", // Black
+          backgroundnavColor: "#373a40",
+          storeNameTextColor: "#eeeeee",
+          categoryTextColor: "#dc5f00",
+          searchBarColor: "#fcf3f3",
         },
         subcategoryColor: {
-          background: "#000000", // Black
-          text: "#00FFFF", // Aqua
+          background: "#eeeeee",
+          text: "#36393f",
         },
         subProductColor: {
-          categoryColor: "#000000", // Black
-          backgroundColor: "#00FFFF", // Aqua
-          textColor: "#000000", // Black
-          borderColor: "#00FFFF", // Aqua
-          priceColor: "#00FFFF", // Aqua
-          priceLetterColor: "#000000", // Black
-          scrollbarColor: "#00FFFF", // Aqua
-          starColor: "#00FFFF", // Aqua
+          categoryColor: "#eeeeee",
+          backgroundColor: "#fafafa",
+          textColor: "#333333",
+          borderColor: "#ffffff",
+          priceColor: "#3d3d3d",
+          priceLetterColor: "#ffffff",
+          buttonColor: "#3d3d3d",
+          scrollbarColor: "#1f1f1e",
+          starColor: "#3d3d3d",
+
         },
         firstBannerColor: {
-          backgroundThemeColor1: "#000000", // Black
-          backgroundThemeColor2: "#00FFFF", // Aqua
-          textColor: "#FFFFFF", // White for contrast
-          buttonColor: "#000000", // Black
-          buttonText: "#00FFFF", // Aqua
+          backgroundThemeColor1: "#fafafa",
+          // backgroundThemeColor2: "#fcf3f3",
+          textColor: "#1f1f1e",
+          buttonColor: "#3d3d3d",
+          buttonText: "#ffffff",
         },
         newProductColor: {
-          backgroundColor: "#000000", // Black
-          cardBackground: "#000000", // Black
-          borderColor: "#00FFFF", // Aqua
-          headerColor: "#00FFFF", // Aqua
-          textColor: "#FFFFFF", // White for contrast
-          priceColor: "#00FFFF", // Aqua
-          heartColor: "#00FFFF", // Aqua
-          buttonTextColor: "#000000", // Black
-          buttonBgColor: "#00FFFF", // Aqua
-          buttonBorderColor: "#000000", // Black
-          buttonBgColorOnHover: "#000000", // Black
+          backgroundColor: "#eeeeee",
+          cardBackground: "#fafafa",
+          borderColor: "#cac4c4",
+          headerColor: "#5D4B3F",
+          textColor: "#3d3d3d",
+          priceColor: "#3d3d3d",
+          heartColor: "#FF4D00",
+          buttonTextColor: "#ffffff",
+          buttonBgColor: "#3d3d3d",
+          buttonBorderColor: "#4F3100",
+          buttonBgColorOnHover: "#263129",
         },
         secondaryBannerColor: {
-          backgroundThemeColor1: "#000000", // Black
-          backgroundThemeColor2: "#00FFFF", // Aqua
-          textColor: "#FFFFFF", // White for contrast
-          buttonColor: "#000000", // Black
-          buttonText: "#00FFFF", // Aqua
+          backgroundThemeColor1: "#fafafa",
+          // backgroundThemeColor2: "#fafafa",
+          textColor: "#1f1f1e",
+          buttonColor: "#3d3d3d",
+          buttonText: "#ffffff",
+        },
+        productSection: "#ffffff",
+        productListColor: {
+          backgroundColor: "#eeeeee",
+          cardBackground: "#fafafa",
+          borderColor: "#cac4c4",
+          headerColor: "#5D4B3F",
+          textColor: "#3d3d3d",
+          priceColor: "#3d3d3d",
+          heartColor: "#FF4D00",
+          buttonTextColor: "#ffffff",
+          buttonBgColor: "#3d3d3d",
+          buttonBorderColor: "#4F3100",
+          buttonBgColorOnHover: "#4F3100",
         },
         offerBannerColor: {
-          backgroundBoxThemeColor1: "#000000", // Black
-          backgroundThemeColor: "#00FFFF", // Aqua
-          textColor: "#FFFFFF", // White for contrast
-          buttonColor: "#000000", // Black
-          buttonText: "#00FFFF", // Aqua
-        },
-        headerColor: {
-          headerText: "#00FFFF", // Aqua
-          headerBackground: "#000000", // Black
-        },
-        productSection: "#000000", // Black
-        productListColor: {
-          backgroundColor: "#000000", // Black
-          cardBackground: "#000000", // Black
-          borderColor: "#00FFFF", // Aqua
-          headerColor: "#00FFFF", // Aqua
-          textColor: "#FFFFFF", // White for contrast
-          priceColor: "#00FFFF", // Aqua
-          heartColor: "#00FFFF", // Aqua
-          buttonTextColor: "#000000", // Black
-          buttonBgColor: "#00FFFF", // Aqua
-          buttonBorderColor: "#000000", // Black
-          buttonBgColorOnHover: "#000000", // Black
+          backgroundBoxThemeColor1: "#ffffff",
+          backgroundThemeColor: "#eeeeee",
+          textColor: "#4E3E34",
+          buttonColor: "#401a12",
+          buttonText: "#3e1818",
         },
         footerColor: {
-          bgColor: "#000000", // Black
-          textColor: "#00FFFF", // Aqua
-          linkHeaderColor: "#00FFFF", // Aqua
-          linkColor: "#00FFFF", // Aqua
-          btnBgColor: "#000000", // Black
-          btnText: "#00FFFF", // Aqua
-          btnBgColorOnHover: "#00FFFF", // Aqua
+          bgColor: "#1e1e20",
+          textColor: "#ffffff",
+          linkHeaderColor: "#ffffff",
+          linkColor: "#f2f2f2",
+          btnBgColor: "#ffffff",
+          btnText: "#fafafa",
+          btnBgColorOnHover: "#4F3100",
         },
-      },
+        headerColor: {
+          headerText: "#ffffff",
+          headerBackground: "#7a5C5c",
+        },
+
+
+      }
     },
     {
       name: 'Blue Voyage',
@@ -453,93 +457,7 @@ const Editor = () => {
         },
       },
     },
-    {
-      name: 'Turquoise Tortoise',
-      color: {
-        backgroundThemeColor: "#E0FFFF", // Light Cyan (Turquoise)
-        navColor: {
-          backgroundnavColor: "#20B2AA", // Light Sea Green
-          storeNameTextColor: "#1A1A1A", // Very Dark Gray
-          categoryTextColor: "#2E8B57", // Sea Green
-          searchBarColor: "#F0FFFF", // Azure
-        },
-        subcategoryColor: {
-          background: "#F0FFFF", // Azure
-          text: "#2F4F4F", // Dark Slate Gray
-        },
-        subProductColor: {
-          categoryColor: "#F0FFFF", // Azure
-          backgroundColor: "#E0FFFF", // Light Cyan
-          textColor: "#2F4F4F", // Dark Slate Gray
-          borderColor: "#20B2AA", // Light Sea Green
-          priceColor: "#2E8B57", // Sea Green
-          priceLetterColor: "#F0FFFF", // Azure
-          scrollbarColor: "#2E8B57", // Sea Green
-          starColor: "#4682B4", // Steel Blue
-        },
-        firstBannerColor: {
-          backgroundThemeColor1: "#F0FFFF", // Azure
-          backgroundThemeColor2: "#E0FFFF", // Light Cyan
-          textColor: "#2F4F4F", // Dark Slate Gray
-          buttonColor: "#20B2AA", // Light Sea Green
-          buttonText: "#F0FFFF", // Azure
-        },
-        newProductColor: {
-          backgroundColor: "#F0FFFF", // Azure
-          cardBackground: "#F0FFFF", // Azure
-          borderColor: "#40E0D0", // Turquoise
-          headerColor: "#2F4F4F", // Dark Slate Gray
-          textColor: "#2E8B57", // Sea Green
-          priceColor: "#2E8B57", // Sea Green
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#2E8B57", // Sea Green
-          buttonBgColor: "#F0FFFF", // Azure
-          buttonBorderColor: "#2E8B57", // Sea Green
-          buttonBgColorOnHover: "#2E8B57", // Sea Green
-        },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#F0FFFF", // Azure
-          backgroundThemeColor2: "#E0FFFF", // Light Cyan
-          textColor: "#2F4F4F", // Dark Slate Gray
-          buttonColor: "#20B2AA", // Light Sea Green
-          buttonText: "#F0FFFF", // Azure
-        },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#F0FFFF", // Azure
-          backgroundThemeColor: "#AFEEEE", // Pale Turquoise
-          textColor: "#2F4F4F", // Dark Slate Gray
-          buttonColor: "#20B2AA", // Light Sea Green
-          buttonText: "#F0FFFF", // Azure
-        },
-        headerColor: {
-          headerText: "#F0FFFF", // Azure
-          headerBackground: "#20B2AA", // Light Sea Green
-        },
-        productSection: "#F0FFFF", // Azure
-        productListColor: {
-          backgroundColor: "#F0FFFF", // Azure
-          cardBackground: "#F0FFFF", // Azure
-          borderColor: "#40E0D0", // Turquoise
-          headerColor: "#2F4F4F", // Dark Slate Gray
-          textColor: "#2E8B57", // Sea Green
-          priceColor: "#2E8B57", // Sea Green
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#2E8B57", // Sea Green
-          buttonBgColor: "#F0FFFF", // Azure
-          buttonBorderColor: "#2E8B57", // Sea Green
-          buttonBgColorOnHover: "#2E8B57", // Sea Green
-        },
-        footerColor: {
-          bgColor: "#2E8B57", // Sea Green
-          textColor: "#F0FFFF", // Azure
-          linkHeaderColor: "#F0FFFF", // Azure
-          linkColor: "#F0FFFF", // Azure
-          btnBgColor: "#2E8B57", // Sea Green
-          btnText: "#F0FFFF", // Azure
-          btnBgColorOnHover: "#20B2AA", // Light Sea Green
-        },
-      },
-    },
+
     {
       name: 'Nostalgic Matcha',
       color: {
@@ -627,966 +545,788 @@ const Editor = () => {
         },
       },
     },
+    {
+      name: 'Soft Lavender',
+      color: {
+        backgroundThemeColor: "#F9F5FF",
+        navColor: {
+          backgroundnavColor: "#E6E0FF",
+          storeNameTextColor: "#4B3A5A",
+          categoryTextColor: "#A89BC8",
+          searchBarColor: "#F2EBFF",
+        },
+        subcategoryColor: {
+          background: "#F2EBFF",
+          text: "#4B3A5A",
+        },
+        subProductColor: {
+          categoryColor: "#F9F5FF",
+          backgroundColor: "#F2EBFF",
+          textColor: "#4B3A5A",
+          borderColor: "#E0D9FF",
+          priceColor: "#4B3A5A",
+          priceLetterColor: "#F2EBFF",
+          buttonColor: "#A89BC8",
+          scrollbarColor: "#4B3A5A",
+          starColor: "#D9CCFF",
+        },
+        firstBannerColor: {
+          backgroundThemeColor1: "#F9F5FF",
+          textColor: "#4B3A5A",
+          buttonColor: "#A89BC8",
+          buttonText: "#F9F5FF",
+        },
+        newProductColor: {
+          backgroundColor: "#F2EBFF",
+          cardBackground: "#F9F5FF",
+          borderColor: "#E0D9FF",
+          headerColor: "#4B3A5A",
+          textColor: "#4B3A5A",
+          priceColor: "#4B3A5A",
+          heartColor: "#D9CCFF",
+          buttonTextColor: "#F9F5FF",
+          buttonBgColor: "#A89BC8",
+          buttonBorderColor: "#4B3A5A",
+          buttonBgColorOnHover: "#4B3A5A",
+        },
+        secondaryBannerColor: {
+          backgroundThemeColor1: "#F9F5FF",
+          textColor: "#4B3A5A",
+          buttonColor: "#A89BC8",
+          buttonText: "#F9F5FF",
+        },
+        offerBannerColor: {
+          backgroundBoxThemeColor1: "#F2EBFF",
+          backgroundThemeColor: "#E0D9FF",
+          textColor: "#4B3A5A",
+          buttonColor: "#A89BC8",
+          buttonText: "#F9F5FF",
+        },
+        headerColor: {
+          headerText: "#4B3A5A",
+          headerBackground: "#E6E0FF",
+        },
+        productSection: "#F9F5FF",
+        productListColor: {
+          backgroundColor: "#F2EBFF",
+          cardBackground: "#F9F5FF",
+          borderColor: "#E0D9FF",
+          headerColor: "#4B3A5A",
+          textColor: "#4B3A5A",
+          priceColor: "#4B3A5A",
+          heartColor: "#D9CCFF",
+          buttonTextColor: "#F9F5FF",
+          buttonBgColor: "#A89BC8",
+          buttonBorderColor: "#4B3A5A",
+          buttonBgColorOnHover: "#4B3A5A",
+        },
+        footerColor: {
+          bgColor: "#E6E0FF",
+          textColor: "#4B3A5A",
+          linkHeaderColor: "#4B3A5A",
+          linkColor: "#4B3A5A",
+          btnBgColor: "#A89BC8",
+          btnText: "#F9F5FF",
+          btnBgColorOnHover: "#4B3A5A",
+        },
+      }
+    },
+    {
+      name: 'Peach Blossom',
+      color: {
+        backgroundThemeColor: "#FFF5EB",
+        navColor: {
+          backgroundnavColor: "#FFDAB9",
+          storeNameTextColor: "#5A4034",
+          categoryTextColor: "#FF8C69",
+          searchBarColor: "#FFF5EB",
+        },
+        subcategoryColor: {
+          background: "#FFF0E6",
+          text: "#5A4034",
+        },
+        subProductColor: {
+          categoryColor: "#FFF0E6",
+          backgroundColor: "#FFF9F3",
+          textColor: "#5A4034",
+          borderColor: "#FFDAB9",
+          priceColor: "#5A4034",
+          priceLetterColor: "#FFF5EB",
+          scrollbarColor: "#FF8C69",
+          starColor: "#FF8C69",
+        },
+        firstBannerColor: {
+          backgroundThemeColor1: "#FFF5EB",
+          textColor: "#5A4034",
+          buttonColor: "#FF8C69",
+          buttonText: "#FFF5EB",
+        },
+        newProductColor: {
+          backgroundColor: "#FFF9F3",
+          cardBackground: "#FFF0E6",
+          borderColor: "#FFDAB9",
+          headerColor: "#5A4034",
+          textColor: "#5A4034",
+          priceColor: "#5A4034",
+          heartColor: "#FF8C69",
+          buttonTextColor: "#FFF5EB",
+          buttonBgColor: "#FF8C69",
+          buttonBorderColor: "#5A4034",
+          buttonBgColorOnHover: "#5A4034",
+        },
+        secondaryBannerColor: {
+          backgroundThemeColor1: "#FFF5EB",
+          textColor: "#5A4034",
+          buttonColor: "#FF8C69",
+          buttonText: "#FFF5EB",
+        },
+        offerBannerColor: {
+          backgroundBoxThemeColor1: "#FFF9F3",
+          backgroundThemeColor: "#FFDAB9",
+          textColor: "#5A4034",
+          buttonColor: "#FF8C69",
+          buttonText: "#FFF5EB",
+        },
+        headerColor: {
+          headerText: "#5A4034",
+          headerBackground: "#FFDAB9",
+        },
+        productSection: "#FFF5EB",
+        productListColor: {
+          backgroundColor: "#FFF9F3",
+          cardBackground: "#FFF0E6",
+          borderColor: "#FFDAB9",
+          headerColor: "#5A4034",
+          textColor: "#5A4034",
+          priceColor: "#5A4034",
+          heartColor: "#FF8C69",
+          buttonTextColor: "#FFF5EB",
+          buttonBgColor: "#FF8C69",
+          buttonBorderColor: "#5A4034",
+          buttonBgColorOnHover: "#5A4034",
+        },
+        footerColor: {
+          bgColor: "#FFDAB9",
+          textColor: "#5A4034",
+          linkHeaderColor: "#5A4034",
+          linkColor: "#5A4034",
+          btnBgColor: "#FF8C69",
+          btnText: "#FFF5EB",
+          btnBgColorOnHover: "#5A4034",
+        },
+      }
+    },
+  
 
-
     {
-      name: 'Brunchy Orange',
+      name: 'Coral Reef',
       color: {
-        backgroundThemeColor: "#FFF8E1", // Light Yellow
+        backgroundThemeColor: "#FFF5F0",
         navColor: {
-          backgroundnavColor: "#FFB347", // Darker Orange
-          storeNameTextColor: "#3C3C3C", // Dark Gray
-          categoryTextColor: "#5A5A5A", // Medium Gray
-          searchBarColor: "#FFF3E0", // Light Orange
+          backgroundnavColor: "#FFCCB6",
+          storeNameTextColor: "#5B4233",
+          categoryTextColor: "#FF9273",
+          searchBarColor: "#FFEDE3",
         },
         subcategoryColor: {
-          background: "#FFF8E1", // Light Yellow
-          text: "#D2691E", // Chocolate
+          background: "#FFEDE3",
+          text: "#5B4233",
         },
         subProductColor: {
-          categoryColor: "#FFF8E1", // Light Yellow
-          backgroundColor: "#FFE4B5", // Moccasin
-          textColor: "#5A5A5A", // Medium Gray
-          borderColor: "#FFB347", // Darker Orange
-          priceColor: "#D2691E", // Chocolate
-          priceLetterColor: "#FFF3E0", // Light Orange
-          scrollbarColor: "#D2691E", // Chocolate
-          starColor: "#FF8C00", // Dark Orange
+          categoryColor: "#FFF5F0",
+          backgroundColor: "#FFCCB6",
+          textColor: "#5B4233",
+          borderColor: "#FFCCB6",
+          priceColor: "#5B4233",
+          priceLetterColor: "#FFEDE3",
+          buttonColor: "#FF9273",
+          scrollbarColor: "#5B4233",
+          starColor: "#FF9273",
         },
         firstBannerColor: {
-          backgroundThemeColor1: "#FFF8E1", // Light Yellow
-          backgroundThemeColor2: "#FFF3E0", // Light Orange
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#FFB347", // Darker Orange
-          buttonText: "#FFF3E0", // Light Orange
+          backgroundThemeColor1: "#FFF5F0",
+          textColor: "#5B4233",
+          buttonColor: "#FF9273",
+          buttonText: "#FFF5F0",
         },
         newProductColor: {
-          backgroundColor: "#FFF8E1", // Light Yellow
-          cardBackground: "#FFF8E1", // Light Yellow
-          borderColor: "#FFD700", // Gold
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2691E", // Chocolate
-          priceColor: "#D2691E", // Chocolate
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#D2691E", // Chocolate
-          buttonBgColor: "#FFF8E1", // Light Yellow
-          buttonBorderColor: "#D2691E", // Chocolate
-          buttonBgColorOnHover: "#D2691E", // Chocolate
+          backgroundColor: "#FFEDE3",
+          cardBackground: "#FFF5F0",
+          borderColor: "#FFCCB6",
+          headerColor: "#5B4233",
+          textColor: "#5B4233",
+          priceColor: "#5B4233",
+          heartColor: "#FF9273",
+          buttonTextColor: "#FFF5F0",
+          buttonBgColor: "#FF9273",
+          buttonBorderColor: "#5B4233",
+          buttonBgColorOnHover: "#5B4233",
         },
         secondaryBannerColor: {
-          backgroundThemeColor1: "#FFF8E1", // Light Yellow
-          backgroundThemeColor2: "#FFF3E0", // Light Orange
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#FFB347", // Darker Orange
-          buttonText: "#FFF3E0", // Light Orange
+          backgroundThemeColor1: "#FFF5F0",
+          textColor: "#5B4233",
+          buttonColor: "#FF9273",
+          buttonText: "#FFF5F0",
+        }, offerBannerColor: {
+          backgroundBoxThemeColor1: "#FFEDE3",
+          backgroundThemeColor: "#FFCCB6",
+          textColor: "#5B4233",
+          buttonColor: "#FF9273",
+          buttonText: "#FFF5F0",
+        }, headerColor: {
+          headerText: "#5B4233",
+          headerBackground: "#FFCCB6",
         },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#FFF8E1", // Light Yellow
-          backgroundThemeColor: "#FFA07A", // Light Salmon
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#FFB347", // Darker Orange
-          buttonText: "#FFF3E0", // Light Orange
-        },
-        headerColor: {
-          headerText: "#FFF3E0", // Light Orange
-          headerBackground: "#D2691E", // Chocolate
-        },
-        productSection: "#FFF8E1", // Light Yellow
+        productSection: "#FFF5F0",
         productListColor: {
-          backgroundColor: "#FFF8E1", // Light Yellow
-          cardBackground: "#FFF8E1", // Light Yellow
-          borderColor: "#FFD700", // Gold
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2691E", // Chocolate
-          priceColor: "#D2691E", // Chocolate
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#D2691E", // Chocolate
-          buttonBgColor: "#FFF8E1", // Light Yellow
-          buttonBorderColor: "#D2691E", // Chocolate
-          buttonBgColorOnHover: "#D2691E", // Chocolate
+          backgroundColor: "#FFEDE3",
+          cardBackground: "#FFF5F0",
+          borderColor: "#FFCCB6",
+          headerColor: "#5B4233",
+          textColor: "#5B4233",
+          priceColor: "#5B4233",
+          heartColor: "#FF9273",
+          buttonTextColor: "#FFF5F0",
+          buttonBgColor: "#FF9273",
+          buttonBorderColor: "#5B4233",
+          buttonBgColorOnHover: "#5B4233",
         },
         footerColor: {
-          bgColor: "#D2691E", // Chocolate
-          textColor: "#FFF3E0", // Light Orange
-          linkHeaderColor: "#FFF3E0", // Light Orange
-          linkColor: "#FFF3E0", // Light Orange
-          btnBgColor: "#D2691E", // Chocolate
-          btnText: "#FFF3E0", // Light Orange
-          btnBgColorOnHover: "#FF4500", // Orange Red
+          bgColor: "#FFCCB6",
+          textColor: "#5B4233",
+          linkHeaderColor: "#5B4233",
+          linkColor: "#5B4233",
+          btnBgColor: "#FF9273",
+          btnText: "#FFF5F0",
+          btnBgColorOnHover: "#5B4233",
         },
-      },
+      }
     },
     {
-      name: 'Forest Whisper',
-      color: {
-        backgroundThemeColor: "#F5FFF5", // Light Green
-        navColor: {
-          backgroundnavColor: "#4CAF50", // Green
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#2E7D32", // Dark Green
-          searchBarColor: "#E8F5E9", // Light Green
+      "name": "Pastel Blossom",
+      "color": {
+        "backgroundThemeColor": "#FFF0F5",
+        "navColor": {
+          "backgroundnavColor": "#FFC1CC",
+          "storeNameTextColor": "#7A3B4E",
+          "categoryTextColor": "#FFA3B0",
+          "searchBarColor": "#FFE4E1"
         },
-        subcategoryColor: {
-          background: "#E8F5E9", // Light Green
-          text: "#2E7D32", // Dark Green
+        "subcategoryColor": {
+          "background": "#FFE4E1",
+          "text": "#7A3B4E"
         },
-        subProductColor: {
-          categoryColor: "#E8F5E9", // Light Green
-          backgroundColor: "#A5D6A7", // Light Green
-          textColor: "#1B5E20", // Dark Green
-          borderColor: "#4CAF50", // Green
-          priceColor: "#2E7D32", // Dark Green
-          priceLetterColor: "#E8F5E9", // Light Green
-          scrollbarColor: "#2E7D32", // Dark Green
-          starColor: "#66BB6A", // Light Green
+        "subProductColor": {
+          "categoryColor": "#FFF0F5",
+          "backgroundColor": "#FFC1CC",
+          "textColor": "#7A3B4E",
+          "borderColor": "#FFC1CC",
+          "priceColor": "#7A3B4E",
+          "priceLetterColor": "#FFE4E1",
+          "buttonColor": "#FFA3B0",
+          "scrollbarColor": "#7A3B4E",
+          "starColor": "#FFA3B0"
         },
-        firstBannerColor: {
-          backgroundThemeColor1: "#E8F5E9", // Light Green
-          backgroundThemeColor2: "#A5D6A7", // Light Green
-          textColor: "#1B5E20", // Dark Green
-          buttonColor: "#4CAF50", // Green
-          buttonText: "#E8F5E9", // Light Green
+        "firstBannerColor": {
+          "backgroundThemeColor1": "#FFF0F5",
+          "textColor": "#7A3B4E",
+          "buttonColor": "#FFA3B0",
+          "buttonText": "#FFF0F5"
         },
-        newProductColor: {
-          backgroundColor: "#E8F5E9", // Light Green
-          cardBackground: "#E8F5E9", // Light Green
-          borderColor: "#81C784", // Light Green
-          headerColor: "#1B5E20", // Dark Green
-          textColor: "#2E7D32", // Dark Green
-          priceColor: "#2E7D32", // Dark Green
-          heartColor: "#FF8C00", // Dark Orange
-          buttonTextColor: "#2E7D32", // Dark Green
-          buttonBgColor: "#E8F5E9", // Light Green
-          buttonBorderColor: "#2E7D32", // Dark Green
-          buttonBgColorOnHover: "#2E7D32", // Dark Green
+        "newProductColor": {
+          "backgroundColor": "#FFE4E1",
+          "cardBackground": "#FFF0F5",
+          "borderColor": "#FFC1CC",
+          "headerColor": "#7A3B4E",
+          "textColor": "#7A3B4E",
+          "priceColor": "#7A3B4E",
+          "heartColor": "#FFA3B0",
+          "buttonTextColor": "#FFF0F5",
+          "buttonBgColor": "#FFA3B0",
+          "buttonBorderColor": "#7A3B4E",
+          "buttonBgColorOnHover": "#7A3B4E"
         },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#E8F5E9", // Light Green
-          backgroundThemeColor2: "#A5D6A7", // Light Green
-          textColor: "#1B5E20", // Dark Green
-          buttonColor: "#4CAF50", // Green
-          buttonText: "#E8F5E9", // Light Green
+        "secondaryBannerColor": {
+          "backgroundThemeColor1": "#FFF0F5",
+          "textColor": "#7A3B4E",
+          "buttonColor": "#FFA3B0",
+          "buttonText": "#FFF0F5"
         },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#E8F5E9", // Light Green
-          backgroundThemeColor: "#C8E6C9", // Light Green
-          textColor: "#1B5E20", // Dark Green
-          buttonColor: "#4CAF50", // Green
-          buttonText: "#E8F5E9", // Light Green
+        "offerBannerColor": {
+          "backgroundBoxThemeColor1": "#FFE4E1",
+          "backgroundThemeColor": "#FFC1CC",
+          "textColor": "#7A3B4E",
+          "buttonColor": "#FFA3B0",
+          "buttonText": "#FFF0F5"
         },
-        headerColor: {
-          headerText: "#E8F5E9", // Light Green
-          headerBackground: "#2E7D32", // Dark Green
+        "headerColor": {
+          "headerText": "#7A3B4E",
+          "headerBackground": "#FFC1CC"
         },
-        productSection: "#E8F5E9", // Light Green
-        productListColor: {
-          backgroundColor: "#E8F5E9", // Light Green
-          cardBackground: "#E8F5E9", // Light Green
-          borderColor: "#81C784", // Light Green
-          headerColor: "#1B5E20", // Dark Green
-          textColor: "#2E7D32", // Dark Green
-          priceColor: "#2E7D32", // Dark Green
-          heartColor: "#FF8C00", // Dark Orange
-          buttonTextColor: "#2E7D32", // Dark Green
-          buttonBgColor: "#E8F5E9", // Light Green
-          buttonBorderColor: "#2E7D32", // Dark Green
-          buttonBgColorOnHover: "#2E7D32", // Dark Green
+        "productSection": "#FFF0F5",
+        "productListColor": {
+          "backgroundColor": "#FFE4E1",
+          "cardBackground": "#FFF0F5",
+          "borderColor": "#FFC1CC",
+          "headerColor": "#7A3B4E",
+          "textColor": "#7A3B4E",
+          "priceColor": "#7A3B4E",
+          "heartColor": "#FFA3B0",
+          "buttonTextColor": "#FFF0F5",
+          "buttonBgColor": "#FFA3B0",
+          "buttonBorderColor": "#7A3B4E",
+          "buttonBgColorOnHover": "#7A3B4E"
         },
-        footerColor: {
-          bgColor: "#2E7D32", // Dark Green
-          textColor: "#E8F5E9", // Light Green
-          linkHeaderColor: "#E8F5E9", // Light Green
-          linkColor: "#E8F5E9", // Light Green
-          btnBgColor: "#2E7D32", // Dark Green
-          btnText: "#E8F5E9", // Light Green
-          btnBgColorOnHover: "#4CAF50", // Green
-        },
-      },
+        "footerColor": {
+          "bgColor": "#FFC1CC",
+          "textColor": "#7A3B4E",
+          "linkHeaderColor": "#7A3B4E",
+          "linkColor": "#7A3B4E",
+          "btnBgColor": "#FFA3B0",
+          "btnText": "#FFF0F5",
+          "btnBgColorOnHover": "#7A3B4E"
+        }
+      }
     },
     {
-      name: 'Royal Blue Elegance',
-      color: {
-        backgroundThemeColor: "#F0F8FF", // Alice Blue
-        navColor: {
-          backgroundnavColor: "#4169E1", // Royal Blue
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#191970", // Midnight Blue
-          searchBarColor: "#E6E6FA", // Lavender
+      "name": "Lavender Fields",
+      "color": {
+        "backgroundThemeColor": "#F0F0FF",
+        "navColor": {
+          "backgroundnavColor": "#C1B6FF",
+          "storeNameTextColor": "#42335B",
+          "categoryTextColor": "#9273FF",
+          "searchBarColor": "#EDE3FF"
         },
-        subcategoryColor: {
-          background: "#E6E6FA", // Lavender
-          text: "#191970", // Midnight Blue
+        "subcategoryColor": {
+          "background": "#EDE3FF",
+          "text": "#42335B"
         },
-        subProductColor: {
-          categoryColor: "#E6E6FA", // Lavender
-          backgroundColor: "#B0C4DE", // Light Steel Blue
-          textColor: "#000080", // Navy
-          borderColor: "#4169E1", // Royal Blue
-          priceColor: "#191970", // Midnight Blue
-          priceLetterColor: "#E6E6FA", // Lavender
-          scrollbarColor: "#191970", // Midnight Blue
-          starColor: "#4682B4", // Steel Blue
+        "subProductColor": {
+          "categoryColor": "#F0F0FF",
+          "backgroundColor": "#C1B6FF",
+          "textColor": "#42335B",
+          "borderColor": "#C1B6FF",
+          "priceColor": "#42335B",
+          "priceLetterColor": "#EDE3FF",
+          "buttonColor": "#9273FF",
+          "scrollbarColor": "#42335B",
+          "starColor": "#9273FF"
         },
-        firstBannerColor: {
-          backgroundThemeColor1: "#E6E6FA", // Lavender
-          backgroundThemeColor2: "#B0C4DE", // Light Steel Blue
-          textColor: "#000080", // Navy
-          buttonColor: "#4169E1", // Royal Blue
-          buttonText: "#E6E6FA", // Lavender
+        "firstBannerColor": {
+          "backgroundThemeColor1": "#F0F0FF",
+          "textColor": "#42335B",
+          "buttonColor": "#9273FF",
+          "buttonText": "#F0F0FF"
         },
-        newProductColor: {
-          backgroundColor: "#E6E6FA", // Lavender
-          cardBackground: "#E6E6FA", // Lavender
-          borderColor: "#6A5ACD", // Slate Blue
-          headerColor: "#000080", // Navy
-          textColor: "#191970", // Midnight Blue
-          priceColor: "#191970", // Midnight Blue
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#191970", // Midnight Blue
-          buttonBgColor: "#E6E6FA", // Lavender
-          buttonBorderColor: "#191970", // Midnight Blue
-          buttonBgColorOnHover: "#191970", // Midnight Blue
+        "newProductColor": {
+          "backgroundColor": "#EDE3FF",
+          "cardBackground": "#F0F0FF",
+          "borderColor": "#C1B6FF",
+          "headerColor": "#42335B",
+          "textColor": "#42335B",
+          "priceColor": "#42335B",
+          "heartColor": "#9273FF",
+          "buttonTextColor": "#F0F0FF",
+          "buttonBgColor": "#9273FF",
+          "buttonBorderColor": "#42335B",
+          "buttonBgColorOnHover": "#42335B"
         },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#E6E6FA", // Lavender
-          backgroundThemeColor2: "#B0C4DE", // Light Steel Blue
-          textColor: "#000080", // Navy
-          buttonColor: "#4169E1", // Royal Blue
-          buttonText: "#E6E6FA", // Lavender
+        "secondaryBannerColor": {
+          "backgroundThemeColor1": "#F0F0FF",
+          "textColor": "#42335B",
+          "buttonColor": "#9273FF",
+          "buttonText": "#F0F0FF"
         },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#E6E6FA", // Lavender
-          backgroundThemeColor: "#ADD8E6", // Light Blue
-          textColor: "#000080", // Navy
-          buttonColor: "#4169E1", // Royal Blue
-          buttonText: "#E6E6FA", // Lavender
+        "offerBannerColor": {
+          "backgroundBoxThemeColor1": "#EDE3FF",
+          "backgroundThemeColor": "#C1B6FF",
+          "textColor": "#42335B",
+          "buttonColor": "#9273FF",
+          "buttonText": "#F0F0FF"
         },
-        headerColor: {
-          headerText: "#E6E6FA", // Lavender
-          headerBackground: "#191970", // Midnight Blue
+        "headerColor": {
+          "headerText": "#42335B",
+          "headerBackground": "#C1B6FF"
         },
-        productSection: "#E6E6FA", // Lavender
-        productListColor: {
-          backgroundColor: "#E6E6FA", // Lavender
-          cardBackground: "#E6E6FA", // Lavender
-          borderColor: "#6A5ACD", // Slate Blue
-          headerColor: "#000080", // Navy
-          textColor: "#191970", // Midnight Blue
-          priceColor: "#191970", // Midnight Blue
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#191970", // Midnight Blue
-          buttonBgColor: "#E6E6FA", // Lavender
-          buttonBorderColor: "#191970", // Midnight Blue
-          buttonBgColorOnHover: "#191970", // Midnight Blue
+        "productSection": "#F0F0FF",
+        "productListColor": {
+          "backgroundColor": "#EDE3FF",
+          "cardBackground": "#F0F0FF",
+          "borderColor": "#C1B6FF",
+          "headerColor": "#42335B",
+          "textColor": "#42335B",
+          "priceColor": "#42335B",
+          "heartColor": "#9273FF",
+          "buttonTextColor": "#F0F0FF",
+          "buttonBgColor": "#9273FF",
+          "buttonBorderColor": "#42335B",
+          "buttonBgColorOnHover": "#42335B"
         },
-        footerColor: {
-          bgColor: "#191970", // Midnight Blue
-          textColor: "#E6E6FA", // Lavender
-          linkHeaderColor: "#E6E6FA", // Lavender
-          linkColor: "#E6E6FA", // Lavender
-          btnBgColor: "#191970", // Midnight Blue
-          btnText: "#E6E6FA", // Lavender
-          btnBgColorOnHover: "#4169E1", // Royal Blue
-        },
-      },
+        "footerColor": {
+          "bgColor": "#C1B6FF",
+          "textColor": "#42335B",
+          "linkHeaderColor": "#42335B",
+          "linkColor": "#42335B",
+          "btnBgColor": "#9273FF",
+          "btnText": "#F0F0FF",
+          "btnBgColorOnHover": "#42335B"
+        }
+      }
     },
     {
-      name: 'Sunset Glow',
-      color: {
-        backgroundThemeColor: "#FFF5E1", // Light Peach
-        navColor: {
-          backgroundnavColor: "#FF8C00", // Dark Orange
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#D2691E", // Chocolate
-          searchBarColor: "#FFE4C4", // Bisque
+      "name": "Ghost of Tsushima - Samurai Red & Black",
+      "color": {
+        "backgroundThemeColor": "#1C1C1C",
+        "navColor": {
+          "backgroundnavColor": "#2E2E2E",
+          "storeNameTextColor": "#FB8E8E",
+          "categoryTextColor": "#FF6969",
+          "searchBarColor": "#3D3D3D"
         },
-        subcategoryColor: {
-          background: "#FFE4C4", // Bisque
-          text: "#D2691E", // Chocolate
+        "subcategoryColor": {
+          "background": "#3D3D3D",
+          "text": "#FB8E8E"
         },
-        subProductColor: {
-          categoryColor: "#FFE4C4", // Bisque
-          backgroundColor: "#FFDAB9", // Peach Puff
-          textColor: "#8B4513", // Saddle Brown
-          borderColor: "#FF8C00", // Dark Orange
-          priceColor: "#D2691E", // Chocolate
-          priceLetterColor: "#FFE4C4", // Bisque
-          scrollbarColor: "#D2691E", // Chocolate
-          starColor: "#FFA07A", // Light Salmon
+        "subProductColor": {
+          "categoryColor": "#1C1C1C",
+          "backgroundColor": "#2E2E2E",
+          "textColor": "#FB8E8E",
+          "borderColor": "#2E2E2E",
+          "priceColor": "#FB8E8E",
+          "priceLetterColor": "#3D3D3D",
+          "buttonColor": "#EDBFBF",
+          "scrollbarColor": "#FB8E8E",
+          "starColor": "#FF6969"
         },
-        firstBannerColor: {
-          backgroundThemeColor1: "#FFE4C4", // Bisque
-          backgroundThemeColor2: "#FFDAB9", // Peach Puff
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#FF8C00", // Dark Orange
-          buttonText: "#FFE4C4", // Bisque
+        "firstBannerColor": {
+          "backgroundThemeColor1": "#1C1C1C",
+          "textColor": "#FB8E8E",
+          "buttonColor": "#EDBFBF",
+          "buttonText": "#1C1C1C"
         },
-        newProductColor: {
-          backgroundColor: "#FFE4C4", // Bisque
-          cardBackground: "#FFE4C4", // Bisque
-          borderColor: "#DEB887", // Burlywood
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2691E", // Chocolate
-          priceColor: "#D2691E", // Chocolate
-          heartColor: "#B22222", // Firebrick
-          buttonTextColor: "#D2691E", // Chocolate
-          buttonBgColor: "#FFE4C4", // Bisque
-          buttonBorderColor: "#D2691E", // Chocolate
-          buttonBgColorOnHover: "#D2691E", // Chocolate
+        "newProductColor": {
+          "backgroundColor": "#3D3D3D",
+          "cardBackground": "#1C1C1C",
+          "borderColor": "#2E2E2E",
+          "headerColor": "#FB8E8E",
+          "textColor": "#FB8E8E",
+          "priceColor": "#FB8E8E",
+          "heartColor": "#FF6969",
+          "buttonTextColor": "#1C1C1C",
+          "buttonBgColor": "#EDBFBF",
+          "buttonBorderColor": "#FB8E8E",
+          "buttonBgColorOnHover": "#FB8E8E"
         },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#FFE4C4", // Bisque
-          backgroundThemeColor2: "#FFDAB9", // Peach Puff
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#FF8C00", // Dark Orange
-          buttonText: "#FFE4C4", // Bisque
+        "secondaryBannerColor": {
+          "backgroundThemeColor1": "#1C1C1C",
+          "textColor": "#FB8E8E",
+          "buttonColor": "#EDBFBF",
+          "buttonText": "#1C1C1C"
         },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#FFE4C4", // Bisque
-          backgroundThemeColor: "#FAEBD7", // Antique White
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#FF8C00", // Dark Orange
-          buttonText: "#FFE4C4", // Bisque
+        "offerBannerColor": {
+          "backgroundBoxThemeColor1": "#3D3D3D",
+          "backgroundThemeColor": "#2E2E2E",
+          "textColor": "#FB8E8E",
+          "buttonColor": "#EDBFBF",
+          "buttonText": "#1C1C1C"
         },
-        headerColor: {
-          headerText: "#FFE4C4", // Bisque
-          headerBackground: "#D2691E", // Chocolate
+        "headerColor": {
+          "headerText": "#FB8E8E",
+          "headerBackground": "#2E2E2E"
         },
-        productSection: "#FFE4C4", // Bisque
-        productListColor: {
-          backgroundColor: "#FFE4C4", // Bisque
-          cardBackground: "#FFE4C4", // Bisque
-          borderColor: "#DEB887", // Burlywood
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2691E", // Chocolate
-          priceColor: "#D2691E", // Chocolate
-          heartColor: "#B22222", // Firebrick
-          buttonTextColor: "#D2691E", // Chocolate
-          buttonBgColor: "#FFE4C4", // Bisque
-          buttonBorderColor: "#D2691E", // Chocolate
-          buttonBgColorOnHover: "#D2691E", // Chocolate
+        "productSection": "#1C1C1C",
+        "productListColor": {
+          "backgroundColor": "#3D3D3D",
+          "cardBackground": "#1C1C1C",
+          "borderColor": "#2E2E2E",
+          "headerColor": "#FB8E8E",
+          "textColor": "#FB8E8E",
+          "priceColor": "#FB8E8E",
+          "heartColor": "#FF6969",
+          "buttonTextColor": "#1C1C1C",
+          "buttonBgColor": "#EDBFBF",
+          "buttonBorderColor": "#FB8E8E",
+          "buttonBgColorOnHover": "#FB8E8E"
         },
-        footerColor: {
-          bgColor: "#D2691E", // Chocolate
-          textColor: "#FFE4C4", // Bisque
-          linkHeaderColor: "#FFE4C4", // Bisque
-          linkColor: "#FFE4C4", // Bisque
-          btnBgColor: "#D2691E", // Chocolate
-          btnText: "#FFE4C4", // Bisque
-          btnBgColorOnHover: "#FF8C00", // Dark Orange
-        },
-      },
+        "footerColor": {
+          "bgColor": "#2E2E2E",
+          "textColor": "#FB8E8E",
+          "linkHeaderColor": "#FB8E8E",
+          "linkColor": "#FB8E8E",
+          "btnBgColor": "#FF6969",
+          "btnText": "#1C1C1C",
+          "btnBgColorOnHover": "#FB8E8E"
+        }
+      }
     },
     {
-      name: 'Desert Sand',
-      color: {
-        backgroundThemeColor: "#FAF0E6", // Linen
-        navColor: {
-          backgroundnavColor: "#D2B48C", // Tan
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#8B4513", // Saddle Brown
-          searchBarColor: "#F5DEB3", // Wheat
+      "name": "Ghost of Tsushima - Blood Moon",
+      "color": {
+        "backgroundThemeColor": "#1F1B2D",
+        "navColor": {
+          "backgroundnavColor": "#332B47",
+          "storeNameTextColor": "#FFFFFF",
+          "categoryTextColor": "#FFFFFF",
+          "searchBarColor": "#44385D"
         },
-        subcategoryColor: {
-          background: "#F5DEB3", // Wheat
-          text: "#8B4513", // Saddle Brown
+        "subcategoryColor": {
+          "background": "#44385D",
+          "text": "#FFFFFF"
         },
-        subProductColor: {
-          categoryColor: "#F5DEB3", // Wheat
-          backgroundColor: "#DEB887", // Burlywood
-          textColor: "#A0522D", // Sienna
-          borderColor: "#D2B48C", // Tan
-          priceColor: "#8B4513", // Saddle Brown
-          priceLetterColor: "#F5DEB3", // Wheat
-          scrollbarColor: "#8B4513", // Saddle Brown
-          starColor: "#DAA520", // Goldenrod
+        "subProductColor": {
+          "categoryColor": "#1F1B2D",
+          "backgroundColor": "#332B47",
+          "textColor": "#FFFFFF",
+          "borderColor": "#332B47",
+          "priceColor": "#FF3B3F",
+          "priceLetterColor": "#FFFFFF",
+          "buttonColor": "#FFFFFF",
+          "scrollbarColor": "#FF3B3F",
+          "starColor": "#FFFFFF"
         },
-        firstBannerColor: {
-          backgroundThemeColor1: "#F5DEB3", // Wheat
-          backgroundThemeColor2: "#DEB887", // Burlywood
-          textColor: "#A0522D", // Sienna
-          buttonColor: "#D2B48C", // Tan
-          buttonText: "#F5DEB3", // Wheat
+        "firstBannerColor": {
+          "backgroundThemeColor1": "#1F1B2D",
+          "textColor": "#FFFFFF",
+          "buttonColor": "#FFFFFF",
+          "buttonText": "#FFFFFF"
         },
-        newProductColor: {
-          backgroundColor: "#F5DEB3", // Wheat
-          cardBackground: "#F5DEB3", // Wheat
-          borderColor: "#C0C0C0", // Silver
-          headerColor: "#A0522D", // Sienna
-          textColor: "#8B4513", // Saddle Brown
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#F5DEB3", // Wheat
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
+        "newProductColor": {
+          "backgroundColor": "#44385D",
+          "cardBackground": "#1F1B2D",
+          "borderColor": "#332B47",
+          "headerColor": "#FF3B3F",
+          "textColor": "#FFFFFF",
+          "priceColor": "#FFFFFF",
+          "heartColor": "#FF615E",
+          "buttonTextColor": "#1F1B2D",
+          "buttonBgColor": "#FF615E",
+          "buttonBorderColor": "#FF3B3F",
+          "buttonBgColorOnHover": "#FF3B3F"
         },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#F5DEB3", // Wheat
-          backgroundThemeColor2: "#DEB887", // Burlywood
-          textColor: "#A0522D", // Sienna
-          buttonColor: "#D2B48C", // Tan
-          buttonText: "#F5DEB3", // Wheat
+        "secondaryBannerColor": {
+          "backgroundThemeColor1": "#1F1B2D",
+          "textColor": "#FFFFFF",
+          "buttonColor": "#FFFFFF",
+          "buttonText": "#FFFFFF"
         },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#F5DEB3", // Wheat
-          backgroundThemeColor: "#F4A460", // Sandy Brown
-          textColor: "#A0522D", // Sienna
-          buttonColor: "#D2B48C", // Tan
-          buttonText: "#F5DEB3", // Wheat
+        "offerBannerColor": {
+          "backgroundBoxThemeColor1": "#44385D",
+          "backgroundThemeColor": "#332B47",
+          "textColor": "#FFFFFF",
+          "buttonColor": "#FF615E",
+          "buttonText": "#FFFFFF"
         },
-        headerColor: {
-          headerText: "#F5DEB3", // Wheat
-          headerBackground: "#8B4513", // Saddle Brown
+        "headerColor": {
+          "headerText": "#FFFFFF",
+          "headerBackground": "#332B47"
         },
-        productSection: "#F5DEB3", // Wheat
-        productListColor: {
-          backgroundColor: "#F5DEB3", // Wheat
-          cardBackground: "#F5DEB3", // Wheat
-          borderColor: "#C0C0C0", // Silver
-          headerColor: "#A0522D", // Sienna
-          textColor: "#8B4513", // Saddle Brown
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#F5DEB3", // Wheat
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
+        "productSection": "#1F1B2D",
+        "productListColor": {
+          "backgroundColor": "#44385D",
+          "cardBackground": "#1F1B2D",
+          "borderColor": "#332B47",
+          "headerColor": "#FF3B3F",
+          "textColor": "#FFFFFF",
+          "priceColor": "#FF3B3F",
+          "heartColor": "#FFFFFF",
+          "buttonTextColor": "#FFFFFF",
+          "buttonBgColor": "#FFFFFF",
+          "buttonBorderColor": "#FF3B3F",
+          "buttonBgColorOnHover": "#FF3B3F"
         },
-        footerColor: {
-          bgColor: "#8B4513", // Saddle Brown
-          textColor: "#F5DEB3", // Wheat
-          linkHeaderColor: "#F5DEB3", // Wheat
-          linkColor: "#F5DEB3", // Wheat
-          btnBgColor: "#8B4513", // Saddle Brown
-          btnText: "#F5DEB3", // Wheat
-          btnBgColorOnHover: "#D2B48C", // Tan
-        },
-      },
+        "footerColor": {
+          "bgColor": "#332B47",
+          "textColor": "#FF3B3F",
+          "linkHeaderColor": "#FF3B3F",
+          "linkColor": "#FF3B3F",
+          "btnBgColor": "#FF615E",
+          "btnText": "#FFFFFF",
+          "btnBgColorOnHover": "#FF3B3F"
+        }
+      }
     },
     {
-      name: 'Canyon Clay',
-      color: {
-        backgroundThemeColor: "#FAEBD7", // Antique White
-        navColor: {
-          backgroundnavColor: "#CD5C5C", // Indian Red
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#8B0000", // Dark Red
-          searchBarColor: "#FFE4E1", // Misty Rose
+      "name": "Cozy Cotton",
+      "color": {
+        "backgroundThemeColor": "#FAFAFA",
+        "navColor": {
+          "backgroundnavColor": "#E0E0E0",
+          "storeNameTextColor": "#424242",
+          "categoryTextColor": "#616161",
+          "searchBarColor": "#9E9E9E"
         },
-        subcategoryColor: {
-          background: "#FFE4E1", // Misty Rose
-          text: "#8B0000", // Dark Red
+        "subcategoryColor": {
+          "background": "#9E9E9E",
+          "text": "#424242"
         },
-        subProductColor: {
-          categoryColor: "#FFE4E1", // Misty Rose
-          backgroundColor: "#E9967A", // Dark Salmon
-          textColor: "#A52A2A", // Brown
-          borderColor: "#CD5C5C", // Indian Red
-          priceColor: "#8B0000", // Dark Red
-          priceLetterColor: "#FFE4E1", // Misty Rose
-          scrollbarColor: "#8B0000", // Dark Red
-          starColor: "#FF6347", // Tomato
+        "subProductColor": {
+          "categoryColor": "#FAFAFA",
+          "backgroundColor": "#E0E0E0",
+          "textColor": "#424242",
+          "borderColor": "#E0E0E0",
+          "priceColor": "#424242",
+          "priceLetterColor": "#9E9E9E",
+          "buttonColor": "#616161",
+          "scrollbarColor": "#424242",
+          "starColor": "#616161"
         },
-        firstBannerColor: {
-          backgroundThemeColor1: "#FFE4E1", // Misty Rose
-          backgroundThemeColor2: "#E9967A", // Dark Salmon
-          textColor: "#A52A2A", // Brown
-          buttonColor: "#CD5C5C", // Indian Red
-          buttonText: "#FFE4E1", // Misty Rose
+        "firstBannerColor": {
+          "backgroundThemeColor1": "#FAFAFA",
+          "textColor": "#424242",
+          "buttonColor": "#616161",
+          "buttonText": "#FAFAFA"
         },
-        newProductColor: {
-          backgroundColor: "#FFE4E1", // Misty Rose
-          cardBackground: "#FFE4E1", // Misty Rose
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#A52A2A", // Brown
-          textColor: "#8B0000", // Dark Red
-          priceColor: "#8B0000", // Dark Red
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#8B0000", // Dark Red
-          buttonBgColor: "#FFE4E1", // Misty Rose
-          buttonBorderColor: "#8B0000", // Dark Red
-          buttonBgColorOnHover: "#8B0000", // Dark Red
+        "newProductColor": {
+          "backgroundColor": "#9E9E9E",
+          "cardBackground": "#FAFAFA",
+          "borderColor": "#E0E0E0",
+          "headerColor": "#424242",
+          "textColor": "#424242",
+          "priceColor": "#424242",
+          "heartColor": "#616161",
+          "buttonTextColor": "#FAFAFA",
+          "buttonBgColor": "#616161",
+          "buttonBorderColor": "#424242",
+          "buttonBgColorOnHover": "#424242"
         },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#FFE4E1", // Misty Rose
-          backgroundThemeColor2: "#E9967A", // Dark Salmon
-          textColor: "#A52A2A", // Brown
-          buttonColor: "#CD5C5C", // Indian Red
-          buttonText: "#FFE4E1", // Misty Rose
+        "secondaryBannerColor": {
+          "backgroundThemeColor1": "#FAFAFA",
+          "textColor": "#424242",
+          "buttonColor": "#616161",
+          "buttonText": "#FAFAFA"
         },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#FFE4E1", // Misty Rose
-          backgroundThemeColor: "#FFA07A", // Light Salmon
-          textColor: "#A52A2A", // Brown
-          buttonColor: "#CD5C5C", // Indian Red
-          buttonText: "#FFE4E1", // Misty Rose
+        "offerBannerColor": {
+          "backgroundBoxThemeColor1": "#9E9E9E",
+          "backgroundThemeColor": "#E0E0E0",
+          "textColor": "#424242",
+          "buttonColor": "#616161",
+          "buttonText": "#FAFAFA"
         },
-        headerColor: {
-          headerText: "#FFE4E1", // Misty Rose
-          headerBackground: "#8B0000", // Dark Red
+        "headerColor": {
+          "headerText": "#424242",
+          "headerBackground": "#E0E0E0"
         },
-        productSection: "#FFE4E1", // Misty Rose
-        productListColor: {
-          backgroundColor: "#FFE4E1", // Misty Rose
-          cardBackground: "#FFE4E1", // Misty Rose
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#A52A2A", // Brown
-          textColor: "#8B0000", // Dark Red
-          priceColor: "#8B0000", // Dark Red
-          heartColor: "#FF4500", // Orange Red
-          buttonTextColor: "#8B0000", // Dark Red
-          buttonBgColor: "#FFE4E1", // Misty Rose
-          buttonBorderColor: "#8B0000", // Dark Red
-          buttonBgColorOnHover: "#8B0000", // Dark Red
+        "productSection": "#FAFAFA",
+        "productListColor": {
+          "backgroundColor": "#9E9E9E",
+          "cardBackground": "#FAFAFA",
+          "borderColor": "#E0E0E0",
+          "headerColor": "#424242",
+          "textColor": "#424242",
+          "priceColor": "#424242",
+          "heartColor": "#616161",
+          "buttonTextColor": "#FAFAFA",
+          "buttonBgColor": "#616161",
+          "buttonBorderColor": "#424242",
+          "buttonBgColorOnHover": "#424242"
         },
-        footerColor: {
-          bgColor: "#8B0000", // Dark Red
-          textColor: "#FFE4E1", // Misty Rose
-          linkHeaderColor: "#FFE4E1", // Misty Rose
-          linkColor: "#FFE4E1", // Misty Rose
-          btnBgColor: "#8B0000", // Dark Red
-          btnText: "#FFE4E1", // Misty Rose
-          btnBgColorOnHover: "#CD5C5C", // Indian Red
-        },
-      },
+        "footerColor": {
+          "bgColor": "#E0E0E0",
+          "textColor": "#424242",
+          "linkHeaderColor": "#424242",
+          "linkColor": "#424242",
+          "btnBgColor": "#616161",
+          "btnText": "#FAFAFA",
+          "btnBgColorOnHover": "#424242"
+        }
+      }
     },
     {
-      name: 'Mocha Delight',
-      color: {
-        backgroundThemeColor: "#FFF8DC", // Cornsilk
-        navColor: {
-          backgroundnavColor: "#8B4513", // Saddle Brown
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#A0522D", // Sienna
-          searchBarColor: "#D2B48C", // Tan
+      "name": "Gentle Earth",
+      "color": {
+        "backgroundThemeColor": "#F5F5F5",
+        "navColor": {
+          "backgroundnavColor": "#D7CCC8",
+          "storeNameTextColor": "#4E342E",
+          "categoryTextColor": "#8D6E63",
+          "searchBarColor": "#BCAAA4"
         },
-        subcategoryColor: {
-          background: "#D2B48C", // Tan
-          text: "#8B4513", // Saddle Brown
+        "subcategoryColor": {
+          "background": "#BCAAA4",
+          "text": "#4E342E"
         },
-        subProductColor: {
-          categoryColor: "#D2B48C", // Tan
-          backgroundColor: "#DEB887", // Burlywood
-          textColor: "#8B4513", // Saddle Brown
-          borderColor: "#A0522D", // Sienna
-          priceColor: "#8B4513", // Saddle Brown
-          priceLetterColor: "#D2B48C", // Tan
-          scrollbarColor: "#8B4513", // Saddle Brown
-          starColor: "#CD853F", // Peru
+        "subProductColor": {
+          "categoryColor": "#F5F5F5",
+          "backgroundColor": "#D7CCC8",
+          "textColor": "#4E342E",
+          "borderColor": "#D7CCC8",
+          "priceColor": "#4E342E",
+          "priceLetterColor": "#BCAAA4",
+          "buttonColor": "#8D6E63",
+          "scrollbarColor": "#4E342E",
+          "starColor": "#8D6E63"
         },
-        firstBannerColor: {
-          backgroundThemeColor1: "#D2B48C", // Tan
-          backgroundThemeColor2: "#DEB887", // Burlywood
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#A0522D", // Sienna
-          buttonText: "#D2B48C", // Tan
+        "firstBannerColor": {
+          "backgroundThemeColor1": "#F5F5F5",
+          "textColor": "#4E342E",
+          "buttonColor": "#8D6E63",
+          "buttonText": "#F5F5F5"
         },
-        newProductColor: {
-          backgroundColor: "#D2B48C", // Tan
-          cardBackground: "#D2B48C", // Tan
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#A0522D", // Sienna
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#D2B48C", // Tan
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
+        "newProductColor": {
+          "backgroundColor": "#BCAAA4",
+          "cardBackground": "#F5F5F5",
+          "borderColor": "#D7CCC8",
+          "headerColor": "#4E342E",
+          "textColor": "#4E342E",
+          "priceColor": "#4E342E",
+          "heartColor": "#8D6E63",
+          "buttonTextColor": "#F5F5F5",
+          "buttonBgColor": "#8D6E63",
+          "buttonBorderColor": "#4E342E",
+          "buttonBgColorOnHover": "#4E342E"
         },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#D2B48C", // Tan
-          backgroundThemeColor2: "#DEB887", // Burlywood
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#A0522D", // Sienna
-          buttonText: "#D2B48C", // Tan
+        "secondaryBannerColor": {
+          "backgroundThemeColor1": "#F5F5F5",
+          "textColor": "#4E342E",
+          "buttonColor": "#8D6E63",
+          "buttonText": "#F5F5F5"
         },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#D2B48C", // Tan
-          backgroundThemeColor: "#F4A460", // Sandy Brown
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#A0522D", // Sienna
-          buttonText: "#D2B48C", // Tan
+        "offerBannerColor": {
+          "backgroundBoxThemeColor1": "#BCAAA4",
+          "backgroundThemeColor": "#D7CCC8",
+          "textColor": "#4E342E",
+          "buttonColor": "#8D6E63",
+          "buttonText": "#F5F5F5"
         },
-        headerColor: {
-          headerText: "#D2B48C", // Tan
-          headerBackground: "#8B4513", // Saddle Brown
+        "headerColor": {
+          "headerText": "#4E342E",
+          "headerBackground": "#D7CCC8"
         },
-        productSection: "#D2B48C", // Tan
-        productListColor: {
-          backgroundColor: "#D2B48C", // Tan
-          cardBackground: "#D2B48C", // Tan
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#A0522D", // Sienna
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#D2B48C", // Tan
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
+        "productSection": "#F5F5F5",
+        "productListColor": {
+          "backgroundColor": "#BCAAA4",
+          "cardBackground": "#F5F5F5",
+          "borderColor": "#D7CCC8",
+          "headerColor": "#4E342E",
+          "textColor": "#4E342E",
+          "priceColor": "#4E342E",
+          "heartColor": "#8D6E63",
+          "buttonTextColor": "#F5F5F5",
+          "buttonBgColor": "#8D6E63",
+          "buttonBorderColor": "#4E342E",
+          "buttonBgColorOnHover": "#4E342E"
         },
-        footerColor: {
-          bgColor: "#8B4513", // Saddle Brown
-          textColor: "#D2B48C", // Tan
-          linkHeaderColor: "#D2B48C", // Tan
-          linkColor: "#D2B48C", // Tan
-          btnBgColor: "#8B4513", // Saddle Brown
-          btnText: "#D2B48C", // Tan
-          btnBgColorOnHover: "#A0522D", // Sienna
-        },
-      },
+        "footerColor": {
+          "bgColor": "#D7CCC8",
+          "textColor": "#4E342E",
+          "linkHeaderColor": "#4E342E",
+          "linkColor": "#4E342E",
+          "btnBgColor": "#8D6E63",
+          "btnText": "#F5F5F5",
+          "btnBgColorOnHover": "#4E342E"
+        }
+      }
     },
-    {
-      name: 'Caramel Creme',
-      color: {
-        backgroundThemeColor: "#FAF0E6", // Linen
-        navColor: {
-          backgroundnavColor: "#A0522D", // Sienna
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#8B4513", // Saddle Brown
-          searchBarColor: "#F5DEB3", // Wheat
-        },
-        subcategoryColor: {
-          background: "#F5DEB3", // Wheat
-          text: "#A0522D", // Sienna
-        },
-        subProductColor: {
-          categoryColor: "#F5DEB3", // Wheat
-          backgroundColor: "#DEB887", // Burlywood
-          textColor: "#8B4513", // Saddle Brown
-          borderColor: "#A0522D", // Sienna
-          priceColor: "#8B4513", // Saddle Brown
-          priceLetterColor: "#F5DEB3", // Wheat
-          scrollbarColor: "#8B4513", // Saddle Brown
-          starColor: "#DAA520", // Goldenrod
-        },
-        firstBannerColor: {
-          backgroundThemeColor1: "#F5DEB3", // Wheat
-          backgroundThemeColor2: "#DEB887", // Burlywood
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#A0522D", // Sienna
-          buttonText: "#F5DEB3", // Wheat
-        },
-        newProductColor: {
-          backgroundColor: "#F5DEB3", // Wheat
-          cardBackground: "#F5DEB3", // Wheat
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#A0522D", // Sienna
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#F5DEB3", // Wheat
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#F5DEB3", // Wheat
-          backgroundThemeColor2: "#DEB887", // Burlywood
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#A0522D", // Sienna
-          buttonText: "#F5DEB3", // Wheat
-        },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#F5DEB3", // Wheat
-          backgroundThemeColor: "#F4A460", // Sandy Brown
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#A0522D", // Sienna
-          buttonText: "#F5DEB3", // Wheat
-        },
-        headerColor: {
-          headerText: "#F5DEB3", // Wheat
-          headerBackground: "#8B4513", // Saddle Brown
-        },
-        productSection: "#F5DEB3", // Wheat
-        productListColor: {
-          backgroundColor: "#F5DEB3", // Wheat
-          cardBackground: "#F5DEB3", // Wheat
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#A0522D", // Sienna
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#F5DEB3", // Wheat
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        footerColor: {
-          bgColor: "#8B4513", // Saddle Brown
-          textColor: "#F5DEB3", // Wheat
-          linkHeaderColor: "#F5DEB3", // Wheat
-          linkColor: "#F5DEB3", // Wheat
-          btnBgColor: "#8B4513", // Saddle Brown
-          btnText: "#F5DEB3", // Wheat
-          btnBgColorOnHover: "#A0522D", // Sienna
-        },
-      },
-    },
-    {
-      name: 'Walnut Essence',
-      color: {
-        backgroundThemeColor: "#FDF5E6", // Old Lace
-        navColor: {
-          backgroundnavColor: "#D2691E", // Chocolate
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#8B4513", // Saddle Brown
-          searchBarColor: "#FFE4B5", // Moccasin
-        },
-        subcategoryColor: {
-          background: "#FFE4B5", // Moccasin
-          text: "#D2691E", // Chocolate
-        },
-        subProductColor: {
-          categoryColor: "#FFE4B5", // Moccasin
-          backgroundColor: "#FFDAB9", // Peach Puff
-          textColor: "#8B4513", // Saddle Brown
-          borderColor: "#D2691E", // Chocolate
-          priceColor: "#8B4513", // Saddle Brown
-          priceLetterColor: "#FFE4B5", // Moccasin
-          scrollbarColor: "#8B4513", // Saddle Brown
-          starColor: "#FF8C00", // Dark Orange
-        },
-        firstBannerColor: {
-          backgroundThemeColor1: "#FFE4B5", // Moccasin
-          backgroundThemeColor2: "#FFDAB9", // Peach Puff
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#D2691E", // Chocolate
-          buttonText: "#FFE4B5", // Moccasin
-        },
-        newProductColor: {
-          backgroundColor: "#FFE4B5", // Moccasin
-          cardBackground: "#FFE4B5", // Moccasin
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2691E", // Chocolate
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#FFE4B5", // Moccasin
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#FFE4B5", // Moccasin
-          backgroundThemeColor2: "#FFDAB9", // Peach Puff
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#D2691E", // Chocolate
-          buttonText: "#FFE4B5", // Moccasin
-        },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#FFE4B5", // Moccasin
-          backgroundThemeColor: "#F4A460", // Sandy Brown
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#D2691E", // Chocolate
-          buttonText: "#FFE4B5", // Moccasin
-        },
-        headerColor: {
-          headerText: "#FFE4B5", // Moccasin
-          headerBackground: "#8B4513", // Saddle Brown
-        },
-        productSection: "#FFE4B5", // Moccasin
-        productListColor: {
-          backgroundColor: "#FFE4B5", // Moccasin
-          cardBackground: "#FFE4B5", // Moccasin
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2691E", // Chocolate
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#FFE4B5", // Moccasin
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        footerColor: {
-          bgColor: "#8B4513", // Saddle Brown
-          textColor: "#FFE4B5", // Moccasin
-          linkHeaderColor: "#FFE4B5", // Moccasin
-          linkColor: "#FFE4B5", // Moccasin
-          btnBgColor: "#8B4513", // Saddle Brown
-          btnText: "#FFE4B5", // Moccasin
-          btnBgColorOnHover: "#D2691E", // Chocolate
-        },
-      },
-    },
-    {
-      name: 'Sandy Breeze',
-      color: {
-        backgroundThemeColor: "#FFF5EE", // Seashell
-        navColor: {
-          backgroundnavColor: "#D2B48C", // Tan
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#8B4513", // Saddle Brown
-          searchBarColor: "#F5F5DC", // Beige
-        },
-        subcategoryColor: {
-          background: "#F5F5DC", // Beige
-          text: "#D2B48C", // Tan
-        },
-        subProductColor: {
-          categoryColor: "#F5F5DC", // Beige
-          backgroundColor: "#FFF8DC", // Cornsilk
-          textColor: "#8B4513", // Saddle Brown
-          borderColor: "#D2B48C", // Tan
-          priceColor: "#8B4513", // Saddle Brown
-          priceLetterColor: "#F5F5DC", // Beige
-          scrollbarColor: "#8B4513", // Saddle Brown
-          starColor: "#FFD700", // Gold
-        },
-        firstBannerColor: {
-          backgroundThemeColor1: "#F5F5DC", // Beige
-          backgroundThemeColor2: "#FFF8DC", // Cornsilk
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#D2B48C", // Tan
-          buttonText: "#FFF5EE", // Seashell
-        },
-        newProductColor: {
-          backgroundColor: "#F5F5DC", // Beige
-          cardBackground: "#F5F5DC", // Beige
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2B48C", // Tan
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#F5F5DC", // Beige
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#F5F5DC", // Beige
-          backgroundThemeColor2: "#FFF8DC", // Cornsilk
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#D2B48C", // Tan
-          buttonText: "#FFF5EE", // Seashell
-        },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#F5F5DC", // Beige
-          backgroundThemeColor: "#F4A460", // Sandy Brown
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#D2B48C", // Tan
-          buttonText: "#FFF5EE", // Seashell
-        },
-        headerColor: {
-          headerText: "#F5F5DC", // Beige
-          headerBackground: "#8B4513", // Saddle Brown
-        },
-        productSection: "#F5F5DC", // Beige
-        productListColor: {
-          backgroundColor: "#F5F5DC", // Beige
-          cardBackground: "#F5F5DC", // Beige
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#D2B48C", // Tan
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#F5F5DC", // Beige
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        footerColor: {
-          bgColor: "#8B4513", // Saddle Brown
-          textColor: "#F5F5DC", // Beige
-          linkHeaderColor: "#F5F5DC", // Beige
-          linkColor: "#F5F5DC", // Beige
-          btnBgColor: "#8B4513", // Saddle Brown
-          btnText: "#F5F5DC", // Beige
-          btnBgColorOnHover: "#D2B48C", // Tan
-        },
-      },
-    },
-    {
-      name: 'Vanilla Dream',
-      color: {
-        backgroundThemeColor: "#FFFACD", // Lemon Chiffon
-        navColor: {
-          backgroundnavColor: "#DEB887", // Burlywood
-          storeNameTextColor: "#FFFFFF", // White
-          categoryTextColor: "#8B4513", // Saddle Brown
-          searchBarColor: "#FAEBD7", // Antique White
-        },
-        subcategoryColor: {
-          background: "#FAEBD7", // Antique White
-          text: "#DEB887", // Burlywood
-        },
-        subProductColor: {
-          categoryColor: "#FAEBD7", // Antique White
-          backgroundColor: "#FFF8DC", // Cornsilk
-          textColor: "#8B4513", // Saddle Brown
-          borderColor: "#DEB887", // Burlywood
-          priceColor: "#8B4513", // Saddle Brown
-          priceLetterColor: "#FAEBD7", // Antique White
-          scrollbarColor: "#8B4513", // Saddle Brown
-          starColor: "#FFD700", // Gold
-        },
-        firstBannerColor: {
-          backgroundThemeColor1: "#FAEBD7", // Antique White
-          backgroundThemeColor2: "#FFF8DC", // Cornsilk
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#DEB887", // Burlywood
-          buttonText: "#FFFACD", // Lemon Chiffon
-        },
-        newProductColor: {
-          backgroundColor: "#FAEBD7", // Antique White
-          cardBackground: "#FAEBD7", // Antique White
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#DEB887", // Burlywood
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#FAEBD7", // Antique White
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        secondaryBannerColor: {
-          backgroundThemeColor1: "#FAEBD7", // Antique White
-          backgroundThemeColor2: "#FFF8DC", // Cornsilk
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#DEB887", // Burlywood
-          buttonText: "#FFFACD", // Lemon Chiffon
-        },
-        offerBannerColor: {
-          backgroundBoxThemeColor1: "#FAEBD7", // Antique White
-          backgroundThemeColor: "#F4A460", // Sandy Brown
-          textColor: "#8B4513", // Saddle Brown
-          buttonColor: "#DEB887", // Burlywood
-          buttonText: "#FFFACD", // Lemon Chiffon
-        },
-        headerColor: {
-          headerText: "#FAEBD7", // Antique White
-          headerBackground: "#8B4513", // Saddle Brown
-        },
-        productSection: "#FAEBD7", // Antique White
-        productListColor: {
-          backgroundColor: "#FAEBD7", // Antique White
-          cardBackground: "#FAEBD7", // Antique White
-          borderColor: "#8B4513", // Saddle Brown
-          headerColor: "#8B4513", // Saddle Brown
-          textColor: "#DEB887", // Burlywood
-          priceColor: "#8B4513", // Saddle Brown
-          heartColor: "#CD5C5C", // Indian Red
-          buttonTextColor: "#8B4513", // Saddle Brown
-          buttonBgColor: "#FAEBD7", // Antique White
-          buttonBorderColor: "#8B4513", // Saddle Brown
-          buttonBgColorOnHover: "#8B4513", // Saddle Brown
-        },
-        footerColor: {
-          bgColor: "#8B4513", // Saddle Brown
-          textColor: "#FAEBD7", // Antique White
-          linkHeaderColor: "#FAEBD7", // Antique White
-          linkColor: "#FAEBD7", // Antique White
-          btnBgColor: "#8B4513", // Saddle Brown
-          btnText: "#FAEBD7", // Antique White
-          btnBgColorOnHover: "#DEB887", // Burlywood
-        },
-      },
-    }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 
@@ -1611,7 +1351,24 @@ const Editor = () => {
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
         <motion.div key='first' initial={{ x: 20 }} exit={{ x: 500 }} transition={{ duration: 0.3 }} animate={{ x: 0 }} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           {/* <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Poppins'></h1> */}
-          <div className='text-red-600 absolute left-10 top-[26px] left text-[16px] flex justify-between font-semibold border-2 p-1 border-red-500 rounded-lg font-Ubuntu' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><p>Hide</p><BiSolidHide className=" my-auto mx-1"/></div>
+          <div className="relative">
+            <div className="relative">
+              <div
+                className='text-gray-600 absolute left-10 top-[26px] text-[16px] flex items-center justify-between font-semibold border-2 px-3 py-2 border-gray-900 rounded-lg bg-white shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out'
+                onClick={(e) => { e.preventDefault(); setNavHide(false) }}
+              >
+                <p>Hide</p>
+                <BiSolidHide className="ml-1" />
+              </div>
+              <div
+                className='text-gray-600 right-10 absolute top-[26px] text-[16px] flex items-center justify-between font-semibold border-2 px-3 py-2 border-gray-900 rounded-lg bg-white shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out'
+                onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}
+              >
+                <p>Exit</p>
+                <RxCrossCircled className="ml-1" />
+              </div>
+            </div>
+          </div>
           <div className='flex justify-between  font-Poppins  mt-24 font-semibold text-[#6A6A6A] border-t-2  pt-4'>
             <button className={`flex-1   text-lg text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content </button>
             <button className={`flex-1  text-lg text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
@@ -1619,7 +1376,6 @@ const Editor = () => {
               <button className={`flex-1  text-lg text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
             }
           </div>
-          <div className='text-red-600 right-10 absolute top-[26px]  text-[16px] flex justify-between font-semibold border-2 p-1 border-red-500 rounded-lg font-Ubuntu' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><p>Exit</p><  RxCrossCircled className=" my-auto mx-1 font-bold"/></div>
 
           {openType === 1 && (
             <motion.div
@@ -1690,18 +1446,18 @@ const Editor = () => {
                     </div>
                   </div>
                   <ul className="font-normal list-disc ml-8 mt-4 text-sm">
-  {store.subCategories.map((item, index) => (
-    <li key={item.name} className="flex justify-between">
-      {item.name}
-      <button
-        onClick={() => handleRemoveCategory(index)}
-        className="ml-4 text-black px-2 py-1 rounded"
-      >
-        -
-      </button>
-    </li>
-  ))}
-</ul>
+                    {store.subCategories.map((item, index) => (
+                      <li key={item.name} className="flex justify-between">
+                        {item.name}
+                        <button
+                          onClick={() => handleRemoveCategory(index)}
+                          className="ml-4 text-black px-2 py-1 rounded"
+                        >
+                          -
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </li>
 
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
