@@ -31,10 +31,11 @@ const TermsAndConditions = () => {
                     <h2 className="text-xl font-semibold mb-3 text-white rounded-md p-2 bg-[#2D2D2D]">4. Intellectual Property</h2>
                     <p className="text-gray-900">All content, trademarks, and data on this website, including but not limited to software, databases, text, graphics, icons, and hyperlinks, are the property of Saika Nepal or have been duly licensed for use on this website. Unauthorized use, distribution, reproduction, or modification of the content is prohibited.</p>
                 </section>
-
                 <section className="mb-8">
                     <h2 className="text-xl font-semibold mb-3 text-white rounded-md p-2 bg-[#2D2D2D]">5. Payments and Refunds</h2>
-                    <p className="text-gray-900">All payments for services must be made through the provided payment methods. All sales are final, and no refunds will be issued unless specifically stated otherwise in a separate agreement.</p>
+                    <p className="text-gray-900">
+                        All payments for services must be made through the provided payment methods. We as a service will take a 3% commission for transactions. All sales are final, and no refunds will be issued unless specifically stated otherwise in a separate agreement.
+                    </p>
                 </section>
 
                 <section className="mb-8">
@@ -155,7 +156,7 @@ const TermsAndConditions = () => {
                         <li>Withdraw consent at any time, where we are relying on consent to process your data</li>
                     </ul>
 
-                    
+
                     <p className="text-gray-900">To exercise any of these rights, please contact us at shopatbanau@gmail.com.</p>
 
                     <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.8 Contact Us</h3>
