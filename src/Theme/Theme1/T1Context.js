@@ -14,7 +14,9 @@ import oneFourty from '../../Assets/ratio/140.png';
 import twoFiftySix from '../../Assets/ratio/256.png';
 import sixTeenHundred from '../../Assets/ratio/1600.png';
 import graybg from '../../Assets/graybg.webp';
-
+import b1 from '../../Assets/Banners/b1.webp';
+import b2 from '../../Assets/Banners/b2.webp';
+import b3 from '../../Assets/Banners/b3.webp';
 
 const StoreContext = createContext();
 
@@ -50,50 +52,50 @@ export const StoreProvider = ({ children, passedStore }) => {
     },
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Kids" }],
 
-    subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
+    subCategories: [{ name: "Category 1" }, { name: "Category 2" }, { name: "Category 3" }],
     banner: { bannerUrl: `${graybg}`, bannerID: '' },
     products: [
       {
         id: 1,
-        name: "Controller",
+        name: "Product 1",
         price: '100',
         image: { imageUrl: oneFourty, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         count: 0,
         variant: [
           {
-            name: "Color",
+            name: "Variant 1",
             options: [
               {
-                name: "Blue",
+                name: "Variant A",
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageUrl: oneFourty
                 },
                 discount: 5
               }, {
-                name: "Gray",
+                name: "Variant B",
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+                  imageUrl: oneFourty
                 },
                 discount: 6
               }
             ]
           },
           {
-            name: "Color",
+            name: "Variant 2",
             options: [
               {
-                name: "blue",
+                name: "Variant A",
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                  imageUrl: oneFourty
                 },
                 discount: 10
               }
@@ -112,37 +114,37 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 2,
-        name: "Goggles",
+        name: "Product 2",
         price: '200',
-        image: { imageUrl: 'https://cdn.pixabay.com/photo/2014/03/24/17/14/eye-295173_960_720.png', imageID: '' },
+        image: { imageUrl: oneFourty, imageID: '' },
         count: 0,
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         variant: [
           {
-            name: "Size",
+            name: "Variant 1",
             options: [
               {
                 name: "Small",
                 price: 90,
                 image: {
                   imageId: "img123",
-                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                  imageUrl: oneFourty
                 },
                 discount: 5
               }
             ]
           },
           {
-            name: "Size",
+            name: "Variant 2",
             options: [
               {
                 name: "Small",
                 price: 900,
                 image: {
                   imageId: "img123",
-                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                  imageUrl: oneFourty
                 },
                 discount: 5
               }
@@ -161,11 +163,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 3,
-        name: "Watch",
+        name: "Product 3",
         price: '100',
-        image: { imageUrl: "https://cdn.pixabay.com/photo/2013/07/12/14/44/watch-148700_1280.png", imageID: '' },
+        image: { imageUrl: oneFourty, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -177,7 +179,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageUrl: oneFourty
                 },
                 discount: 5
               }, {
@@ -185,7 +187,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+                  imageUrl: oneFourty
                 },
                 discount: 6
               }
@@ -199,7 +201,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                  imageUrl: oneFourty
                 },
                 discount: 10
               }
@@ -218,11 +220,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 4,
-        name: "Watch1",
+        name: "Product 4",
         price: '100',
-        image: { imageUrl: controller, imageID: '' },
+        image: { imageUrl: oneFourty, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -234,7 +236,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageUrl: oneFourty
                 },
                 discount: 5
               }, {
@@ -242,7 +244,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+                  imageUrl: oneFourty
                 },
                 discount: 6
               }
@@ -256,7 +258,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                  imageUrl: oneFourty
                 },
                 discount: 10
               }
@@ -267,11 +269,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 5,
-        name: "Ghadi",
+        name: "Product 5",
         price: '100',
-        image: { imageUrl: controller, imageID: '' },
+        image: { imageUrl: oneFourty, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -283,7 +285,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageUrl: oneFourty
                 },
                 discount: 5
               }, {
@@ -291,7 +293,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
+                  imageUrl: oneFourty
                 },
                 discount: 6
               }
@@ -305,7 +307,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                  imageUrl: oneFourty
                 },
                 discount: 10
               }
@@ -400,20 +402,20 @@ export const StoreProvider = ({ children, passedStore }) => {
         btnBgColorOnHover: "#4F3100",
       },
     },
-    offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },
+    offerBanner: { offerBannerUrl: `${b2}`, offerBannerID: '' },
     offerBannerText: {
       para1: "",
       para2: "",
       para3: "",
     },
-    secondaryBanner: { secondaryBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
-    thirdBanner: { thirdBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
+    secondaryBanner: { secondaryBannerUrl: `${b3}`, secondaryBannerID: '' },
+    thirdBanner: { thirdBannerUrl: `${b1}`, secondaryBannerID: '' },
     thirdBannerText: {
       heading: "",
       paragraph: "",
     },
     previewMode: true,
-    selectedSubCategory: "Watch",
+    selectedSubCategory: "Category 1",
     cart: [
 
     ],
@@ -767,25 +769,25 @@ export const StoreProvider = ({ children, passedStore }) => {
     }));
   };
 
-    return (
-      <StoreContext.Provider
-        value={{
-          store,
-          setStore,
-          storeID,
-          addCategory,
-          addSubCategory,
-          removeCategory,
-          removeSubCategory,
-          setSelectedSubCategory,
-          updateSecondaryBanner,
-          addProduct,
-          addToCart,
-          deleteFromCart,
-          updateFont
-        }}
-      >
-        {children}
-      </StoreContext.Provider>
-    );
+  return (
+    <StoreContext.Provider
+      value={{
+        store,
+        setStore,
+        storeID,
+        addCategory,
+        addSubCategory,
+        removeCategory,
+        removeSubCategory,
+        setSelectedSubCategory,
+        updateSecondaryBanner,
+        addProduct,
+        addToCart,
+        deleteFromCart,
+        updateFont
+      }}
+    >
+      {children}
+    </StoreContext.Provider>
+  );
 };

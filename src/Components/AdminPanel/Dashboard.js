@@ -24,7 +24,7 @@ const Dashboard = () => {
 
 
   const fetchStore = async () => {
-    console.log("Store token" , auth)
+    console.log("Store token", auth)
 
     try {
       const responseData = await sendRequest(
@@ -55,7 +55,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchUserRole = async () => {
-      console.log("user role token" , auth.token)
+      console.log("user role token", auth.token)
       try {
         const userResponse = await sendRequest('users/getLoggedInUser', 'GET', null, {
           'Content-Type': 'application/json',
