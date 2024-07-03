@@ -15,11 +15,11 @@ const Loader = () => {
         { char: 'N', delay: '2s' },
         { char: 'A', delay: '2.2s' },
         { char: 'U', delay: '2.4s' },
+    ];
 
-    ]
     return (
-        <div className='bg-white h-screen w-full'>
-            <div className='flex h-screen items-center justify-center text-4xl md:text-6xl tracking-wide font-Saira font-semibold text-orange-500'>
+        <div className='bg-white h-screen w-screen fixed top-0 left-0 flex items-center justify-center z-50'>
+            <div className='flex items-center justify-center text-4xl md:text-6xl tracking-wide font-Saira font-semibold text-orange-500'>
                 {letters.map((letter, index) => (
                     <h1
                         key={index}
