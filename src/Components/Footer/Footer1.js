@@ -173,7 +173,7 @@ const Footer1 = ({
                 <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 justify-center px-4 gap-10 md:gap-14 lg:gap-32 ">
                     <div className="mb-4">
                         <span className='font-bold text-lg lg:text-xl'>{store.name}</span>
-                        {logo && <img src={logo.logoUrl} alt="Store Logo" className="h-12 w-auto my-2 lg:my-4" />}
+                        {logo && <img src={logo.logoUrl} alt="Store Logo" className="h-14 w-20 rounded-full w-auto my-2 lg:my-4" />}
                         <div className="flex my-5 gap-2 lg:gap-4">
                             <>
                                 <a href={newSocialMediaLinks.facebook}>

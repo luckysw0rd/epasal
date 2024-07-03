@@ -131,22 +131,6 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
 
                 <del className="ml-2 "> Rs {product.price}</del>
             </div>
-            {/* <div className="flex mb-2 justify-center md:justify-start">
-                {[...Array(5)].map((_, index) => {
-                    if (index < product.rating)
-                        return <StarIcon className='w-4 h-4' style={{ color: store.color.newProductColor.starColor }} key={index} />
-                    else
-                        return <StarIcon className='w-4 h-4 ' key={index} />
-                })}
-            </div> */}
-            {/* 
-            <button
-                className="py-2 px-6 rounded-full duration-300 mt-4"
-                onClick={handleProductClick(product)}
-                style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}` }}
-            >
-                Add to Cart
-            </button> */}
             <button
                 style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}`, }}
                 className="py-2 px-6 rounded-full duration-300 mt-4"
@@ -157,15 +141,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
             >
                 Add to cart
             </button>
-            {/* {addedToCart && (
-                <button
-                    className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
-                    disabled
-                    style={{ backgroundColor: store.color.newProductColor.priceColor, color: store.color.newProductColor.priceLetterColor, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.ButtonBorderColor}` }}
-                >
-                    <FaShoppingCart className="mr-1 " />
-                </button>
-            )} */}
+          
         </motion.div>
     );
 }

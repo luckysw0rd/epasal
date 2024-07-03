@@ -137,8 +137,8 @@ const Navbar = ({ navbarImage, setStores }) => {
                             <div className='absolute top-0 bg-white w-full rounded-b-3xl py-3 pl-3'>
                                 {searchData.map((n, i) => {
                                     return <div className='flex gap-4 py-1 items-center'>
-                                        <Link to={`/store/${n.name}`}>
-                                            <div className=' font-bold flex flex-row gap-4 items-center' 
+                                        <Link to={`/store/${n.name}`} target='_blank'>
+                                            <div className=' font-bold flex flex-row gap-4 items-center'
                                             >
                                                 <img className='h-8 w-8 rounded-full border border-2 border-gray-700' src={n.logo.logoUrl} />
                                                 <div>{n.name}</div>
@@ -157,7 +157,7 @@ const Navbar = ({ navbarImage, setStores }) => {
 
                     <div className='flex items-center gap-1 text-white hidden md:flex'>
                         <div className='h-10 relative rounded-full w-10 bg-[#F38825] flex items-center justify-center text-lg' onMouseEnter={() => { setMouseHover(true) }} onMouseLeave={() => { setMouseHover(false) }}>
-                            <Link to='/buildstore'>
+                            <Link to='/buildstore' target='_blank'>
                                 <IoBagHandleOutline />
                             </Link>
                             {
@@ -196,11 +196,11 @@ const Navbar = ({ navbarImage, setStores }) => {
                             )}
                         </AnimatePresence>
                     </div>
-                    {!auth.isLoggedIn && <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
+                    {!auth.token && <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
                         Login
                         <IoIosLogIn className=' text-xl font-bold  ml-2 items-center' />
                     </div>}
-                    {auth.isLoggedIn && <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
+                    {auth.token && <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
                         Logout
                         <IoLogOut className=' font-bold ml-2 items-center' />
                     </div>}

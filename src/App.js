@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import Dashboard from './Components/AdminPanel/Dashboard';
 // import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
@@ -15,7 +16,7 @@ const Navbar = React.lazy(() => import('./HomePage/Navbar'));
 const SignInPage = React.lazy(() => import('./Login/SignInPage'));
 const Theme = React.lazy(() => import('./Theme/Theme'));
 const GetUserLocation = React.lazy(() => import('./Components/Geolocaiton/GetUserLocation'));
-const Dashboard = React.lazy(() => import('./Components/AdminPanel/Dashboard'));
+// const Dashboard = React.lazy(() => import('./Components/AdminPanel/Dashboard'));
 const GoogleOAuth = React.lazy(() => import('./Components/Google-OAuth/GoogleOAuth'));
 const GoogleOAuthCustom = React.lazy(() => import('./Components/Google-OAuth/GoogleOAuthCustom'));
 const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductForm'));
@@ -40,40 +41,38 @@ function App() {
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
-        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
-
-        {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
         <Route path="/settings" element={<SettingPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-
+        <Route path="*" element={<Navigate to="/" />} />
       </React.Fragment>
     );
   } else {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
+        {/* <Route path="/buildstore" element={<Theme />} /> */}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/login" element={<SignInPage />}></Route>
+        {/* <Route path="/adminpanel/:storeName" element={<Dashboard />} /> */}
+
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-        {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
+        <Route path="*" element={<Navigate to="/login" />} />
       </React.Fragment>
     );
   }
