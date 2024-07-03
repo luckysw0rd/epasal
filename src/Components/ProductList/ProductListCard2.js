@@ -5,8 +5,8 @@ import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreCont
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store,productListProps }) => {
-    const {addToCart}=productListProps;
+const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store, productListProps }) => {
+    const { addToCart } = productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -131,19 +131,8 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
 
                 <del className="ml-2 "> Rs {product.price}</del>
             </div>
-            {/* <div className="flex items-center mt-2">
-                <p className="text-lg font-semibold " style={{ color: `${store.color.productListColor.priceColor}` }} >Rs {product.price}</p>
-                <del className="ml-2 "> Rs {product.originalPrice}</del>
-            </div> */}
-            {/* <div className="flex mb-2 justify-center md:justify-start">
-                {[...Array(5)].map((_, index) => {
-                    if (index < product.rating)
-                        return <StarIcon className='w-4 h-4' style={{ color: store.color.productListColor.starColor }} key={index} />
-                    else
-                        return <StarIcon className='w-4 h-4 ' key={index} />
-                })}
-            </div> */}
-            {!addedToCart && (
+
+   
                 <button
                     className="py-2 px-6 rounded-full duration-300 mt-4"
                     onClick={() => {
@@ -153,8 +142,8 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                 >
                     Add to Cart
                 </button>
-            )}
-           
+        
+
         </motion.div>
     );
 }

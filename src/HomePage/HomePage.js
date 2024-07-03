@@ -52,7 +52,7 @@ function HomePage() {
             <Navbar setStores={setStores} navbarImage={navbarImage} />
             <Heading setnavbarImage={setnavbarImage} />
             <div className="relative flex justify-center z-40 bg-white w-full">
-                <div className="-mt-[76px] h-[77vh] absolute -z-10">
+                <div className="-mt-[76px] h-[30vh] absolute -z-10">
                     <svg
                         height="80"
                         viewBox="0 0 192 60"
@@ -70,7 +70,6 @@ function HomePage() {
                 <div>
                     <Link
                         to="/buildstore"
-                        target="_blank"
                         className="w-[110px] h-[110px] pointer-events-auto bg-orange-500 -mt-[60px] border border-8 border-white rounded-full flex flex-col items-center justify-center text-center font-bold text-white"
                     >
                         <IoBagHandleOutline className="text-3xl mb-2" />

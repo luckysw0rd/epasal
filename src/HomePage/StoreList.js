@@ -12,7 +12,7 @@ const StoreCard = ({ store, auth }) => {
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white px-4 py-4 flex justify-between items-center ">
                 {auth.isLoggedIn && (
-                    <Link to={`/adminpanel/${store.name}`} target='_blank' className="">
+                    <Link to={`/adminpanel/${store.name}`}  className="">
                         Dashboard
                     </Link>)
                 }

@@ -3,7 +3,7 @@ import cosmetic from '../../../../Assets/cosmetic.webp';
 import esewa from '../../../../Assets/esewa.webp';
 import useFetch from '../../../../Hooks/useFetch';
 const ProductCard2 = () => (
-    <div className="w-62 hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="w-[300px] hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <a href="#">
             <img
                 src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -95,7 +95,7 @@ const ProductCard3 = () => (
                 New Product
             </p>
             <p className="font-bold text-xl tracking-wider text-[#495c48] ">
-             Slider 
+                Slider
             </p>
         </div>
         <div
@@ -135,7 +135,7 @@ const ProductCard3 = () => (
                         </svg>
                         <p className="text-xs break-words font-semibold  text-[#495c48]">          l orem lorem lorem loremlorem loremasdasldjsadlorem loremasdkajdaskldalorem loremasdsadasdasd</p>
                     </li>
-     
+
                 </ul>
             </div>
         </div>
@@ -175,7 +175,7 @@ export default function ProductCards({ store }) {
             payment_method: 'esewa',
             store: store._id,
         };
-        const success_url = process.env.REACT_APP_BASE_URL+'/esewa/skin';
+        const success_url = process.env.REACT_APP_BASE_URL + '/esewa/skin';
         try {
             const responseData = await sendRequest(
                 'payment/create',
@@ -221,7 +221,7 @@ export default function ProductCards({ store }) {
             <div className="product-list flex  flex-wrap gap-4 md:gap-8 mx-auto w-full  ">
                 {productCardsArray.map((card, index) => (
                     <>
-                        <div className=' flex flex-col w-[90%] sm:w-[75%] lg:w-[35%] mx-auto h-[500px]'>
+                        <div className=' flex flex-col w-[300px] mx-auto h-[500px]'>
                             <React.Fragment key={index}>{card}</React.Fragment>
                             <div>
                                 <button
