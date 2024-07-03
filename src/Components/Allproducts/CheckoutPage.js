@@ -86,7 +86,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
             esewaTransactionID: null,
             deliveryCode: null,
         };
-        const success_url = process.env.REACT_APP_BASE_URL+ '/esewa/order';
+        const success_url = process.env.REACT_APP_BASE_URL + '/esewa/order';
         console.log(orderData);
         try {
             console.log(store);
@@ -247,9 +247,9 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
 
                     </form>
                     <div className="mt-16 text-sm font-semibold text-center text-gray-600">
-                    <p>
-                        &copy; Brought To You By <a href="/" target="_blank" className=" underline hover:text-orange-200">Shop At Banau</a>, By <a href="https://www.saikanepal.com" target="_blank" className=" underline hover:text-blue-300">Saika Nepal</a> @ {new Date().getFullYear()}
-                    </p>
+                        <p>
+                            &copy; Brought To You By <a href="/" target="_blank" className=" underline hover:text-orange-200">Shop At Banau</a>, By <a href="https://www.saikanepal.com" target="_blank" className=" underline hover:text-blue-300">Saika Nepal</a> @ {new Date().getFullYear()}
+                        </p>
                     </div>
                 </div>
             </div>
