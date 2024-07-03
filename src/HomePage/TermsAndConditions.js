@@ -31,10 +31,11 @@ const TermsAndConditions = () => {
                     <h2 className="text-xl font-semibold mb-3 text-white rounded-md p-2 bg-[#2D2D2D]">4. Intellectual Property</h2>
                     <p className="text-gray-900">All content, trademarks, and data on this website, including but not limited to software, databases, text, graphics, icons, and hyperlinks, are the property of Saika Nepal or have been duly licensed for use on this website. Unauthorized use, distribution, reproduction, or modification of the content is prohibited.</p>
                 </section>
-
                 <section className="mb-8">
                     <h2 className="text-xl font-semibold mb-3 text-white rounded-md p-2 bg-[#2D2D2D]">5. Payments and Refunds</h2>
-                    <p className="text-gray-900">All payments for services must be made through the provided payment methods. All sales are final, and no refunds will be issued unless specifically stated otherwise in a separate agreement.</p>
+                    <p className="text-gray-900">
+                        All payments for services must be made through the provided payment methods. We as a service will take a 3% commission for transactions. All sales are final, and no refunds will be issued unless specifically stated otherwise in a separate agreement.
+                    </p>
                 </section>
 
                 <section className="mb-8">
@@ -78,9 +79,22 @@ const TermsAndConditions = () => {
                 </section>
 
                 <section className="mb-8">
-                    <h2 className="text-xl font-semibold mb-3 text-white rounded-md p-2 bg-[#2D2D2D]">12. Data Collection and Responsible Use</h2>
+                    <h2 className="text-xl font-semibold mb-3 text-white rounded-md p-2 bg-[#2D2D2D]">12.Cancellation and Price Manipulation</h2>
+                    <p className="text-gray-900">If you have any questions about these terms, please contact us at:</p>
+                    <ul className="list-disc list-inside text-gray-900">
+                        <li>Order Cancellations: You shall not cancel any customer order with the intent to resell the same product at a lower price or engage in any similar activities that may deceive or disadvantage the customer. Canceling orders in such a manner is considered a breach of transparency and trust with our platform.
+                        </li>
+                        <li>Fair Pricing: You acknowledge that all sales should be conducted fairly and transparently. Any attempt to manipulate pricing to undercut customer expectations or orders is strictly prohibited.</li>
+                        <li>Delivery Code Requirement: Completed deliveries must be confirmed using the provided delivery code. This ensures the accuracy and integrity of the delivery process. Failing to provide the delivery code and canceling the order to simplify the process undermines transparency and is a violation of our policies.</li>
+                        <li>Customer Trust: Maintaining customer trust is of utmost importance. Any actions that compromise this trust, such as canceling orders to offer lower prices or bypassing the delivery code requirement, will result in immediate action, which may includeke suspension or termination of your account.</li>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.1 Personal Data Collection</h3>
+                    </ul>
+                </section>
+
+                <section className="mb-8">
+                    <h2 className="text-xl font-semibold mb-3 text-white rounded-md p-2 bg-[#2D2D2D]">13. Data Collection and Responsible Use</h2>
+
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.1 Personal Data Collection</h3>
                     <p className="text-gray-900">We collect personal data from you when you register for an account, use our services, make a purchase, or interact with us in any other way. The types of personal data we collect may include:</p>
                     <ul className="list-disc list-inside text-gray-900">
                         <li>Name</li>
@@ -92,7 +106,7 @@ const TermsAndConditions = () => {
                         <li>Any other details you provide to us through our Service</li>
                     </ul>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.2 Usage Data Collection</h3>
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.2 Usage Data Collection</h3>
                     <p className="text-gray-900">We automatically collect usage data when you interact with our Service. This data may include:</p>
                     <ul className="list-disc list-inside text-gray-900">
                         <li>Your computer’s Internet Protocol (IP) address</li>
@@ -104,7 +118,7 @@ const TermsAndConditions = () => {
                         <li>Other diagnostic data</li>
                     </ul>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.3 Responsible Use of Data</h3>
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.3 Responsible Use of Data</h3>
                     <p className="text-gray-900">We are committed to ensuring that your personal data is used responsibly and ethically. We will not misuse your data, and we only collect data that you provide voluntarily through our input fields. Specifically, we will:</p>
                     <ul className="list-disc list-inside text-gray-900">
                         <li>Use your data to provide, maintain, and improve our Service</li>
@@ -114,10 +128,10 @@ const TermsAndConditions = () => {
                         <li>Use your data to comply with legal obligations and protect our rights</li>
                     </ul>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.4 Data Security</h3>
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.4 Data Security</h3>
                     <p className="text-gray-900">We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. Despite our efforts, no method of transmission over the Internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.5 Data Sharing and Disclosure</h3>
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.5 Data Sharing and Disclosure</h3>
                     <p className="text-gray-900">We do not sell or rent your personal data to third parties. We may share your data with:</p>
                     <ul className="list-disc list-inside text-gray-900">
                         <li>Service providers who assist us in operating our Service and conducting our business</li>
@@ -125,10 +139,12 @@ const TermsAndConditions = () => {
                         <li>Other parties in connection with a merger, acquisition, or sale of assets, in which case we will provide notice before your data is transferred and becomes subject to a different privacy policy</li>
                     </ul>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.6 Data Retention</h3>
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.6 Data Retention</h3>
                     <p className="text-gray-900">We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected, including to comply with legal, accounting, or reporting requirements. When your data is no longer needed, we will securely delete or anonymize it.</p>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.7 Your Rights</h3>
+
+
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.7 Your Rights</h3>
                     <p className="text-gray-900">You have the right to:</p>
                     <ul className="list-disc list-inside text-gray-900">
                         <li>Access the personal data we hold about you</li>
@@ -139,9 +155,11 @@ const TermsAndConditions = () => {
                         <li>Request the transfer of your data to another party</li>
                         <li>Withdraw consent at any time, where we are relying on consent to process your data</li>
                     </ul>
+
+
                     <p className="text-gray-900">To exercise any of these rights, please contact us at shopatbanau@gmail.com.</p>
 
-                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">12.8 Contact Us</h3>
+                    <h3 className="text-md font-semibold mb-2 text-white rounded-md p-2 bg-[#2D2D2D]">13.8 Contact Us</h3>
                     <p className="text-gray-900">If you have any questions about this data collection and responsible use section, please contact us at:</p>
                     <ul className="list-disc list-inside text-gray-900">
                         <li>Email: shopatbanau@gmail.com</li>

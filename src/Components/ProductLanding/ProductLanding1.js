@@ -227,7 +227,7 @@ const ProjectLanding1 = () => {
                                     </p>
                                     <div className='flex mb-2 md:justify-start'>
                                         {[...Array(5)].map((option, index) => {
-                                            if (index < parseFloat(selectedProduct.rating))
+                                            if (index < parseFloat(Math.ceil(selectedProduct.rating)))
                                                 return <StarIcon className='w-5 h-5 text-[#8B5A08]' key={index} />
                                             else
                                                 return <StarIcon className='w-5 h-5 text-[#959595]' key={index} />

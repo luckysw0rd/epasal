@@ -24,6 +24,8 @@ const Dashboard = () => {
 
 
   const fetchStore = async () => {
+    console.log("Store token" , auth)
+
     try {
       const responseData = await sendRequest(
         'store/getStore/' + storeName,
@@ -31,7 +33,7 @@ const Dashboard = () => {
         null,
         {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.token,
+          'Authorization': 'Bearer ' + auth.token,
         }
       );
       console.log(responseData); // Handle response data as needed
@@ -53,10 +55,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchUserRole = async () => {
+      console.log("user role token" , auth.token)
       try {
         const userResponse = await sendRequest('users/getLoggedInUser', 'GET', null, {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.token,
+          'Authorization': 'Bearer ' + auth.token,
         });
         const userRole = userResponse.user.roles[0].role;
         setRole(userRole);
@@ -66,7 +69,7 @@ const Dashboard = () => {
     };
 
     fetchUserRole();
-  }, [auth.token]);
+  }, []);
 
 
   const renderDashboardContent = (store) => {

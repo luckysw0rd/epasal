@@ -4,14 +4,14 @@ import './BanauTheme.css';
 
 const BanauTheme = () => {
     return (
-        <div className="p-8 md:p-4 xl:p-8 w-full">
+        <div className="p-4 py-8 md:py-10 lg:py-20 w-full">
             <div className="flex gap-5 lg:gap-10 p-8 lg:p-10 xl:p-16 bg-gray-800 rounded-lg text-white">
                 <div className="flex flex-col gap-5 xl:gap-10">
                     <h1 className="text-2xl lg:text-3xl font-bold">Banau <span className="text-blue-400">Themes</span></h1>
                     <p className="md:text-xs xl:text-base mt-2">
                         "Transform your online store with Banau's stunning skins, featuring customizable design cards and banners—some free, some premium!"
                     </p>
-                    <button className="text-xs xl:text-base mt-5 lg:mt-10 w-1/2 md:w-[90%] xl:w-2/3 bg-gray-700 border border-white text-white py-2 px-2 lg:px-3 rounded-lg flex justify-center items-center gap-3 md:gap-1 lg:gap-3">
+                    <button className="text-xs xl:text-base mt-5 lg:mt-10 w-1/2 md:w-[90%] xl:w-2/3 2xl:w-1/2 bg-gray-700 border border-white text-white py-2 px-2 lg:px-3 rounded-lg flex justify-center items-center gap-3 md:gap-1 lg:gap-3">
                         Watch Video
                         <FaPlay />
                     </button>

@@ -42,7 +42,7 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
 
     return (
         <motion.div
-            className="w-[300px]  shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+            className="w-[280px]  shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.newProductColor.cardBackground, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.borderColor}` }}
@@ -62,7 +62,9 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
                     alt={product.name}
                     className="h-60 p-2 w-full object-cover rounded-t-xl"
                 />
-                <div className="px-4 py-3 w-72">
+                <div className="px-4 py-3 w-70 border-t-2"
+                    style={{ borderColor: `${store?.color?.newProductColor?.borderColor}` }}
+                >
                     <span className=" mr-3 uppercase text-xs">{product.subcategories[0]}</span>
                     <p className="text-lg font-bold truncate block capitalize">{product.name}</p>
                     <div className="flex  items-center justify-between">
@@ -70,10 +72,10 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
                             <p className="text-md text-nowrap font-semibold cursor-auto my-3" style={{ color: `${store.color.newProductColor.priceColor}` }}>
                                 Rs {product.price - product.discount}
                             </p>
-                            {product.discount>0 &&
-                            <del>
-                                <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
-                            </del>}
+                            {product.discount > 0 &&
+                                <del>
+                                    <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
+                                </del>}
                         </div>
                         <div className=" ">
 

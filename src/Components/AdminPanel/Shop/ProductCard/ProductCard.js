@@ -5,7 +5,7 @@ import useFetch from '../../../../Hooks/useFetch';
 import Loading from "../../../Loading/Loading"
 
 const ProductCard2 = () => (
-    <div className="w-62 hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="w-[300px] hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <a href="#">
             <img
                 src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"

@@ -56,7 +56,7 @@ const DragdropSection = () => {
                     )}
                 </div>
 
-                <div className="hidden md:flex flex-col gap-2 lg:gap-4 bg-[#793A00] w-[70%] lg:w-[55%] rounded-2xl absolute top-[18%] -right-[25%] text-white py-4 px-6 lg:px-12 2xl:py-8">
+                <div className="hidden md:flex flex-col gap-2 lg:gap-4 bg-[#793A00] w-[70%] lg:w-[55%] rounded-2xl absolute top-[18%] -right-[25%] text-white py-4 px-6 lg;py-6 xl:px-12 2xl:py-8">
                     <h3 className="text-xs md:text-sm lg:text-base 2xl:text-lg font-bold">FREEDOM IS YOURS</h3>
                     <p className="text-xs lg:text-sm 2xl:text-base">Have fun customizing your digital store.</p>
                     <Link to="/buildstore" className="border border-white hover:bg-white hover:text-[#793A00] p-1 rounded-md lg:rounded-xl text-xs lg:text-sm lg:w-2/3 2xl:w-1/2">

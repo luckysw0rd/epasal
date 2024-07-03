@@ -83,7 +83,7 @@ const Card = () => {
                 >
                     <div>
                         <h2 className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold tracking-wide">Manage Employee and Staff</h2>
-                        <p className="mt-2 text-sm md:text-base lg:text-lg 2xl:text-xl">Effectively Organize and manage your team with role based access effectively.</p>
+                        <p className="mt-2 text-sm md:text-base lg:text-lg 2xl:text-xl">Effectively Organize and manage your team with role based access.</p>
                     </div>
                     <img src={staffIcon} alt="staff" className='w-[80px] md:w-[120px] object-contain' />
                 </motion.div>

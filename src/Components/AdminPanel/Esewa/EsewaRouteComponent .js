@@ -72,8 +72,9 @@ const EsewaRouteComponent = () => {
                 }
             );
             console.log("Response data:", responseData);
-            setUpdatedOrder(responseData.updatedOrder);
             setIsSuccess(true);
+
+            setUpdatedOrder(responseData.updatedOrder);
         } catch (error) {
             console.error("Error message:", error.message);
             console.error("Error details:", error);

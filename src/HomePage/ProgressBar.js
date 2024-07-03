@@ -33,19 +33,19 @@ const ProgressBar = () => {
 
     return (
         <div className='bg-white p-4'>
-            <div className="flex flex-col md:flex-row items-center justify-between mx-auto p-4 space-y-8 md:space-y-0 md:space-x-8">
-                <div className="hidden 2xl:block">
+            <div className="flex flex-col md:flex-row items-center justify-between mx-auto md:p-4 gap-5 space-y-4 md:space-y-0 md:space-x-8">
+                <div className="mt-4 md:mt-0 hidden 2xl:block">
                     <div className="relative w-full max-w-sm h-96 p-4 mx-auto">
                         <img src={slider} alt="Decorative" className="w-full h-full object-cover" />
                     </div>
                 </div>
-                <div className="flex flex-col justify-center items-center md:items-start space-y-4 w-full md:w-auto">
+                <div className="flex flex-col justify-center items-center md:items-start gap-5 w-full md:w-auto">
                     <h2 className="font-bold text-2xl  mr-24 text-orange-500 mb-4 md:text-left 
                      sm:mr-0">Get Started</h2>
-                    <div className="flex flex-col items-start space-y-2">
+                    <div className="flex flex-col items-start space-y-2 md:space-y-0 lg:space-y-2">
                         {steps.map((step, index) => (
                             <React.Fragment key={index}>
-                                <div className="flex items-center space-x-2 text-xl text-[#262626]">
+                                <div className="flex items-center space-x-2 text-xl md:text-sm lg:text-xl text-[#262626]">
                                     <div className={`w-4 h-4 rounded-full ${index <= currentStep ? 'bg-[#1E1E1E]' : 'bg-gray-300'}`}></div>
                                     <span className={`ml-2 ${index === currentStep ? 'font-bold' : ''}`}>{step.label}</span>
                                 </div>
@@ -56,7 +56,7 @@ const ProgressBar = () => {
                         ))}
                     </div>
                 </div>
-                <div className="w-full max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto md:mx-0">
+                <div className="w-full max-w-lg md:max-w-md lg:max-w-2xl xl:max-w-3xl mx-auto md:mx-0">
                     <div className="border-8 border-[#2D2D2D] shadow-md flex items-center justify-center bg-[#1E1E1E] rounded-xl overflow-hidden">
                         <img src={steps[currentStep].gif} alt="GIF" className="w-full h-full object-cover" />
                     </div>

@@ -272,7 +272,7 @@ const Navbar1 = ({
 
     return (
         <motion.nav
-            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${scrolling ? 'bg-brown-700' : 'bg-transparent'
+            className={`flex  items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${scrolling ? 'bg-brown-700' : 'bg-transparent'
                 }`}
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -298,17 +298,18 @@ const Navbar1 = ({
                         <img
                             src={store?.logo?.logoUrl}
                             alt="Logo"
-                            className="h-8 mr-4"
+                            className="h-12 w-12 rounded-full object-cover mr-4"
                         />
                     )
                 ) : (
                     <div {...getRootProps()} className="cursor-pointer flex items-center">
                         <input {...getInputProps()} />
                         <img
-                            src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
-                            alt="Logo"
-                            className="h-8 mr-4"
-                        />
+  src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
+  alt="Logo"
+  className="h-12 w-12 rounded-full object-cover mr-4"
+/>
+
                     </div>
                 )}
                 <span className="text-xl font-bold" onClick={() => navigate('./')}>
@@ -344,7 +345,7 @@ const Navbar1 = ({
                 {(store.isEdit || !store.fetchedFromBackend) && 
            <button
            onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
-           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200"
+           className="bg-black hover:bg-white text-white hover:text-black hover:border-black hover:border-1 font-bold py-2 px-4 text-sm rounded transition duration-200"
          >
            {store.previewMode ? 'Preview Mode' : 'Edit'}
          </button>}

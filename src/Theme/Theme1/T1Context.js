@@ -13,6 +13,8 @@ import sevenForty from '../../Assets/ratio/740.png';
 import oneFourty from '../../Assets/ratio/140.png';
 import twoFiftySix from '../../Assets/ratio/256.png';
 import sixTeenHundred from '../../Assets/ratio/1600.png';
+import graybg from '../../Assets/graybg.webp';
+
 
 const StoreContext = createContext();
 
@@ -49,7 +51,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Kids" }],
 
     subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
-    banner: { bannerUrl: `${sixTeenHundred}`, bannerID: '' },
+    banner: { bannerUrl: `${graybg}`, bannerID: '' },
     products: [
       {
         id: 1,
@@ -315,72 +317,67 @@ export const StoreProvider = ({ children, passedStore }) => {
     ],
     featuredProducts: [0, 1, 4],
     color: {
-      backgroundThemeColor: "#FFFFFF",
+      backgroundThemeColor: "#ffffff",
       navColor: {
-        backgroundnavColor: "#B6947D",
-        storeNameTextColor: "#000000",
-        categoryTextColor: "#1d2830",
+        backgroundnavColor: "#373a40",
+        storeNameTextColor: "#eeeeee",
+        categoryTextColor: "#dc5f00",
         searchBarColor: "#fcf3f3",
       },
       subcategoryColor: {
-        background: "#ffffff",
-        text: "#4F3100",
+        background: "#eeeeee",
+        text: "#36393f",
       },
       subProductColor: {
-        categoryColor: "#ffffff",
-        backgroundColor: "#FDF7E6",
+        categoryColor: "#eeeeee",
+        backgroundColor: "#f3f2ec",
         textColor: "#333333",
-        borderColor: "#AB8076",
-        priceColor: "#4F3100",
-        priceLetterColor: "#fff",
-        scrollbarColor: "#4F3100",
-        starColor: "#875300",
+        borderColor: "#ffffff",
+        priceColor: "#3d3d3d",
+        priceLetterColor: "#ffffff",
+        scrollbarColor: "#1f1f1e",
+        starColor: "#3d3d3d",
       },
       firstBannerColor: {
-        backgroundThemeColor1: "#ffffff",
+        backgroundThemeColor1: "#fafafa",
         backgroundThemeColor2: "#fcf3f3",
-        textColor: "#5D4B3F",
-        buttonColor: "#AB8076",
+        textColor: "#1f1f1e",
+        buttonColor: "#3d3d3d",
         buttonText: "#ffffff",
       },
       newProductColor: {
-        // Define productListColor object
-        backgroundColor: "#FFFFFF",
-        cardBackground: "#FFFFFF",
-        borderColor: "#B5A297",
+        backgroundColor: "#ffffff",
+        cardBackground: "#f3f2ec",
+        borderColor: "#cac4c4",
         headerColor: "#5D4B3F",
-        textColor: "#4F3100",
-        priceColor: "#4F3100",
+        textColor: "#3d3d3d",
+        priceColor: "#3d3d3d",
         heartColor: "#FF4D00",
-        buttonTextColor: "#4F3100",
-        buttonBgColor: "#FFFFFF",
+        buttonTextColor: "#ffffff",
+        buttonBgColor: "#3d3d3d",
         buttonBorderColor: "#4F3100",
-        buttonBgColorOnHover: "#4F3100",
+        buttonBgColorOnHover: "#263129",
       },
       secondaryBannerColor: {
-        backgroundThemeColor1: "#ffffff",
-        backgroundThemeColor2: "#fcf3f3",
-        textColor: "#5D4B3F",
-        buttonColor: "#AB8076",
+        backgroundThemeColor1: "#fafafa",
+        backgroundThemeColor2: "#fafafa",
+        textColor: "#1f1f1e",
+        buttonColor: "#3d3d3d",
         buttonText: "#ffffff",
       },
-
       offerBannerColor: {
         backgroundBoxThemeColor1: "#ffffff",
-        backgroundThemeColor: "#C9BCAC",
+        backgroundThemeColor: "#eeeeee",
         textColor: "#4E3E34",
-        buttonColor: "#AB8076",
-        buttonText: "#ffffff",
+        buttonColor: "#401a12",
+        buttonText: "#3e1818",
       },
-
       headerColor: {
         headerText: "#ffffff",
         headerBackground: "#7a5C5c",
       },
-
       productSection: "#ffffff",
       productListColor: {
-        // Define productListColor object
         backgroundColor: "#FFFFFF",
         cardBackground: "#FFFFFF",
         borderColor: "#B5A297",
@@ -393,15 +390,14 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonBorderColor: "#4F3100",
         buttonBgColorOnHover: "#4F3100",
       },
-
       footerColor: {
-        bgColor: "#736860",
+        bgColor: "#1e1e20",
         textColor: "#ffffff",
         linkHeaderColor: "#ffffff",
-        linkColor: "#ffffff",
-        btnBgColor: "#736860",
-        btnText: "#ffffff",
-        btnBgColorOnHover: "#4F3100"
+        linkColor: "#f2f2f2",
+        btnBgColor: "#ffffff",
+        btnText: "#fafafa",
+        btnBgColorOnHover: "#4F3100",
       },
     },
     offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },

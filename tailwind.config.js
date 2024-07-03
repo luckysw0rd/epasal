@@ -31,7 +31,8 @@ module.exports = {
 "Work-Sans":["Work Sans", "sans-serif"],
 Saira:["Saira", "sans-serif"],
 Mohave:["Mohave", "sans-serif"],
-Asap:["Asap", "sans-serif"]
+Asap:["Asap", "sans-serif"],
+Ubuntu:["Ubuntu", "sans-serif"]
       },
       
     },
