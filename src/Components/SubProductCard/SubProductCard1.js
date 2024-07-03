@@ -107,7 +107,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             )}
 
 
-            <div className="relative w-[140px]  md:w-[240px] h-[139px] flex ml-2 mt-5 md:mt-0">
+            <div className="relative w-[140px]  md:w-[240px] h-[139px] flex ml-2 mt-0 md:mt-0">
                 <motion.img
                     className="w-full h-[120px] sm:h-full object-contain "
                     src={product?.image?.imageUrl}
@@ -129,7 +129,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     })}
                 </div>
                 <div className=' md:h-[56px] py-1 text-xs overflow-hidden'>{truncateName1(product.description)}</div>
-                <div className="mt-1">
+                <div className="mt-1 py-2">
                     <div className="text-sm font-bold flex items-center gap-1 justify-between mx-2 sm:mx-0" >
                         <div className=' flex flex-col gap-0 '>
                             {product.discount > 0 &&
