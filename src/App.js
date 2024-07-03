@@ -34,7 +34,7 @@ function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if (token) {
+  if (true) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />

@@ -142,7 +142,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                             onClick={() => {
                                 handleProductClick(product)
                             }}
-                            style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
+                            style={{ backgroundColor: `${store.color.subProductColor.buttonColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
                         >
                             Add to Cart
                         </button>

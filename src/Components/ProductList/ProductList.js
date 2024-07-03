@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProductListCard1 from './ProductListCard1';
 import ProductListCard2 from './ProductListCard2';
 import ProductListcard3 from './ProductListCard3';
-const ProductList = ({ productListProps, productListType }) => {
+const ProductList = ({ productListProps, productListType,storeName }) => {
     const { products, isEdit, productColor, setStore, store, fetchedFromBackend } = productListProps
-
+  const navigate=useNavigate()
+  
+    const handleExploreClick=(e)=>{
+       
+          navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
+          
+        
+      }
     // Filtered products state
     const [filteredProducts, setFilteredProducts] = useState(products);
 
@@ -114,7 +121,8 @@ const ProductList = ({ productListProps, productListType }) => {
         <div className='relative' style={{ fontFamily: store?.fonts?.Featured, backgroundColor:"#ffff" }}>
             {renderProductList()}
             <Link>
-                <button className="flex items-center absolute right-10 bottom-2 font-semibold transition ease-in duration-200 border-nore focus:outline-none">
+                <button className="flex items-center absolute right-10 bottom-2 font-semibold transition ease-in duration-200 border-nore focus:outline-none"
+                onClick={handleExploreClick}>
                     <span>View More</span> <IoIosArrowForward />
                 </button>
             </Link>

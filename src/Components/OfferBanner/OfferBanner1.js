@@ -44,7 +44,7 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
 
   return (
     <div className="box-border py-8 mb-16" style={{
-      backgroundColor: color.offerBannerColor.backgroundThemeColor,}}>
+      backgroundColor: color.offerBannerColor.backgroundThemeColor1,}}>
       <motion.div
         className="box-border relative shadow-lg min-h-[300px] sm:h-[600px] md:h-[800px] lg:h-[400px] lg:min-h-[450px] flex flex-col sm:flex-col sm:space-y-5 lg:space-y-0  lg:flex-row md:justify-center items-center  space-x-0 lg:space-x-20 px-10  py-10 text-black  "
         initial={{ opacity: 0, y: -50 }}

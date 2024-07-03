@@ -114,12 +114,12 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                                     <FaHeart style={{ color: heartColor }} size={15} />
                                 </div> */}
                                 <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
-                                    <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
+                                    {/* <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
                                         <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
                                             Learn More <IoIosArrowForward />
                                         </div>
-                                    </button>
-                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+                                    </button> */}
+                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                         onClick={() => {
