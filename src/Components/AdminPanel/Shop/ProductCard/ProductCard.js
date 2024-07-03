@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import cosmetic from '../../../../Assets/cosmetic.webp';
 import esewa from '../../../../Assets/esewa.webp';
 import useFetch from '../../../../Hooks/useFetch';
+import Loading from "../../../Loading/Loading"
+
 const ProductCard2 = () => (
     <div className="w-[300px] hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <a href="#">
@@ -217,36 +219,37 @@ export default function ProductCards({ store }) {
     };
 
     return (
-        <div className="container  mx-auto px-5 py-8 flex flex-wrap justify-between ">
-            <div className="product-list flex  flex-wrap gap-4 md:gap-8 mx-auto w-full  ">
-                {productCardsArray.map((card, index) => (
-                    <>
-                        <div className=' flex flex-col w-[300px] mx-auto h-[500px]'>
-                            <React.Fragment key={index}>{card}</React.Fragment>
-                            <div>
-                                <button
-                                    className="flex items-center justify-center space-x-5 mt-auto text-green-800 bg-gray-300 border-0 py-3 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
-                                    onClick={() => handleBuyNow(index)}
-                                >
-                                    <img src={esewa} alt="eSewa" className="font-Cinzel rounded-md w-20 h-10 mr-6" />
-                                    <span className='  relative right-10 '>Pay Now</span>
-                                    <svg
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        className="w-4 h-4 font-extrabold"
-                                        viewBox="0 0 24 24"
+        isLoading ? <Loading /> :
+            <div className="container  mx-auto px-5 py-8 flex flex-wrap justify-between ">
+                <div className="product-list flex  flex-wrap gap-4 md:gap-8 mx-auto w-full  ">
+                    {productCardsArray.map((card, index) => (
+                        <>
+                            <div className=' flex flex-col w-[90%] sm:w-[75%] lg:w-[35%] mx-auto h-[500px]'>
+                                <React.Fragment key={index}>{card}</React.Fragment>
+                                <div>
+                                    <button
+                                        className="flex items-center justify-center space-x-5 mt-auto text-green-800 bg-gray-300 border-0 py-3 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
+                                        onClick={() => handleBuyNow(index)}
                                     >
-                                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                                    </svg>
-                                </button></div>
-                        </div>
-                    </>
-                ))}
+                                        <img src={esewa} alt="eSewa" className="font-Cinzel rounded-md w-20 h-10 mr-6" />
+                                        <span className='  relative right-10 '>Pay Now</span>
+                                        <svg
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            className="w-4 h-4 font-extrabold"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                        </svg>
+                                    </button></div>
+                            </div>
+                        </>
+                    ))}
+                </div>
             </div>
-        </div>
     );
 }
 
