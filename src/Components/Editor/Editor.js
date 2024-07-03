@@ -1604,17 +1604,17 @@ const Editor = () => {
     <AnimatePresence>
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
         <motion.div key='first' initial={{ x: 20 }} exit={{ x: 500 }} transition={{ duration: 0.3 }} animate={{ x: 0 }} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
-          <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Poppins'>Design Your Website </h1>
-
-          <div className='flex justify-between  font-Poppins  mt-5 font-semibold text-[#6A6A6A] '>
+          {/* <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Poppins'></h1> */}
+          <div className='text-red-600 absolute left-10 top-[26px] left text-[16px] flex justify-between font-semibold border-2 p-1 border-red-500 rounded-lg font-Ubuntu' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><p>Hide</p><BiSolidHide className=" my-auto mx-1"/></div>
+          <div className='flex justify-between  font-Poppins  mt-24 font-semibold text-[#6A6A6A] border-t-2  pt-4'>
             <button className={`flex-1   text-lg text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content </button>
             <button className={`flex-1  text-lg text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
             {store.isEdit &&
               <button className={`flex-1  text-lg text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
             }
           </div>
-          <div className='text-red-600 absolute top-[26px] right-2 text-[20px]' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><  RxCrossCircled /></div>
-          <div className='text-red-600 absolute top-[26px] right-10 text-[20px]' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><BiSolidHide /></div>
+          <div className='text-red-600 right-10 absolute top-[26px]  text-[16px] flex justify-between font-semibold border-2 p-1 border-red-500 rounded-lg font-Ubuntu' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><p>Exit</p><  RxCrossCircled className=" my-auto mx-1 font-bold"/></div>
+
           {openType === 1 && (
             <motion.div
               initial={{ opacity: 0 }}
