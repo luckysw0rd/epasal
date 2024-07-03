@@ -39,7 +39,7 @@ const AllProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/product/getStoreProducts/${storeName}`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/getStoreProducts/${storeName}`, {
         params: {
           page,
           limit: 12,
