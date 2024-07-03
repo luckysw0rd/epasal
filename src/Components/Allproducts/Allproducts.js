@@ -341,7 +341,7 @@ const AllProducts = () => {
             </div>
           )}
 
-          <div className="lg:ml-16 flex-grow p-4 w-full lg:w-3/4">
+          <div className="lg:ml-16 flex-grow p-4 w-full lg:w-3/4 min-h-screen ">
             <div className="flex flex-wrap justify-start gap-4">
               <div className="flex items-center space-x-2 mb-4 ml-0 w-full">
                 <input
