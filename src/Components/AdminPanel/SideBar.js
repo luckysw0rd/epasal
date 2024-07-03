@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { MdOutlineDashboard, MdStore, MdEdit, MdShop2 } from "react-icons/md";
@@ -6,11 +6,11 @@ import { FaUserAlt, FaClipboardList, FaBox } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
 import banau from '../../Assets/banau.png';
-
-const SideBar = ({ setDashboardState }) => {
+import { AuthContext } from "../../Hooks/AuthContext";
+const SideBar = ({ setDashboardState,role }) => {
   const navigate = useNavigate();
   const { open, setOpen } = useSiderBar();
-
+  const auth=useContext(AuthContext);
   const handleLogout = () => {
     try {
       navigate("/");
@@ -20,12 +20,12 @@ const SideBar = ({ setDashboardState }) => {
   };
 
   const menus = [
-    { name: "General", link: "/adminpanel", icon: MdEdit },
-    { name: "Home", link: "/adminpanel", icon: MdOutlineDashboard },
-    { name: "Employee", link: "/adminpanel", icon: FaUserAlt },
+    ...(role === 'Admin' || role === 'Owner' || role==='Staff'?[{ name: "General", link: "/adminpanel", icon: MdEdit }]:[]),
+    ...(role === 'Admin' || role === 'Owner' || role==='Staff'?[{ name: "Home", link: "/adminpanel", icon: MdOutlineDashboard }]:[]),
+    ...(role==='Admin'||role==='Owner'?[{ name: "Employee", link: "/adminpanel", icon: FaUserAlt }]:[]),
     { name: "Order", link: "/adminpanel", icon: FaClipboardList },
-    { name: "Product", link: "/adminpanel", icon: FaBox },
-    { name: "Edit Store", link: "/adminpanel", icon: MdEdit },
+    ...(role === 'Admin' || role === 'Owner' || role==='Staff'?[{ name: "Product", link: "/adminpanel", icon: FaBox }]:[]),
+    ...(role === 'Admin' || role === 'Owner'?[{ name: "Edit Store", link: "/adminpanel", icon: MdEdit }]:[]),
 
   ];
 
@@ -93,14 +93,14 @@ const SideBar = ({ setDashboardState }) => {
               className="flex ml-12 items-center text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200"
             >
               <FiSettings size={20} />
-              <span className="pl-2">Settings</span>
+              <span className="pl-2" onClick={()=>navigate('/settings')}>Settings</span>
             </button>
             <button
               onClick={handleLogout}
               className="flex ml-12 items-center text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200"
             >
               <FiLogOut size={20} />
-              <span className="pl-2">Log out</span>
+              <span className="pl-2" onClick={()=>{auth.logout()}}>Log out</span>
             </button>
           </div>
         </div>

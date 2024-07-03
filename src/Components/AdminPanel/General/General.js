@@ -88,6 +88,7 @@ const General = ({ store, setDashboardState }) => {
             toast.success(responseData.message);
             window.location.reload();
         } catch (error) {
+            toast.error(error.message)
             console.error(error.message || 'An error occurred during login');
         }
         setIsEditing(false);

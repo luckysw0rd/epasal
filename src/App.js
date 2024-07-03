@@ -8,7 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
 import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
-import Dashboard from './Components/AdminPanel/Dashboard';
+// import Dashboard from './Components/AdminPanel/Dashboard';
+const Dashboard=React.lazy(()=>import('./Components/AdminPanel/Dashboard'))
 // import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
@@ -41,7 +42,7 @@ function App() {
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
-        <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
@@ -54,7 +55,9 @@ function App() {
         <Route path="/settings" element={<SettingPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
+
+        <Route path="/*" element={<Navigate to="/" />} />
       </React.Fragment>
     );
   } else {
@@ -67,12 +70,11 @@ function App() {
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/login" element={<SignInPage />}></Route>
-        {/* <Route path="/adminpanel/:storeName" element={<Dashboard />} /> */}
 
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/*" element={<Navigate to="/login" />} />
       </React.Fragment>
     );
   }
@@ -89,6 +91,7 @@ function App() {
                 </div>}>
               <Routes>
                 {routes}
+                <Route path="/adminpanel/:storeName" element={token?<Dashboard />:<Navigate to='/login'/>} />
               </Routes>
             </Suspense>
           </Router>

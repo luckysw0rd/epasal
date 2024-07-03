@@ -138,7 +138,7 @@ const Product = ({ store }) => {
       };
 
       const response = await sendRequest(
-        `product/updateProduct`,
+        `product/updateProduct?storeID=${store._id}`,
         'PUT',
         JSON.stringify({ id: updatedEditProduct._id, updates }),
         {
