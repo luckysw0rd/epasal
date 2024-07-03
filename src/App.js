@@ -6,9 +6,9 @@ import { PrimeReactProvider } from 'primereact/api';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
-import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 // import Dashboard from './Components/AdminPanel/Dashboard';
+import Loading from "./Theme/Theme1/Loading/Loading";
 const Dashboard=React.lazy(()=>import('./Components/AdminPanel/Dashboard'))
 // import Theme from "./Theme/Theme";
 // Lazy loading components
@@ -35,7 +35,7 @@ function App() {
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
   let routes;
-  if (token) {
+  if (true) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -86,9 +86,8 @@ function App() {
           <Router>
             <Suspense fallback=
               {
-                <div className=" bg-fuchsia-700 h-screen w-screen">
-                  LOADING
-                </div>}>
+                <Loading />
+              }>
               <Routes>
                 {routes}
                 <Route path="/adminpanel/:storeName" element={token?<Dashboard />:<Navigate to='/login'/>} />

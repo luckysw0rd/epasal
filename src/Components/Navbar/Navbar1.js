@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
@@ -18,7 +18,8 @@ const Navbar1 = ({
     searchInput,
     setIsSidebarOpen,
     setSearchInput,
-    setLogoFile
+    setLogoFile,
+    isEdit, fetchedFromBackend
 }) => {
     const [scrolling, setScrolling] = useState(false);
     const [editableText, setEditableText] = useState("Ecom Template-2");
@@ -26,6 +27,7 @@ const Navbar1 = ({
     const location = useLocation();
     const navigate = useNavigate();
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const sidebarRef = useRef();
     const [cartItems, setCartItems] = useState([
         {
             id: 1,
@@ -91,6 +93,7 @@ const Navbar1 = ({
     };
     useEffect(() => {
         loadCartFromLocalStorage();
+        console.log("hellleoeoeoeoe", isEdit, fetchedFromBackend)
     }, [setStore]);
 
     // Save cart to localStorage whenever it changes
@@ -145,6 +148,25 @@ const Navbar1 = ({
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                setIsSidebarOpen(false);
+            }
+        };
+
+        if (isSidebarOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isSidebarOpen]);
+
     console.log(store.cartCount)
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -282,8 +304,9 @@ const Navbar1 = ({
                 backgroundColor: scrolling ? color?.navColor?.backgroundnavColor : 'transparent',
                 color: color.navColor.storeNameTextColor,
             }}
+
         >
-            <div className="flex items-center">
+            <div className="flex items-center ">
                 {!isSidebarOpen && (
                     <button
                         style={{ color: color.navColor.storeNameTextColor }}
@@ -305,10 +328,10 @@ const Navbar1 = ({
                     <div {...getRootProps()} className="cursor-pointer flex items-center">
                         <input {...getInputProps()} />
                         <img
-  src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
-  alt="Logo"
-  className="h-12 w-12 rounded-full object-cover mr-4"
-/>
+                            src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
+                            alt="Logo"
+                            className="h-12 w-12 rounded-full object-cover mr-4"
+                        />
 
                     </div>
                 )}
@@ -319,9 +342,9 @@ const Navbar1 = ({
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-4 mr-8">
-                    <a href={`/store/products/${store.name}`} className="hover:underline">All Products</a>
-                    <a href={`/store/products/${store.name}`} className="hover:underline">Featured</a>
-                    <a href={`/store/products/${store.name}`} className="hover:underline">Offers</a>
+                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
+                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
+                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input
@@ -342,58 +365,64 @@ const Navbar1 = ({
                     )}
                 </button>
                 {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} store={store} setStore={setStore} />} {/* Conditionally render the CartDropdown */}
-                {(store.isEdit || !store.fetchedFromBackend) && 
-           <button
-           onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
-           className="bg-black hover:bg-white text-white hover:text-black hover:border-black hover:border-1 font-bold py-2 px-4 text-sm rounded transition duration-200"
-         >
-           {store.previewMode ? 'Preview Mode' : 'Edit'}
-         </button>}
+                {(store.isEdit || !store.fetchedFromBackend) &&
+                    <button
+                        onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
+                        className="bg-black hover:bg-white text-white hover:text-black hover:border-black hover:border-1 font-bold py-2 px-4 text-sm rounded transition duration-200"
+                    >
+                        {store.previewMode ? 'Preview Mode' : 'Edit'}
+                    </button>}
             </div>
 
-            {isSidebarOpen && (
-                <button
-                    style={{ color: color.navColor.storeNameTextColor }}
-                    className="block focus:outline-none md:hidden absolute right-6"
-                    onClick={toggleSidebar}
-                >
-                    <FaTimes className="h-6 w-6 fill-current" />
-                </button>
-            )}
+            {
+                isSidebarOpen && (
+                    <button
+                        style={{ color: color.navColor.storeNameTextColor }}
+                        className="block focus:outline-none md:hidden absolute right-6"
+                        onClick={toggleSidebar}
+                    >
+                        <FaTimes className="h-6 w-6 fill-current" />
+                    </button>
+                )
+            }
 
-            {isSidebarOpen && (
-                <div
-                    className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
-                    style={{ backgroundColor: color.navColor.backgroundnavColor }}
-                >
-                    <div className="flex flex-col items-start space-y-4 p-4">
-                        <div className="flex items-center mb-4">
-                            {store.logo && (
-                                <img
-                                    src={store?.logo?.logoUrl}
-                                    alt="Logo"
-                                    className="h-8 mr-4"
+            {
+                isSidebarOpen && (
+                    <div
+                        className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
+                        style={{ backgroundColor: color.navColor.backgroundnavColor }}
+                        ref={sidebarRef}
+                    >
+                        <div className="flex flex-col items-start space-y-4 p-4">
+                            <div className="flex items-center mb-4">
+                                {store.logo && (
+                                    <img
+                                        src={store?.logo?.logoUrl}
+                                        alt="Logo"
+                                        className="h-8 mr-4"
+                                    />
+                                )}
+                                <span className="text-xl font-bold">{store.name}</span>
+                            </div>
+                            <div className="relative flex gap-3 items-center w-full">
+                                <input
+                                    type="text"
+                                    value={searchInput}
+                                    onChange={handleSearchInputChange}
+                                    placeholder="Search"
+                                    className="bg-transparent border-b border-white focus:outline-none placeholder-white text-xl w-full placeholder:text-sm"
                                 />
-                            )}
-                            <span className="text-xl font-bold">{store.name}</span>
-                        </div>
-                        <a href="#" className="hover:underline">All Products</a>
-                        <a href="#" className="hover:underline">Featured</a>
-                        <a href="#" className="hover:underline">Offers</a>
-                        <div className="relative flex items-center w-full">
-                            <input
-                                type="text"
-                                value={searchInput}
-                                onChange={handleSearchInputChange}
-                                placeholder="Search"
-                                className="bg-transparent border-b border-white focus:outline-none placeholder-white text-xl w-full placeholder:text-sm"
-                            />
-                            <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+                                <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+                            </div>
+                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
+                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
+                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
+
                         </div>
                     </div>
-                </div>
-            )}
-        </motion.nav>
+                )
+            }
+        </motion.nav >
     );
 };
 

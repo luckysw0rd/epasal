@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import StarRating from './StarRating'; // Import the StarRating component
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
+import Loader from '../Loading/Loading';
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -254,7 +255,7 @@ const AllProducts = () => {
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />
   }
 
   return (
@@ -340,7 +341,7 @@ const AllProducts = () => {
             </div>
           )}
 
-          <div className="lg:ml-16 flex-grow p-4 w-full lg:w-3/4">
+          <div className="lg:ml-16 flex-grow p-4 w-full lg:w-3/4 min-h-screen ">
             <div className="flex flex-wrap justify-start gap-4">
               <div className="flex items-center space-x-2 mb-4 ml-0 w-full">
                 <input

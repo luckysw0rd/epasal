@@ -107,7 +107,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             )}
 
 
-            <div className="relative w-[140px]  md:w-[240px] h-[139px] flex ml-2 mt-0 md:mt-0">
+            <div className="relative w-[140px]  md:w-[240px] h-[139px] flex ml-2 mt-0 md:mt-0" onClick={() => handleProductClick(product)}>
                 <motion.img
                     className="w-full h-[120px] sm:h-full object-contain "
                     src={product?.image?.imageUrl}
@@ -118,7 +118,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                 />
             </div>
 
-            <div className="px-10 md:py-4 w-[280px]">
+            <div className="px-10 md:py-4 w-[280px]" >
                 <div className="font-bold text-base mt-2 md:mt-3">{truncateName(product.name)}</div>
                 <div className='flex mb-1 md:mb-2 justify-center md:justify-start'>
                     {[...Array(5)].map((_, index) => {
@@ -142,7 +142,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                             onClick={() => {
                                 handleProductClick(product)
                             }}
-                            style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
+                            style={{ backgroundColor: `${store.color.subProductColor.buttonColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
                         >
                             Add to Cart
                         </button>
