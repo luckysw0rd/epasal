@@ -62,6 +62,7 @@ const Dashboard = () => {
           'Authorization': 'Bearer ' + auth.token,
         });
         const userRole = userResponse.user.roles[0].role;
+        console.log(userRole);
         setRole(userRole);
       } catch (error) {
         console.error('Error fetching user role:', error);
@@ -129,10 +130,10 @@ const Dashboard = () => {
   return (
     isLoading ? <Loading /> :
       <>
-        {store && (
+        {store && role && (
           <div className=""> {/* Apply overflow styling here */}
             <SiderBarProvider className="overflow-hidden">
-              <DashboardWrapper setDashboardState={setDashboardState} store={store}>
+              <DashboardWrapper setDashboardState={setDashboardState} store={store} role={role}>
                 <div className="text-black p-2 py-4 mt-8 overflow-hidden">
                   {renderDashboardContent(store)}
                 </div>

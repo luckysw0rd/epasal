@@ -4,19 +4,19 @@ import slider from '../Assets/slider.png';
 const steps = [
     {
         label: 'Build Your Store',
-        gif: 'https://i.pinimg.com/originals/48/72/59/487259006ebb768d17f7ec4497969876.gif',
+        gif: 'https://i.pinimg.com/originals/58/26/22/582622377739ce42b29d020e35335541.gif',
     },
     {
         label: 'Customize Your Store',
-        gif: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6egYTkEYrSDay0X-WczNTOFdiRy-ysIugTg&s',
+        gif: 'https://www.drip.com/hubfs/gifs_in_emails-BLOG.gif',
     },
     {
         label: 'Add Products',
-        gif: 'https://64.media.tumblr.com/338f612ba38837ea2a324ec774876ab7/9fa1b3df5d51ee85-5e/s540x810/d092909b68d167b5aaa8613b8ac0859f56ef73a5.gifv',
+        gif: 'https://assets.wpdeveloper.com/2020/09/Customize-Your-WooCommerce-Product-Page.gif',
     },
     {
         label: 'Launch your Store',
-        gif: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfXf1GcKUt72Uc5JPq4j9MLHhixVm7WyBjcA&s',
+        gif: 'https://cdn.dribbble.com/users/331307/screenshots/4515838/street-800x600.gif   ',
     },
 ];
 
@@ -57,8 +57,8 @@ const ProgressBar = () => {
                     </div>
                 </div>
                 <div className="w-full max-w-lg md:max-w-md lg:max-w-2xl xl:max-w-3xl mx-auto md:mx-0">
-                    <div className="border-8 border-[#2D2D2D] shadow-md flex items-center justify-center bg-[#1E1E1E] rounded-xl overflow-hidden">
-                        <img src={steps[currentStep].gif} alt="GIF" className="w-full h-full object-cover" />
+                    <div className="border-8  max-w-[600px] border-[#2D2D2D] shadow-md flex items-center justify-center bg-[#1E1E1E] rounded-xl overflow-hidden">
+                        <img src={steps[currentStep].gif} alt="GIF" className=" h-[350px] object-cover" />
                     </div>
                 </div>
             </div>
