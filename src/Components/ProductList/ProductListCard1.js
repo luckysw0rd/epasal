@@ -86,6 +86,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                 <div className=" py-2 " onClick={() => handleProductClick(product)}
                                 // className="prod-title mt-2 flex justify-between items-center"
                                 >
+                                    <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
                                     <div className=' flex flex-row space-x-2'>
                                         <p className="my-1 font-bold text-md" style={{ color: priceColor }}>Rs. {price - discount}</p>
                                         {discount > 0 &&

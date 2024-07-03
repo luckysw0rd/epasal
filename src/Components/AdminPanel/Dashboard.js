@@ -23,7 +23,7 @@ const Dashboard = () => {
 
 
   const fetchStore = async () => {
-    console.log("Store token" , auth)
+    console.log("Store token", auth)
 
     try {
       const responseData = await sendRequest(
@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchUserRole = async () => {
-      console.log("user role token" , auth.token)
+      console.log("user role token", auth.token)
       try {
         const userResponse = await sendRequest('users/getLoggedInUser', 'GET', null, {
           'Content-Type': 'application/json',
@@ -90,8 +90,8 @@ const Dashboard = () => {
         return <Product store={store}></Product>
       case 'General':
         return <General store={store} setDashboardState={setDashboardState}></General>
-        case 'Shop':
-          return <Shop store={store} ></Shop>
+      case 'Shop':
+        return <Shop store={store} ></Shop>
       default:
         return <Home />;
     }
