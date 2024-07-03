@@ -4,8 +4,8 @@ import storepic2 from "../Assets/storedesign2.png";
 
 function Landingpage() {
   return (
-    <div className="lg:flex max-h-[800px]">
-      <div className="w-full lg:w-1/2 flex justify-between p-4">
+    <div className="lg:flex lg:max-h-[800px]">
+      <div className="w-full lg:w-1/2 flex justify-between p-8 md:py-10 lg:py-10">
         <div className="xl:pl-8 flex flex-col justify-center items-center md:items-start">
           <h1 className="text-2xl md:ml-20  lg:ml-10 xl:ml-[78px] 2xl:ml-[150px] font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#383737]">
             WHY BANAU ?
@@ -21,7 +21,7 @@ function Landingpage() {
                 <button className="px-6 py-2 border text-xs border-black rounded-full">Get Started</button>
               </div>
             </div>
-            <div className="w-full lg:w-1/2 lg:pl-8 flex flex-col justify-center items-center md:items-start mt-10">
+            <div className="w-full lg:w-1/2 lg:pl-8 flex flex-col justify-center items-center lg:items-start mt-10">
               <ul className="space-y-4 text-base font-extrabold text-gray-800 list-disc list-inside dark:text-gray-700 text-transparent bg-clip-text bg-gradient-to-r from-[#303030] to-[#878787]">
                 <li className="flex items-center">
                   <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#303030]"></span> Order Management
@@ -33,26 +33,26 @@ function Landingpage() {
                   <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#303030]"></span> Payment Gateway
                 </li>
               </ul>
-              <div className="my-8 flex gap-2">
-                <div>
+              <div className="my-8 flex items-center justify-center gap-2 xl:gap-0">
+                <div className='xl:w-[80px] flex flex-col justify-center items-center'>
                   <p className="w-16 h-16 bg-[#262626] text-white text-base flex justify-center items-center font-bold rounded-lg">100 +</p>
                   <span className="text-[#262626] font-bold mx-2">Store</span>
                 </div>
-                <div>
+                <div className='xl:w-[80px] flex flex-col  justify-center items-center'>
                   <p className="w-16 h-16 bg-[#262626] text-white text-base flex justify-center items-center font-bold rounded-lg">1 M</p>
                   <span className="text-[#262626] font-bold mx-2">Sales</span>
                 </div>
-                <div>
+                <div className='xl:w-[80px] flex  flex-col justify-center items-center'>
                   <p className="w-16 h-16 bg-[#262626] text-white text-base flex justify-center items-center font-bold rounded-lg">3</p>
-                  <span className="text-[#262626] font-bold mx-2">Countries</span>
+                  <span className="text-[#262626] font-bold">Countries</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full   lg:w-1/2 text-white p-4">
-        <div className="mb-4 bg-gray-900 p-6 rounded-2xl relative">
+      <div className="w-full lg:w-1/2 text-white p-4">
+        <div className="bg-gray-900 p-6 rounded-2xl relative">
           <div
             className="absolute inset-0 bg-cover bg-center rounded-2xl"
             style={{ backgroundImage: `url(${storepic2})` }}

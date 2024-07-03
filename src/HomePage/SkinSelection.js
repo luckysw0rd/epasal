@@ -6,15 +6,15 @@ import ManFrame from '../Assets/ManFrame.png';
 
 const SkinSection = () => {
   return (
-    <div className="flex flex-col items-center bg-white p-4 md:p-10">
-      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">Skins for your components</h1>
-      
+    <div className="flex flex-col items-center bg-white p-4 py-8 md:py-10 lg:py-20">
+      <h1 className="text-3xl md:text-4xl font-bold mb-8 md:mb-10 lg:mb-16 text-center">Skins for your components</h1>
+
       <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:items-start space-y-8 lg:space-y-0 lg:space-x-8">
         {/* First column */}
         <div className="flex flex-col items-center lg:items-start">
           <img src={Card1} alt="Card 1" className="w-full h-auto lg:w-full max-w-[250px] object-contain " />
         </div>
-        
+
         {/* Second column */}
         <div className="flex flex-col items-center lg:items-start space-y-4">
           <div className="w-full lg:w-[200px] bg-[#526560] rounded-lg p-4">
@@ -23,7 +23,7 @@ const SkinSection = () => {
           </div>
           <img src={Card2} alt="Card 2" className="w-48 h-auto lg:w-full max-w-[200px] object-contain hidden lg:block" />
         </div>
-        
+
         {/* Third column */}
         <div className="w-full flex flex-col">
           <div className="w-full flex flex-col lg:flex-row lg:space-x-60 space-y-4 lg:space-y-0">

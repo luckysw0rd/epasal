@@ -9,6 +9,7 @@ import Stores from "./Stores/Stores";
 import Employee from "./Dashboard/Employee";
 
 import TransactionLogs from "./TransactionLogs/TransactionLogs";
+import Loading from "../Loading/Loading"
 
 const AdminDashboard = () => {
   const auth = useContext(AuthContext);
@@ -74,19 +75,21 @@ const AdminDashboard = () => {
   };
 
   return (
-    <>
-      {auth?.token && (
-        <div className=""> {/* Apply overflow styling here */}
-          <SiderBarProvider className="overflow-hidden">
-            <DashboardWrapper setDashboardState={setDashboardState} store={banau}>
-              <div className="text-black p-2 py-4 mt-8 overflow-hidden">
-                {renderDashboardContent(banau)}
-              </div>
-            </DashboardWrapper>
-          </SiderBarProvider>
-        </div >
-      )}
-    </>
+    isLoading ? <Loading /> :
+
+      <>
+        {auth?.token && (
+          <div className=""> {/* Apply overflow styling here */}
+            <SiderBarProvider className="overflow-hidden">
+              <DashboardWrapper setDashboardState={setDashboardState} store={banau}>
+                <div className="text-black p-2 py-4 mt-8 overflow-hidden">
+                  {renderDashboardContent(banau)}
+                </div>
+              </DashboardWrapper>
+            </SiderBarProvider>
+          </div >
+        )}
+      </>
   );
 };
 

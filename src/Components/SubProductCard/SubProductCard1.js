@@ -107,7 +107,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             )}
 
 
-            <div className="relative w-[140px]  md:w-[240px] h-[139px] flex ml-2 mt-0 md:mt-0">
+            <div className="relative w-[140px]  md:w-[240px] h-[139px] flex ml-2 mt-2 md:mt-0">
                 <motion.img
                     className="w-full h-[120px] sm:h-full object-contain "
                     src={product?.image?.imageUrl}

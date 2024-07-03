@@ -6,8 +6,8 @@ import { PrimeReactProvider } from 'primereact/api';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
-import Loading from "./Theme/Theme1/Loading/Loading";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
+import Loading from "./Components/Loading/Loading";
 import Dashboard from './Components/AdminPanel/Dashboard';
 // import Theme from "./Theme/Theme";
 // Lazy loading components
@@ -84,9 +84,8 @@ function App() {
           <Router>
             <Suspense fallback=
               {
-                <div className=" bg-fuchsia-700 h-screen w-screen">
-                  LOADING
-                </div>}>
+                <Loading />
+              }>
               <Routes>
                 {routes}
               </Routes>

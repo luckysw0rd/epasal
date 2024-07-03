@@ -274,8 +274,8 @@ const Editor = () => {
       },
     },
     {
-      name:'Blue Voyage',
-      color:{
+      name: 'Blue Voyage',
+      color: {
         backgroundThemeColor: "#ffffff",
         navColor: {
           backgroundnavColor: "#9fc3de",
@@ -1616,164 +1616,209 @@ const Editor = () => {
           <div className='text-red-600 absolute top-[26px] right-2 text-[20px]' onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}><  RxCrossCircled /></div>
           <div className='text-red-600 absolute top-[26px] right-10 text-[20px]' onClick={(e) => { e.preventDefault(); setNavHide(false) }}><BiSolidHide /></div>
           {openType === 1 && (
-  <motion.div 
-    initial={{ opacity: 0 }} 
-    animate={{ opacity: 1 }} 
-    transition={{ duration: 0.5 }}
-  >
-    <ul className='flex flex-col mt-10 gap-4 px-4'>
-      <li className='font-bold border-b-2 border-gray-200 pb-4 hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
-        <h1 className='text-2xl font-Poppins flex flex-row text-center items-center mb-4'>
-          Navbar
-        </h1>
-        <div>
-          <FontSelector section="Navbar" />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Shop Name</label>
-          <input 
-            type='text' 
-            className='border-2 border-gray-300 h-10 rounded-lg px-4 text-sm w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.name} 
-            onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Logo:</label>
-          <ImageDrop setStore={setStore} className="text-sm" imageData='logo.logoUrl' />
-        </div>
-      </li>
-
-      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
-        <h1 className='text-2xl font-Poppins mb-4'>Hero Section</h1>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Title</label>
-          <input 
-            type='text' 
-            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 text-sm transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.name} 
-            onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Background:</label>
-          <ImageDrop setStore={setStore} imageData='banner.bannerUrl' />
-        </div>
-      </li>
-
-      <li className='font-bold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
-        <h1 className='text-2xl font-Poppins mb-4'>Categories</h1>
-        <div className="font-VT323 text-sm mb-4">
-          <FontSelector section="Categories" />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Title</label>
-          <div className='flex h-10'>
-            <input 
-              type='text' 
-              className='border-2 border-gray-300 w-full rounded-lg mr-2 px-4 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-              value={categoryData} 
-              onChange={e => setCategoryData(e.target.value)} 
-            />
-            <button 
-              className='px-4 text-sm font-Poppins border-2 border-gray-300 rounded-lg flex items-center justify-center transition duration-300 hover:bg-blue-400 hover:text-white' 
-              onClick={handleAddCategory}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              Add <FaPlus className="ml-1"/>
-            </button>
-          </div>
-        </div>
-        <ul className='font-normal list-disc ml-8 mt-4 text-sm'>
-          {store.subCategories.map(item => (<li key={item.name}>{item.name}</li>))}
-        </ul>
-      </li>
+              <ul className='flex flex-col mt-10 gap-4 px-4'>
+                <li className='font-bold border-b-2 border-gray-200 pb-4 hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  <h1 className='text-2xl font-Poppins flex flex-row text-center items-center mb-4'>
+                    Navbar
+                  </h1>
+                  <div>
+                    <FontSelector section="Navbar" />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Shop Name</label>
+                    <input
+                      type='text'
+                      className='border-2 border-gray-300 h-10 rounded-lg px-4 text-sm w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.name}
+                      onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Logo:</label>
+                    <ImageDrop setStore={setStore} className="text-sm" imageData='logo.logoUrl' />
+                  </div>
+                </li>
 
-      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
-        <h1 className='text-2xl font-Poppins mb-4'>Banner #1</h1>
-        <div className='mt-4'>
-          <FontSelector section="Banner1" />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Title</label>
-          <input 
-            type='text' 
-            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.thirdBannerText.heading} 
-            onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }} 
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Description</label>
-          <textarea 
-            className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.thirdBannerText.paragraph} 
-            onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }} 
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Image:</label>
-          <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
-        </div>
-      </li>
+                <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  <h1 className='text-2xl font-Poppins mb-4'>Hero Section</h1>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Title</label>
+                    <input
+                      type='text'
+                      className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 text-sm transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.name}
+                      onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Background:</label>
+                    <ImageDrop setStore={setStore} imageData='banner.bannerUrl' />
+                  </div>
+                </li>
 
-      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
-        <h1 className='text-2xl font-Poppins mb-4'>Banner #2</h1>
-        <div className='mt-4'>
-          <FontSelector section="Banner2" />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Title</label>
-          <input 
-            type='text' 
-            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.secondaryBannerText.heading} 
-            onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }} 
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Description</label>
-          <textarea 
-            className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.secondaryBannerText.paragraph} 
-            onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }} 
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Image:</label>
-          <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
-        </div>
-      </li>
+                <li className='font-bold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  <h1 className='text-2xl font-Poppins mb-4'>Categories</h1>
+                  <div className="font-VT323 text-sm mb-4">
+                    <FontSelector section="Categories" />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Title</label>
+                    <div className='flex h-10'>
+                      <input
+                        type='text'
+                        className='border-2 border-gray-300 w-full rounded-lg mr-2 px-4 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                        value={categoryData}
+                        onChange={e => setCategoryData(e.target.value)}
+                      />
+                      <button
+                        className='px-4 text-sm font-Poppins border-2 border-gray-300 rounded-lg flex items-center justify-center transition duration-300 hover:bg-blue-400 hover:text-white'
+                        onClick={handleAddCategory}
+                      >
+                        Add <FaPlus className="ml-1" />
+                      </button>
+                    </div>
+                  </div>
+                  <ul className='font-normal list-disc ml-8 mt-4 text-sm'>
+                    {store.subCategories.map(item => (<li key={item.name}>{item.name}</li>))}
+                  </ul>
+                </li>
 
-      <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
-        <h1 className='text-2xl font-Poppins mb-4'>Banner #3</h1>
-        <div className='mt-4'>
-          <FontSelector section="Banner3" />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Title</label>
-          <input 
-            type='text' 
-            className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.offerBannerText.para1} 
-            onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }} 
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Description</label>
-          <textarea 
-            className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none' 
-            value={store.offerBannerText.heading} 
-            onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, heading: e.target.value } })) }} 
-          />
-        </div>
-        <div className='font-normal mt-4'>
-          <label className='text-sm font-Poppins mb-2 block'>Image:</label>
-          <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
-        </div>
-      </li>
-    </ul>
-  </motion.div>
-)}
+                <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  <h1 className='text-2xl font-Poppins mb-4'>Banner #1</h1>
+                  <div className='mt-4'>
+                    <FontSelector section="Banner1" />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Title</label>
+                    <input
+                      type='text'
+                      className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.thirdBannerText.heading}
+                      onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, heading: e.target.value } })) }}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Description</label>
+                    <textarea
+                      className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.thirdBannerText.paragraph}
+                      onChange={(e) => { setStore(prev => ({ ...prev, thirdBannerText: { ...prev.thirdBannerText, paragraph: e.target.value } })) }}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Image:</label>
+                    <ImageDrop setStore={setStore} imageData='thirdBanner.thirdBannerUrl' />
+                  </div>
+                </li>
+
+                <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  <h1 className='text-2xl font-Poppins mb-4'>Banner #2</h1>
+                  <div className='mt-4'>
+                    <FontSelector section="Banner2" />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Title</label>
+                    <input
+                      type='text'
+                      className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.secondaryBannerText.heading}
+                      onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, heading: e.target.value } })) }}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Description</label>
+                    <textarea
+                      className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.secondaryBannerText.paragraph}
+                      onChange={(e) => { setStore(prev => ({ ...prev, secondaryBannerText: { ...prev.secondaryBannerText, paragraph: e.target.value } })) }}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Image:</label>
+                    <ImageDrop setStore={setStore} imageData='secondaryBanner.secondaryBannerUrl' />
+                  </div>
+                </li>
+
+                <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  <h1 className='text-2xl font-Poppins mb-4'>Banner #3</h1>
+                  <div className='mt-4'>
+                    <FontSelector section="Banner3" />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Title</label>
+                    <input
+                      type='text'
+                      className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.offerBannerText.para1}
+                      onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para1: e.target.value } })) }}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Description</label>
+                    <textarea
+                      className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.offerBannerText.heading}
+                      onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, heading: e.target.value } })) }}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Image:</label>
+                    <ImageDrop setStore={setStore} imageData='offerBanner.offerBannerUrl' />
+                  </div>
+                </li>
+                <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  Add Products<br />
+                  <div className='mt-2'>
+                    <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddProduct}>Add +</button>
+                  </div>
+                </li>
+                <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  Featured Products<br />
+                  <div>
+                    <FontSelector section="Featured" />
+                  </div>
+                  <div>
+                    <FontSelector section="NewProduct" />
+                  </div>
+                  <div className='mt-2 flex '>
+                    <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
+                      {store.products.map((n, i) => (<option value={i} key={i}>{n.name}</option>))}
+                    </select>
+                    <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddFeaturedProduct}>Add +</button>
+                  </div>
+                </li>
+
+                <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
+                  Footer<br />
+                  <div>
+                    <FontSelector section="Footer" />
+                  </div>
+                  <label className='text-[12px]  font-Ubuntu'>Location</label><br />
+                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
+                  <label className='text-[12px]  font-Ubuntu'>Email</label><br />
+                  <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
+                  <label className='text-[12px]  font-Ubuntu'>Phone Number</label><br />
+                  <input value={store.phoneNumber} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
+                  <div className='mt-3'>Social Media Links</div>
+                  <label className='text-[12px]  font-Ubuntu'>Facebook</label><br />
+                  <input value={store.socialMediaLinks.facebook} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
+                  <label className='text-[12px]  font-Ubuntu'>Twitter</label><br />
+                  <input value={store.socialMediaLinks.twitter} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
+                  <label className='text-[12px]  font-Ubuntu'>Instagram</label><br />
+                  <input value={store.socialMediaLinks.instagram} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
+                  <label className='text-[12px]  font-Ubuntu'>linkedIn</label><br />
+                  <input value={store.socialMediaLinks.linkedin} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
+
+                </li>
+              </ul>
+              {addProductForm && <ProductForm onClose={() => setAddProductForm(!addProductForm)} />}
+            </motion.div>
+          )}
 
 
           {openType === 2 && (

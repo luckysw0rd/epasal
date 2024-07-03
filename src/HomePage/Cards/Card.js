@@ -20,18 +20,18 @@ const Card = () => {
     };
 
     return (
-        <div className='bg-white p-8 md:p-10 lg:p-16'>
+        <div className='bg-white p-8 md:p-10 lg:p-20'>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8" ref={ref}>
                 <motion.div
-                    className="h-[200px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-xl flex  justify-between items-center  shadow-lg"
+                    className="h-[200px] 2xl:h-[250px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 2xl:py-10 rounded-xl flex  justify-between items-center  shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
                     variants={cardVariants}
                 >
-                    <div className='flex flex-col justify-between  '>
-                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">
+                    <div className='flex flex-col justify-between h-full'>
+                        <h2 className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold tracking-wide">
                             Payment Gateway Integration
                         </h2>
                         <div className="flex gap-5 mt-4">
@@ -44,7 +44,7 @@ const Card = () => {
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl flex justify-between items-center shadow-lg"
+                    className="h-[200px] 2xl:h-[250px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl 2xl:py-10 flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
@@ -52,14 +52,14 @@ const Card = () => {
                     variants={cardVariants}
                 >
                     <div>
-                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">Analytics</h2>
-                        <p className="mt-2 text-sm md:text-base lg:text-lg">Visualize your data with ease. Stay up to date with your product info.</p>
+                        <h2 className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold tracking-wide">Analytics</h2>
+                        <p className="mt-2 text-sm md:text-base lg:text-lg 2xl:text-xl">Visualize your data with ease. Stay up to date with your product info.</p>
                     </div>
                     <img src={graph} alt="graph" className='w-[80px] md:w-[120px] object-contain' />
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl flex justify-between items-center shadow-lg"
+                    className="h-[200px] 2xl:h-[250px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl 2xl:py-10 flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
@@ -67,14 +67,14 @@ const Card = () => {
                     variants={cardVariants}
                 >
                     <div>
-                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">Manage Product and Inventory</h2>
-                        <p className="mt-2 text-sm md:text-base lg:text-lg">Keep track of your products and inventory levels effortlessly.</p>
+                        <h2 className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold tracking-wide">Manage Product and Inventory</h2>
+                        <p className="mt-2 text-sm md:text-base lg:text-lg 2xl:text-xl">Keep track of your products and inventory levels effortlessly.</p>
                     </div>
                     <img src={productIcon} alt="product" className='w-[80px] md:w-[120px] object-contain' />
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-xl flex justify-between items-center shadow-lg"
+                    className="h-[200px] 2xl:h-[250px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 2xl:py-10 rounded-xl flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
@@ -82,8 +82,8 @@ const Card = () => {
                     variants={cardVariants}
                 >
                     <div>
-                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-wide">Manage Employee and Staff</h2>
-                        <p className="mt-2 text-sm md:text-base lg:text-lg">Effectively Organize and manage your team with role based access effectively.</p>
+                        <h2 className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold tracking-wide">Manage Employee and Staff</h2>
+                        <p className="mt-2 text-sm md:text-base lg:text-lg 2xl:text-xl">Effectively Organize and manage your team with role based access.</p>
                     </div>
                     <img src={staffIcon} alt="staff" className='w-[80px] md:w-[120px] object-contain' />
                 </motion.div>
