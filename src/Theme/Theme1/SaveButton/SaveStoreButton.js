@@ -6,9 +6,11 @@ import useFetch from "../../../Hooks/useFetch";
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../../Components/Loading/Loading';
 const SaveStoreButton = () => {
     const { uploadImage } = useImage();
     const auth = useContext(AuthContext);
+    const [tempLoading,setTempLoading]= useState(false)
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
     const [storeMade,setStoreMade]=useState(false);
@@ -18,6 +20,7 @@ const SaveStoreButton = () => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
         try {
+            setTempLoading(true);
             const ImageData = await uploadImage(store.logo.logoUrl)
             const BannerData = await uploadImage(store.banner.bannerUrl)
             const secondaryBannerData = await uploadImage(store.secondaryBanner.secondaryBannerUrl)
@@ -98,10 +101,13 @@ const SaveStoreButton = () => {
                 }
             ))
             storeNewImage = store;
+            setTempLoading(false);
             PostData(storeNewImage)
             console.log(ImageData, "image Data")
             setStoreNew(true)
         } catch (err) {
+            setTempLoading(false);
+            toast.error('Error Uploading Image')
             console.log(err, "error uploading image")
         }
     }
@@ -151,12 +157,18 @@ const SaveStoreButton = () => {
     }
     const saveStore = async () => {
         console.log(store, "store is this")
+        
         await ImageUpload()
         // await PostData()
 
     };
-
+    if(isLoading || tempLoading){
+        return(
+            <Loader></Loader>
+        )
+    }
     if (!store.fetchedFromBackend || store.isEdit) {
+     
         return (
             <div className='mt-4 h-20 flex justify-center'>
                 {isLoading ? (
