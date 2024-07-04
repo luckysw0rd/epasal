@@ -70,6 +70,9 @@ const Product = ({ store }) => {
     });
   };
 
+
+
+
   const handleDeleteVariant = (variantIndex) => {
     const updatedVariants = editProduct.variant.filter((variant, vIndex) => vIndex !== variantIndex);
     setEditProduct({
@@ -109,7 +112,7 @@ const Product = ({ store }) => {
         rating: updatedEditProduct.rating,
         image: updatedEditProduct.image,
         variant: updatedEditProduct.variant,
-        discount:updatedEditProduct.discount,
+        discount: updatedEditProduct.discount,
         inventory: updatedEditProduct.inventory,
         soldQuantity: updatedEditProduct.soldQuantity,
         revenueGenerated: updatedEditProduct.revenueGenerated
@@ -135,6 +138,25 @@ const Product = ({ store }) => {
       toast.error(error.message);
     }
   };
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      const response = await sendRequest(
+        `product/deleteProduct`,
+        'DELETE',
+        JSON.stringify({ id: productId, storeId: store._id }),
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token
+        }
+      );
+      toast.success('Product deleted successfully');
+      setProducts(products.filter(product => product._id !== productId));
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -216,12 +238,12 @@ const Product = ({ store }) => {
     setCurrentPage(page);
     fetchProducts(page, 10, searchQuery, sortOrder);
   };
-  const handleSearchButton=(e)=>{
+  const handleSearchButton = (e) => {
     fetchProducts(1, 10, searchQuery, sortOrder);
   }
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    
+
   };
 
   const handleSortChange = (event) => {
@@ -285,31 +307,37 @@ const Product = ({ store }) => {
             >
               Apply Filters
             </button>
-            </div>
+          </div>
         </div>
         <div className="flex flex-wrap grow-0 gap-12 p-4">
           {products.map((product, productIndex) => (
             <div key={productIndex} className="bg-white shadow-lg pb-5 h-100 rounded-lg overflow-hidden transform transition-transform hover:scale-105">
-              
-                <div className=" capitalize">
-                  <img className="flex justify-center mx-auto w-80 h-60" src={product.image.imageUrl} alt={product.name} />
-                  <h2 className="text-xl font-bold my-2 pl-2">{product.name}</h2>
-                  <div className='flex gap-2 '>
+
+              <div className=" capitalize">
+                <img className="flex justify-center mx-auto w-80 h-60" src={product.image.imageUrl} alt={product.name} />
+                <h2 className="text-xl font-bold my-2 pl-2">{product.name}</h2>
+                <div className='flex gap-2 '>
                   <p className="text-gray-700 mb-2 pl-2 flex-grow">{product.description}</p>
-                    <div className='text-xs pr-2'>
-                      <p className="text-gray-700 mb-2">Price: ${product.price}</p>
-                      <p className="text-gray-700 mb-2">Discount: {product.discount}</p>
-                      <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
-                    </div>
+                  <div className='text-xs pr-2'>
+                    <p className="text-gray-700 mb-2">Price: ${product.price}</p>
+                    <p className="text-gray-700 mb-2">Discount: {product.discount}</p>
+                    <p className="text-gray-700 mb-2">Revenue: ${product.revenueGenerated}</p>
                   </div>
-                  <button
-                    className="bg-blue-500 text-white ml-2 px-4 py-2 rounded mt-3"
-                    onClick={() => {console.log(productIndex,"product Index");handleEditClick(productIndex)}}
-                  >
-                    Edit
-                  </button>
                 </div>
-              
+                <button
+                  className="bg-blue-500 text-white ml-2 px-4 py-2 rounded mt-3"
+                  onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex) }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteProduct(product._id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded mt-2"
+                >
+                  Delete
+                </button>
+              </div>
+
             </div>
           ))}
         </div>
@@ -330,175 +358,175 @@ const Product = ({ store }) => {
             Next
           </button>
         </div>
-        {editProductIndex!==null && (
-                <div className="  fixed top-0 left-0 w-full h-screen z-50 flex justify-center">
-                  <div className='absolute bg-black opacity-50 w-screen top-0 left-0 h-screen'></div>
-                  <div className='absolute w-[80%] mt-10 bg-white p-12 h-[80%] overflow-y-scroll'>
-                    <div className='absolute top-3 right-5 text-red-500 cursor-pointer' onClick={()=>{handleEditClick(null)}}>X</div>
-                  <div className="mb-4">
-                    <h2 className='text-2xl font-bold mb-4'>Edit Product</h2>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={editProduct.name}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
-                    <textarea
-                      name="description"
-                      value={editProduct.description}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
-                    <input
-                      type="number"
-                      name="price"
-                      value={editProduct.price}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Discount</label>
-                    <input
-                      type="number"
-                      name="discount"
-                      value={editProduct.discount}
-                      onChange={handleInputChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
-                    <ProductImageDropzone
-                      imageUrl={editProduct.image.imageUrl}
-                      setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
-                      className="w-10 h-10"
-                    />
-                  </div>
+        {editProductIndex !== null && (
+          <div className="  fixed top-0 left-0 w-full h-screen z-50 flex justify-center">
+            <div className='absolute bg-black opacity-50 w-screen top-0 left-0 h-screen'></div>
+            <div className='absolute w-[80%] mt-10 bg-white p-12 h-[80%] overflow-y-scroll'>
+              <div className='absolute top-3 right-5 text-red-500 cursor-pointer' onClick={() => { handleEditClick(null) }}>X</div>
+              <div className="mb-4">
+                <h2 className='text-2xl font-bold mb-4'>Edit Product</h2>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={editProduct.name}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                <textarea
+                  name="description"
+                  value={editProduct.description}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={editProduct.price}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+                <input
+                  type="number"
+                  name="discount"
+                  value={editProduct.discount}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+                <ProductImageDropzone
+                  imageUrl={editProduct.image.imageUrl}
+                  setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
+                  className="w-10 h-10"
+                />
+              </div>
 
-                  {editProduct.variant.map((variant, variantIndex) => (
-                    <div key={variantIndex} className="mb-4">
+              {editProduct.variant.map((variant, variantIndex) => (
+                <div key={variantIndex} className="mb-4">
+                  <div className="flex justify-between items-center">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
+                    <button
+                      className="bg-red-500 text-white px-2 py-1 rounded mb-2"
+                      onClick={() => handleDeleteVariant(variantIndex)}
+                    >
+                      Delete Variant
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    value={variant.name}
+                    onChange={(event) => handleVariantNameChange(event, variantIndex)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                    placeholder="Variant Name"
+                  />
+                  {variant.options.map((option, optionIndex) => (
+                    <div key={optionIndex} className="mb-4">
                       <div className="flex justify-between items-center">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
                         <button
                           className="bg-red-500 text-white px-2 py-1 rounded mb-2"
-                          onClick={() => handleDeleteVariant(variantIndex)}
+                          onClick={() => handleDeleteOption(variantIndex, optionIndex)}
                         >
-                          Delete Variant
+                          Delete Option
                         </button>
                       </div>
+
                       <input
                         type="text"
-                        value={variant.name}
-                        onChange={(event) => handleVariantNameChange(event, variantIndex)}
+                        name="name"
+                        value={option.name}
+                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                        placeholder="Variant Name"
+                        placeholder="Option Name"
                       />
-                      {variant.options.map((option, optionIndex) => (
-                        <div key={optionIndex} className="mb-4">
-                          <div className="flex justify-between items-center">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
-                            <button
-                              className="bg-red-500 text-white px-2 py-1 rounded mb-2"
-                              onClick={() => handleDeleteOption(variantIndex, optionIndex)}
-                            >
-                              Delete Option
-                            </button>
-                          </div>
-
+                      {variantIndex === 0 && (
+                        <>
                           <input
-                            type="text"
-                            name="name"
-                            value={option.name}
+                            type="number"
+                            name="price"
+                            value={option.price}
                             onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                            placeholder="Option Name"
+                            placeholder="Option Price"
                           />
-                          {variantIndex === 0 && (
-                            <>
-                              <input
-                                type="number"
-                                name="price"
-                                value={option.price}
-                                onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                                placeholder="Option Price"
-                              />
-                              <input
-                                type="number"
-                                name="discount"
-                                value={option.discount}
-                                onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                                placeholder="Option Discount"
-                              />
-                              <input
-                                type="number"
-                                name="count"
-                                value={option.count}
-                                onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                                placeholder="Option Count"
-                              />
-                            </>
-                          )}
-                          {variantIndex === 0 && (
-                            <ProductImageDropzone
-                              imageUrl={option.image?.imageUrl}
-                              setImageUrl={(url) =>
-                                setEditProduct((prev) => {
-                                  const updatedVariants = [...prev.variant];
-                                  updatedVariants[variantIndex].options[optionIndex].image = {
-                                    ...updatedVariants[variantIndex].options[optionIndex].image,
-                                    imageUrl: url
-                                  };
-                                  return { ...prev, variant: updatedVariants };
-                                })
-                              }
-                            />
-                          )}
-                        </div>
-                      ))}
-                      <button
-                        className="bg-blue-500 text-white px-2 py-1 rounded"
-                        onClick={() => handleAddOption(variantIndex)}
-                      >
-                        Add Option
-                      </button>
+                          <input
+                            type="number"
+                            name="discount"
+                            value={option.discount}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Discount"
+                          />
+                          <input
+                            type="number"
+                            name="count"
+                            value={option.count}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Count"
+                          />
+                        </>
+                      )}
+                      {variantIndex === 0 && (
+                        <ProductImageDropzone
+                          imageUrl={option.image?.imageUrl}
+                          setImageUrl={(url) =>
+                            setEditProduct((prev) => {
+                              const updatedVariants = [...prev.variant];
+                              updatedVariants[variantIndex].options[optionIndex].image = {
+                                ...updatedVariants[variantIndex].options[optionIndex].image,
+                                imageUrl: url
+                              };
+                              return { ...prev, variant: updatedVariants };
+                            })
+                          }
+                        />
+                      )}
                     </div>
                   ))}
                   <button
-                    className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-                    onClick={handleAddVariant}
+                    className="bg-blue-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleAddOption(variantIndex)}
                   >
-                    Add Variant
+                    Add Option
                   </button>
-                  <div className="mt-4">
-                    <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                      onClick={handleSaveClick}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className="bg-gray-500 text-white px-4 py-2 rounded"
-                      onClick={() => setEditProductIndex(null)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                  </div>
                 </div>
-              )}
-             
+              ))}
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded mt-4"
+                onClick={handleAddVariant}
+              >
+                Add Variant
+              </button>
+              <div className="mt-4">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                  onClick={handleSaveClick}
+                >
+                  Save
+                </button>
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 rounded"
+                  onClick={() => setEditProductIndex(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     )
   );

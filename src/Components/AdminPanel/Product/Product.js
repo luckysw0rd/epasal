@@ -74,6 +74,25 @@ const Product = ({ store }) => {
     });
   };
 
+  const handleDeleteProduct = async (productId) => {
+    try {
+      const response = await sendRequest(
+        `product/deleteProduct`,
+        'POST',
+        JSON.stringify({ id: productId, storeId: store._id }),
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token
+        }
+      );
+      toast.success('Product deleted successfully');
+      setProducts(products.filter(product => product._id !== productId));
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+
   const truncateDescription = (description, wordLimit) => {
     const words = description.split(' ');
     if (words.length > wordLimit) {
@@ -349,6 +368,12 @@ const Product = ({ store }) => {
                 >
                   <FaEdit />
                   Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteProduct(product._id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded mt-2"
+                >
+                  Delete
                 </button>
               </div>
             ))}

@@ -43,7 +43,8 @@ function App() {
   };
 
   let routes;
-  if (token) {
+  
+  if (token ||auth.token) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
