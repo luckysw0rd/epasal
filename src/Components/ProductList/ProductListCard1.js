@@ -121,7 +121,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                         </button> */}
                                         <button
                                             style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
-                                            className={`px-3 py-1 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
+                                            className={`px-3 py-3 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
                                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                             onClick={() => {

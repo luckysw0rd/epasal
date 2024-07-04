@@ -1351,17 +1351,17 @@ const Editor = () => {
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
         <motion.div key='first' initial={{ x: 20 }} exit={{ x: 500 }} transition={{ duration: 0.3 }} animate={{ x: 0 }} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           {/* <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Poppins'></h1> */}
-          <div className="relative">
-            <div className="relative">
+          <div className="fixed bg-white">
+            <div className=" relative w-[100%] flex px-5 my-5 ">
               <div
-                className='text-gray-600 absolute left-10 top-[26px] text-[16px] flex items-center justify-between font-semibold border-2 px-3 py-2 border-gray-900 rounded-lg bg-white shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out'
+                className='text-gray-600  top-[26px] text-[16px]  flex items-center justify-between font-semibold border-2 px-3 py-2 border-gray-900 rounded-lg bg-white shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out'
                 onClick={(e) => { e.preventDefault(); setNavHide(false) }}
               >
                 <p>Hide</p>
                 <BiSolidHide className="ml-1" />
-              </div>
+              </div >
               <div
-                className='text-gray-600 right-10 absolute top-[26px] text-[16px] flex items-center justify-between font-semibold border-2 px-3 py-2 border-gray-900 rounded-lg bg-white shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out'
+                className='text-gray-600  top-[26px] text-[16px] flex items-center justify-between font-semibold border-2 px-3 py-2 border-gray-900 rounded-lg bg-white shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out ml-28'
                 onClick={(e) => { e.preventDefault(); setStore(n => ({ ...n, previewMode: true })) }}
               >
                 <p>Exit</p>
@@ -1397,6 +1397,7 @@ const Editor = () => {
                       type='text'
                       className='border-2 border-gray-300 h-10 rounded-lg px-4 text-sm w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
                       value={store.name}
+                      placeholder='Store Name'
                       onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
                     />
                   </div>
@@ -1414,6 +1415,7 @@ const Editor = () => {
                       type='text'
                       className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 text-sm transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
                       value={store.name}
+                       placeholder='Store Name'
                       onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
                     />
                   </div>
@@ -1568,23 +1570,23 @@ const Editor = () => {
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   Footer<br />
                   <div>
-                    <FontSelector section="Footer" />
+                    <FontSelector section="Footer " />
                   </div>
                   <label className='text-[12px]  font-Ubuntu'>Location</label><br />
-                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
+                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 '  placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Email</label><br />
-                  <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
+                  <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2'placeholder='email@abc.com' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Phone Number</label><br />
-                  <input value={store.phoneNumber} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
+                  <input value={store.phoneNumber} type='text' className='border-2 border-gray-300 rounded px-2' placeholder='9876543210' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
                   <div className='mt-3'>Social Media Links</div>
                   <label className='text-[12px]  font-Ubuntu'>Facebook</label><br />
-                  <input value={store.socialMediaLinks.facebook} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.facebook} placeholder='facebook.com' type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, facebook: e.target.value } })); }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Twitter</label><br />
-                  <input value={store.socialMediaLinks.twitter} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.twitter} placeholder='twitter.com' type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, twitter: e.target.value } })); }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Instagram</label><br />
-                  <input value={store.socialMediaLinks.instagram} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.instagram} placeholder='instagram.com' type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>linkedIn</label><br />
-                  <input value={store.socialMediaLinks.linkedin} type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.linkedin} placeholder='linked.com'type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
 
                 </li>
               </ul>

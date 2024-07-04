@@ -345,6 +345,7 @@ const Navbar1 = ({
                     <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
                     <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
                     <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
+                    <a href={!isEdit && previewMode &&  `/`} className="hover:underline">Banau Page</a>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input
@@ -417,7 +418,8 @@ const Navbar1 = ({
                             <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
                             <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
                             <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
-
+                   
+                            
                         </div>
                     </div>
                 )
