@@ -113,11 +113,11 @@ const SaveStoreButton = () => {
     }
     useEffect(() => {
 
-        if (!auth.token) {
+        if (!auth.token && !store.fetchedFromBackend) {
             toast.warning('Please Ensure you are logged in first ,Changes will not be saved',
                 {
-                     theme:"dark",
-                     autoClose: 10000
+                    theme: "dark",
+                    autoClose: 10000
                 }
             );
         }
