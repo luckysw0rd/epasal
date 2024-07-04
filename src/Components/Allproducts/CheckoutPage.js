@@ -9,7 +9,7 @@ import Loading from "../Loading/Loading"
 const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [promoCode, setPromoCode] = useState('');
-    const [selectedPayment, setSelectedPayment] = useState('');
+    const [selectedPayment, setSelectedPayment] = useState('esewa');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + expectedDeliveryPrice - discount;
 
     const UnderlineSVG = () => (
-        <svg className="w-full h-2 absolute bottom-0" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className="w-full  h-2 absolute bottom-0" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 5H100" stroke="#3B82F6" strokeWidth="2" />
         </svg>
     );
@@ -151,7 +151,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                             <div className="flex items-center text-xl flex-1 justify-between">
                                                 <span className="mx-auto text-center">{item.count}</span>
                                                 <span className='mr-4 '>रु {item.price}</span>
-                                                <IoCloseCircleOutline size={20} onClick={() => handleDeleteFromCart(index)} />
+                                                {/* <IoCloseCircleOutline size={20} onClick={() => handleDeleteFromCart(index)} /> */}
                                             </div>
                                         </div>
                                     ))
@@ -233,7 +233,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                 {paymentOptions.map(option => (
                                     <div
                                         key={option.id}
-                                        className={` w-[80px]  relative h-[60px] mr-4  object-contain border border-gray-100 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-500' : 'border-gray-900'
+                                        className={` w-[80px]  relative h-[60px] mr-4  object-contain border border-gray-100 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-500 ' : 'border-gray-200'
                                             } ${option.label === 'esewa' ? 'border-2 border-blue-500' : ''}`}
                                         onClick={() => setSelectedPayment(option.label)}
                                     >
@@ -241,7 +241,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                         {option.label === 'esewa' && (
                                             <span className="absolute top-0 right-0 px-1 bg-blue-500 text-white text-xs font-semibold rounded-bl-md">Popular</span>
                                         )}
-                                        {selectedPayment === option.label && <UnderlineSVG className='w-[800px]' />}
+                                        {selectedPayment === option.label && <UnderlineSVG className='w-[800px] border-2 border-gray-600' />}
                                         <h3 className=' font-md text-center'>{option.label}</h3>
                                     </div>
                                 ))}
