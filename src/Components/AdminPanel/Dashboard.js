@@ -5,7 +5,7 @@ import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
 import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EditStore from './EditStore/EditStore.js';
 import Order from './Dashboard/Order/Order.js';
 import Product from "./Product/Product.js";
@@ -21,7 +21,7 @@ const Dashboard = () => {
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
 
-
+  const navigate=useNavigate();
 
   const fetchStore = async () => {
     console.log("Store token", auth)
@@ -49,6 +49,9 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    if(!auth.isLoggedIn){
+      navigate('/login')
+    }
     fetchStore();
   }, []);
 

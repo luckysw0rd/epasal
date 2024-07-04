@@ -62,22 +62,22 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
 
     return (
         <motion.div
-            className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
+            className="font-roboto    rounded-lg  shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
             style={{ borderColor }}
             whileTap={{ scale: 0.98 }}
         >
-            <div className="w-full">
+            <div className="w-full  ">
                 <div className="relative w-full">
                     {!previewMode && (
                         <button
-                            className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
+                            className="absolute top-2 right-2 p-2  bg-red-500 z-10 text-white flex items-center justify-center"
                             onClick={() => handleDeleteProduct(product.id)}
                         >
                             <FaTimes />
                         </button>
                     )}
-                    <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-                        <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+                    <div className="card cursor-pointer flex flex-col gap-2 justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+                        <div className="card cursor-pointer  flex flex-col  justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                             <div onClick={() => handleProductClick(product)}>
                                 <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                             </div>
@@ -97,7 +97,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                 <div className="grid gap-3 relative w-full">
                                     <div className="flex px-2">
                                         <div
-                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
+                                            className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-sm`}
                                             onClick={handleDefaultImage}
                                         >
                                             <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2 object-contain' />
@@ -105,7 +105,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                         {firstVariant?.options?.map((option, index) => (
                                             <div
                                                 key={index}
-                                                className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
+                                                className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-sm`}
                                                 onClick={() => handleOptionSelect(index)}
                                             >
                                                 <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />

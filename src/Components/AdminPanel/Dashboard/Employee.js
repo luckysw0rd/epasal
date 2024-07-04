@@ -35,6 +35,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import './Employee.css'; // Import your CSS file here
 import useFetch from "../../../Hooks/useFetch";
 import { fakeDataFromStaffArray } from './makeData'; // Import the fake data generator
+import { toast } from 'react-toastify';
 
 const Example = ({ store }) => {
     const [validationErrors, setValidationErrors] = useState({});
@@ -292,11 +293,12 @@ const Example = ({ store }) => {
             );
 
             console.log(responseData); // Handle response data as needed
-
+            toast.success("User Deleted Successfully")
             // Refresh the page
             window.location.reload();
         } catch (error) {
             // Handle error if needed
+            toast.error(error)
             console.error(error); // Optionally log the error
         }
     };
@@ -305,8 +307,8 @@ const Example = ({ store }) => {
     const openDeleteConfirmModal = (row) => {
         console.log(row.original);
         if (window.confirm('Are you sure you want to delete this user?')) {
-            // deleteEmployee(row.original);
-            // deleteUser(row.id); // Pass the id directly to deleteUser
+            deleteEmployee(row.original);
+            deleteUser(row.id); // Pass the id directly to deleteUser
         }
     };
 

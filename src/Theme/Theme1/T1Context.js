@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useNavigate, useParams } from "react-router-dom"; // Import useParams
 import { BrowserRouter } from "react-router-dom"; // Import BrowserRouter
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
@@ -14,7 +14,10 @@ import oneFourty from '../../Assets/ratio/140.png';
 import twoFiftySix from '../../Assets/ratio/256.png';
 import sixTeenHundred from '../../Assets/ratio/1600.png';
 import graybg from '../../Assets/graybg.webp';
-
+import b1 from '../../Assets/Banners/b1.webp';
+import b2 from '../../Assets/Banners/b2.webp';
+import b3 from '../../Assets/Banners/b3.webp';
+import { toast } from "react-toastify";
 
 const StoreContext = createContext();
 
@@ -27,7 +30,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const { storeID } = useParams(); // Extract storeID using useParams
-
+  const navigate=useNavigate();
   /*   useEffect(() => {
       const savedCart = localStorage.getItem('cart');
       if (savedCart) {
@@ -539,6 +542,10 @@ export const StoreProvider = ({ children, passedStore }) => {
 
       } catch (error) {
         setStore(defaultStoreData);
+        toast.error("Error fetching data")
+        setTimeout(()=>{
+          navigate('/mystore/storeNotFound')
+        },[2000])
         console.error("Error fetching store data:", error);
       }
     };
@@ -772,25 +779,26 @@ export const StoreProvider = ({ children, passedStore }) => {
     }));
   };
 
-    return (
-      <StoreContext.Provider
-        value={{
-          store,
-          setStore,
-          storeID,
-          addCategory,
-          addSubCategory,
-          removeCategory,
-          removeSubCategory,
-          setSelectedSubCategory,
-          updateSecondaryBanner,
-          addProduct,
-          addToCart,
-          deleteFromCart,
-          updateFont
-        }}
-      >
-        {children}
-      </StoreContext.Provider>
-    );
+  return (
+    <StoreContext.Provider
+      value={{
+        store,
+        setStore,
+        storeID,
+        addCategory,
+        addSubCategory,
+        removeCategory,
+        removeSubCategory,
+        setSelectedSubCategory,
+        updateSecondaryBanner,
+        addProduct,
+        addToCart,
+        deleteFromCart,
+        updateFont,
+        isLoading
+      }}
+    >
+      {children}
+    </StoreContext.Provider>
+  );
 };

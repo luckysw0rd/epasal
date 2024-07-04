@@ -62,7 +62,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
 
     return (
         <motion.div
-            className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
+            className="font-roboto  rounded-lg  shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
             style={{ borderColor }}
             whileTap={{ scale: 0.98 }}
         >
@@ -76,7 +76,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                             <FaTimes />
                         </button>
                     )} */}
-                    <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+                    <div className="card cursor-pointer  flex flex-col  justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <button>
                             <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                         </button>

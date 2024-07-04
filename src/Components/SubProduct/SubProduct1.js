@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import useFetch from '../../Hooks/useFetch';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../Hooks/AuthContext';
 
 const SubProduct1 = ({
     products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
@@ -9,6 +10,7 @@ const SubProduct1 = ({
     const containerRef = useRef(null);
     const { events } = useDraggable(ref);
     const {sendRequest}=useFetch();
+    const auth=useContext(AuthContext);
 
     const selectedSubCategory = store.selectedSubCategory || subCategories[0].name;
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -41,7 +43,8 @@ const SubProduct1 = ({
                     'POST',
                     JSON.stringify(productName),
                     {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + auth.token,
                     }
                 );
                 toast(response.message);
