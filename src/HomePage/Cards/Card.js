@@ -23,18 +23,18 @@ const Card = () => {
         <div className='bg-white p-8 md:p-10 lg:p-20'>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8" ref={ref}>
                 <motion.div
-                    className="h-[200px] 2xl:h-[250px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 2xl:py-10 rounded-xl flex  justify-between items-center  shadow-lg"
+                    className="h-[200px] md:h-[220px] 2xl:h-[250px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 2xl:py-10 rounded-xl flex  justify-between items-center md:items-start lg:items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
                     variants={cardVariants}
                 >
-                    <div className='flex flex-col justify-between h-full'>
+                    <div>
                         <h2 className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold tracking-wide">
                             Payment Gateway Integration
                         </h2>
-                        <div className="flex gap-5 mt-4">
+                        <div className="flex gap-5 mt-8">
                             <img src={esewa} alt="esewa" className='w-[120px] h-[50px] object-contain' />
                             <img src={fonepay} alt="fonepay" className='w-[120px] h-[50px] object-contain' />
                         </div>
@@ -44,7 +44,7 @@ const Card = () => {
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] 2xl:h-[250px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl 2xl:py-10 flex justify-between items-center shadow-lg"
+                    className="h-[200px] md:h-[220px] 2xl:h-[250px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl 2xl:py-8 flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
@@ -59,7 +59,7 @@ const Card = () => {
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] 2xl:h-[250px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl 2xl:py-10 flex justify-between items-center shadow-lg"
+                    className="h-[200px] md:h-[220px] 2xl:h-[250px] bg-white text-gray-800 border-2 border-gray-300 p-6 rounded-xl 2xl:py-10 flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
@@ -74,7 +74,7 @@ const Card = () => {
                 </motion.div>
 
                 <motion.div
-                    className="h-[200px] 2xl:h-[250px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 2xl:py-10 rounded-xl flex justify-between items-center shadow-lg"
+                    className="h-[200px] md:h-[220px] 2xl:h-[250px] bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 2xl:py-10 rounded-xl flex justify-between items-center shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
                     initial="hidden"
