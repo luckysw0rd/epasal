@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import useFetch from '../Hooks/useFetch';
 import Overlay from './Overlay';
 import { AuthContext } from '../Hooks/AuthContext';
+import { toast } from 'react-toastify';
 
 const SignInPage = () => {
     const [isSignIn, setIsSignIn] = useState(true);
@@ -17,8 +18,43 @@ const SignInPage = () => {
     const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [otp, setOtp] = useState('');
+    const [canResendOTP, setCanResendOTP] = useState(true);
+    const [timer, setTimer] = useState(0);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        // const lastSentTime = localStorage.getItem('otpLastSentTime');
+        // if (lastSentTime) {
+        //     const timePassed = Date.now() - parseInt(lastSentTime, 10);
+        //     if (timePassed < 2 * 60 * 1000) {
+        //         const remainingTime = Math.ceil((2 * 60 * 1000 - timePassed) / 1000);
+        //         setCanResendOTP(false);
+        //         setTimer(remainingTime);
+        //         const intervalId = setInterval(() => {
+        //             setTimer(prevTimer => {
+        //                 if (prevTimer <= 1) {
+        //                     clearInterval(intervalId);
+        //                     setCanResendOTP(true);
+        //                     return 0;
+        //                 }
+        //                 return prevTimer - 1;
+        //             });
+        //         }, 1000);
+        //     }
+        // }
+
+        const lastSentTime = localStorage.getItem('otpLastSentTime');
+        if (lastSentTime) {
+            const timePassed = Date.now() - parseInt(lastSentTime, 10);
+            if (timePassed < 2 * 60 * 1000) {
+                setCanResendOTP(false);
+                setTimeout(() => {
+                    setCanResendOTP(true);
+                }, 2 * 60 * 1000 - timePassed);
+            }
+        }
+    }, []);
 
     const toggleForm = () => {
         setIsSignIn(!isSignIn);
@@ -87,15 +123,74 @@ const SignInPage = () => {
         }
     };
 
-    const handleForgotPassword = () => {
-        console.log(forgotPasswordEmail);
-        setShowForgotPasswordModal(false);
-        setShowUpdatePasswordModal(true);
+    const handleForgotPassword = async () => {
+        try {
+            if (canResendOTP) {
+                if (forgotPasswordEmail === '')
+                    throw new Error("[-] Please Enter Valid Email");
+                console.log(forgotPasswordEmail);
+
+                localStorage.setItem('otpLastSentTime', Date.now());
+                setCanResendOTP(false);
+                const responseData = await sendRequest(
+                    'users/forgotpassword',
+                    'POST',
+                    JSON.stringify({
+                        email: forgotPasswordEmail,
+                    }),
+                    {
+                        'Content-Type': 'application/json'
+                    }
+                );
+
+                if (responseData && responseData.message) {
+                    console.log(responseData.message);
+                    toast.success(responseData.message);
+                    setShowForgotPasswordModal(false);
+                    setShowUpdatePasswordModal(true);
+                }
+
+                setTimeout(() => {
+                    setCanResendOTP(true);
+                }, 1 * 60 * 1000);
+            } else {
+                return toast.info('[+] Dear User Please Wait For 2 Minutes');
+            }
+        } catch (error) {
+            return toast.info(error.message);
+
+        }
     };
 
-    const handleUpdatePassword = () => {
-        console.log({ otp, newPassword });
-        setShowUpdatePasswordModal(false);
+    const handleUpdatePassword = async () => {
+        console.log({ otp, newPassword, forgotPasswordEmail });
+        try {
+            if (!otp || !newPassword || !forgotPasswordEmail)
+                throw new Error("[-] Please provide OTP and password");
+            const responseData = await sendRequest(
+                'users/forgotpasswordnewpassword',
+                'POST',
+                JSON.stringify({
+                    email: forgotPasswordEmail,
+                    verificationCode: otp,
+                    newPassword: newPassword
+                }),
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+
+            if (responseData && responseData.message) {
+                console.log(responseData.message);
+                toast.success(responseData.message);
+                setShowForgotPasswordModal(false);
+                setShowUpdatePasswordModal(true);
+            }
+            setShowUpdatePasswordModal(false);
+
+        } catch (error) {
+            return toast.info(error.message);
+        }
     };
 
     return (
@@ -168,11 +263,16 @@ const SignInPage = () => {
                             </div>
                         ) : null}
                         <button
-                            className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                            className={`w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300 ${canResendOTP ? '' : 'opacity-50 pointer-events-none'}`}
                             onClick={isSignIn ? handleSignIn : handleSignUp}
                         >
                             {isSignIn ? 'Sign in' : 'Sign up'}
                         </button>
+                        {/* {!canResendOTP && (
+                            <div className="text-center text-sm text-gray-500 mb-4">
+                                Wait for {timer} seconds to resend OTP
+                            </div>
+                        )} */}
 
                         <div className="cursor-pointer text-center flex flex-col text-gray-400" onClick={toggleForm}>
                             {isSignIn ? "Don't have an account?" : "Already have an account?"}
@@ -205,18 +305,40 @@ const SignInPage = () => {
                     <div className="bg-white p-8 rounded-lg shadow-lg">
                         <h2 className="text-xl font-semibold mb-4">Forgot Password</h2>
                         <input
-                            type="email"
+                            type="text"
                             className="w-full p-2 border border-gray-300 rounded-md mb-4"
                             placeholder="Enter your email"
                             value={forgotPasswordEmail}
                             onChange={(e) => setForgotPasswordEmail(e.target.value)}
                         />
                         <button
-                            className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                            className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
                             onClick={handleForgotPassword}
                         >
-                            Send OTP
+                            {canResendOTP ? 'Send OTP' : `Resend OTP in ${2} Minutes`}
                         </button>
+                        <button
+                            className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                            onClick={e => {
+                                try {
+                                    if (!forgotPasswordEmail || forgotPasswordEmail === '')
+                                        throw new Error("[-] Please provide your email where otp was sent");
+                                    setShowForgotPasswordModal(false);
+                                    setShowUpdatePasswordModal(true);
+                                } catch (error) {
+                                    return toast.info(error.message);
+                                }
+                            }}
+                        >
+                            Verify YourSelf
+                        </button>
+                        <button
+                            className="w-full bg-gray-300 text-black p-2 rounded-lg hover:bg-gray-400"
+                            onClick={() => setShowForgotPasswordModal(false)}
+                        >
+                            Cancel
+                        </button>
+
                     </div>
                 </div>
             )}
@@ -225,6 +347,13 @@ const SignInPage = () => {
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white p-8 rounded-lg shadow-lg">
                         <h2 className="text-xl font-semibold mb-4">Update Password</h2>
+                        {/* {forgotPasswordEmail === '' && <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                            placeholder="Enter your email"
+                            value={forgotPasswordEmail}
+                            onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                        />} */}
                         <input
                             type="text"
                             className="w-full p-2 border border-gray-300 rounded-md mb-4"
@@ -240,16 +369,27 @@ const SignInPage = () => {
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
                         <button
-                            className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                            className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
                             onClick={handleUpdatePassword}
                         >
                             Update Password
+                        </button>
+                        <button
+                            className="w-full bg-gray-300 text-black p-2 rounded-lg hover:bg-gray-400"
+                            onClick={() => {
+                                setShowUpdatePasswordModal(false);
+                                setOtp('');
+                                setNewPassword('');
+                            }}
+                        >
+                            Cancel
                         </button>
                     </div>
                 </div>
             )}
         </>
     );
+
 };
 
 export default SignInPage;
