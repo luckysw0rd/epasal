@@ -30,7 +30,7 @@ const Navbar1 = ({
     const navigate = useNavigate();
     const [isCartOpen, setIsCartOpen] = useState(false);
     const sidebarRef = useRef();
-    const [searchItem,setSearchItem]=useState([])
+    const [searchItem, setSearchItem] = useState([])
     const [cartItems, setCartItems] = useState([
         {
             id: 1,
@@ -74,7 +74,14 @@ const Navbar1 = ({
         }
     ];
 
+    const handleProductClick = (product) => {
+        localStorage.setItem('product', JSON.stringify(product));
+        localStorage.setItem('store', JSON.stringify(store));
 
+        if (fetchedFromBackend && !isEdit)
+            navigate("/productlanding", { state: { product, store } })
+    };
+    
     const loadCartFromLocalStorage = () => {
         console.log('Attempting to load cart from localStorage');
         const savedCart = localStorage.getItem('cart');
@@ -288,23 +295,23 @@ const Navbar1 = ({
 
     const fetchProducts = async () => {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/getStoreProducts/${store.name}`, {
-            params: {
-              page:1,
-              limit: 5,
-              productName: searchInput // Pass the name filter to the backend
-            }
-          });
-          const data = response.data;
-          setSearchItem(response.data.products)
-          
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/getStoreProducts/${store.name}`, {
+                params: {
+                    page: 1,
+                    limit: 5,
+                    productName: searchInput // Pass the name filter to the backend
+                }
+            });
+            const data = response.data;
+            setSearchItem(response.data.products)
+
         } catch (error) {
-          console.error("Error fetching data:", error);
+            console.error("Error fetching data:", error);
         }
-      };
-useEffect(()=>{console.log(searchItem,"search item")},[searchItem])
+    };
+    useEffect(() => { console.log(searchItem, "search item") }, [searchItem])
     const handleSearchIconClick = () => {
-        if(searchInput==='')
+        if (searchInput === '')
             setIsSearchClicked(!isSearchClicked)
         else fetchProducts();
     };
@@ -367,7 +374,7 @@ useEffect(()=>{console.log(searchItem,"search item")},[searchItem])
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</Link>
-                    <Link to={!isEdit && previewMode &&  `/`} className="hover:underline">Banau Page</Link>
+                    <Link to={!isEdit && previewMode && `/`} className="hover:underline">Banau Page</Link>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input
@@ -378,15 +385,17 @@ useEffect(()=>{console.log(searchItem,"search item")},[searchItem])
                         className={`bg-transparent border-b border-black focus:outline-none placeholder-black placeholder:text-sm text-xl ${isSearchClicked ? 'block' : 'hidden'}`}
                     />
                     <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
-                    {searchItem.length>0 && 
+                    {searchItem.length > 0 &&
                         <ul className='absolute top-10 -left-2 flex flex-col gap-3 w-full px-3 py-3 rounded-b-2xl' style={{
                             fontFamily: store?.fonts?.Navbar,
                             backgroundColor: color?.navColor?.backgroundnavColor,
                             color: color?.navColor?.storeNameTextColor,
                         }}>
-                            {searchItem.map((n,i)=>{
-                                return <li key={i} className='flex items-center gap-4'>
-                                    <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black '/>
+                            {searchItem.map((n, i) => {
+                                return <li   onClick={() => {
+                                    handleProductClick(n)
+                                }} key={i} className='flex items-center gap-4'>
+                                    <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black ' />
                                     <div>{n.name}</div>
                                 </li>
                             })}
