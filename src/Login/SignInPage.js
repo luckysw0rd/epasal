@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import useFetch from '../Hooks/useFetch';
 import Overlay from './Overlay';
 import { AuthContext } from '../Hooks/AuthContext';
-import Loading from "../Components/Loading/Loading"
+import Loading from "../Components/Loading/Loading";
+import { toast } from 'react-toastify';
 
 const SignInPage = () => {
     const [isSignIn, setIsSignIn] = useState(true);
@@ -35,7 +36,7 @@ const SignInPage = () => {
 
     const handleSignIn = async () => {
         try {
-            console.log(process.env.REACT_APP_BACKEND_URL + 'users/signin')
+            console.log(process.env.REACT_APP_BACKEND_URL + 'users/signin');
             const responseData = await sendRequest(
                 'users/signin',
                 'POST',
@@ -50,13 +51,16 @@ const SignInPage = () => {
             console.log(responseData); // Handle response data as needed
 
             auth.login(responseData.user.id, responseData.token);
+            toast('Sign In successful');
             window.location.href = "/";
 
         } catch (error) {
             console.log(error.message);
             if (error?.message === 'User not verified') {
+                toast.warn("Please Verify Your Email Address");
                 setShowOverlay(true);
             } else {
+                toast.error(error.message || "Sign In Failure");
                 console.error('Sign-in request failed:', error);
             }
         }
@@ -80,12 +84,16 @@ const SignInPage = () => {
 
             if (responseData && responseData.message) {
                 console.log(responseData.message);
+                toast.warn("Please Verify Your Email Address");
+
                 setShowOverlay(true);
             } else {
+                toast.error(error.message || "Sign Up Failure");
+
                 console.error('Unexpected response format:', responseData);
             }
         } catch (error) {
-            console.error(error.message || 'An error occurred during login');
+            console.error(error.message || 'An error occurred during signup');
         }
     };
 
@@ -100,8 +108,14 @@ const SignInPage = () => {
         setShowUpdatePasswordModal(false);
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            isSignIn ? handleSignIn() : handleSignUp();
+        }
+    };
+
     return (
-        <form onSubmit={isSignIn ? handleSignIn : handleSignUp}>
+        <>
             {isLoading ? <Loading /> :
                 <>
                     {showOverlay && <Overlay email={formData.email} setShowOverlay={setShowOverlay} />}
@@ -125,6 +139,7 @@ const SignInPage = () => {
                                                 id="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
+                                                onKeyDown={handleKeyDown}
                                             />
                                         </div>
                                     </>
@@ -138,6 +153,7 @@ const SignInPage = () => {
                                         id="email"
                                         value={formData.email}
                                         onChange={handleChange}
+                                        onKeyDown={handleKeyDown}
                                     />
                                 </div>
                                 <div className="py-2 ">
@@ -149,6 +165,7 @@ const SignInPage = () => {
                                         className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
                                         value={formData.password}
                                         onChange={handleChange}
+                                        onKeyDown={handleKeyDown}
                                     />
                                 </div>
                                 {!isSignIn && (
@@ -162,6 +179,7 @@ const SignInPage = () => {
                                                 className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
                                                 value={formData.confirmPassword}
                                                 onChange={handleChange}
+                                                onKeyDown={handleKeyDown}
                                             />
                                         </div>
                                     </>
@@ -173,7 +191,7 @@ const SignInPage = () => {
                                 ) : null}
                                 <button
                                     className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
-                                    type='submit'
+                                    onClick={isSignIn ? handleSignIn : handleSignUp}
                                 >
                                     {isSignIn ? 'Sign in' : 'Sign up'}
                                 </button>
@@ -215,6 +233,7 @@ const SignInPage = () => {
                                     placeholder="Enter your email"
                                     value={forgotPasswordEmail}
                                     onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <button
                                     className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
@@ -236,6 +255,7 @@ const SignInPage = () => {
                                     placeholder="Enter OTP"
                                     value={otp}
                                     onChange={(e) => setOtp(e.target.value)}
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <input
                                     type="password"
@@ -243,6 +263,7 @@ const SignInPage = () => {
                                     placeholder="Enter new password"
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <button
                                     className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
@@ -255,7 +276,7 @@ const SignInPage = () => {
                     )}
                 </>
             }
-        </ form>
+        </>
     );
 };
 
