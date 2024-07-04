@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaImage } from "react-icons/fa6";
 import { useStore } from '../T1Context';
@@ -7,9 +7,10 @@ import useFetch from '../../../Hooks/useFetch';
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../Hooks/AuthContext';
+import Tooltip from './Tooltip';
 export default function ProductForm({ onClose }) {
-    const {sendRequest}=useFetch()
-    const {uploadImage}=useImage()
+    const { sendRequest } = useFetch()
+    const { uploadImage } = useImage()
     const { setStore, store } = useStore();
     const auth = useContext(AuthContext);
     const initialState = {
@@ -31,7 +32,7 @@ export default function ProductForm({ onClose }) {
         subcategories: [store?.subCategories[0]?.name] // Change to array
     };
 
-    const [onEditDataUpload,setOnEditDataUpload]=useState(false)
+    const [onEditDataUpload, setOnEditDataUpload] = useState(false)
 
 
     const [formState, setFormState] = useState(initialState);
@@ -40,7 +41,7 @@ export default function ProductForm({ onClose }) {
 
     const handleCategoryChange = (e) => {
         const { value } = e.target;
-        console.log(e.target.value,"options")
+        console.log(e.target.value, "options")
         // const selectedCategories = Array.from(value)
         //     .filter(option => option.selected)
         //     .map(option => option.value);
@@ -138,29 +139,29 @@ export default function ProductForm({ onClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const updatedVariants = formState.variant.map((variant, variantIndex) => {
             const updatedOptions = variant.options.map((option, optionIndex) => ({
                 ...option,
                 name: option.name || `default`
             }));
-    
+
             return {
                 ...variant,
                 name: variant.name || `default`,
                 options: updatedOptions
             };
         });
-    
+
         setFormState(prevFormState => ({
             ...prevFormState,
             variant: updatedVariants
         }));
-    
+
         if (store.isEdit) {
             try {
                 const productImg = await uploadImage(formState?.image?.imageUrl);
-    
+
                 setFormState(prev => ({
                     ...prev,
                     image: {
@@ -169,28 +170,28 @@ export default function ProductForm({ onClose }) {
                         imageID: productImg.id
                     }
                 }));
-    
+
                 for (let i = 0; i < formState.variant[0].options.length; i++) {
                     const optionImage = await uploadImage(formState.variant[0].options[i].image.imageUrl);
-    
+
                     setFormState(prev => {
                         const formState = { ...prev };
                         const variant = { ...formState.variant[0] };
                         const option = { ...variant.options[i] };
-    
+
                         option.image = {
                             ...option.image,
                             imageUrl: optionImage.img,
                             imageID: optionImage.id
                         };
-    
+
                         variant.options[i] = option;
                         formState.variant[0] = variant;
-    
+
                         return formState;
                     });
                 }
-    
+
                 await new Promise(resolve => setTimeout(resolve, 0));
                 setOnEditDataUpload(prev => !prev);
             } catch (err) {
@@ -209,21 +210,21 @@ export default function ProductForm({ onClose }) {
             onClose();
         }
     };
-    
+
     // Function to upload data
     const uploadData = async () => {
-        try{
-            const response=await sendRequest(
+        try {
+            const response = await sendRequest(
                 `product/addProduct`,
                 'POST',
-                JSON.stringify({ formState,storeID:store._id }),
+                JSON.stringify({ formState, storeID: store._id }),
                 {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
             toast.success(response.message)
-        }catch(err){
+        } catch (err) {
             toast.error(err.message)
         }
         const newProduct = {
@@ -237,14 +238,14 @@ export default function ProductForm({ onClose }) {
         onClose();
         setOnEditDataUpload(false)
     };
-    
+
 
     useEffect(() => {
         if (onEditDataUpload) {
             uploadData();
         }
     }, [onEditDataUpload, setOnEditDataUpload]);
-    
+
 
 
     return (
@@ -363,14 +364,20 @@ export default function ProductForm({ onClose }) {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         <div>
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
-                                Price
-                            </label>
+                            <div className=' flex flex-row items-center my-auto'>
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
+                                    Price (Nrs)
+                                </label>
+                                <Tooltip message="We apply a 3% transaction fee, so please adjust the price accordingly.">
+                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
+                                </Tooltip>
+
+                            </div>
                             <input
                                 id="price"
                                 name="price"
                                 type="number"
-                                placeholder="Price"
+                                placeholder="Price (Nrs)"
                                 value={formState.price}
                                 onChange={handleInputChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -379,7 +386,7 @@ export default function ProductForm({ onClose }) {
                         </div>
                         <div>
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="discount">
-                                Discount
+                                Discount (Nrs)
                             </label>
                             <input
                                 id="discount"
@@ -410,6 +417,9 @@ export default function ProductForm({ onClose }) {
 
                     <div className="bg-white p-8 rounded-lg shadow-lg mt-4">
                         <h2 className="text-xl font-semibold mb-1">Variants</h2>
+                        <h3 className="text-sm font-semibold mb-1 text-yellow-500 ">
+                            Please note that only the first variant can have different prices, inventory, and images.</h3>
+
                         <hr className='mb-3' style={{ borderWidth: '1px', borderColor: '#DDDDDD' }} />
                         {formState.variant.map((variant, variantIndex) => (
                             <div key={variantIndex} className="mb-4 border p-4 rounded-lg">
@@ -425,7 +435,7 @@ export default function ProductForm({ onClose }) {
                                     id={`variant-name-${variantIndex}`}
                                     name="name"
                                     type="text"
-                                    placeholder="Eg: Size"
+                                    placeholder="Eg: Size , Color , Quantity"
                                     value={variant.name}
                                     onChange={(e) => handleVariantChange(variantIndex, e)}
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -440,14 +450,20 @@ export default function ProductForm({ onClose }) {
                                             </button>
                                         </div>
                                         <div className="mb-2">
-                                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-name-${variantIndex}-${optionIndex}`}>
-                                                Option Name
-                                            </label>
+                                        <div className=' flex flex-row items-center my-auto'>
+                                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-name-${variantIndex}-${optionIndex}`}>
+                                                    Option Name
+                                                </label>
+                                                <Tooltip message="Mention The Name of the Variant (color , Size , Quantity etc) , Not the Value (White,XL,200 gms)">
+                                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
+                                                </Tooltip>
+                                            </div>
+
                                             <input
                                                 id={`option-name-${variantIndex}-${optionIndex}`}
                                                 name="name"
                                                 type="text"
-                                                placeholder="Eg: Large"
+                                                placeholder="if color then Red,Green , Size then L , XL etc "
                                                 value={option.name}
                                                 onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
                                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -464,7 +480,7 @@ export default function ProductForm({ onClose }) {
                                                         id={`option-price-${variantIndex}-${optionIndex}`}
                                                         name="price"
                                                         type="number"
-                                                        placeholder="Option Price"
+                                                        placeholder=" Different Price for the variant"
                                                         value={option.price}
                                                         onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
                                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
