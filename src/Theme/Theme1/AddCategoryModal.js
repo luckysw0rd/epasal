@@ -22,7 +22,7 @@ const AddCategoryModal = ({ onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
-            <motion.div className="bg-white p-8 rounded-lg shadow-xl"
+            <motion.div className="bg-white text-black p-8 rounded-lg shadow-xl"
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 200, damping: 20 }}

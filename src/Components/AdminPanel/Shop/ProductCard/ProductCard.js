@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import cosmetic from '../../../../Assets/cosmetic.webp';
 import esewa from '../../../../Assets/esewa.webp';
 import useFetch from '../../../../Hooks/useFetch';
 import Loading from "../../../Loading/Loading"
-
+import { AuthContext } from '../../../../Hooks/AuthContext';
 const ProductCard2 = () => (
     <div className="w-[300px] hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <a href="#">
@@ -16,9 +16,9 @@ const ProductCard2 = () => (
                 <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
                 <p className="text-lg font-bold text-black truncate block capitalize">Modern Minimalistic</p>
                 <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3"> Rs 149</p>
+                    <p className="text-lg font-semibold text-black cursor-auto my-3"> Rs 99</p>
                     <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2"> Rs 199</p>
+                        <p className="text-sm text-gray-600 cursor-auto ml-2"> Rs 150</p>
                     </del>
                     <div className="ml-[100px]">
                         <svg
@@ -44,48 +44,8 @@ const ProductCard2 = () => (
     </div>
 );
 
-// const ProductCard3 = () => (
-//     <div className="w-62 hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
-//         <a href="#">
-//             <img
-//                 src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-//                 alt="Product"
-//                 className="h-60 w-full object-cover rounded-t-xl"
-//             />
-//             <div className="px-4 py-3 w-72">
-//                 <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-//                 <p className="text-lg font-bold text-black truncate block capitalize">Modern Minimalistic</p>
-//                 <div className="flex items-center">
-//                     <p className="text-lg font-semibold text-black cursor-auto my-3"> Rs 149</p>
-//                     <del>
-//                         <p className="text-sm text-gray-600 cursor-auto ml-2"> Rs 199</p>
-//                     </del>
-//                     <div className="ml-[100px]">
-//                         <svg
-//                             xmlns="http://www.w3.org/2000/svg"
-//                             width="20"
-//                             height="20"
-//                             fill="currentColor"
-//                             className="bi bi-bag-plus"
-//                             viewBox="0 0 16 16"
-//                         >
-//                             <path
-//                                 fillRule="evenodd"
-//                                 d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-//                             />
-//                             <path
-//                                 d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
-//                             />
-//                         </svg>
-//                     </div>
-//                 </div>
-//             </div>
-//         </a>
-//     </div>
-// );
-
 const ProductCard3 = () => (
-    <div className="product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="product-card w-[300px] rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <div className="para uppercase text-center leading-none ">
             <p
                 style={{
@@ -142,8 +102,8 @@ const ProductCard3 = () => (
             </div>
         </div>
         <div className="flex flex-col items-center mt-2">
-            <p className="text-lg font-semibold text-black">Rs 149</p>
-            <del className="ml-2 text-gray-600"> Rs 500</del>
+            <p className="text-lg font-semibold text-black">Rs 99</p>
+            <del className="ml-2 text-gray-600"> Rs 150</del>
         </div>
         <button className="bg-blue-600 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4">
             Add to Cart
@@ -154,16 +114,17 @@ const ProductCard3 = () => (
 const productCardsArray = [<ProductCard2 />, <ProductCard3 />]; // Add more as needed
 const productInfo = [{
     name: 'Modern Minimalistic',
-    price: 150,
+    price: 99,
 },
 {
     name: 'Slider',
-    price: 400,
+    price: 99,
 }
 ]
 
 
 export default function ProductCards({ store }) {
+    const auth = useContext(AuthContext);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
     const handleBuyNow = async (cardNumber) => {
@@ -186,7 +147,8 @@ export default function ProductCards({ store }) {
                     data, success: success_url
                 }),
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token
                 }
             );
             console.log(responseData); // Handle response data as needed
@@ -228,7 +190,7 @@ export default function ProductCards({ store }) {
                                 <React.Fragment key={index}>{card}</React.Fragment>
                                 <div>
                                     <button
-                                        className="flex items-center justify-center space-x-5 mt-auto text-green-800 bg-gray-300 border-0 py-3 px-4 w-full focus:outline-none hover:text-white hover:bg-gray-700 rounded"
+                                        className="flex max-w-[300px] w-full  items-center justify-center space-x-5 mt-auto text-green-800 bg-gray-300 border-0 py-3 px-4  focus:outline-none hover:text-white hover:bg-gray-700 rounded"
                                         onClick={() => handleBuyNow(index)}
                                     >
                                         <img src={esewa} alt="eSewa" className="font-Cinzel rounded-md w-20 h-10 mr-6" />

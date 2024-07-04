@@ -111,7 +111,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                             </div>
                         ))}
                         {(!previewMode) && (
-                            <button className="py-2 px-8 hover:bg-gray-100" onClick={handleAddCategory}>Add Subcategory</button>
+                            <button className="py-2 px-8 hover:bg-gray-100" onClick={handleAddCategory}>Add Category</button>
                         )}
                     </div>
                 </div>
