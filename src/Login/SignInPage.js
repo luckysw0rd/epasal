@@ -101,7 +101,7 @@ const SignInPage = () => {
     };
 
     return (
-        <>
+        <form onSubmit={isSignIn ? handleSignIn : handleSignUp}>
             {isLoading ? <Loading /> :
                 <>
                     {showOverlay && <Overlay email={formData.email} setShowOverlay={setShowOverlay} />}
@@ -173,7 +173,7 @@ const SignInPage = () => {
                                 ) : null}
                                 <button
                                     className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
-                                    onClick={isSignIn ? handleSignIn : handleSignUp}
+                                    type='submit'
                                 >
                                     {isSignIn ? 'Sign in' : 'Sign up'}
                                 </button>
@@ -255,7 +255,7 @@ const SignInPage = () => {
                     )}
                 </>
             }
-        </>
+        </ form>
     );
 };
 

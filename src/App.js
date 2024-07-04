@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 // import Dashboard from './Components/AdminPanel/Dashboard';
 import Loading from "./Theme/Theme1/Loading/Loading";
+import StoreNotFound from "./Components/NotFound/StoreNotFound";
 const Dashboard=React.lazy(()=>import('./Components/AdminPanel/Dashboard'))
 // import Theme from "./Theme/Theme";
 // Lazy loading components
@@ -48,10 +49,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/:storeID" element={<RedirectToStore />} />
-
+        <Route path="/mystore/storeNotFound" element={<StoreNotFound/>}/>
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
-        
+        <Route path="/adminpanel/:storeName" element={<Dashboard />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
@@ -66,7 +67,7 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
 
-        <Route path="/*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </React.Fragment>
     );
   } else {
@@ -76,16 +77,16 @@ function App() {
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/mystore/storeNotFound" element={<StoreNotFound/>}/>
+        <Route path="/login" element={<SignInPage />}></Route>
         <Route path="/:storeID" element={<RedirectToStore />} />
-
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
-        <Route path="/login" element={<SignInPage />}></Route>
-
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
-        <Route path="/*" element={<Navigate to="/login" />} />
+        <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="*" element={<Navigate to="/login" />} />
       </React.Fragment>
     );
   }
@@ -101,7 +102,7 @@ function App() {
               }>
               <Routes>
                 {routes}
-                <Route path="/adminpanel/:storeName" element={token?<Dashboard />:<Navigate to='/login'/>} />
+                
               </Routes>
             </Suspense>
           </Router>

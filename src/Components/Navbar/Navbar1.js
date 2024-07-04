@@ -5,8 +5,10 @@ import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiMenu } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import CartDropdown from './CartDropDown';
 import CartDropdown from '../Allproducts/CartDropDown';
+import axios from 'axios';
 
 const Navbar1 = ({
     setNewCategory,
@@ -28,6 +30,7 @@ const Navbar1 = ({
     const navigate = useNavigate();
     const [isCartOpen, setIsCartOpen] = useState(false);
     const sidebarRef = useRef();
+    const [searchItem,setSearchItem]=useState([])
     const [cartItems, setCartItems] = useState([
         {
             id: 1,
@@ -283,8 +286,27 @@ const Navbar1 = ({
         setEditableText(e.target.value);
     };
 
+    const fetchProducts = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/getStoreProducts/${store.name}`, {
+            params: {
+              page:1,
+              limit: 5,
+              productName: searchInput // Pass the name filter to the backend
+            }
+          });
+          const data = response.data;
+          setSearchItem(response.data.products)
+          
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+useEffect(()=>{console.log(searchItem,"search item")},[searchItem])
     const handleSearchIconClick = () => {
-        setIsSearchClicked(!isSearchClicked);
+        if(searchInput==='')
+            setIsSearchClicked(!isSearchClicked)
+        else fetchProducts();
     };
 
 
@@ -342,9 +364,9 @@ const Navbar1 = ({
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-4 mr-8">
-                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
-                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
-                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</Link>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input
@@ -355,6 +377,19 @@ const Navbar1 = ({
                         className={`bg-transparent border-b border-black focus:outline-none placeholder-black placeholder:text-sm text-xl ${isSearchClicked ? 'block' : 'hidden'}`}
                     />
                     <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+                    {searchItem.length>0 && 
+                        <ul className='absolute top-10 -left-2 flex flex-col gap-3 w-full px-3 py-3 rounded-b-2xl' style={{
+                            fontFamily: store?.fonts?.Navbar,
+                            backgroundColor: color?.navColor?.backgroundnavColor,
+                            color: color?.navColor?.storeNameTextColor,
+                        }}>
+                            {searchItem.map((n,i)=>{
+                                return <li key={i} className='flex items-center gap-4'>
+                                    <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black '/>
+                                    <div>{n.name}</div>
+                                </li>
+                            })}
+                        </ul>}
                 </div>
                 <button onClick={handleCartClick} className="relative">
                     <FaShoppingCart className="text-2xl" />
@@ -414,9 +449,9 @@ const Navbar1 = ({
                                 />
                                 <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
                             </div>
-                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
-                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
-                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
+                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
+                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
+                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
 
                         </div>
                     </div>
