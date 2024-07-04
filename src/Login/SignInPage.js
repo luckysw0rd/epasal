@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import useFetch from '../Hooks/useFetch';
 import Overlay from './Overlay';
 import { AuthContext } from '../Hooks/AuthContext';
@@ -19,8 +19,29 @@ const SignInPage = () => {
     const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [otp, setOtp] = useState('');
+    const [canResendOTP, setCanResendOTP] = useState(true);
+    const [timer, setTimer] = useState(0);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        if (window.location.pathname === '/login') {
+            abc();
+        }
+    }, [window.location.pathname]);
+
+    useEffect(() => {
+        const lastSentTime = localStorage.getItem('otpLastSentTime');
+        if (lastSentTime) {
+            const timePassed = Date.now() - parseInt(lastSentTime, 10);
+            if (timePassed < 2 * 60 * 1000) {
+                setCanResendOTP(false);
+                setTimeout(() => {
+                    setCanResendOTP(true);
+                }, 2 * 60 * 1000 - timePassed);
+            }
+        }
+    }, []);
 
     const toggleForm = () => {
         setIsSignIn(!isSignIn);
@@ -34,7 +55,7 @@ const SignInPage = () => {
         }));
     };
 
-    const handleSignIn = async () => {
+    const handleSignIn = async (e) => {
         try {
             console.log(process.env.REACT_APP_BACKEND_URL + 'users/signin');
             const responseData = await sendRequest(
@@ -66,8 +87,9 @@ const SignInPage = () => {
         }
     };
 
-    const handleSignUp = async () => {
+    const handleSignUp = async (e) => {
         try {
+            e.preventDefault();
             const responseData = await sendRequest(
                 'users/signup',
                 'POST',
@@ -89,7 +111,6 @@ const SignInPage = () => {
                 setShowOverlay(true);
             } else {
                 toast.error(error.message || "Sign Up Failure");
-
                 console.error('Unexpected response format:', responseData);
             }
         } catch (error) {
@@ -97,15 +118,52 @@ const SignInPage = () => {
         }
     };
 
-    const handleForgotPassword = () => {
+    const handleForgotPassword = async (e) => {
+        e.preventDefault();
         console.log(forgotPasswordEmail);
         setShowForgotPasswordModal(false);
-        setShowUpdatePasswordModal(true);
+        // setShowUpdatePasswordModal(true);
+        try {
+            const responseData = await sendRequest(
+                'users/forgotpassword',
+                'POST',
+                JSON.stringify({
+                    email: forgotPasswordEmail,
+                }),
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+            console.log(responseData.message);
+            setShowForgotPasswordModal(false);
+            setShowUpdatePasswordModal(true);
+        } catch (error) {
+            console.error(error.message || 'An error occurred during signup');
+
+        }
     };
 
-    const handleUpdatePassword = () => {
+    const handleUpdatePassword = async (e) => {
         console.log({ otp, newPassword });
-        setShowUpdatePasswordModal(false);
+        try {
+            const responseData = await sendRequest(
+                'users/forgotpasswordnewpassword',
+                'POST',
+                JSON.stringify({
+                    email: forgotPasswordEmail,
+                    newPassword: newPassword,
+                    verificationCode: otp
+                }),
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+            console.log(responseData.message);
+            toast.success('Password Changed');
+            setShowUpdatePasswordModal(false);
+        } catch (error) {
+            toast.error(error.message || 'verfication failed');
+        }
     };
 
     const handleKeyDown = (e) => {
@@ -195,6 +253,11 @@ const SignInPage = () => {
                                 >
                                     {isSignIn ? 'Sign in' : 'Sign up'}
                                 </button>
+                                {/* {!canResendOTP && (
+                            <div className="text-center text-sm text-gray-500 mb-4">
+                                Wait for {timer} seconds to resend OTP
+                            </div>
+                        )} */}
 
                                 <div className="cursor-pointer text-center flex flex-col text-gray-400" onClick={toggleForm}>
                                     {isSignIn ? "Don't have an account?" : "Already have an account?"}
@@ -244,11 +307,60 @@ const SignInPage = () => {
                             </div>
                         </div>
                     )}
+                    {showForgotPasswordModal && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="bg-white p-8 rounded-lg shadow-lg">
+                                <h2 className="text-xl font-semibold mb-4">Forgot Password</h2>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                                    placeholder="Enter your email"
+                                    value={forgotPasswordEmail}
+                                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                                />
+                                <button
+                                    className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                                    onClick={handleForgotPassword}
+                                >
+                                    {canResendOTP ? 'Send OTP' : `Resend OTP in ${2} Minutes`}
+                                </button>
+                                <button
+                                    className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                                    onClick={e => {
+                                        try {
+                                            if (!forgotPasswordEmail || forgotPasswordEmail === '')
+                                                throw new Error("[-] Please provide your email where otp was sent");
+                                            setShowForgotPasswordModal(false);
+                                            setShowUpdatePasswordModal(true);
+                                        } catch (error) {
+                                            return toast.info(error.message);
+                                        }
+                                    }}
+                                >
+                                    Verify YourSelf
+                                </button>
+                                <button
+                                    className="w-full bg-gray-300 text-black p-2 rounded-lg hover:bg-gray-400"
+                                    onClick={() => setShowForgotPasswordModal(false)}
+                                >
+                                    Cancel
+                                </button>
+
+                            </div>
+                        </div>
+                    )}
 
                     {showUpdatePasswordModal && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white p-8 rounded-lg shadow-lg">
                                 <h2 className="text-xl font-semibold mb-4">Update Password</h2>
+                                {/* {forgotPasswordEmail === '' && <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                            placeholder="Enter your email"
+                            value={forgotPasswordEmail}
+                            onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                        />} */}
                                 <input
                                     type="text"
                                     className="w-full p-2 border border-gray-300 rounded-md mb-4"
@@ -266,10 +378,20 @@ const SignInPage = () => {
                                     onKeyDown={handleKeyDown}
                                 />
                                 <button
-                                    className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                                    className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
                                     onClick={handleUpdatePassword}
                                 >
                                     Update Password
+                                </button>
+                                <button
+                                    className="w-full bg-gray-300 text-black p-2 rounded-lg hover:bg-gray-400"
+                                    onClick={() => {
+                                        setShowUpdatePasswordModal(false);
+                                        setOtp('');
+                                        setNewPassword('');
+                                    }}
+                                >
+                                    Cancel
                                 </button>
                             </div>
                         </div>
@@ -278,6 +400,17 @@ const SignInPage = () => {
             }
         </>
     );
+
 };
 
 export default SignInPage;
+
+function abc(liveChatSource) {
+    var s1 = document.createElement('script'),
+        s0 = document.getElementsByTagName('script')[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/66827eb5eaf3bd8d4d16c22f/1i1mrtts8';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+}

@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import useFetch from '../Hooks/useFetch';
 import { AuthContext } from '../Hooks/AuthContext';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const Overlay = ({ email, setShowOverlay }) => {
     const [verificationCode, setVerificationCode] = useState('');
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -25,7 +27,8 @@ const Overlay = ({ email, setShowOverlay }) => {
             if (responseData && responseData.message) {
                 console.log(responseData);
                 auth.login(responseData.user.id, responseData.token);
-                window.location.href = "/";
+                toast.success('Verification Successfull')
+                navigate('/');
 
             } else {
                 console.error('Unexpected response format:', responseData);
@@ -33,6 +36,7 @@ const Overlay = ({ email, setShowOverlay }) => {
         } catch (error) {
             console.log("here");
             console.error(error.message || 'An error occurred during login');
+            toast.error(error.message || 'verfication failed');
         }
     };
 

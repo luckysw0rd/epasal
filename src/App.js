@@ -11,7 +11,7 @@ import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 // import Dashboard from './Components/AdminPanel/Dashboard';
 import Loading from "./Theme/Theme1/Loading/Loading";
 import StoreNotFound from "./Components/NotFound/StoreNotFound";
-const Dashboard=React.lazy(()=>import('./Components/AdminPanel/Dashboard'))
+const Dashboard = React.lazy(() => import('./Components/AdminPanel/Dashboard'));
 // import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
@@ -35,27 +35,30 @@ function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
   const { token, login, logout, userID } = useAuth();
+  const userData = localStorage.getItem('userData');
+  console.log({ userData, data: JSON.parse(userData)?.token });
   const auth = useContext(AuthContext);
-
+  console.log({ token });
   const RedirectToStore = () => {
     const { storeID } = useParams();
     return <Navigate to={`/store/${storeID}`} />;
   };
 
   let routes;
-  
-  if (token ||auth.token) {
+  if (token || auth.token || (userData && JSON.parse(userData)?.token)) {
+    console.log(`[+] I was freaking calledy:....`);
+
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
+        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/:storeID" element={<RedirectToStore />} />
-        <Route path="/mystore/storeNotFound" element={<StoreNotFound/>}/>
+        <Route path="/mystore/storeNotFound" element={<StoreNotFound />} />
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
-        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
@@ -67,19 +70,19 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
-
         <Route path="*" element={<Navigate to="/" />} />
       </React.Fragment>
     );
   } else {
+    console.log(`[+] I was freaking calledm:....`);
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/mystore/storeNotFound" element={<StoreNotFound/>}/>
         <Route path="/login" element={<SignInPage />}></Route>
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/mystore/storeNotFound" element={<StoreNotFound />} />
         <Route path="/:storeID" element={<RedirectToStore />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
@@ -103,7 +106,6 @@ function App() {
               }>
               <Routes>
                 {routes}
-                
               </Routes>
             </Suspense>
           </Router>

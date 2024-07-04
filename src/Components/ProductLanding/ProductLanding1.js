@@ -115,7 +115,7 @@ const ProjectLanding1 = () => {
             // Handle products without variants or unselected variants
             const basePrice = parseFloat(selectedProduct.price) || 0;
             const discount = parseFloat(selectedProduct.discount) || 0;
-            console.log("hereerer")
+            console.log("hereerer");
 
             return basePrice - discount;
         } else {
@@ -235,7 +235,7 @@ const ProjectLanding1 = () => {
                                             if (index < parseFloat(Math.ceil(selectedProduct.rating)))
                                                 return <StarIcon className='w-5 h-5 text-[#8B5A08]' key={index} />
                                             else
-                                                return <StarIcon className='w-5 h-5 text-[#959595]' key={index} />
+                                                return <StarIcon className='w-5 h-5 text-[#959595]' key={index} />;
                                         })}
                                     </div>
                                     <div className="flex gap-5 items-center">
