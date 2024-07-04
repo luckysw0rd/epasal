@@ -73,7 +73,7 @@ function App() {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/buildstore" element={<Theme />} /> */}
+        <Route path="/buildstore" element={<Theme />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/:storeID" element={<RedirectToStore />} />
