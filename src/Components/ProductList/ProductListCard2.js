@@ -98,7 +98,7 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                             color: store.color.productListColor.categoryColor,
                         }}
                     >
-                               {product.subcategories[0]}
+                        {product.subcategories[0]}
                     </p>
                     <ul className="flex flex-col items-start gap-2">
                         <li
@@ -132,17 +132,17 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                 <del className="ml-2 "> Rs {product.price}</del>
             </div>
 
-   
-                <button
-                    className="py-2 px-6 rounded-full duration-300 mt-4"
-                    onClick={() => {
-                        handleProductClick(product);
-                    }}
-                    style={{ backgroundColor: `${store.color.productListColor.buttonBgColor}`, color: `${store.color.productListColor.buttonTextColor}` }}
-                >
-                    Add to Cart
-                </button>
-        
+
+            <button
+                className="py-2 px-6 rounded-full duration-300 mt-4"
+                onClick={() => {
+                    handleProductClick(product);
+                }}
+                style={{ backgroundColor: `${store.color.productListColor.buttonBgColor}`, color: `${store.color.productListColor.buttonTextColor}` }}
+            >
+                Add to Cart
+            </button>
+
 
         </motion.div>
     );
