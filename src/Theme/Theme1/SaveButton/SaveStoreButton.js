@@ -10,11 +10,11 @@ import Loader from '../../../Components/Loading/Loading';
 const SaveStoreButton = () => {
     const { uploadImage } = useImage();
     const auth = useContext(AuthContext);
-    const [tempLoading,setTempLoading]= useState(false)
+    const [tempLoading, setTempLoading] = useState(false)
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
-    const [storeMade,setStoreMade]=useState(false);
-    const navigate=useNavigate();
+    const [storeMade, setStoreMade] = useState(false);
+    const navigate = useNavigate();
     var storeNewImage = {};
     const { previewMode } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -47,21 +47,21 @@ const SaveStoreButton = () => {
                 });
 
                 // Update variant images
-                if(!store.isEdit){
-                for (let j = 0; j < product?.variant[0]?.options.length; j++) {
-                    const variantOption = product?.variant[0]?.options[j];
-                    const variantImg = await uploadImage(variantOption?.image?.imageUrl);
+                if (!store.isEdit) {
+                    for (let j = 0; j < product?.variant[0]?.options.length; j++) {
+                        const variantOption = product?.variant[0]?.options[j];
+                        const variantImg = await uploadImage(variantOption?.image?.imageUrl);
 
-                    setStore(prev => {
-                        const updatedProducts = [...prev.products];
-                        const updatedOptions = [...updatedProducts[i]?.variant[0]?.options];
-                        updatedOptions[j] = {
-                            ...updatedOptions[j],
-                            image: {
-                                imageID: variantImg.id,
-                                imageUrl: variantImg.img
-                            }
-                        };
+                        setStore(prev => {
+                            const updatedProducts = [...prev.products];
+                            const updatedOptions = [...updatedProducts[i]?.variant[0]?.options];
+                            updatedOptions[j] = {
+                                ...updatedOptions[j],
+                                image: {
+                                    imageID: variantImg.id,
+                                    imageUrl: variantImg.img
+                                }
+                            };
 
                             updatedProducts[i] = {
                                 ...updatedProducts[i],
@@ -112,10 +112,19 @@ const SaveStoreButton = () => {
         }
     }
     useEffect(() => {
+
+        if (!auth.token) {
+            toast.warning('Please Ensure you are logged in first ,Changes will not be saved',
+                {
+                     theme:"dark",
+                     autoClose: 10000
+                }
+            );
+        }
         if (storeNew) {
             PostData();
         }
-    }, [storeNew,setStoreNew])
+    }, [storeNew, setStoreNew])
     const PostData = async () => {
         try {
             console.log(store, "store my")
@@ -132,7 +141,7 @@ const SaveStoreButton = () => {
                 setStoreMade(true)
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
-  
+
                 navigate('/')
             } else {
                 const responseData = await sendRequest(
@@ -150,25 +159,28 @@ const SaveStoreButton = () => {
             }
         } catch (error) {
             console.error('Error saving store data:', error);
-            if(error.message)
+            if (error.message)
                 toast.error(error.message); // Handle response data as needed
 
         }
     }
     const saveStore = async () => {
-        console.log(store, "store is this")
-        
-        await ImageUpload()
-        // await PostData()
-
+        console.log(store, "store is this");
+        if (auth.token) {
+            await ImageUpload();
+        } else {
+            toast("Please Log In First");
+            window.open('/login'); // Open the login page in a new tab
+        }
     };
-    if(isLoading || tempLoading){
-        return(
+
+    if (isLoading || tempLoading) {
+        return (
             <Loader></Loader>
         )
     }
     if (!store.fetchedFromBackend || store.isEdit) {
-     
+
         return (
             <div className='mt-4 h-20 flex justify-center'>
                 {isLoading ? (
