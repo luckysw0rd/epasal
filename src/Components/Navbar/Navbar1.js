@@ -367,6 +367,7 @@ useEffect(()=>{console.log(searchItem,"search item")},[searchItem])
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</Link>
+                    <Link to={!isEdit && previewMode &&  `/`} className="hover:underline">Banau Page</Link>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input
