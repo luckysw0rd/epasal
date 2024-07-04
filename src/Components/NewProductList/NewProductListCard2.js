@@ -90,12 +90,12 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     className="object-cover w-[180px] h-[180px]"
                 />
                 <div
-                    className="tooltips absolute top-0 left-0 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
+                    className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
                 >
                     <p
                         className=" pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
                         style={{
-                            color: store.color.newProductColor.categoryColor,
+                            color: store.color.subProductColor.textColor,
                         }}
                     >
                         {product.subcategories[0]}
@@ -131,22 +131,6 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
 
                 <del className="ml-2 "> Rs {product.price}</del>
             </div>
-            {/* <div className="flex mb-2 justify-center md:justify-start">
-                {[...Array(5)].map((_, index) => {
-                    if (index < product.rating)
-                        return <StarIcon className='w-4 h-4' style={{ color: store.color.newProductColor.starColor }} key={index} />
-                    else
-                        return <StarIcon className='w-4 h-4 ' key={index} />
-                })}
-            </div> */}
-            {/* 
-            <button
-                className="py-2 px-6 rounded-full duration-300 mt-4"
-                onClick={handleProductClick(product)}
-                style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}` }}
-            >
-                Add to Cart
-            </button> */}
             <button
                 style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}`, }}
                 className="py-2 px-6 rounded-full duration-300 mt-4"
@@ -157,15 +141,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
             >
                 Add to cart
             </button>
-            {/* {addedToCart && (
-                <button
-                    className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
-                    disabled
-                    style={{ backgroundColor: store.color.newProductColor.priceColor, color: store.color.newProductColor.priceLetterColor, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.ButtonBorderColor}` }}
-                >
-                    <FaShoppingCart className="mr-1 " />
-                </button>
-            )} */}
+
         </motion.div>
     );
 }

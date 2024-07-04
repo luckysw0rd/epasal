@@ -4,29 +4,29 @@ import React, { useEffect, useRef } from 'react'
 const Heading = ({ setnavbarImage }) => {
   const headingRef = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          console.log('Heading component is out of view');
-          setnavbarImage(true);
-        } else {
-          setnavbarImage(false);
-        }
-      },
-      { threshold: 0 }
-    );
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (!entry.isIntersecting) {
+  //         console.log('Heading component is out of view');
+  //         setnavbarImage(true);
+  //       } else {
+  //         setnavbarImage(false);
+  //       }
+  //     },
+  //     { threshold: 0 }
+  //   );
 
-    if (headingRef.current) {
-      observer.observe(headingRef.current);
-    }
+  //   if (headingRef.current) {
+  //     observer.observe(headingRef.current);
+  //   }
 
-    return () => {
-      if (headingRef.current) {
-        observer.unobserve(headingRef.current);
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (headingRef.current) {
+  //       observer.unobserve(headingRef.current);
+  //     }
+  //   };
+  // }, []);
 
   return (
     <div ref={headingRef} className="relative">

@@ -9,7 +9,7 @@ import { useMediaQuery } from "react-responsive";
 import OfferBanner from "./T1OfferBanner";
 import Footer from "./Footer/T1Footer";
 import SaveStoreButton from "./SaveButton/SaveStoreButton";
-import Loading from "./Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import Task from "./Task/Task";
 import {
   DndContext,
@@ -85,7 +85,7 @@ const EStore = ({ Passedstore }) => {
   useEffect(() => {
     console.log(tasks);
   }, [tasks]);
-  const { store } = useStore();
+  const { store,isLoading } = useStore();
   const { previewMode } = store;
   const { fetchedFromBackend } = store;
 
@@ -103,7 +103,7 @@ const EStore = ({ Passedstore }) => {
   ) {
     return (
       <div className=" w-screen">
-        <Loading></Loading>
+        <Loading />
       </div>
     );
   } else

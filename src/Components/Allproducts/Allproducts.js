@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import StarRating from './StarRating'; // Import the StarRating component
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
+import Loader from '../Loading/Loading';
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -39,7 +40,7 @@ const AllProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/product/getStoreProducts/${storeName}`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/getStoreProducts/${storeName}`, {
         params: {
           page,
           limit: 12,
@@ -128,6 +129,32 @@ const AllProducts = () => {
       return newStore;
     });
   };
+
+  const generatePageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (page > 3) {
+        pages.push('...');
+      }
+      const startPage = Math.max(2, page - 1);
+      const endPage = Math.min(totalPages - 1, page + 1);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (page < totalPages - 2) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
+  const pageNumbers = generatePageNumbers();
 
   const deleteFromCart = (product) => {
     const { price, selectedVariant } = product;
@@ -225,28 +252,32 @@ const AllProducts = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
   };
 
+
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />
   }
 
   return (
     color && products && store && (
-      <div className="flex flex-col mt-20">
+      <div className="flex flex-col mt-16 ">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col lg:flex-row px-3 md:px-5 lg:px-0"
+          style={{ backgroundColor: color.productListColor.backgroundColor }}
+        >
           <button
             onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
-            className="md:hidden px-4 py-2 bg-blue-500 text-white rounded m-2"
+            className="lg:hidden px-4 py-2 bg-blue-500 text-white rounded m-2"
           >
             {isFilterVisible ? <FaTimes /> : <FaBars />}
           </button>
 
-          {(isFilterVisible || window.innerWidth >= 768) && ( // Conditionally render the filter section based on visibility state or screen width
-            <div className="   relative top-8 md:left-5  w-full md:w-1/4 h-[688px]  my md:max-w-[250px] p-5 py-0   md:-mt-4 rounded-lg border-2  shadow-xl"
+          {(isFilterVisible || window.innerWidth >= 1260) && ( // Conditionally render the filter section based on visibility state or screen width
+            <div className="relative top-8 lg:left-12  w-full lg:w-1/4 lg:max-w-[250px] p-5 py-0  md:-mt-4 rounded-lg border-2 mb-16 shadow-xl"
               style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor }}
             >
-              <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10  ">Filters</h3>
+              <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10">Filters</h3>
               <div className="block mb-4">
                 <label className="block mb-2 font-semibold">Price Range:</label>
                 <div className="flex items-center">
@@ -300,7 +331,7 @@ const AllProducts = () => {
               )}
               <button
                 onClick={handleSearch} // Handle click on search button
-                className="px-4 py-1   rounded  transition ease-in-out duration-200  border-2"
+                className="px-4 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2"
                 style={
                   { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
                 }
@@ -310,26 +341,25 @@ const AllProducts = () => {
             </div>
           )}
 
-          <div className="flex-grow p-4 W-full md:W-3/4">
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex items-center mb-4 w-full">
+          <div className="lg:ml-16 flex-grow p-4 w-full lg:w-3/4 min-h-screen ">
+            <div className="flex flex-wrap justify-start gap-4">
+              <div className="flex items-center space-x-2 mb-4 ml-0 w-full">
                 <input
                   type="text"
                   name="productName"
                   value={name}
                   onChange={handleNameFilterChange} // Handle change for name filter input
-                  placeholder="Search by name"
-                  className="mt-1 p-2 border rounded w-2/3 md:w-1/6 ml-14"
+                  placeholder="Search..."
+                  className="p-2 border border-gray-300 rounded-sm w-full lg:w-[144px] h-[28px] "
                 />
-
                 <button
                   onClick={handleSearch} // Handle click on search button
-                  className="p-2 bg-blue-500 text-white rounded ml-2"
+                  className="p-2 bg-gray-300 border h-[28px] border-l-0 border-gray-300 rounded-r-lg flex items-center justify-center"
                 >
-                  <FaSearch />
+                  <FaSearch className="text-gray-500" />
                 </button>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+              <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-x-8 md:gap-y-8 md:w-[900px] rounded-lg 2xl:w-[1500px]">
                 {products.map(product => (
                   <ProductCard
                     key={product.id}
@@ -346,17 +376,28 @@ const AllProducts = () => {
               <button
                 disabled={page <= 1}
                 onClick={() => handlePageChange(page - 1)}
-                className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+                className={`px-4 py-2 rounded ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-white text-gray-700 border border-gray-300'}`}
               >
-                Previous
+                &lt;
               </button>
-              <span className="mx-2 flex items-center text-center">Page {page} of {totalPages}</span>
+
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  disabled
+                  key={index + 1}
+                  className={`mx-1 px-4 py-2 rounded  bg-white text-gray-700 border border-gray-300`}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {page}
+                </button>
+              ))}
+
               <button
-                // disabled={page  totalPages}
+                // disabled={page >= totalPages}
                 onClick={() => handlePageChange(page + 1)}
-                className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+                className={`px-4 py-2 roundedbg-white text-gray-700 border border-gray-300`}
               >
-                Next
+                &gt;
               </button>
             </div>
           </div>

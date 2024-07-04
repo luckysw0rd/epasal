@@ -5,16 +5,22 @@ import Loading from '../Loading/Loading';
 import useFetch from "../../../Hooks/useFetch";
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../../../Components/Loading/Loading';
 const SaveStoreButton = () => {
     const { uploadImage } = useImage();
     const auth = useContext(AuthContext);
+    const [tempLoading, setTempLoading] = useState(false)
     const [storeNew, setStoreNew] = useState(false);
     const { store, setStore } = useStore();
+    const [storeMade, setStoreMade] = useState(false);
+    const navigate = useNavigate();
     var storeNewImage = {};
     const { previewMode } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const ImageUpload = async () => {
         try {
+            setTempLoading(true);
             const ImageData = await uploadImage(store.logo.logoUrl)
             const BannerData = await uploadImage(store.banner.bannerUrl)
             const secondaryBannerData = await uploadImage(store.secondaryBanner.secondaryBannerUrl)
@@ -41,21 +47,21 @@ const SaveStoreButton = () => {
                 });
 
                 // Update variant images
-                if(!store.isEdit){
-                for (let j = 0; j < product?.variant[0]?.options.length; j++) {
-                    const variantOption = product?.variant[0]?.options[j];
-                    const variantImg = await uploadImage(variantOption?.image?.imageUrl);
+                if (!store.isEdit) {
+                    for (let j = 0; j < product?.variant[0]?.options.length; j++) {
+                        const variantOption = product?.variant[0]?.options[j];
+                        const variantImg = await uploadImage(variantOption?.image?.imageUrl);
 
-                    setStore(prev => {
-                        const updatedProducts = [...prev.products];
-                        const updatedOptions = [...updatedProducts[i]?.variant[0]?.options];
-                        updatedOptions[j] = {
-                            ...updatedOptions[j],
-                            image: {
-                                imageID: variantImg.id,
-                                imageUrl: variantImg.img
-                            }
-                        };
+                        setStore(prev => {
+                            const updatedProducts = [...prev.products];
+                            const updatedOptions = [...updatedProducts[i]?.variant[0]?.options];
+                            updatedOptions[j] = {
+                                ...updatedOptions[j],
+                                image: {
+                                    imageID: variantImg.id,
+                                    imageUrl: variantImg.img
+                                }
+                            };
 
                             updatedProducts[i] = {
                                 ...updatedProducts[i],
@@ -95,22 +101,34 @@ const SaveStoreButton = () => {
                 }
             ))
             storeNewImage = store;
+            setTempLoading(false);
             PostData(storeNewImage)
             console.log(ImageData, "image Data")
             setStoreNew(true)
         } catch (err) {
+            setTempLoading(false);
+            toast.error('Error Uploading Image')
             console.log(err, "error uploading image")
         }
     }
     useEffect(() => {
+
+        if (!auth.token && !store.fetchedFromBackend) {
+            toast.warning('Please Ensure you are logged in first ,Changes will not be saved',
+                {
+                    theme: "dark",
+                    autoClose: 10000
+                }
+            );
+        }
         if (storeNew) {
             PostData();
         }
-    }, [storeNew,setStoreNew])
+    }, [storeNew, setStoreNew])
     const PostData = async () => {
         try {
             console.log(store, "store my")
-            if (!store.isEdit) {
+            if (!store.isEdit && !storeMade) {
                 const responseData = await sendRequest(
                     'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
                     'POST',
@@ -120,8 +138,11 @@ const SaveStoreButton = () => {
                         Authorization: 'Bearer ' + auth.token,
                     }
                 );
+                setStoreMade(true)
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
+
+                navigate('/')
             } else {
                 const responseData = await sendRequest(
                     `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
@@ -134,21 +155,32 @@ const SaveStoreButton = () => {
                 );
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
+                navigate('/')
             }
         } catch (error) {
             console.error('Error saving store data:', error);
-            toast.error(error.message); // Handle response data as needed
+            if (error.message)
+                toast.error(error.message); // Handle response data as needed
 
         }
     }
     const saveStore = async () => {
-        console.log(store, "store is this")
-        await ImageUpload()
-        // await PostData()
-
+        console.log(store, "store is this");
+        if (auth.token) {
+            await ImageUpload();
+        } else {
+            toast("Please Log In First");
+            window.open('/login'); // Open the login page in a new tab
+        }
     };
 
+    if (isLoading || tempLoading) {
+        return (
+            <Loader></Loader>
+        )
+    }
     if (!store.fetchedFromBackend || store.isEdit) {
+
         return (
             <div className='mt-4 h-20 flex justify-center'>
                 {isLoading ? (

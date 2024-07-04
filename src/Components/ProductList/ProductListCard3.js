@@ -3,8 +3,8 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const ProductListcard3 = ({ product, handleRemoveProduct, store ,productListProps}) => {
-    const {addToCart}=productListProps;
+const ProductListcard3 = ({ product, handleRemoveProduct, store, productListProps }) => {
+    const { addToCart } = productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const navigate = useNavigate()
@@ -42,10 +42,10 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store ,productListProp
 
     return (
         <motion.div
-            className="w-62 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+            className="w-[260px] bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            style={{ backgroundColor: store.color.productListColor.backgroundColor, color: store.color.productListColor.textColor, border: `2px solid ${store.color.productListColor.borderColor}` }}
+            style={{ backgroundColor: store?.color?.productListColor?.backgroundColor, color: store.color.productListColor.textColor, border: `2px solid ${store.color.productListColor.borderColor}` }}
         >
             {(!previewMode || isEdit) && (
                 <button
@@ -60,70 +60,55 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store ,productListProp
                 <img
                     src={product.image.imageUrl}
                     alt={product.name}
-                    className="h-60 p-2 w-full object-cover rounded-t-xl"
+                    className="h-60  w-full object-cover rounded-t-xl"
                 />
-                <div className="px-4 py-3 w-72">
+                <div className="px-4 py-3 w-70 border-t-2"
+                    style={{ borderColor: `${store?.color?.productListColor?.borderColor}` }}
+                >
                     <span className="text-gray-400 mr-3 uppercase text-xs">{product.subcategories[0]}</span>
                     <p className="text-lg font-bold  truncate block capitalize">{product.name}</p>
                     <div className="flex  items-center justify-between">
-                        <div  className=' flex justify-start items-center'>
+                        <div className=' flex justify-start items-center'>
                             <p className="text-md text-nowrap font-semibold cursor-auto my-3" style={{ color: `${store.color.productListColor.priceColor}` }}>
                                 Rs {product.price - product.discount}
                             </p>
-                            {product.discount>0 &&
-                            <del>
-                                <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
-                            </del>}
+                            {product.discount > 0 &&
+                                <del>
+                                    <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
+                                </del>}
                         </div>
                         <div className=" ">
 
                             <button
-                                className="py-2 px-6 rounded-full duration-300"
+                                className="py-2 px-6 rounded-full duration-300 border-2"
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = store.color?.productListColor?.buttonBgColorOnHover}
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = store.color?.productListColor?.buttonBgColor}
                                 onClick={() => {
                                     handleProductClick(product)
                                 }}
-                                style={{ backgroundColor: `${store.color.productListColor.priceColor}`, color: `${store.color.productListColor.priceLetterColor}` }}
+                                style={{ backgroundColor: `${store.color?.productListColor?.buttonBgColor}`, color: `${store?.color?.productListColor?.buttonTextColor}`, borderColor: `${store.color?.productListColor?.buttonBorderColor}` }}
                             >
-                                <FaShoppingCart />
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="15"
+                                    height="15"
+                                    fill="currentColor"
+                                    className="bi bi-bag-plus"
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
+                                    />
+                                    <path
+                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
+                                    />
+                                </svg>
                             </button>
 
                         </div>
                     </div>
-                    {/* <div className="flex items-center">
-                        <p className="text-lg font-semibold text-black cursor-auto my-3" style={{ color: `${store.color.productListColor.priceColor}` }}>Rs {product.price}</p>
-                        <del>
-                            <p className="text-sm text-gray-600 cursor-auto ml-2">Rs {product.originalPrice}</p>
-                        </del>
-                        <div className="ml-[100px]">
-                            {!addedToCart && (
-                                <button
-                                    className="py-2 px-6 rounded-full duration-300"
-                                    onClick={() => {
-                                        const productToAdd = {
-                                            ...product,
-                                            selectedVariant: null,
-                                            price:product.originalPrice
-                                        };
-                                        console.log("productToAdd"); // Log the product with variant to the console
-                                        addToCart(productToAdd);
-
-                                    }}
-                                    style={{ backgroundColor: `${store.color.productListColor.priceColor}`, color: `${store.color.productListColor.priceLetterColor}` }}
-                                >
-                                    <FaShoppingCart />
-                                </button>
-                            )}
-                            {addedToCart && (
-                                <button
-                                    className="text-xs px-2 h-10 cursor-not-allowed rounded px-8"
-                                    disabled
-                                    style={{ backgroundColor: store.color.productListColor.priceColor, color: store.color.productListColor.priceLetterColor }}
-                                >
-                                    <FaShoppingCart className="mr-1 " />
-                                </button>
-                            )}
-                        </div>
-                    </div> */}
+  
                 </div>
             </a>
         </motion.div>

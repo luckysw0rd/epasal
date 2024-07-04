@@ -7,13 +7,13 @@ const SettingPage = () => {
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  
+
   const [editMode, setEditMode] = useState({
     userName: false,
     email: false,
     password: false,
   });
-  
+
   const [passwordChange, setPasswordChange] = useState({
     oldPassword: '',
     newPassword: '',
@@ -68,30 +68,30 @@ const SettingPage = () => {
       setMessage('Please fill out all fields.');
       return;
     }
-  
+
     if (!validateEmail(email)) {
       setMessage('Please enter a valid email.');
       return;
     }
-  
+
     if (editMode.password && (passwordChange.newPassword !== passwordChange.confirmPassword)) {
       setMessage('New passwords do not match.');
       return;
     }
-  
+
     try {
       // Prepare the request body
       const requestBody = {
         name: userName,
         email: email,
       };
-  
+
       // Add password fields if in password edit mode
       if (editMode.password) {
         requestBody.oldPassword = passwordChange.oldPassword;
         requestBody.newPassword = passwordChange.newPassword;
       }
-  
+
       // Send the API request
       const response = await sendRequest(
         'users/updateUserDetails',
@@ -121,7 +121,7 @@ const SettingPage = () => {
       setMessage('Error updating user settings');
     }
   };
-  
+
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

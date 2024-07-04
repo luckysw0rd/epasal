@@ -63,13 +63,13 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
                         <div key={index} className="flex items-center justify-between mb-4 p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition duration-200">
                             <img src={item?.selectedVariant[0]?.options?.image || item?.productImage} alt={item.productName} className="h-16 w-16 rounded object-cover" />
                             <div className="flex-1 ml-4">
-                                <h4 className="text-md font-semibold text-gray-800">{item.productName}</h4>
-                                <p className="text-xs font-bold text-gray-600">Rs {item.price}</p>
+                                <h4 className="text-md font-semibold text-gray-800">{item?.productName}</h4>
+                                <p className="text-xs font-bold text-gray-600">Rs {item?.price * item.count}</p>
                             </div>
                             <div className="flex items-center">
                                 <button
                                     className="bg-gray-300 px-2 py-1 rounded-l hover:bg-gray-400 transition duration-200"
-                                    onClick={() => handleDecreaseQuantity(index)}
+                                    onClick={() => handleDeleteFromCart(index)}
                                 >
                                     -
                                 </button>
@@ -81,12 +81,12 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
                                     +
                                 </button>
                             </div>
-                            <button
+                            {/* <button
                                 className="text-red-500 ml-4 hover:text-red-700 transition duration-200"
                                 onClick={() => handleDeleteFromCart(index)}
                             >
                                 <FaTrashAlt />
-                            </button>
+                            </button> */}
                         </div>
                     ))
                 )}

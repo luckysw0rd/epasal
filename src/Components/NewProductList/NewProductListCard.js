@@ -35,6 +35,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
         if (store.fetchedFromBackend && !store.isEdit)
             navigate("/productlanding", { state: { product, store } })
     };
+
     const truncateName = (name, charLimit) => {
         if (name.length > charLimit) {
             return name.slice(0, charLimit) + '...';
@@ -61,7 +62,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
 
     return (
         <motion.div
-            className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
+            className="font-roboto  rounded-lg  shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
             style={{ borderColor }}
             whileTap={{ scale: 0.98 }}
         >
@@ -75,13 +76,13 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                             <FaTimes />
                         </button>
                     )} */}
-                    <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+                    <div className="card cursor-pointer  flex flex-col  justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <button>
-                            <img src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
+                            <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                         </button>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
-                            <div className=" py-2 "
+                            <div className=" py-2 onClick={() => handleProductClick(product)}"
                             // className="prod-title mt-2 flex justify-between items-center"
                             >
                                 <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
@@ -92,7 +93,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                                     }
                                 </div>
                             </div>
-                            <div className="grid gap-2 relative w-full">
+                            <div className="grid gap-3 relative w-full">
                                 <div className="flex ">
                                     <div
                                         className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
@@ -114,12 +115,8 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                                     <FaHeart style={{ color: heartColor }} size={15} />
                                 </div> */}
                                 <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
-                                    <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
-                                        <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
-                                            Learn More <IoIosArrowForward />
-                                        </div>
-                                    </button>
-                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 text-xs transition ease-in duration-200 border-solid border rounded-sm focus:outline-none addToCartBtn`}
+
+                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                         onClick={() => {

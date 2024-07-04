@@ -39,7 +39,7 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
     };
 
     const esewaCall = (formData) => {
-        var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+        var path = process.env.REACT_APP_ESEWA_URL;
         var form = document.createElement("form");
         form.setAttribute("method", "POST");
         form.setAttribute("action", path);
@@ -80,7 +80,7 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
             esewaTransactionID: null,
             deliveryCode: null,
         };
-        const success_url = 'http://localhost:3000/esewa/order';
+        const success_url = process.env.REACT_APP_BASE_URL+'/esewa/order';
 
         try {
             const responseData = await sendRequest(

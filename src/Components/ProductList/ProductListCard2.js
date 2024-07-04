@@ -5,8 +5,8 @@ import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreCont
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store,productListProps }) => {
-    const {addToCart}=productListProps;
+const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store, productListProps }) => {
+    const { addToCart } = productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -48,7 +48,7 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
 
     return (
         <motion.div
-            className="product-card w-full  rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
+            className="product-card w-[280px] rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.productListColor.cardBackground, color: store.color.productListColor.textColor, border: `2px solid ${store.color.productListColor.borderColor}` }}
@@ -98,7 +98,7 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                             color: store.color.productListColor.categoryColor,
                         }}
                     >
-                        {product.category}
+                        {product.subcategories[0]}
                     </p>
                     <ul className="flex flex-col items-start gap-2">
                         <li
@@ -131,30 +131,19 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
 
                 <del className="ml-2 "> Rs {product.price}</del>
             </div>
-            {/* <div className="flex items-center mt-2">
-                <p className="text-lg font-semibold " style={{ color: `${store.color.productListColor.priceColor}` }} >Rs {product.price}</p>
-                <del className="ml-2 "> Rs {product.originalPrice}</del>
-            </div> */}
-            {/* <div className="flex mb-2 justify-center md:justify-start">
-                {[...Array(5)].map((_, index) => {
-                    if (index < product.rating)
-                        return <StarIcon className='w-4 h-4' style={{ color: store.color.productListColor.starColor }} key={index} />
-                    else
-                        return <StarIcon className='w-4 h-4 ' key={index} />
-                })}
-            </div> */}
-            {!addedToCart && (
-                <button
-                    className="py-2 px-6 rounded-full duration-300 mt-4"
-                    onClick={() => {
-                        handleProductClick(product);
-                    }}
-                    style={{ backgroundColor: `${store.color.productListColor.buttonBgColor}`, color: `${store.color.productListColor.buttonTextColor}` }}
-                >
-                    Add to Cart
-                </button>
-            )}
-           
+
+
+            <button
+                className="py-2 px-6 rounded-full duration-300 mt-4"
+                onClick={() => {
+                    handleProductClick(product);
+                }}
+                style={{ backgroundColor: `${store.color.productListColor.buttonBgColor}`, color: `${store.color.productListColor.buttonTextColor}` }}
+            >
+                Add to Cart
+            </button>
+
+
         </motion.div>
     );
 }

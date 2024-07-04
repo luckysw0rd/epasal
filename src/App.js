@@ -6,19 +6,20 @@ import { PrimeReactProvider } from 'primereact/api';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
-import Loading from "./Theme/Theme1/Loading/Loading";
-
+import { useParams } from "react-router-dom";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
-import AdminHome from "./Components/AdminPanelBanau/Dashboard/Home/AdminHome";
-import ProjectLanding1 from "./Components/ProductLanding/ProductLanding1";
-
+// import Dashboard from './Components/AdminPanel/Dashboard';
+import Loading from "./Theme/Theme1/Loading/Loading";
+import StoreNotFound from "./Components/NotFound/StoreNotFound";
+const Dashboard = React.lazy(() => import('./Components/AdminPanel/Dashboard'));
+// import Theme from "./Theme/Theme";
 // Lazy loading components
 const HomePage = React.lazy(() => import('./HomePage/HomePage'));
 const Navbar = React.lazy(() => import('./HomePage/Navbar'));
 const SignInPage = React.lazy(() => import('./Login/SignInPage'));
 const Theme = React.lazy(() => import('./Theme/Theme'));
 const GetUserLocation = React.lazy(() => import('./Components/Geolocaiton/GetUserLocation'));
-const Dashboard = React.lazy(() => import('./Components/AdminPanel/Dashboard'));
+// const Dashboard = React.lazy(() => import('./Components/AdminPanel/Dashboard'));
 const GoogleOAuth = React.lazy(() => import('./Components/Google-OAuth/GoogleOAuth'));
 const GoogleOAuthCustom = React.lazy(() => import('./Components/Google-OAuth/GoogleOAuthCustom'));
 const ProductForm = React.lazy(() => import('./Theme/Theme1/SubProduct/ProductForm'));
@@ -26,41 +27,70 @@ const Home = React.lazy(() => import('./Components/AdminPanel/Dashboard/Home/Hom
 const EsewaRouteComponent = React.lazy(() => import('./Components/AdminPanel/Esewa/EsewaRouteComponent '));
 const Allproducts = React.lazy(() => import('./Components/Allproducts/Allproducts'));
 const SettingPage = React.lazy(() => import('./Components/SettingsPage/SettingPage'));
+const PrivacyPolicy = React.lazy(() => import('./HomePage/PrivacyOverlay'));
+const TermsAndConditions = React.lazy(() => import('./HomePage/TermsAndConditions'));
+const ProjectLanding1 = React.lazy(() => import('./Components/ProductLanding/ProductLanding1'));
 
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
   const { token, login, logout, userID } = useAuth();
+  const userData = localStorage.getItem('userData');
+  console.log({ userData, data: JSON.parse(userData)?.token });
   const auth = useContext(AuthContext);
+  console.log({ token });
+  const RedirectToStore = () => {
+    const { storeID } = useParams();
+    return <Navigate to={`/store/${storeID}`} />;
+  };
+
   let routes;
-  if (token) {
+  if (token || auth.token || (userData && JSON.parse(userData)?.token)) {
+    console.log(`[+] I was freaking calledy:....`);
+
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
+        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/store/:storeID" element={<Theme />} />
+        <Route path="/:storeID" element={<RedirectToStore />} />
+        <Route path="/mystore/storeNotFound" element={<StoreNotFound />} />
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
-        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
-        <Route path="/adminpanelbanau" element={<AdminDashboard />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />
         <Route path="/googleoauthv1" element={<GoogleOAuthCustom />} />
         <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
-        {/* Delete this route later */}
         <Route path="/adminhome" element={<Home />} />
         <Route path="/productlanding" element={<ProjectLanding1 />} />
         <Route path="/settings" element={<SettingPage />} />
-
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </React.Fragment>
     );
   } else {
+    console.log(`[+] I was freaking calledm:....`);
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
+        <Route path="/buildstore" element={<Theme />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/login" element={<SignInPage />}></Route>
-        {/* <Route path="/adminpanelbanau" element={<AdminDashboard />} /> */}
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/mystore/storeNotFound" element={<StoreNotFound />} />
+        <Route path="/:storeID" element={<RedirectToStore />} />
+        <Route path="/store/:storeID" element={<Theme />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
+        <Route path="/esewa/:field" element={<EsewaRouteComponent />} />
+        <Route path="/googleoauth" element={<GoogleOAuth />} />
+        <Route path="/productlanding" element={<ProjectLanding1 />} />
+        <Route path="/adminpanel/:storeName" element={<Dashboard />} />
+        <Route path="*" element={<Navigate to="/login" />} />
       </React.Fragment>
     );
   }
@@ -71,10 +101,9 @@ function App() {
         <div className="App">
           <Router>
             <Suspense fallback=
-            {
-            <div className=" bg-fuchsia-700 h-screen w-screen">
-              LOADING 
-            </div>}>
+              {
+                <Loading />
+              }>
               <Routes>
                 {routes}
               </Routes>

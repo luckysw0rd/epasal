@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as necessary
 import { useImage } from "../../Hooks/useImage";
-const ThirdBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
+import { Link } from "react-router-dom";
+const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName }) => {
   const { store, setStore } = useStore();
-  const { color, secondaryBannerText ,thirdBannerText} = store;
+  const { color, secondaryBannerText, thirdBannerText } = store;
   const { uploadImage } = useImage();
-
+  const navigate = useNavigate()
   const onDropBackground = (acceptedFiles) => {
     const backgroundImage = acceptedFiles[0];
     const reader = new FileReader();
@@ -25,7 +27,12 @@ const ThirdBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
     };
     reader.readAsDataURL(backgroundImage);
   };
+  const handleExploreClick = (e) => {
+    if (store.fetchedFromBackend && !store.isEdit) {
+      navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
 
+    }
+  }
   const handleTextChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -49,14 +56,15 @@ const ThirdBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
   }, [store])
   return (
     <div className="box-border py-8 mb-16" style={{
-      backgroundColor: color.firstBannerColor.backgroundThemeColor1}}>
+      backgroundColor: color.firstBannerColor.backgroundThemeColor1
+    }}>
       <motion.div
         className="box-border font-roboto relative shadow-lg min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[400px] flex flex-col sm:flex-col md:flex-row lg:flex-row justify-between items-center text-black"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          fontFamily:store?.fonts?.Banner1,
+          fontFamily: store?.fonts?.Banner1,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -78,7 +86,7 @@ const ThirdBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
                 className="text-3xl lg:text-5xl xl:text-6xl font-bold"
                 style={{ color: color.firstBannerColor.textColor }}
               >
-                {thirdBannerText?.heading  || "Rekindle with class"}
+                {thirdBannerText?.heading || "Rekindle with class"}
               </h2>
               <p
                 className="mt-2 text-base md:text-2xl font-normal"
@@ -109,14 +117,22 @@ const ThirdBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
               />
             </>
           )}
+
           <button
-            className="mt-4 md:mt-2 lg:mt-8 inline-block h-12 rounded-lg border-2 border-success px-6 py-auto text-xs md:text-xs lg:text-base font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:border-2"
+
+            className={`mt-4 md:mt-2 py-auto lg:mt-8  h-12 rounded-lg border-2 border-success px-6 py-auto text-xs md:text-xs lg:text-base font-medium uppercase leading-normal text-success transition duration-150 ease-in-out hover:border-success-600 hover:bg-success-50/50 hover:text-success-600 focus:border-success-600 focus:bg-success-50/50 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 motion-reduce:transition-none hover:border-2 flex items-center
+   ${!previewMode ? "cursor-not-allowed opacity-50" : ""
+              }`}
             style={{
-              color: color.firstBannerColor.buttonText,
-              backgroundColor: color.firstBannerColor.buttonColor,
+              color: color.thirdBanner?.buttonText,
+              backgroundColor: color.thirdBanner?.buttonColor,
             }}
+
+          
           >
+            <Link to={`/store/products/${store.name}`}>
             Explore More
+            </Link>
             <span className="text-lg ml-3 my-auto">&gt;</span>
           </button>
         </div>

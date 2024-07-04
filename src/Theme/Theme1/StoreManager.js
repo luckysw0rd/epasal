@@ -85,7 +85,7 @@ const StoreManager = () => {
                 onChange={(e) => setNewSubCategory(e.target.value)}
                 placeholder="New SubCategory"
             />
-            <button onClick={handleAddSubCategory}>Add SubCategory</button>
+            <button onClick={handleAddSubCategory}>Add Category</button>
             <ul>
                 {store.subCategories.map((subcategory, index) => (
                     <li key={index}>

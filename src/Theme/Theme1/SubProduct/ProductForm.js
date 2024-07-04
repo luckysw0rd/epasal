@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useContext} from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaImage } from "react-icons/fa6";
 import { useStore } from '../T1Context';
@@ -6,10 +6,12 @@ import ImageDrop from '../../../Components/Editor/ImageDrop';
 import useFetch from '../../../Hooks/useFetch';
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../../Hooks/AuthContext';
 export default function ProductForm({ onClose }) {
     const {sendRequest}=useFetch()
     const {uploadImage}=useImage()
     const { setStore, store } = useStore();
+    const auth = useContext(AuthContext);
     const initialState = {
         name: '',
         description: '',
@@ -216,7 +218,8 @@ export default function ProductForm({ onClose }) {
                 'POST',
                 JSON.stringify({ formState,storeID:store._id }),
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token
                 }
             );
             toast.success(response.message)
