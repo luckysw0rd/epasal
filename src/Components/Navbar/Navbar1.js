@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiMenu } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import CartDropdown from './CartDropDown';
 import CartDropdown from '../Allproducts/CartDropDown';
 import axios from 'axios';
@@ -363,9 +364,9 @@ useEffect(()=>{console.log(searchItem,"search item")},[searchItem])
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-4 mr-8">
-                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
-                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
-                    <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</Link>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input
@@ -448,9 +449,9 @@ useEffect(()=>{console.log(searchItem,"search item")},[searchItem])
                                 />
                                 <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
                             </div>
-                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
-                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
-                            <a href={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
+                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
+                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
+                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
 
                         </div>
                     </div>

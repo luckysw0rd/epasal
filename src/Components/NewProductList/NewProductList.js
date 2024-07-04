@@ -5,15 +5,15 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import NewProductListCard from './NewProductListCard';
 import NewProductListCard2 from './NewProductListCard2';
 import NewProductListCard3 from './NewProductListCard3';
-const NewProductList = ({ productListProps, productListType,storeName }) => {
+const NewProductList = ({ productListProps, productListType, storeName }) => {
     const { products, productColor, setStore, store } = productListProps
-    const navigate =useNavigate()
-    const handleExploreClick=(e)=>{
-        if (store.fetchedFromBackend && !store.isEdit){
-          navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
-          
+    const navigate = useNavigate()
+    const handleExploreClick = (e) => {
+        if (store.fetchedFromBackend && !store.isEdit) {
+            navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
+
         }
-      }
+    }
     // Filtered products state
     const [filteredProducts, setFilteredProducts] = useState(products);
 
@@ -118,9 +118,13 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
         <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
             {renderProductList()}
             <Link>
-                <button className="flex items-center absolute right-10 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
-                onClick={handleExploreClick}>
-                    <span>View More</span> <IoIosArrowForward />
+                <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
+                  >
+                    <span>
+                        <Link to={`/store/products/${store.name}`} >
+                            View More
+                        </Link>
+                    </span> <IoIosArrowForward />
                 </button>
             </Link>
         </div>
