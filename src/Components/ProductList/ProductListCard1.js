@@ -94,7 +94,7 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                         }
                                     </div>
                                 </div>
-                                <div className="grid gap-2 relative w-full">
+                                <div className="grid gap-3 relative w-full">
                                     <div className="flex px-2">
                                         <div
                                             className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
@@ -112,10 +112,8 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                             </div>
                                         ))}
                                     </div>
-                                    {/* <div className='absolute right-1 top-1'>
-                                    <FaHeart style={{ color: heartColor }} size={15} />
-                                </div> */}
-                                    <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
+
+                                    <div className="flex mb-5    text-xl font-bold md:flex-row justify-between items-center text-gray-900">
                                         {/* <button className="py-2 transition ease-in duration-200 border-none focus:outline-none">
                                             <div style={{ color: priceColor }} className="flex gap-1 text-xs items-center">
                                                 Learn More <IoIosArrowForward />

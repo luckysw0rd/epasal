@@ -43,7 +43,7 @@ const General = ({ store, setDashboardState }) => {
     };
 
     const handleCopyLink = () => {
-        const link = `https://banau.com/${store.name}`;
+        const link = `${process.env.REACT_APP_BASE_URL}/${store?.name}`;
         navigator.clipboard.writeText(link).then(() => {
             setCopySuccess('Link copied!');
             setTimeout(() => setCopySuccess(''), 2000);
@@ -464,7 +464,7 @@ const General = ({ store, setDashboardState }) => {
                             <div className="flex items-center space-x-2">
                                 <li className='text-blue-500 hover:text-blue-700'>
                                     <Link to={`/store/${store?.name}`}>
-                                        {`https://banau.com/${store?.name}`}
+                                        {`${process.env.REACT_APP_BASE_URL}/${store?.name}`}
                                     </Link>
                                 </li>
                                 <button

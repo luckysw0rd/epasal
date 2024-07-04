@@ -90,12 +90,12 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     className="object-cover w-[180px] h-[180px]"
                 />
                 <div
-                    className="tooltips absolute top-0 left-0 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
+                    className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
                 >
                     <p
                         className=" pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
                         style={{
-                            color: store.color.newProductColor.categoryColor,
+                            color: store.color.subProductColor.textColor,
                         }}
                     >
                         {product.subcategories[0]}
@@ -141,7 +141,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
             >
                 Add to cart
             </button>
-          
+
         </motion.div>
     );
 }

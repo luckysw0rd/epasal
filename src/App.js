@@ -6,6 +6,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from "./Hooks/useFetch";
+import { useParams } from "react-router-dom";
 import AdminDashboard from "./Components/AdminPanelBanau/Dashboard";
 // import Dashboard from './Components/AdminPanel/Dashboard';
 import Loading from "./Theme/Theme1/Loading/Loading";
@@ -34,12 +35,20 @@ function App() {
 
   const { token, login, logout, userID } = useAuth();
   const auth = useContext(AuthContext);
+
+  const RedirectToStore = () => {
+    const { storeID } = useParams();
+    return <Navigate to={`/store/${storeID}`} />;
+  };
+
   let routes;
   if (token) {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
         <Route path="/store/:storeID" element={<Theme />} />
+        <Route path="/:storeID" element={<RedirectToStore />} />
+
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
         
@@ -67,6 +76,8 @@ function App() {
         {/* <Route path="/buildstore" element={<Theme />} /> */}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/:storeID" element={<RedirectToStore />} />
+
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/login" element={<SignInPage />}></Route>

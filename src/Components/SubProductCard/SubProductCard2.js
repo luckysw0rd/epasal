@@ -97,7 +97,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     <p
                         className=" pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
                         style={{
-                            color: store.color.subProductColor.categoryColor,
+                            color: store.color.subProductColor.textColor,
                         }}
                     >
                         {product.subcategories[0]}
@@ -133,26 +133,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
 
                 <del className="ml-2 "> Rs {product.price}</del>
             </div>
-            {/* <div className="flex items-center mt-2">
-                <p className="text-lg font-semibold " style={{ color: `${store.color.subProductColor.priceColor}` }} >Rs {product.price}</p>
-                <del className="ml-2 "> Rs {product.originalPrice}</del>
-            </div> */}
-            {/* <div className="flex mb-2 justify-center md:justify-start">
-                {[...Array(5)].map((_, index) => {
-                    if (index < product.rating)
-                        return <StarIcon className='w-4 h-4' style={{ color: store.color.subProductColor.starColor }} key={index} />
-                    else
-                        return <StarIcon className='w-4 h-4 ' key={index} />
-                })}
-            </div> */}
 
-            {/* <button
-                className="py-2 px-6 rounded-full duration-300 mt-4"
-                onClick={handleAddToCart}
-                style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}
-            >
-                Add to Cart
-            </button> */}
             <button
                 className="py-2 px-6 rounded-full duration-300 mt-4"
                 style={{ backgroundColor: `${store.color.subProductColor.priceColor}`, color: `${store.color.subProductColor.priceLetterColor}` }}

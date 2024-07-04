@@ -48,7 +48,7 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
 
     return (
         <motion.div
-            className="product-card w-full  rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
+            className="product-card w-[280px] rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.productListColor.cardBackground, color: store.color.productListColor.textColor, border: `2px solid ${store.color.productListColor.borderColor}` }}
@@ -98,7 +98,7 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                             color: store.color.productListColor.categoryColor,
                         }}
                     >
-                        {product.category}
+                               {product.subcategories[0]}
                     </p>
                     <ul className="flex flex-col items-start gap-2">
                         <li
