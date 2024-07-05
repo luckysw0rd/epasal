@@ -4,7 +4,7 @@ import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
-import Loading from "../../Loading/Loading"
+import Loading from "../../Loading/Loading";
 
 const EsewaRouteComponent = () => {
     const auth = useContext(AuthContext);
@@ -60,6 +60,9 @@ const EsewaRouteComponent = () => {
 
     const updateOrder = async (data) => {
         //TODO CHECK ESEWA API CONFIRMATION FIRST
+        console.log({ updatedOrder });
+        if (updatedOrder)
+            return;
         try {
             console.log("Data to be sent:", data);
             const responseData = await sendRequest(
@@ -78,6 +81,7 @@ const EsewaRouteComponent = () => {
         } catch (error) {
             console.error("Error message:", error.message);
             console.error("Error details:", error);
+
             // Handle error state here
             setIsSuccess(false); // Set success state to false
         }
@@ -181,7 +185,10 @@ const EsewaRouteComponent = () => {
                                 )}
                                 {updatedOrder && (
                                     <div id="updated-order-details" className="bg-gray-50 p-4 rounded-lg mb-4 border-t border-gray-200">
-                                        <h2 className="text-xl font-semibold mb-4">Updated Order Details</h2>
+                                        <p className="text-yellow-600 font-semibold mb-2">Please Note Down The Delivery Code</p>
+                                        <p className=' mb-5'><strong>Delivery Code:</strong> <span style={{ backgroundColor: 'yellow', fontWeight: 'bold' }}>{updatedOrder.deliveryCode}</span></p>
+
+                                        <h2 className="text-xl font-semibold mb-4"> Order Details</h2>
                                         <div className="text-left">
                                             <p><strong>Full Name:</strong> {updatedOrder.fullName}</p>
                                             <p><strong>Phone Number:</strong> {updatedOrder.phoneNumber}</p>

@@ -10,6 +10,7 @@ import Employee from "./Dashboard/Employee";
 
 import TransactionLogs from "./TransactionLogs/TransactionLogs";
 import Loading from "../Loading/Loading";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
   const auth = useContext(AuthContext);
@@ -21,10 +22,10 @@ const AdminDashboard = () => {
   const [role, setRole] = useState(null);
   const userData = localStorage.getItem('userData');
   console.log(`[+] Admin banel banau`, { auth, banau, token: auth.token });
-  let token = auth.token ||  JSON.parse(userData)?.token;
+  let token = auth.token || JSON.parse(userData)?.token;
   const fetchbanau = async () => {
     try {
-      console.log(`[+] Token:`,token);
+      console.log(`[+] Token:`, token);
       const responseData = await sendRequest(
         'banau/getbanau',
         'GET',
@@ -39,7 +40,9 @@ const AdminDashboard = () => {
       setBanau(responseData.banau);
     } catch (error) {
       // Handle error if needed
-      console.log(error.message);
+      console.log(`[+] Fetch banau error`, error);
+      toast.error('Access denied')
+      return navigate('/');
     }
   };
 
