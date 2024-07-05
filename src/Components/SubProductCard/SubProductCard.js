@@ -3,7 +3,7 @@ import SubProductCard1 from './SubProductCard1';
 import SubProductCard2 from './SubProductCard2';
 import SubProductCard3 from './SubProductCard3';
 const SubProductCard = ({ categoryType, ...props }) => {
-    console.log(props);
+    console.log("SubProudct",props);
 
     switch (categoryType) {
         case 'default':

@@ -142,7 +142,7 @@ const SubscriptionPlans = () => {
     const [duration, setDuration] = useState('monthly');
 
     return (
-        <div className="bg-[#FFFFFF] font-Poppins py-8 md:py-10 lg:py-20 px-4">
+        <div className="bg-[#FFFFFF] font-Poppins py-8 md:py-10 lg:py-20 px-4" id="pricing-section">
             <div className="max-w-[1200px] max-h-[1000px] mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold text-gray-800">Subscription Plans</h2>

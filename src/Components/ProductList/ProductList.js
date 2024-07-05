@@ -4,10 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import ProductListCard1 from './ProductListCard1';
 import ProductListCard2 from './ProductListCard2';
 import ProductListcard3 from './ProductListCard3';
+import useFetch from '../../Hooks/useFetch';
+import { toast } from 'react-toastify';
 const ProductList = ({ productListProps, productListType,storeName }) => {
     const { products, isEdit, productColor, setStore, store, fetchedFromBackend } = productListProps
   const navigate=useNavigate()
-  
+  const {sendRequest}=useFetch();
     const handleExploreClick=(e)=>{
        
           navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
@@ -23,6 +25,7 @@ const ProductList = ({ productListProps, productListType,storeName }) => {
     }, [products]);
 
     const handleDeleteProduct = (productId) => {
+        console.log("Proudct Deleted")
         const productIndex = store?.products?.findIndex(data => data.id == productId)
         if (store.isEdit) {
 
@@ -31,6 +34,35 @@ const ProductList = ({ productListProps, productListType,storeName }) => {
             ...prevStore,
             featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex) || []
         }));
+    };
+
+    const handleRemoveProduct =async (productName) => {
+        if(store.isEdit){
+            try{
+                const response=await sendRequest(
+                    `product/deleteProduct`,
+                    'POST',
+                    JSON.stringify(productName),
+                    {
+                        'Content-Type': 'application/json'
+                    }
+                );
+                toast(response.message);
+            }catch(err){
+                console.log(err)
+                toast("Error Deleting Product")
+            }
+            setStore(prevStore => ({
+                ...prevStore,
+                products: prevStore.products.filter(product => product._id !== productName.id)
+            }));
+        }
+        else{
+        setStore(prevStore => ({
+            ...prevStore,
+            products: prevStore.products.filter(product => product.id !== productName.id)
+        }));
+    }
     };
 
     const renderProductList = () => {
@@ -45,7 +77,7 @@ const ProductList = ({ productListProps, productListType,storeName }) => {
                                     <ProductListCard1
                                         product={product}
                                         productListProps={productListProps}
-                                        handleDeleteProduct={handleDeleteProduct}
+                                        handleDeleteProduct={handleRemoveProduct}
                                         store={store}
                                     />
                                 )
@@ -106,7 +138,7 @@ const ProductList = ({ productListProps, productListType,storeName }) => {
                                     key={product.id}
                                     product={product}
                                     productListProps={productListProps}
-                                    handleDeleteProduct={handleDeleteProduct}
+                                    handleDeleteProduct={handleRemoveProduct}
                                     store={store}
 
                                 />

@@ -5,9 +5,12 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import NewProductListCard from './NewProductListCard';
 import NewProductListCard2 from './NewProductListCard2';
 import NewProductListCard3 from './NewProductListCard3';
+import useFetch from '../../Hooks/useFetch';
+import { toast } from 'react-toastify';
 const NewProductList = ({ productListProps, productListType,storeName }) => {
     const { products, productColor, setStore, store } = productListProps
-    const navigate =useNavigate()
+    const navigate =useNavigate();
+    const {sendRequest}=useFetch();
     const handleExploreClick=(e)=>{
         if (store.fetchedFromBackend && !store.isEdit){
           navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
@@ -22,13 +25,51 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
         setFilteredProducts(products.slice(0, 12));
     }, [products]);
 
-    // const handleDeleteProduct = (productId) => {
-    //     const productIndex=store.products.findIndex(data=>data.id==productId)
-    //     setStore(prevStore => ({
-    //         ...prevStore,
-    //         featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
-    //     }));
-    // };
+/*     const handleDeleteProduct = (productId) => {
+        const productIndex=store.products.findIndex(data=>data.id==productId)
+        setStore(prevStore => ({
+            ...prevStore,
+           featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
+         }));
+     }; */
+    const handleDeleteProduct = (productId) => {
+        const productIndex = store?.products?.findIndex(data => data.id == productId)
+        if (store.isEdit) {
+
+        }
+        setStore(prevStore => ({
+            ...prevStore,
+            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex) || []
+        }));
+    };
+    const handleRemoveProduct =async (productName) => {
+        if(store.isEdit){
+            try{
+                const response=await sendRequest(
+                    `product/deleteProduct`,
+                    'POST',
+                    JSON.stringify(productName),
+                    {
+                        'Content-Type': 'application/json'
+                    }
+                );
+                toast(response.message);
+            }catch(err){
+                console.log(err)
+                toast("Error Deleting Product")
+            }
+            setStore(prevStore => ({
+                ...prevStore,
+                products: prevStore.products.filter(product => product._id !== productName.id)
+            }));
+        }
+        else{
+        setStore(prevStore => ({
+            ...prevStore,
+            products: prevStore.products.filter(product => product.id !== productName.id)
+        }));
+    }
+    };
 
     const renderProductList = () => {
         switch (productListType) {
@@ -43,7 +84,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        // handleDeleteProduct={handleDeleteProduct}
+                                        handleDeleteProduct={handleRemoveProduct}
                                         store={store}
 
                                     />
@@ -63,7 +104,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        // handleDeleteProduct={handleDeleteProduct}
+                                        handleDeleteProduct={handleDeleteProduct}
                                         store={store}
 
                                     />
@@ -83,7 +124,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        // handleDeleteProduct={handleDeleteProduct}
+                                        handleDeleteProduct={handleDeleteProduct}
                                         store={store}
 
                                     />
@@ -103,7 +144,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                     key={product.id}
                                     product={product}
                                     productListProps={productListProps}
-                                    // handleDeleteProduct={handleDeleteProduct}
+                                    handleDeleteProduct={handleDeleteProduct}
                                     store={store}
 
                                 />
