@@ -10,6 +10,7 @@ import { IoLogOut } from "react-icons/io5";
 import { IoIosLogIn } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
+import { RiPriceTagLine } from "react-icons/ri";
 const Navbar = ({ navbarImage, setStores }) => {
     const [isRotated, setIsRotated] = useState(false);
     const [isStoreOpen, setIsStoreOpen] = useState(false)
@@ -176,9 +177,10 @@ const Navbar = ({ navbarImage, setStores }) => {
                         {/* <p>Build Your Store</p> */}
                     </div>
                     <div className='flex items-center gap-1 text-white hidden md:flex'>
-    <div className='h-10 relative rounded-lg w-20 bg-[#F38825] flex items-center justify-center text-lg'>
-        <ScrollLink to='pricing-section' smooth={true} duration={500} className='w-full text-center cursor-pointer'>
+    <div className='h-10 relative rounded-lg w-[120px] bg-[#F38825] flex items-center justify-center text-lg'>
+        <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-semibold text-center text-md cursor-pointer'>
             Pricing
+            <RiPriceTagLine />
         </ScrollLink>
     </div>
 </div>

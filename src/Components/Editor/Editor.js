@@ -14,11 +14,17 @@ import { BiSolidHide } from "react-icons/bi";
 import { FaPlus, FaUpload } from 'react-icons/fa';
 import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
 import { CiTextAlignJustify } from "react-icons/ci";
+import { FaDownload } from "react-icons/fa";
+import 'react-toastify/dist/ReactToastify.css';
+
 // List of fonts from your Tailwind configuration
 const fonts = [
   "Anta", "VT323", "Kode Mono", "Sixtyfour", "Oleo Script", "Mansalva",
   "Genos", "Orbitron", "Cinzel", "Exo 2", "Roboto", "Sanchez", "DM Serif Text"
 ];
+
+
+// Handle file import
 
 
 const Editor = () => {
@@ -59,7 +65,7 @@ const Editor = () => {
     buttonText: 'Button Text',
     backgroundBoxThemeColor1: 'Box Background',
     backgroundnavColor: 'Background ',
-    storeNameTextColor: 'Store Name',
+    storeNameTextColor: 'Text',
     categoryTextColor: 'Text',
     searchBarColor: 'Search Bar',
     headerText: 'Header Text Color',
@@ -90,6 +96,42 @@ const Editor = () => {
     btnBgColor: ' Button Color',
     btnText: ' Button Text ',
     btnBgColorOnHover: ' Button Background Hover ',
+  };
+  const handleImportPreset = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const importedPreset = JSON.parse(event.target.result);
+        console.log("Imported Preset:", importedPreset);  // Log the imported preset
+        setStore(prevStore => ({
+          ...prevStore,
+          color: {
+            ...prevStore.color,
+            ...importedPreset,  // Assume importedPreset is an object with color properties
+          }
+        }));
+        console.log("Updated Store:", store);  // Log the store after setting the imported preset
+        toast.success("Preset imported successfully!");
+      } catch (error) {
+        console.error("Error importing preset:", error);
+        toast.error("Failed to import preset. Please check the file format.");
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  // Handle file export
+  const handleExportPreset = () => {
+    const presetToExport = JSON.stringify(store.color, null, 2);
+    const blob = new Blob([presetToExport], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'preset.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Preset exported successfully!");
   };
 
   const handleAddCategory = (e) => {
@@ -1371,6 +1413,7 @@ const Editor = () => {
               </div>
             </div>
           </div>
+
           <div className='flex justify-between  font-Poppins  mt-24 font-semibold text-[#6A6A6A] border-t-2  pt-4'>
             <button className={`flex-1   text-lg text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content </button>
             <button className={`flex-1  text-lg text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
@@ -1613,7 +1656,24 @@ const Editor = () => {
                     ))}
                   </select>
                 </div>
+                <div className='flex row justify-center items-center p-4 bg-gray-100 rounded-lg shadow-lg space-y-3'>
+                  <div className="flex flex-col items-center w-full">
+                    <div className="flex items-center space-x-2">
+                      <input type="file" accept=".json" onChange={handleImportPreset} className="hidden" id="importPreset" />
+                      <label htmlFor="importPreset" className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 transform hover:scale-105 transition duration-300 ease-in-out flex items-center">
+                        <FaUpload className="mr-2" />
+                        Import
+                      </label>
+                    </div>
+                  </div>
 
+                  <div className="flex flex-col items-center w-full">
+                    <button onClick={handleExportPreset} className="bg-green-500 text-white py-2 px-4 rounded-md shadow mb-3 hover:bg-green-600 transform hover:scale-105 transition duration-300 ease-in-out flex items-center">
+                      <FaDownload className="mr-2" />
+                      Export
+                    </button>
+                  </div>
+                </div>
 
                 {Object.entries(color).map(([colorKey, colorValue], index) => {
                   if (typeof colorValue === 'object') {
