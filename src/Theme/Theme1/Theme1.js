@@ -85,7 +85,7 @@ const EStore = ({ Passedstore }) => {
   useEffect(() => {
     console.log(tasks);
   }, [tasks]);
-  const { store,isLoading } = useStore();
+  const { store, isLoading } = useStore();
   const { previewMode } = store;
   const { fetchedFromBackend } = store;
 
