@@ -378,14 +378,14 @@ const Product = ({ store }) => {
               </div>
             ))}
           </div>
-          <div className="flex justify-between items-center mt-6">
+          <div className="flex justify-between items-center mt-6 mx-16  md:mx-40">
             <button
               onClick={() => handlePageChange(page - 1)} disabled={page <= 1}
               className={`px-4 py-2 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
             >
               Previous
             </button>
-            <span>Page {page} of {totalPages}</span>
+            <span>Page {page} </span>
             <button
               onClick={() => handlePageChange(page + 1)}
               //  disabled={currentPage === totalPages}

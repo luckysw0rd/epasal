@@ -463,8 +463,6 @@ export const StoreProvider = ({ children, passedStore }) => {
       navColor: {
         backgroundnavColor: "#373a40",
         storeNameTextColor: "#eeeeee",
-        categoryTextColor: "#dc5f00",
-        searchBarColor: "#fcf3f3",
       },
       subcategoryColor: {
         background: "#eeeeee",

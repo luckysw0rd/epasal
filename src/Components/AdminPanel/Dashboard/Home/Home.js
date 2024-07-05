@@ -10,6 +10,7 @@ import { store } from "./homeStore";
 import SalesGraph from './SalesGraph';
 import { AuthContext } from '../../../../Hooks/AuthContext';
 import Loading from "../../../Loading/Loading"
+import Tooltip from '../../../../Theme/Theme1/SubProduct/Tooltip';
 
 //store 1 needs to be store
 const Home = ({ data }) => {
@@ -131,7 +132,12 @@ const Home = ({ data }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 mb-5 justify-between gap-6">
             <div className="w-full bg-white rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
               <div className="flex justify-between px-4">
-                <h3 className="text-lg font-semibold text-[#888888]">Due Amount</h3>
+                <div className=' flex flex-row items-center'>
+                  <h3 className="text-lg font-semibold text-[#888888]">Due Amount</h3>
+                  <Tooltip message=" Shop At Banau applies a 3% transaction fee on all orders, including Cash On Delivery orders.">
+                    <span className=' ml-2  flex   text-yellow-600 text-2xl font-bold'>?</span>
+                  </Tooltip>
+                </div>
                 <FiDollarSign size={25} className='text-red-700' />
               </div>
 
@@ -144,6 +150,9 @@ const Home = ({ data }) => {
                     <div onClick={() => { handleBuyNow() }} className="flex items-center text-bold justify-center gap-2">
                       Pay Now <LuWallet size={20} />
                     </div>
+                    <Tooltip message="Please engage with our agent via the live chat. We would be delighted to assist you in real time.">
+                      <span className=' absolute left-40  -bottom-1 w-[120px] rounded-lg  text-gray-800 text-xl border-2  mt-2  border-gray-500 font-semibold'> QR CODE?</span>
+                    </Tooltip>
                   </button>
 
                 </div>
@@ -152,7 +161,12 @@ const Home = ({ data }) => {
 
             <div className="w-full bg-white rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
               <div className="flex justify-between px-4">
-                <h3 className="text-lg font-semibold text-[#888888]">Pending Amount</h3>
+                <div className=' flex flex-row items-center justify-center'>
+                  <h3 className="text-lg font-semibold text-[#888888]"> Pending Amount</h3>
+                  <Tooltip message=" Orders paid through esewa are transferred to us. We will forward you this amount within 3 to 4 days of transaction being complete">
+                    <span className=' ml-2  flex   text-yellow-600 text-2xl font-bold'>?</span>
+                  </Tooltip>
+                </div>
                 <FiDollarSign size={25} className='text-green-500' />
               </div>
               <div className="p-4 flex items-center justify-between">

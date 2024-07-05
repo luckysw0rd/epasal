@@ -29,23 +29,7 @@ function HomePage() {
         }
     }, [window.location.pathname]);
 
-    // Add scroll event listener
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollableDiv = document.getElementById('scrollableDiv');
-            if (scrollableDiv) {
-                const distanceFromTop = scrollableDiv.getBoundingClientRect().top;
-                if (distanceFromTop <= 200) {
-                    scrollableDiv.classList.add('overflow-scroll', 'sticky');
-                } else {
-                    scrollableDiv.classList.remove('overflow-scroll', 'sticky');
-                }
-            }
-        };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     return (
         <div className="flex flex-col relative h-full items-center">

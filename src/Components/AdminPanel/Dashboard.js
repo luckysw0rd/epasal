@@ -23,6 +23,13 @@ const Dashboard = () => {
 
   const navigate=useNavigate();
 
+  useEffect(() => {
+    if (window.location.pathname.includes("/adminpanel/") ){
+        abc();
+    }
+}, [window.location.pathname]);
+
+
   const fetchStore = async () => {
     console.log("Store token", auth)
 
@@ -149,3 +156,12 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+function abc(liveChatSource) {
+  var s1 = document.createElement('script'),
+      s0 = document.getElementsByTagName('script')[0];
+  s1.async = true;
+  s1.src = 'https://embed.tawk.to/66827eb5eaf3bd8d4d16c22f/1i1mrtts8';
+  s1.charset = 'UTF-8';
+  s1.setAttribute('crossorigin', '*');
+  s0.parentNode.insertBefore(s1, s0);
+}
