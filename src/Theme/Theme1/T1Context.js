@@ -30,7 +30,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const { storeID } = useParams(); // Extract storeID using useParams
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   /*   useEffect(() => {
       const savedCart = localStorage.getItem('cart');
       if (savedCart) {
@@ -338,10 +338,10 @@ export const StoreProvider = ({ children, passedStore }) => {
         borderColor: "#ffffff",
         priceColor: "#3d3d3d",
         priceLetterColor: "#ffffff",
-         buttonColor:"#3d3d3d",
+        buttonColor: "#3d3d3d",
         scrollbarColor: "#1f1f1e",
         starColor: "#3d3d3d",
-       
+
       },
       firstBannerColor: {
         backgroundThemeColor1: "#fafafa",
@@ -387,7 +387,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       offerBannerColor: {
         backgroundThemeColor: "#eeeeee",
         backgroundBoxThemeColor1: "#ffffff",
-       
+
         textColor: "#4E3E34",
         buttonColor: "#401a12",
         buttonText: "#3e1818",
@@ -405,8 +405,8 @@ export const StoreProvider = ({ children, passedStore }) => {
         headerText: "#ffffff",
         headerBackground: "#7a5C5c",
       },
-   
-     
+
+
     },
     offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },
     offerBannerText: {
@@ -541,12 +541,14 @@ export const StoreProvider = ({ children, passedStore }) => {
         });
 
       } catch (error) {
-        setStore(defaultStoreData);
-        toast.error("Error fetching data")
-        setTimeout(()=>{
-          navigate('/mystore/storeNotFound')
-        },[2000])
-        console.error("Error fetching store data:", error);
+        if (!store.fetchedFromBackend) {
+          setStore(defaultStoreData);
+          toast.error("Error fetching data")
+          setTimeout(() => {
+            navigate('/mystore/storeNotFound')
+          }, [2000])
+          console.error("Error fetching store data:", error);
+        }
       }
     };
     if (window.location.pathname.includes("/store/edit/")) {
