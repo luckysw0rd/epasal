@@ -373,7 +373,7 @@ export default function ProductForm({ onClose }) {
                                     Price (Nrs)
                                 </label>
                                 <Tooltip message="We apply a 3% transaction fee, so please adjust the price accordingly.">
-                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
+                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl font-bold'>?</span>
                                 </Tooltip>
 
                             </div>
@@ -395,7 +395,7 @@ export default function ProductForm({ onClose }) {
                                     Discount (Nrs)
                                 </label>
                                 <Tooltip message=" Discount Amount">
-                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
+                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl font-bold'>?</span>
                                 </Tooltip>
                             </div>
                             <input
@@ -409,9 +409,14 @@ export default function ProductForm({ onClose }) {
                             />
                         </div>
                         <div>
+                        <div className=' flex flex-row items-center my-auto'>
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="inventory">
                                 Inventory
                             </label>
+                            <Tooltip message="Total Number of Count / Stock of this product">
+                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl font-bold'>?</span>
+                                </Tooltip>
+                                </div>
                             <input
                                 id="inventory"
                                 name="inventory"
@@ -439,7 +444,7 @@ export default function ProductForm({ onClose }) {
                                             Variant Name
                                         </label>
                                         <Tooltip message="Mention The Name of the Variant (color , Size , Quantity etc) , Not the Value (White,XL,200 gms)">
-                                            <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
+                                            <span className=' absolute -bottom-2 text-yellow-600 text-xl font-bold'>?</span>
                                         </Tooltip>
                                     </div>
                                     <button type="button" className="text-red-500" onClick={() => handleRemoveVariant(variantIndex)}>
