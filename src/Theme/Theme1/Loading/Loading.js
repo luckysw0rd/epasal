@@ -1,16 +1,37 @@
 import React from 'react';
 
-export default function Loading() {
+const Loader = () => {
+  const letters = [
+    { char: 'S', delay: '0s' },
+    { char: 'H', delay: '0.2s' },
+    { char: 'O', delay: '0.4s' },
+    { char: 'P', delay: '0.6s' },
+    { char: ' ', delay: '0.8s', isSpacer: true },
+    { char: 'A', delay: '1s' },
+    { char: 'T', delay: '1.2s' },
+    { char: ' ', delay: '1.4s', isSpacer: true },
+    { char: 'B', delay: '1.6s' },
+    { char: 'A', delay: '1.8s' },
+    { char: 'N', delay: '2s' },
+    { char: 'A', delay: '2.2s' },
+    { char: 'U', delay: '2.4s' },
+  ];
+
   return (
-    <div className='flex justify-center items-center w-screen h-screen'>
-      <div className="relative flex w-64 animate-pulse gap-2 p-4">
-        <div className="h-12 w-12 rounded-full bg-slate-400"></div>
-        <div className="flex-1">
-          <div className="mb-1 h-5 w-3/5 rounded-lg bg-slate-400 text-lg"></div>
-          <div className="h-5 w-[90%] rounded-lg bg-slate-400 text-sm"></div>
-        </div>
-        <div className="absolute bottom-5 right-0 h-4 w-4 rounded-full bg-slate-400"></div>
+    <div className='bg-white h-screen w-screen fixed top-0 left-0 flex items-center justify-center z-50'>
+      <div className='flex items-center justify-center text-4xl md:text-6xl tracking-wide font-Saira font-semibold text-orange-500'>
+        {letters.map((letter, index) => (
+          <h1
+            key={index}
+            className={`letter ${letter.isSpacer ? 'mx-2' : ''}`}
+            style={{ animationDelay: letter.delay }}
+          >
+            {letter.char}
+          </h1>
+        ))}
       </div>
     </div>
   );
-}
+};
+
+export default Loader;

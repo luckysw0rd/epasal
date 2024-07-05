@@ -164,7 +164,7 @@ const Order = ({ store }) => {
     return (
         isLoading ? <Loading /> :
 
-            <div className="flex flex-col w-screen justify-start p-4 bg-gray-100">
+            <div className="flex flex-col w-full justify-start p-4 bg-gray-100 ">
                 <div className="w-full max-w-md mb-4 flex">
                     <input
                         type="text"

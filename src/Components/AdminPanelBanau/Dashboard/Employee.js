@@ -42,7 +42,7 @@ const Example = ({ banau }) => {
     const [validationErrors, setValidationErrors] = useState({});
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
-    console.log({ banau });
+    console.log({ banau,auth });
 
     /* Custom Handle Updating User */
     const [editingRow, setEditingRow] = useState(null);
@@ -63,7 +63,7 @@ const Example = ({ banau }) => {
 
     console.log({ userState });
     // Get fake data from the staff array using the banau ID
-    const staffFakeData = useMemo(() => extractData(banau.staff, banau._id), [banau.staff, banau._id]);
+    const staffFakeData = useMemo(() => extractData(banau?.staff, banau?._id), [banau?.staff, banau?._id]);
 
     const columns = useMemo(
         () => [

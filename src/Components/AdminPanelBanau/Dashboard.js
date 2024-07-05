@@ -3,41 +3,46 @@ import DashboardWrapper from "./DashboardWrapper";
 import { SiderBarProvider } from "./SiderBarContext";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Home from "./Dashboard/Home/Home";
 import Stores from "./Stores/Stores";
 import Employee from "./Dashboard/Employee";
 
 import TransactionLogs from "./TransactionLogs/TransactionLogs";
-import Loading from "../Loading/Loading"
+import Loading from "../Loading/Loading";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
   const auth = useContext(AuthContext);
   const [dashboardState, setDashboardState] = useState('Home');
+  const navigate = useNavigate();
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [banau, setBanau] = useState(null); // Initialize store as null
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
-
-  console.log({ auth });
-
-
+  const userData = localStorage.getItem('userData');
+  console.log(`[+] Admin banel banau`, { auth, banau, token: auth.token });
+  let token = auth.token || JSON.parse(userData)?.token;
   const fetchbanau = async () => {
     try {
+      console.log(`[+] Token:`, token);
       const responseData = await sendRequest(
         'banau/getbanau',
         'GET',
         null,
         {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.token,
+          Authorization: 'Bearer ' + token,
         }
       );
       console.log({ responseData }); // Handle response data as needed
+
       setBanau(responseData.banau);
     } catch (error) {
       // Handle error if needed
-      console.log(error);
+      console.log(`[+] Fetch banau error`, error);
+      toast.error('Access denied')
+      return navigate('/');
     }
   };
 
@@ -45,7 +50,12 @@ const AdminDashboard = () => {
 
 
   useEffect(() => {
-    fetchbanau();
+    if (token) {
+      fetchbanau();
+    }
+    else {
+      navigate('/login');
+    }
   }, []);
 
 

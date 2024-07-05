@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
@@ -7,23 +7,28 @@ import NewProductListCard2 from './NewProductListCard2';
 import NewProductListCard3 from './NewProductListCard3';
 import useFetch from '../../Hooks/useFetch';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../Hooks/AuthContext';
 const NewProductList = ({ productListProps, productListType,storeName }) => {
+    const initialProducts = [];
     const { products, productColor, setStore, store } = productListProps
     const navigate =useNavigate();
     const {sendRequest}=useFetch();
     const handleExploreClick=(e)=>{
         if (store.fetchedFromBackend && !store.isEdit){
-          navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
-          
+        navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
         }
-      }
+    }
+    const [setProducts] = useState(initialProducts);
     // Filtered products state
     const [filteredProducts, setFilteredProducts] = useState(products);
+    const auth = useContext(AuthContext);
 
     // Delayed filtering function
     useEffect(() => {
         setFilteredProducts(products.slice(0, 12));
     }, [products]);
+
+    
 
 /*     const handleDeleteProduct = (productId) => {
         const productIndex=store.products.findIndex(data=>data.id==productId)
@@ -32,25 +37,17 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
          }));
      }; */
-    const handleDeleteProduct = (productId) => {
-        const productIndex = store?.products?.findIndex(data => data.id == productId)
-        if (store.isEdit) {
 
-        }
-        setStore(prevStore => ({
-            ...prevStore,
-            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex) || []
-        }));
-    };
-    const handleRemoveProduct =async (productName) => {
-        if(store.isEdit){
+     const handleRemoveProduct =async (productName) => {
+        if(store?.isEdit){
             try{
                 const response=await sendRequest(
                     `product/deleteProduct`,
                     'POST',
                     JSON.stringify(productName),
                     {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + auth.token,
                     }
                 );
                 toast(response.message);
@@ -84,7 +81,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        handleDeleteProduct={handleRemoveProduct}
+                                        handleRemoveProduct={handleRemoveProduct}
                                         store={store}
 
                                     />
@@ -104,7 +101,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        handleDeleteProduct={handleDeleteProduct}
+                                        handleRemoveProduct={handleRemoveProduct}
                                         store={store}
 
                                     />
@@ -124,7 +121,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                         key={product.id}
                                         product={product}
                                         productListProps={productListProps}
-                                        handleDeleteProduct={handleDeleteProduct}
+                                        handleRemoveProduct={handleRemoveProduct}
                                         store={store}
 
                                     />
@@ -144,7 +141,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                     key={product.id}
                                     product={product}
                                     productListProps={productListProps}
-                                    handleDeleteProduct={handleDeleteProduct}
+                                    handleRemoveProduct={handleRemoveProduct}
                                     store={store}
 
                                 />
@@ -159,9 +156,13 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
         <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
             {renderProductList()}
             <Link>
-                <button className="flex items-center absolute right-10 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
-                onClick={handleExploreClick}>
-                    <span>View More</span> <IoIosArrowForward />
+                <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
+                  >
+                    <span>
+                        <Link to={`/store/products/${store.name}`} >
+                            View More
+                        </Link>
+                    </span> <IoIosArrowForward />
                 </button>
             </Link>
         </div>

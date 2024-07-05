@@ -5,8 +5,8 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart, store } = productListProps;
+const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) => {
+    const { productColor, previewMode, addToCart, store,isEdit } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
@@ -59,10 +59,17 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
         setSelectedOptionIndex(-1);
         setDisplayedImage(product?.image?.imageUrl);
     };
+    const handleDeleteProduct = async () => {
+        if (isEdit) {
+            handleRemoveProduct({ id: product._id, storeId: store._id })
+        } else {
+            handleRemoveProduct({ id: product.id })
+        }
+    }
 
     return (
         <motion.div
-            className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
+            className="font-roboto  rounded-lg  shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-full mx-auto"
             style={{ borderColor }}
             whileTap={{ scale: 0.98 }}
         >
@@ -75,8 +82,8 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                         >
                             <FaTimes />
                         </button>
-                    )}
-                    <div className="card cursor-pointer  flex flex-col  justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
+                    )} 
+                    <div className="card cursor-pointer  flex flex-col  justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <button>
                             <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                         </button>
@@ -116,7 +123,7 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
                                 </div> */}
                                 <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
 
-                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-1 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
+                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-3 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                         onClick={() => {

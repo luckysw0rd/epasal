@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useNavigate, useParams } from "react-router-dom"; // Import useParams
 import { BrowserRouter } from "react-router-dom"; // Import BrowserRouter
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
@@ -17,6 +17,7 @@ import graybg from '../../Assets/graybg.webp';
 import b1 from '../../Assets/Banners/b1.webp';
 import b2 from '../../Assets/Banners/b2.webp';
 import b3 from '../../Assets/Banners/b3.webp';
+import { toast } from "react-toastify";
 
 const StoreContext = createContext();
 
@@ -29,7 +30,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const { storeID } = useParams(); // Extract storeID using useParams
-
+  const navigate = useNavigate();
   /*   useEffect(() => {
       const savedCart = localStorage.getItem('cart');
       if (savedCart) {
@@ -42,60 +43,60 @@ export const StoreProvider = ({ children, passedStore }) => {
 
 
   const defaultStoreData = {
-    name: "Store Name",
-    location: "Your Store Location",
-    email: "store@example.com",
-    phoneNumber: "+1234567890",
+    name: "",
+    location: "",
+    email: "",
+    phoneNumber: "",
     logo: {
       logoUrl: "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305",
       logoID: ''
     },
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Kids" }],
 
-    subCategories: [{ name: "Category 1" }, { name: "Category 2" }, { name: "Category 3" }],
+    subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
     banner: { bannerUrl: `${graybg}`, bannerID: '' },
     products: [
       {
         id: 1,
-        name: "Product 1",
+        name: "Controller",
         price: '100',
         image: { imageUrl: oneFourty, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Category 1"],
+        subcategories: ["Watch"],
         rating: 2.5,
         count: 0,
         variant: [
           {
-            name: "Variant 1",
+            name: "Color",
             options: [
               {
-                name: "Variant A",
+                name: "Blue",
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
                 },
                 discount: 5
               }, {
-                name: "Variant B",
+                name: "Gray",
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
                 },
                 discount: 6
               }
             ]
           },
           {
-            name: "Variant 2",
+            name: "Color",
             options: [
               {
-                name: "Variant A",
+                name: "blue",
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
                 },
                 discount: 10
               }
@@ -114,37 +115,37 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 2,
-        name: "Product 2",
+        name: "Goggles",
         price: '200',
-        image: { imageUrl: oneFourty, imageID: '' },
+        image: { imageUrl: 'https://cdn.pixabay.com/photo/2014/03/24/17/14/eye-295173_960_720.png', imageID: '' },
         count: 0,
         categories: ["Men"],
-        subcategories: ["Category 1"],
+        subcategories: ["Watch"],
         rating: 2.5,
         variant: [
           {
-            name: "Variant 1",
+            name: "Size",
             options: [
               {
                 name: "Small",
                 price: 90,
                 image: {
                   imageId: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
                 },
                 discount: 5
               }
             ]
           },
           {
-            name: "Variant 2",
+            name: "Size",
             options: [
               {
                 name: "Small",
                 price: 900,
                 image: {
                   imageId: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
                 },
                 discount: 5
               }
@@ -163,11 +164,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 3,
-        name: "Product 3",
+        name: "Watch",
         price: '100',
-        image: { imageUrl: oneFourty, imageID: '' },
+        image: { imageUrl: "https://cdn.pixabay.com/photo/2013/07/12/14/44/watch-148700_1280.png", imageID: '' },
         categories: ["Men"],
-        subcategories: ["Category 1"],
+        subcategories: ["Watch"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -179,7 +180,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
                 },
                 discount: 5
               }, {
@@ -187,7 +188,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
                 },
                 discount: 6
               }
@@ -201,7 +202,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
                 },
                 discount: 10
               }
@@ -220,11 +221,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 4,
-        name: "Product 4",
+        name: "Watch1",
         price: '100',
-        image: { imageUrl: oneFourty, imageID: '' },
+        image: { imageUrl: controller, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Category 1"],
+        subcategories: ["Watch"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -236,7 +237,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
                 },
                 discount: 5
               }, {
@@ -244,7 +245,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
                 },
                 discount: 6
               }
@@ -258,7 +259,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
                 },
                 discount: 10
               }
@@ -269,11 +270,11 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 5,
-        name: "Product 5",
+        name: "Ghadi",
         price: '100',
-        image: { imageUrl: oneFourty, imageID: '' },
+        image: { imageUrl: controller, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Category 1"],
+        subcategories: ["Watch"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -285,7 +286,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
                 },
                 discount: 5
               }, {
@@ -293,7 +294,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 2000,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
                 },
                 discount: 6
               }
@@ -307,7 +308,7 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: oneFourty
+                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
                 },
                 discount: 10
               }
@@ -332,15 +333,15 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       subProductColor: {
         categoryColor: "#eeeeee",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#f3f2ec",
         textColor: "#333333",
         borderColor: "#ffffff",
         priceColor: "#3d3d3d",
         priceLetterColor: "#ffffff",
-         buttonColor:"#3d3d3d",
+        buttonColor: "#3d3d3d",
         scrollbarColor: "#1f1f1e",
         starColor: "#3d3d3d",
-       
+
       },
       firstBannerColor: {
         backgroundThemeColor1: "#fafafa",
@@ -350,8 +351,8 @@ export const StoreProvider = ({ children, passedStore }) => {
         buttonText: "#ffffff",
       },
       newProductColor: {
-        backgroundColor: "#eeeeee",
-        cardBackground: "#fafafa",
+        backgroundColor: "#ffffff",
+        cardBackground: "#f3f2ec",
         borderColor: "#cac4c4",
         headerColor: "#5D4B3F",
         textColor: "#3d3d3d",
@@ -371,21 +372,22 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       productSection: "#ffffff",
       productListColor: {
-        backgroundColor: "#eeeeee",
-        cardBackground: "#fafafa",
-        borderColor: "#cac4c4",
+        backgroundColor: "#FFFFFF",
+        cardBackground: "#FFFFFF",
+        borderColor: "#B5A297",
         headerColor: "#5D4B3F",
-        textColor: "#3d3d3d",
-        priceColor: "#3d3d3d",
+        textColor: "#4F3100",
+        priceColor: "#4F3100",
         heartColor: "#FF4D00",
-        buttonTextColor: "#ffffff",
-        buttonBgColor: "#3d3d3d",
+        buttonTextColor: "#4F3100",
+        buttonBgColor: "#FFFFFF",
         buttonBorderColor: "#4F3100",
         buttonBgColorOnHover: "#4F3100",
       },
       offerBannerColor: {
-        backgroundBoxThemeColor1: "#ffffff",
         backgroundThemeColor: "#eeeeee",
+        backgroundBoxThemeColor1: "#ffffff",
+
         textColor: "#4E3E34",
         buttonColor: "#401a12",
         buttonText: "#3e1818",
@@ -403,23 +405,23 @@ export const StoreProvider = ({ children, passedStore }) => {
         headerText: "#ffffff",
         headerBackground: "#7a5C5c",
       },
-   
-     
+
+
     },
-    offerBanner: { offerBannerUrl: `${b3}`, offerBannerID: '' },
+    offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },
     offerBannerText: {
       para1: "",
       para2: "",
       para3: "",
     },
-    secondaryBanner: { secondaryBannerUrl: `${b2}`, secondaryBannerID: '' },
-    thirdBanner: { thirdBannerUrl: `${b1}`, secondaryBannerID: '' },
+    secondaryBanner: { secondaryBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
+    thirdBanner: { thirdBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
     thirdBannerText: {
       heading: "",
       paragraph: "",
     },
     previewMode: true,
-    selectedSubCategory: "Category 1",
+    selectedSubCategory: "Watch",
     cart: [
 
     ],
@@ -429,10 +431,10 @@ export const StoreProvider = ({ children, passedStore }) => {
       paragraph: "",
     },
     socialMediaLinks: {
-      facebook: "facebook.com",
-      twitter: "twitter.com",
-      instagram: "instagram.com",
-      linkedin: "linkedin.com",
+      facebook: "",
+      twitter: "",
+      instagram: "",
+      linkedin: "",
     },
     footerDescription: "A modern online store for all your needs.",
     fetchedFromBackend: false,
@@ -539,8 +541,14 @@ export const StoreProvider = ({ children, passedStore }) => {
         });
 
       } catch (error) {
-        setStore(defaultStoreData);
-        console.error("Error fetching store data:", error);
+        if (!store.fetchedFromBackend) {
+          setStore(defaultStoreData);
+          toast.error("Error fetching data")
+          setTimeout(() => {
+            navigate('/mystore/storeNotFound')
+          }, [2000])
+          console.error("Error fetching store data:", error);
+        }
       }
     };
     if (window.location.pathname.includes("/store/edit/")) {
@@ -788,7 +796,8 @@ export const StoreProvider = ({ children, passedStore }) => {
         addProduct,
         addToCart,
         deleteFromCart,
-        updateFont
+        updateFont,
+        isLoading
       }}
     >
       {children}
