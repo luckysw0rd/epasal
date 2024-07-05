@@ -135,7 +135,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                             {product.discount > 0 &&
                                 <del className=' text-[12px] md:text-sm     text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price}</del>
                             }
-                            <div className=' text-[14px] md:text-md  flex text-nowrap items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product.price - product.discount}</div>
+                            <div className=' text-[14px] md:text-md  flex text-nowrap items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>NRs. {product?.price - product?.discount}</div>
                         </div>
                         <button
                             className="text-xs h-8 w-[80px] rounded "

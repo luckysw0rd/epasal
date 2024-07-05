@@ -107,8 +107,9 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
                                                 key={index}
                                                 className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-sm`}
                                                 onClick={() => handleOptionSelect(index)}
-                                            >
+                                            >   {option?.image?.imageUrl &&
                                                 <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                                                }
                                             </div>
                                         ))}
                                     </div>

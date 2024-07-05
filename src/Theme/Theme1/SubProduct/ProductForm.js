@@ -312,24 +312,24 @@ export default function ProductForm({ onClose }) {
                                 placeholder="Product Description"
                                 value={formState.description}
                                 onChange={handleInputChange}
-                                className="shadow appearance-none border rounded w-full h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full h-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
-                        <div className="relative">
+                        <div className="relative h-[250px]">
                             <label className="block text-gray-700 text-sm font-bold mb-2">Product Image</label>
                             <input
                                 id="product-image"
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => handleProductImageUpload(e.target.files)}
-                                className="hidden"
+                                className="hidden "
                             />
-                            <div className="flex items-center justify-center mb-2">
+                            <div className="flex items-center h-[250px] justify-center mb-2">
                                 <button
                                     type="button"
                                     // bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
-                                    className="h-40 w-full px-2  flex justify-center items-center text-4xl shadow appearance-none border rounded"
+                                    className="h-[250px] w-full px-2  flex justify-center items-center text-4xl shadow appearance-none border rounded"
                                     onClick={handleUploadProductImageClick}
                                 >
                                     <FaImage />
@@ -337,8 +337,8 @@ export default function ProductForm({ onClose }) {
 
                             </div>
                             {formState.image.imageUrl && (
-                                <div className="absolute top-7 w-full left-0 z-0 pointer-events-none">
-                                    <img className="rounded w-full h-40" src={formState.image.imageUrl} alt="Product" />
+                                <div className="absolute h-[250px] top-7 w-full left-0 z-0 pointer-events-none">
+                                    <img className="rounded w-full h-[250px]" src={formState.image.imageUrl} alt="Product" />
                                 </div>
                             )}
                         </div>
@@ -385,9 +385,15 @@ export default function ProductForm({ onClose }) {
                             />
                         </div>
                         <div>
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="discount">
-                                Discount (Nrs)
-                            </label>
+                            <div className=' flex flex-row items-center my-auto'>
+
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="discount">
+                                    Discount (Nrs)
+                                </label>
+                                <Tooltip message=" Discount Amount">
+                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
+                                </Tooltip>
+                            </div>
                             <input
                                 id="discount"
                                 name="discount"
@@ -424,9 +430,14 @@ export default function ProductForm({ onClose }) {
                         {formState.variant.map((variant, variantIndex) => (
                             <div key={variantIndex} className="mb-4 border p-4 rounded-lg">
                                 <div className="flex justify-between items-center mb-2">
-                                    <label className="block text-gray-700 text-sm font-bold" htmlFor={`variant-name-${variantIndex}`}>
-                                        Variant Name
-                                    </label>
+                                    <div className=' flex flex-row items-center my-auto'>
+                                        <label className="block text-gray-700 text-sm font-bold" htmlFor={`variant-name-${variantIndex}`}>
+                                            Variant Name
+                                        </label>
+                                        <Tooltip message="Mention The Name of the Variant (color , Size , Quantity etc) , Not the Value (White,XL,200 gms)">
+                                            <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
+                                        </Tooltip>
+                                    </div>
                                     <button type="button" className="text-red-500" onClick={() => handleRemoveVariant(variantIndex)}>
                                         <FaTrash />
                                     </button>
@@ -450,14 +461,11 @@ export default function ProductForm({ onClose }) {
                                             </button>
                                         </div>
                                         <div className="mb-2">
-                                        <div className=' flex flex-row items-center my-auto'>
-                                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-name-${variantIndex}-${optionIndex}`}>
-                                                    Option Name
-                                                </label>
-                                                <Tooltip message="Mention The Name of the Variant (color , Size , Quantity etc) , Not the Value (White,XL,200 gms)">
-                                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl'>?</span>
-                                                </Tooltip>
-                                            </div>
+
+                                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`option-name-${variantIndex}-${optionIndex}`}>
+                                                Option Name
+                                            </label>
+
 
                                             <input
                                                 id={`option-name-${variantIndex}-${optionIndex}`}
@@ -585,11 +593,7 @@ export default function ProductForm({ onClose }) {
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
-
         </div>
     );
 }

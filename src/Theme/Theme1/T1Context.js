@@ -14,6 +14,14 @@ import oneFourty from '../../Assets/ratio/140.png';
 import twoFiftySix from '../../Assets/ratio/256.png';
 import sixTeenHundred from '../../Assets/ratio/1600.png';
 import graybg from '../../Assets/graybg.webp';
+import grayjacket from '../../Assets/grayjacket.png';
+import grayjacket2 from '../../Assets/grayjacket2.webp';
+import grayscarf from '../../Assets/grayscarf.png';
+
+import grayshoes from '../../Assets/grayshoes.png';
+
+
+import grayhat from '../../Assets/grayhat.webp'
 import b1 from '../../Assets/Banners/b1.webp';
 import b2 from '../../Assets/Banners/b2.webp';
 import b3 from '../../Assets/Banners/b3.webp';
@@ -53,16 +61,17 @@ export const StoreProvider = ({ children, passedStore }) => {
     },
     categories: [{ name: "Men" }, { name: "Women" }, { name: "Kids" }],
 
-    subCategories: [{ name: "Watch" }, { name: "Jacket" }, { name: "Pants" }],
+    subCategories: [{ name: "Category 1" }, { name: "Category 2" }, { name: "Category 3" }],
     banner: { bannerUrl: `${graybg}`, bannerID: '' },
     products: [
       {
         id: 1,
-        name: "Controller",
-        price: '100',
-        image: { imageUrl: oneFourty, imageID: '' },
+        name: "Product 1",
+        price: 100,
+        discount : 10,
+        image: { imageUrl: grayshoes, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -74,17 +83,9 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageUrl: "https://png.pngtree.com/png-vector/20231124/ourmid/pngtree-grey-shoes-child-png-image_10692794.png"
                 },
                 discount: 5
-              }, {
-                name: "Gray",
-                price: 2000,
-                image: {
-                  imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
-                },
-                discount: 6
               }
             ]
           },
@@ -115,23 +116,24 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 2,
-        name: "Goggles",
-        price: '200',
-        image: { imageUrl: 'https://cdn.pixabay.com/photo/2014/03/24/17/14/eye-295173_960_720.png', imageID: '' },
+        name: "Product 2",
+        price: 200,
+        discount:50,
+        image: { imageUrl: grayjacket, imageID: '' },
         count: 0,
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         variant: [
           {
-            name: "Size",
+            name: "Color",
             options: [
               {
                 name: "Small",
                 price: 90,
                 image: {
                   imageId: "img123",
-                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                  imageUrl: "https://pics.clipartpng.com/Grey_T_Shirt_PNG_Clip_Art-2347.png"
                 },
                 discount: 5
               }
@@ -164,11 +166,12 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 3,
-        name: "Watch",
-        price: '100',
-        image: { imageUrl: "https://cdn.pixabay.com/photo/2013/07/12/14/44/watch-148700_1280.png", imageID: '' },
+        name: "Product 3",
+        price: 100,
+        discount :20,
+        image: { imageUrl: grayjacket2, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -180,17 +183,9 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageUrl: "https://png.pngtree.com/png-clipart/20240103/original/pngtree-women-suit-black-gray-blue-png-image_14002697.png"
                 },
                 discount: 5
-              }, {
-                name: "Gray",
-                price: 2000,
-                image: {
-                  imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
-                },
-                discount: 6
               }
             ]
           },
@@ -221,11 +216,12 @@ export const StoreProvider = ({ children, passedStore }) => {
       },
       {
         id: 4,
-        name: "Watch1",
-        price: '100',
-        image: { imageUrl: controller, imageID: '' },
+        name: "Product 4",
+        price: 100,
+        discount:20,
+        image: { imageUrl: grayscarf, imageID: '' },
         categories: ["Men"],
-        subcategories: ["Watch"],
+        subcategories: ["Category 1"],
         rating: 2.5,
         count: 0,
         variant: [
@@ -237,17 +233,9 @@ export const StoreProvider = ({ children, passedStore }) => {
                 price: 1200,
                 image: {
                   imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageUrl: "https://static.vecteezy.com/system/resources/previews/011/235/813/original/scarf-isolated-with-clipping-path-transparent-background-png.png"
                 },
                 discount: 5
-              }, {
-                name: "Gray",
-                price: 2000,
-                image: {
-                  imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
-                },
-                discount: 6
               }
             ]
           },
@@ -269,53 +257,204 @@ export const StoreProvider = ({ children, passedStore }) => {
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       },
       {
-        id: 5,
-        name: "Ghadi",
-        price: '100',
-        image: { imageUrl: controller, imageID: '' },
-        categories: ["Men"],
-        subcategories: ["Watch"],
-        rating: 2.5,
+        id: 2,
+        name: "Product A",
+        price: 300,
+        discount:50,
+        image: { imageUrl: grayhat, imageID: '' },
         count: 0,
+        categories: ["Men"],
+        subcategories: ["Category 2"],
+        rating: 2.5,
         variant: [
           {
-            name: "Color",
+            name: "Size",
             options: [
               {
-                name: "Blue",
-                price: 1200,
+                name: "Small",
+                price: 90,
                 image: {
-                  imageID: "img123",
-                  imageUrl: "https://images-na.ssl-images-amazon.com/images/I/714xodINSzL._SLDPMOBCAROUSELAUTOCROP288221_MCnd_AC_SR462,693_.jpg"
+                  imageId: "img123",
+                  imageUrl: "https://clipart-library.com/image_gallery/n1493878.png"
                 },
                 discount: 5
-              }, {
-                name: "Gray",
-                price: 2000,
-                image: {
-                  imageID: "img123",
-                  imageUrl: "https://cms.cloudinary.vpsvc.com/image/upload/v1675872460/ideas-and-advice-prod/en-us/CMT-1630-TshirtDesign-Tile004_en-us.png"
-                },
-                discount: 6
               }
             ]
           },
           {
-            name: "Color",
+            name: "Size",
             options: [
               {
-                name: "blue",
-                price: 1200,
+                name: "Small",
+                price: 900,
                 image: {
-                  imageID: "img123",
-                  imageUrl: "https://images.vexels.com/media/users/3/234039/isolated/preview/0bb83cedf3679102fae76c6bbb940ccb-denim-jean-jacket.png"
+                  imageId: "img123",
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
                 },
-                discount: 10
+                discount: 5
               }
             ]
           },
         ],
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
+      },
+      {
+        id: 2,
+        name: "Product B",
+        price: 300,
+        discount:200,
+        image: { imageUrl: "https://davidbeckhameyewear.com/cdn/shop/products/1034710KB700_P02.png?v=1633562490", imageID: '' },
+        count: 0,
+        categories: ["Men"],
+        subcategories: ["Category 2"],
+        rating: 2.5,
+        variant: [
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 90,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://pngimg.com/d/sunglasses_PNG77.png"
+                },
+                discount: 5
+              }
+            ]
+          },
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 900,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                },
+                discount: 5
+              }
+            ]
+          },
+        ],
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
+      },
+      {
+        id: 2,
+        name: "Product C",
+        price: 300,
+        discount:100,
+        image: { imageUrl: "https://mcc-jo.com/wp-content/uploads/2024/05/FANTECH-RAIGOR-III-WG12R-GAMING-MOUSE-GREY.png", imageID: '' },
+        count: 0,
+        categories: ["Men"],
+        subcategories: ["Category 2"],
+        rating: 2.5,
+        variant: [
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 90,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://resource.logitech.com/content/dam/gaming/en/products/g502x-lightspeed/gallery/g502x-lightspeed-gallery-1-white.png"
+                },
+                discount: 5
+              }
+            ]
+          },
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 900,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                },
+                discount: 5
+              }
+            ]
+          },
+        ],
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
+      },
+      {
+        id: 2,
+        name: "Product D",
+        price: 300,
+        discount:120,
+        image: { imageUrl: "https://static.vecteezy.com/system/resources/thumbnails/010/175/452/small/white-cream-jar-bottle-beauty-cosmetic-blank-mockup-3d-illustration-free-png.png", imageID: '' },
+        count: 0,
+        categories: ["Men"],
+        subcategories: ["Category 2"],
+        rating: 2.5,
+        variant: [
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 90,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://png.pngtree.com/png-clipart/20230427/original/pngtree-face-cream-skin-care-cosmetics-transparent-png-image_9116644.png"
+                },
+                discount: 5
+              }
+            ]
+          },
+          {
+            name: "Size",
+            options: [
+              {
+                name: "Small",
+                price: 900,
+                image: {
+                  imageId: "img123",
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxEbK3Nqdg3b7KlytQ57iOF7Jxtiy4Kn-nQ&s"
+                },
+                discount: 5
+              }
+            ]
+          },
+        ],
+        description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
+        review: [{
+          user: "Ram",
+          text: "Very good happy to have it"
+        },
+        {
+          user: "Shyam",
+          text: "Scam Alert!! Dont buy"
+        }]
       },
     ],
     featuredProducts: [0, 1, 4],
@@ -408,20 +547,20 @@ export const StoreProvider = ({ children, passedStore }) => {
 
 
     },
-    offerBanner: { offerBannerUrl: `${offerBannerImg}`, offerBannerID: '' },
+    offerBanner: { offerBannerUrl: `${b3}`, offerBannerID: '' },
     offerBannerText: {
       para1: "",
       para2: "",
       para3: "",
     },
-    secondaryBanner: { secondaryBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
-    thirdBanner: { thirdBannerUrl: `${secondaryBannerImg}`, secondaryBannerID: '' },
+    secondaryBanner: { secondaryBannerUrl: `${b2}`, secondaryBannerID: '' },
+    thirdBanner: { thirdBannerUrl: `${b1}`, secondaryBannerID: '' },
     thirdBannerText: {
       heading: "",
       paragraph: "",
     },
     previewMode: true,
-    selectedSubCategory: "Watch",
+    selectedSubCategory: "Category 1",
     cart: [
 
     ],

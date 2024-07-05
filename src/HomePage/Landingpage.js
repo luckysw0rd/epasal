@@ -52,9 +52,8 @@ function Landingpage() {
         </div>
       </div>
       <div className="w-full lg:w-1/2 text-white p-4">
-        <div className="border border-white p-2 md:p-6 rounded-2xl relative">
-
-          <iframe className='rounded-3xl w-full h-[350px] md:h-[500px] lg:w-[600px] lg:h-[400px] 2xl:w-[750px] 2xl:h-[600px]' src="https://www.youtube.com/embed/GpeRIjffJXk?si=6j0u7LEKRGjZDL3W" title="Why Banau?" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div className="border border-white p-2 md:p-6  flex justify-center rounded-2xl relative">
+          <iframe className='rounded-3xl   w-full h-[350px] md:h-[500px] md:max-w-[550px] 2xl:max-w-full lg:w-[600px] lg:h-[400px] 2xl:w-[750px] 2xl:h-[500px]' src="https://www.youtube.com/embed/GpeRIjffJXk?si=6j0u7LEKRGjZDL3W" title="Why Banau?" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
     </div>

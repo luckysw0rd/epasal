@@ -65,7 +65,7 @@ const SkinSection = () => {
 
               </div>
             </div>
-            <img src={NewCollection} alt="New Fashion Collection" className="w-full lg:w-auto lg:flex-1 h-auto lg:max-h-[220px] 2xl:max-h-[300px] object-contain rounded-lg mx-auto lg:mx-0" />
+            <img src={NewCollection} alt="New Fashion Collection" className="w-full max-w-sm lg:w-auto lg:flex-1 h-auto lg:max-h-[220px] 2xl:max-h-[300px] object-contain rounded-lg mx-auto lg:mx-0" />
           </div>
         </div>
       </div>

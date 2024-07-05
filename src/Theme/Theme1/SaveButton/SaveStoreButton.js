@@ -107,7 +107,11 @@ const SaveStoreButton = () => {
             setStoreNew(true)
         } catch (err) {
             setTempLoading(false);
-            toast.error('Error Uploading Image')
+            toast.error('Error Uploading Image', {
+                position: "top-center",
+                pauseOnFocusLoss: false,
+                pauseOnHover: false
+            })
             console.log(err, "error uploading image")
         }
     }
@@ -117,7 +121,10 @@ const SaveStoreButton = () => {
             toast.warning('Please Ensure you are logged in first ,Changes will not be saved',
                 {
                     theme: "dark",
-                    autoClose: 10000
+                    autoClose: 10000,
+                    position: "top-center",
+                    pauseOnFocusLoss: false,
+                    pauseOnHover: false
                 }
             );
         }

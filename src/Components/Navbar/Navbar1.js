@@ -23,6 +23,7 @@ const Navbar1 = ({
     setLogoFile,
     isEdit, fetchedFromBackend
 }) => {
+
     const [scrolling, setScrolling] = useState(false);
     const [editableText, setEditableText] = useState("Ecom Template-2");
     const [isSearchClicked, setIsSearchClicked] = useState(false);
@@ -31,18 +32,16 @@ const Navbar1 = ({
     const [isCartOpen, setIsCartOpen] = useState(false);
     const sidebarRef = useRef();
     const [searchItem, setSearchItem] = useState([])
+    const [isAnimating, setIsAnimating] = useState(true);
     const [cartItems, setCartItems] = useState([
-        {
-            id: 1,
-            name: 'Item 1',
-            variant: [{ options: [{ price: 10, image: { imageUrl: 'https://via.placeholder.com/50' } }] }]
-        },
-        {
-            id: 2,
-            name: 'Item 2',
-            variant: [{ options: [{ price: 20, image: { imageUrl: 'https://via.placeholder.com/50' } }] }]
-        }
     ]);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsAnimating(false);
+        }, 8000); // Duration of the animation in milliseconds
+
+        return () => clearTimeout(timer);
+    }, []);
     const cart = [
         {
             product: "Item 1",
@@ -78,10 +77,11 @@ const Navbar1 = ({
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
+
         if (fetchedFromBackend && !isEdit)
             navigate("/productlanding", { state: { product, store } })
     };
-    
+
     const loadCartFromLocalStorage = () => {
         console.log('Attempting to load cart from localStorage');
         const savedCart = localStorage.getItem('cart');
@@ -392,7 +392,7 @@ const Navbar1 = ({
                             color: color?.navColor?.storeNameTextColor,
                         }}>
                             {searchItem.map((n, i) => {
-                                return <li   onClick={() => {
+                                return <li onClick={() => {
                                     handleProductClick(n)
                                 }} key={i} className='flex items-center gap-4'>
                                     <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black ' />
@@ -412,11 +412,15 @@ const Navbar1 = ({
                 {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} store={store} setStore={setStore} />} {/* Conditionally render the CartDropdown */}
                 {(store.isEdit || !store.fetchedFromBackend) &&
                     <button
-                        onClick={() => { setStore(prev => ({ ...prev, previewMode: !store.previewMode })) }}
-                        className="bg-black hover:bg-white text-white hover:text-black hover:border-black hover:border-1 font-bold py-2 px-4 text-sm rounded transition duration-200"
+                        onClick={() => {
+                            setStore(prev => ({ ...prev, previewMode: !store.previewMode }));
+                        }}
+                        className={`h-12 bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 text-sm rounded transition duration-200  ${isAnimating ? 'animate-flashy-border border-2' : 'border-2 border-transparent hover:border-black'
+                            }`}
                     >
                         {store.previewMode ? 'Preview Mode' : 'Edit'}
-                    </button>}
+                    </button>
+                }
             </div>
 
             {
