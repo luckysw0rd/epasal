@@ -44,6 +44,9 @@ function App() {
     return <Navigate to={`/store/${storeID}`} />;
   };
 
+  localStorage.removeItem('store');
+  localStorage.removeItem('product');
+
   let routes;
   if (token || auth.token || (userData && JSON.parse(userData)?.token)) {
     console.log(`[+] I was freaking calledy:....`);
