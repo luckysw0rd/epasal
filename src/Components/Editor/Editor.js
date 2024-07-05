@@ -115,6 +115,7 @@ const Editor = () => {
         },
       },
     }));
+    console.log(color);
   };
 
   const handleHexCodeChange = (e, field) => {
@@ -157,6 +158,7 @@ const Editor = () => {
         [field]: newValue,
       },
     }));
+    console.log(color);
   };
 
   const handleFeaturedChange = (e) => {
@@ -716,7 +718,7 @@ const Editor = () => {
         },
       }
     },
-  
+
 
     {
       name: 'Coral Reef',
@@ -1318,15 +1320,15 @@ const Editor = () => {
         }
       }
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1415,7 +1417,7 @@ const Editor = () => {
                       type='text'
                       className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 text-sm transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
                       value={store.name}
-                       placeholder='Store Name'
+                      placeholder='Store Name'
                       onChange={e => setStore(n => ({ ...n, name: e.target.value }))}
                     />
                   </div>
@@ -1573,9 +1575,9 @@ const Editor = () => {
                     <FontSelector section="Footer " />
                   </div>
                   <label className='text-[12px]  font-Ubuntu'>Location</label><br />
-                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 '  placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
+                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Email</label><br />
-                  <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2'placeholder='email@abc.com' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
+                  <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' placeholder='email@abc.com' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Phone Number</label><br />
                   <input value={store.phoneNumber} type='text' className='border-2 border-gray-300 rounded px-2' placeholder='9876543210' onChange={(e) => { setStore(prev => ({ ...prev, phoneNumber: e.target.value })) }} ></input><br />
                   <div className='mt-3'>Social Media Links</div>
@@ -1586,7 +1588,7 @@ const Editor = () => {
                   <label className='text-[12px]  font-Ubuntu'>Instagram</label><br />
                   <input value={store.socialMediaLinks.instagram} placeholder='instagram.com' type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, instagram: e.target.value } })); }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>linkedIn</label><br />
-                  <input value={store.socialMediaLinks.linkedin} placeholder='linked.com'type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
+                  <input value={store.socialMediaLinks.linkedin} placeholder='linked.com' type='text' className='border-2 border-gray-300 rounded px-2' onChange={(e) => { setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } })); }} ></input><br />
 
                 </li>
               </ul>

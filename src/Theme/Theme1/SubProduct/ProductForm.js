@@ -139,29 +139,30 @@ export default function ProductForm({ onClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log(formState);
+    
         const updatedVariants = formState.variant.map((variant, variantIndex) => {
             const updatedOptions = variant.options.map((option, optionIndex) => ({
                 ...option,
                 name: option.name || `default`
             }));
-
+    
             return {
                 ...variant,
                 name: variant.name || `default`,
                 options: updatedOptions
             };
         });
-
+    
         setFormState(prevFormState => ({
             ...prevFormState,
             variant: updatedVariants
         }));
-
+    
         if (store.isEdit) {
             try {
                 const productImg = await uploadImage(formState?.image?.imageUrl);
-
+    
                 setFormState(prev => ({
                     ...prev,
                     image: {
@@ -170,28 +171,30 @@ export default function ProductForm({ onClose }) {
                         imageID: productImg.id
                     }
                 }));
-
-                for (let i = 0; i < formState.variant[0].options.length; i++) {
-                    const optionImage = await uploadImage(formState.variant[0].options[i].image.imageUrl);
-
-                    setFormState(prev => {
-                        const formState = { ...prev };
-                        const variant = { ...formState.variant[0] };
-                        const option = { ...variant.options[i] };
-
-                        option.image = {
-                            ...option.image,
-                            imageUrl: optionImage.img,
-                            imageID: optionImage.id
-                        };
-
-                        variant.options[i] = option;
-                        formState.variant[0] = variant;
-
-                        return formState;
-                    });
+    
+                if (formState.variant.length > 0 && formState.variant[0].options.length > 0) {
+                    for (let i = 0; i < formState.variant[0].options.length; i++) {
+                        const optionImage = await uploadImage(formState.variant[0].options[i].image.imageUrl);
+    
+                        setFormState(prev => {
+                            const newFormState = { ...prev };
+                            const variant = { ...newFormState.variant[0] };
+                            const option = { ...variant.options[i] };
+    
+                            option.image = {
+                                ...option.image,
+                                imageUrl: optionImage.img,
+                                imageID: optionImage.id
+                            };
+    
+                            variant.options[i] = option;
+                            newFormState.variant[0] = variant;
+    
+                            return newFormState;
+                        });
+                    }
                 }
-
+    
                 await new Promise(resolve => setTimeout(resolve, 0));
                 setOnEditDataUpload(prev => !prev);
             } catch (err) {
@@ -210,6 +213,7 @@ export default function ProductForm({ onClose }) {
             onClose();
         }
     };
+    
 
     // Function to upload data
     const uploadData = async () => {
