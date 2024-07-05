@@ -52,25 +52,9 @@ function Landingpage() {
         </div>
       </div>
       <div className="w-full lg:w-1/2 text-white p-4">
-        <div className="bg-gray-900 p-6 rounded-2xl relative">
-          <div
-            className="absolute inset-0 bg-cover bg-center rounded-2xl"
-            style={{ backgroundImage: `url(${storepic2})` }}
-          ></div>
-          <section className="relative flex flex-col lg:flex-row justify-between z-10 p-4">
-            <div className="lg:w-1/2">
-              <h2 className="text-base font-bold py-2">Follow some steps to create your website</h2>
-              <p className="py-2 text-xs">Watch the video tutorial to get started</p>
-              <button className="mt-2 px-4 py-2 bg-white text-black text-xs rounded-full">
-                More <span className="mx-2">&gt;</span>
-              </button>
-            </div>
-            <div className="w-full lg:w-1/2 flex justify-center items-center">
-              <button className="mt-4 lg:mt-0 px-4 py-2 lg:px-8 lg:py-4 bg-orange-500 text-white text-sm lg:text-lg font-bold rounded-full hover:bg-orange-600 transition-colors duration-300">
-                Watch Now
-              </button>
-            </div>
-          </section>
+        <div className="border border-white p-2 md:p-6 rounded-2xl relative">
+
+          <iframe className='rounded-3xl w-full h-[350px] md:h-[500px] lg:w-[600px] lg:h-[400px] 2xl:w-[750px] 2xl:h-[600px]' src="https://www.youtube.com/embed/GpeRIjffJXk?si=6j0u7LEKRGjZDL3W" title="Why Banau?" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -78,3 +62,4 @@ function Landingpage() {
 }
 
 export default Landingpage;
+
