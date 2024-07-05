@@ -59,7 +59,7 @@ const DragdropSection = () => {
                 <div className="hidden md:flex flex-col gap-2  lg:gap-4 bg-[#793A00] w-[70%] lg:w-[55%] rounded-2xl absolute top-[18%] -right-[25%] text-white py-4 px-6 lg;py-6 xl:px-12 2xl:py-8">
                     <h3 className="text-xs md:text-sm lg:text-base 2xl:text-lg font-bold">FREEDOM IS YOURS</h3>
                     <p className="text-xs lg:text-sm 2xl:text-base">Have fun customizing your digital store.</p>
-                    <Link to="/buildstore" className="border h-[40px] font-bold  text-center items-center border-white hover:bg-white  justify-center hover:text-[#793A00] p-1 rounded-md lg:rounded-3xl  lg:text-sm pt-2 lg:w-2/3 2xl:w-1/2 text-2xl">
+                    <Link to="/buildstore" className="border h-[40px] font-semibold  text-center items-center border-white hover:bg-white  justify-center hover:text-[#793A00] p-1 rounded-lg lg:rounded-3xl text-sm pt-2 lg:w-2/3 2xl:w-1/2 2xl:text-2xl">
                         Build yours now
                     </Link>
                 </div>
@@ -72,7 +72,7 @@ const DragdropSection = () => {
                         <>
                             <h3 className="text-xs md:text-sm lg:text-base font-bold">FREEDOM IS YOURS</h3>
                             <p className="text-xs lg:text-sm">Have fun customizing your digital store.</p>
-                            <Link to="/buildstore" className="border border-white hover:bg-white hover:text-[#793A00] p-1 rounded-md text-xs w-1/2">
+                            <Link to="/buildstore" className="flex items-center justify-center border border-white hover:bg-white hover:text-[#793A00] p-2 rounded-md text-xs w-1/2">
                                 Build yours now
                             </Link>
                         </>
