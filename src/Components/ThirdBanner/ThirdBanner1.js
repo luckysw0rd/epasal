@@ -124,14 +124,14 @@ const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName }) => {
    ${!previewMode ? "cursor-not-allowed opacity-50" : ""
               }`}
             style={{
-              color: color.thirdBanner?.buttonText,
-              backgroundColor: color.thirdBanner?.buttonColor,
+              color: color.firstBannerColor?.buttonText,
+              backgroundColor: color.firstBannerColor?.buttonColor,
             }}
 
-          
+
           >
             <Link to={`/store/products/${store.name}`}>
-            Explore More
+              Explore More
             </Link>
             <span className="text-lg ml-3 my-auto">&gt;</span>
           </button>
