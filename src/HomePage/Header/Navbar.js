@@ -9,6 +9,7 @@ import useFetch from '../../Hooks/useFetch';
 import { IoLogOut } from "react-icons/io5";
 import { IoIosLogIn } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
 const Navbar = ({ navbarImage, setStores }) => {
     const [isRotated, setIsRotated] = useState(false);
     const [isStoreOpen, setIsStoreOpen] = useState(false)
@@ -174,6 +175,14 @@ const Navbar = ({ navbarImage, setStores }) => {
                         </div>
                         {/* <p>Build Your Store</p> */}
                     </div>
+                    <div className='flex items-center gap-1 text-white hidden md:flex'>
+    <div className='h-10 relative rounded-lg w-20 bg-[#F38825] flex items-center justify-center text-lg'>
+        <ScrollLink to='pricing-section' smooth={true} duration={500} className='w-full text-center cursor-pointer'>
+            Pricing
+        </ScrollLink>
+    </div>
+</div>
+
                     <div className='relative'>
                         {/* {auth.isLoggedIn && <motion.div onClick={handleClick} className=' px-4 h-10 rounded-lg bg-[#F38825] text-white hidden  flex-col items-center md:flex justify-center'>
                             My Store

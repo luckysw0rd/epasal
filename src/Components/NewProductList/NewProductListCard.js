@@ -5,8 +5,8 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) => {
-    const { productColor, previewMode, addToCart, store } = productListProps;
+const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) => {
+    const { productColor, previewMode, addToCart, store,isEdit } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
@@ -59,6 +59,13 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
         setSelectedOptionIndex(-1);
         setDisplayedImage(product?.image?.imageUrl);
     };
+    const handleDeleteProduct = async () => {
+        if (isEdit) {
+            handleRemoveProduct({ id: product._id, storeId: store._id })
+        } else {
+            handleRemoveProduct({ id: product.id })
+        }
+    }
 
     return (
         <motion.div
@@ -68,14 +75,14 @@ const NewProductListCard = ({ productListProps, handleDeleteProduct, product }) 
         >
             <div className="w-full">
                 <div className="relative w-full">
-                    {/* {!previewMode && (
+                    {!previewMode && (
                         <button
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
                             onClick={() => handleDeleteProduct(product.id)}
                         >
                             <FaTimes />
                         </button>
-                    )} */}
+                    )} 
                     <div className="card cursor-pointer  flex flex-col  justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <button>
                             <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />

@@ -462,6 +462,21 @@ const Navbar1 = ({
                                     className="bg-transparent border-b border-white focus:outline-none placeholder-white text-xl w-full placeholder:text-sm"
                                 />
                                 <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
+                                {searchItem.length > 0 &&
+                        <ul className='absolute top-10 -left-2 flex flex-col gap-3 w-full px-3 py-3 rounded-b-2xl' style={{
+                            fontFamily: store?.fonts?.Navbar,
+                            backgroundColor: color?.navColor?.backgroundnavColor,
+                            color: color?.navColor?.storeNameTextColor,
+                        }}>
+                            {searchItem.map((n, i) => {
+                                return <li   onClick={() => {
+                                    handleProductClick(n)
+                                }} key={i} className='flex items-center gap-4'>
+                                    <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black ' />
+                                    <div>{n.name}</div>
+                                </li>
+                            })}
+                        </ul>}
                             </div>
                             <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
                             <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>

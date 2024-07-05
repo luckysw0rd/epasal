@@ -5,15 +5,18 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import './productList.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 
-const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) => {
+
+
+const ProductListCard1 = ({ productListProps, handleRemoveProduct, product }) => {
     const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
     const navigate = useNavigate()
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
+
 
     //truncating 
     const getTruncateLength = (width) => {
@@ -59,6 +62,14 @@ const ProductListCard1 = ({ productListProps, handleDeleteProduct, product }) =>
         if (fetchedFromBackend && !isEdit)
             navigate("/productlanding", { state: { product, store } })
     };
+
+    const handleDeleteProduct = async () => {
+        if (isEdit) {
+            handleRemoveProduct({ id: product._id, storeId: store._id })
+        } else {
+            handleRemoveProduct({ id: product.id })
+        }
+    }
 
     return (
         <motion.div
