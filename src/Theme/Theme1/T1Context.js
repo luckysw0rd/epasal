@@ -410,7 +410,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 2,
         name: "Product D",
         price: 300,
-        discount:600,
+        discount:120,
         image: { imageUrl: "https://static.vecteezy.com/system/resources/thumbnails/010/175/452/small/white-cream-jar-bottle-beauty-cosmetic-blank-mockup-3d-illustration-free-png.png", imageID: '' },
         count: 0,
         categories: ["Men"],
