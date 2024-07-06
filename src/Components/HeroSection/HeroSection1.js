@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import banner from "../../Assets/banner2.png"
+import { AuthContext } from '../../Hooks/AuthContext';
+import { toast } from 'react-toastify';
 const HeroSection1 = ({ previewMode, store, setStore }) => {
 
+    const auth = useContext(AuthContext);
     const [bgImage, setBgImage] = useState(banner);
     const [logoImage, setLogoImage] = useState(null);
     const [heroText, setHeroText] = useState("Welcome to Our Store");
+
+    useEffect(() => {
+        if (!auth.token && !store.fetchedFromBackend) {
+            toast.warning('Please Ensure you are logged in first ,Changes will not be saved',
+                {
+                    theme: "dark",
+                    autoClose: 10000,
+                    position: "top-center",
+                    pauseOnFocusLoss: false,
+                    pauseOnHover: false
+                }
+            );
+        }
+    }, [])
 
     const onDropBackground = acceptedFiles => {
         const backgroundImage = acceptedFiles[0];

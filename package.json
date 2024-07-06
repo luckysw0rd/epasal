@@ -51,6 +51,7 @@
     "react-table": "^7.8.0",
     "react-toastify": "^10.0.5",
     "react-typed": "^2.0.12",
+    "react-typewriter-effect": "^1.1.0",
     "react-use-draggable-scroll": "^0.4.7",
     "recharts": "^2.12.7",
     "swiper": "^11.0.7",
