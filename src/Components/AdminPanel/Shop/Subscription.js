@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import esewa from '../../../Assets/esewa.webp';
 import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
-
 import { FaClock, FaStar } from 'react-icons/fa';
 
 const plans = {
@@ -136,6 +135,7 @@ const getMonthlyEquivalent = (price, duration) => {
     }
 };
 
+
 const getPercentageSavings = (monthlyPrice, durationPrice, duration) => {
     const fullPrice = monthlyPrice * (duration === 'quarterly' ? 3 : 12);
     const savings = fullPrice - durationPrice;
@@ -143,6 +143,7 @@ const getPercentageSavings = (monthlyPrice, durationPrice, duration) => {
 };
 
 const SubscriptionPlans = ({ store }) => {
+
     const [duration, setDuration] = useState('monthly');
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
@@ -168,7 +169,8 @@ const SubscriptionPlans = ({ store }) => {
                 'POST',
                 JSON.stringify({ data }),
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+ auth.token
                 }
             );
             console.log(responseData); // Handle response data as needed
