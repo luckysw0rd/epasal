@@ -116,18 +116,6 @@ const SaveStoreButton = () => {
         }
     }
     useEffect(() => {
-
-        if (!auth.token && !store.fetchedFromBackend) {
-            toast.warning('Please Ensure you are logged in first ,Changes will not be saved',
-                {
-                    theme: "dark",
-                    autoClose: 10000,
-                    position: "top-center",
-                    pauseOnFocusLoss: false,
-                    pauseOnHover: false
-                }
-            );
-        }
         if (storeNew) {
             PostData();
         }

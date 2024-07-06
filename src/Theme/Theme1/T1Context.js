@@ -477,7 +477,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         priceLetterColor: "#ffffff",
         buttonColor: "#3d3d3d",
         scrollbarColor: "#1f1f1e",
-        starColor: "#3d3d3d",
+        // starColor: "#3d3d3d",
 
       },
       firstBannerColor: {

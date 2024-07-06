@@ -12,34 +12,6 @@ export default function Theme() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
 
-  // useEffect(() => {
-  //   const fetchStoreData = async () => {
-  //     try {
-  //       console.log('inside fetching');
-  //       // Fetch store data from the server using the provided store ID
-  //       const response = await sendRequest(
-  //         `store/getactiveTheme/${storeID}`, // Replace 'your-api-endpoint' with your actual API endpoint
-  //         'GET',
-  //         null,
-  //         {
-  //           'Content-Type': 'application/json',
-  //           Authorization: 'Bearer ' + auth.token,
-  //         }
-  //       ); // Use storeID from useParams
-      
-  //       console.log(response);
-
-  //     } catch (error) {
-  //       // If an error occurs during fetch, set default store data
-  //       console.error('Error fetching store data:', error);
-  //     }
-  //   };
-
-  //   if (window.location.pathname.includes('/store/')) {
-  //     // fetchStoreData();
-  //   } else {
-  //   }
-  // }, [storeID, sendRequest, auth.token]);
 
 
   return (
