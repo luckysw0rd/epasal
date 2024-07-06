@@ -63,6 +63,7 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
             }));
         }
         else {
+            console.log(productName);
             setStore(prevStore => ({
                 ...prevStore,
                 products: prevStore.products.filter(product => product.id !== productName.id)
