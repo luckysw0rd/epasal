@@ -13,7 +13,7 @@ function Landingpage() {
             WHY BANAU?
           </h1>
           <p className="text-lg flex justify-center text-gray-700 mb-6 px-4 md:px-8 lg:px-0">
-            Discover the ultimate e-commerce solution with Banau. Effortlessly customizable, and entirely code-free, Banau empowers anyone to build and manage their online store with ease.
+            Discover the ultimate e-commerce solution with Shop at Banau. Effortlessly customizable, and entirely code-free, Banau empowers anyone to build and manage their online store with ease.
           </p>
           <Link to={'/buildstore'} className="px-8 py-3 flex mx-auto bg-gradient-to-r from-orange-500 to-orange-700 text-white rounded-full hover:shadow-lg transition transform hover:scale-105">
             Get Started
@@ -26,7 +26,7 @@ function Landingpage() {
           <Feature icon="👨‍💼" title="Employee Management" />
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-6 mt-6">
+        <div className="flex flex-row sm:flex-row sm:justify-center lg:justify-start gap-6 mt-6">
           <Stat number="100+" label="Stores" />
           <Stat number="♾️" label="Customization" />
           <Stat number="10+" label="Presets" />
