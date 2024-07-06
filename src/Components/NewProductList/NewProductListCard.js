@@ -6,7 +6,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) => {
-    const { productColor, previewMode, addToCart, store,isEdit } = productListProps;
+    const { productColor, previewMode, addToCart, store, isEdit } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
@@ -60,10 +60,10 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
         setDisplayedImage(product?.image?.imageUrl);
     };
     const handleDeleteProduct = async () => {
-        if (isEdit) {
+        if (store?.isEdit) {
             handleRemoveProduct({ id: product._id, storeId: store._id })
         } else {
-            handleRemoveProduct({ id: product.id })
+            handleRemoveProduct({ id: product._id })
         }
     }
 
@@ -78,11 +78,11 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                     {!previewMode && (
                         <button
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
-                            onClick={() => handleDeleteProduct(product.id)}
+                            onClick={() => handleDeleteProduct(product._id)}
                         >
                             <FaTimes />
                         </button>
-                    )} 
+                    )}
                     <div className="card cursor-pointer  flex flex-col  justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <button>
                             <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
@@ -114,10 +114,10 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                                             className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === index ? 'font-bold' : ''} rounded-md`}
                                             onClick={() => handleOptionSelect(index)}
                                         >
-                                            {option?.image?.imageUrl && 
-                                            <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                                            {option?.image?.imageUrl &&
+                                                <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
                                             }
-                                            </div>
+                                        </div>
                                     ))}
                                 </div>
                                 {/* <div className='absolute right-1 top-1'>

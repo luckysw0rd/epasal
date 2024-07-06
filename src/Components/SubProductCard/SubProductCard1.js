@@ -102,7 +102,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center" // Added flex and justify-center
                     onClick={handleDeleteProduct} // Call handleRemoveProduct on click
                 >
-                    <FaTimes /> 
+                    <FaTimes />
                 </button>
             )}
 

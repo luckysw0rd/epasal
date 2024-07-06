@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-
 import NewProductListCard from './NewProductListCard';
 import NewProductListCard2 from './NewProductListCard2';
 import NewProductListCard3 from './NewProductListCard3';
 import useFetch from '../../Hooks/useFetch';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../Hooks/AuthContext';
-const NewProductList = ({ productListProps, productListType,storeName }) => {
+import Loader from '../Loading/Loading';
+const NewProductList = ({ productListProps, productListType, storeName }) => {
     const initialProducts = [];
     const { products, productColor, setStore, store } = productListProps
-    const navigate =useNavigate();
-    const {sendRequest}=useFetch();
-    const handleExploreClick=(e)=>{
-        if (store.fetchedFromBackend && !store.isEdit){
-        navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
+    const navigate = useNavigate();
+    const { sendRequest, isLoading } = useFetch();
+    const handleExploreClick = (e) => {
+        if (store.fetchedFromBackend && !store.isEdit) {
+            navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
         }
     }
     const [setProducts] = useState(initialProducts);
@@ -28,20 +28,22 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
         setFilteredProducts(products.slice(0, 12));
     }, [products]);
 
-    
 
-/*     const handleDeleteProduct = (productId) => {
-        const productIndex=store.products.findIndex(data=>data.id==productId)
+
+    const handleDeleteProduct = (productId) => {
+        const productIndex = store.products.findIndex(data => data.id == productId)
         setStore(prevStore => ({
             ...prevStore,
-           featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
-         }));
-     }; */
+            featuredProducts: prevStore.featuredProducts.filter(product => product !== productIndex)
+        }));
+    };
 
-     const handleRemoveProduct =async (productName) => {
-        if(store?.isEdit){
-            try{
-                const response=await sendRequest(
+    const handleRemoveProduct = async (productName) => {
+        console.log(store.isEdit);
+        console.log(productName);
+        if (store?.isEdit) {
+            try {
+                const response = await sendRequest(
                     `product/deleteProduct`,
                     'POST',
                     JSON.stringify(productName),
@@ -51,7 +53,7 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                     }
                 );
                 toast(response.message);
-            }catch(err){
+            } catch (err) {
                 console.log(err)
                 toast("Error Deleting Product")
             }
@@ -60,13 +62,15 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                 products: prevStore.products.filter(product => product._id !== productName.id)
             }));
         }
-        else{
-        setStore(prevStore => ({
-            ...prevStore,
-            products: prevStore.products.filter(product => product.id !== productName.id)
-        }));
-    }
+        else {
+            setStore(prevStore => ({
+                ...prevStore,
+                products: prevStore.products.filter(product => product.id !== productName.id)
+            }));
+        }
     };
+
+
 
     const renderProductList = () => {
         switch (productListType) {
@@ -83,7 +87,8 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                                         productListProps={productListProps}
                                         handleRemoveProduct={handleRemoveProduct}
                                         store={store}
-
+                                        handleDeleteProduct={handleDeleteProduct}
+                                        index={i}
                                     />
                                 ))}
                             </div>
@@ -151,23 +156,28 @@ const NewProductList = ({ productListProps, productListType,storeName }) => {
                 </div>
         }
     };
-    return (
 
-        <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
-            {renderProductList()}
-            <Link>
-                <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
-                  >
-                    <span>
-                        <Link to={`/store/products/${store.name}`} >
-                            View More
-                        </Link>
-                    </span> <IoIosArrowForward />
-                </button>
-            </Link>
-        </div>
+    if (isLoading) {
+        return <Loader></Loader>
+    } else {
+        return (
 
-    );
+            <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
+                {renderProductList()}
+                <Link>
+                    <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
+                    >
+                        <span>
+                            <Link to={`/store/products/${store.name}`} >
+                                View More
+                            </Link>
+                        </span> <IoIosArrowForward />
+                    </button>
+                </Link>
+            </div>
+
+        );
+    }
 };
 
 export default NewProductList;

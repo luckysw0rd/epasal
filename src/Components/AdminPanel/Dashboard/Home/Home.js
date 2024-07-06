@@ -88,7 +88,7 @@ const Home = ({ data }) => {
                 <div className='flex flex-col gap-5'>
                   <div className="text-2xl font-semibold">Rs. {data?.revenueGenerated ? data.revenueGenerated.toFixed(2) : '0.00'}</div>
 
-                  <div className='text-[#888888]'><span className="text-sm text-green-600">+ {salesChange} </span> from previous month</div>
+                  {/* <div className='text-[#888888]'><span className="text-sm text-green-600">+ {salesChange} </span> from previous month</div> */}
                 </div>
               </div>
             </div>
@@ -184,7 +184,7 @@ const Home = ({ data }) => {
               <div className="p-4 flex items-center justify-between">
                 <div className='flex flex-col gap-5'>
                   <div className="text-2xl font-semibold">{data?.mostSoldItem?.name || 'Nothing'}</div>
-                  <div className='text-[#888888]'><span className="text-sm text-green-600">+ {salesChange} </span> from previous month</div>
+                  {/* <div className='text-[#888888]'><span className="text-sm text-green-600">+ {salesChange} </span> from previous month</div> */}
                 </div>
               </div>
             </div>

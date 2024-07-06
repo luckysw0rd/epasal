@@ -9,15 +9,22 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const ProductListCard1 = ({ productListProps, handleRemoveProduct, product }) => {
-    const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend } = productListProps;
+const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, index ,setStore }) => {
+    console.log(index);
+    const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend, } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
     const navigate = useNavigate()
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
 
-
+    const handleDeleteProduct = (productIndex) => {
+        console.log(productIndex);
+        setStore(prevStore => ({
+            ...prevStore,
+            featuredProducts: prevStore.featuredProducts.filter((_, index) => index !== productIndex)
+        }));
+    };
     //truncating 
     const getTruncateLength = (width) => {
         if (width < 640) return 50; // sm
@@ -63,13 +70,13 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product }) =>
             navigate("/productlanding", { state: { product, store } })
     };
 
-    const handleDeleteProduct = async () => {
-        if (isEdit) {
-            handleRemoveProduct({ id: product._id, storeId: store._id })
-        } else {
-            handleRemoveProduct({ id: product.id })
-        }
-    }
+    // const handleDeleteProduct = async () => {
+    //     if (isEdit) {
+    //         handleRemoveProduct({ id: product._id, storeId: store._id })
+    //     } else {
+    //         handleRemoveProduct({ id: product.id })
+    //     }
+    // }
 
     return (
         <motion.div
@@ -82,7 +89,7 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product }) =>
                     {!previewMode && (
                         <button
                             className="absolute top-2 right-2 p-2  bg-red-500 z-10 text-white flex items-center justify-center"
-                            onClick={() => handleDeleteProduct(product.id)}
+                            onClick={() => handleDeleteProduct(index)}
                         >
                             <FaTimes />
                         </button>
