@@ -25,6 +25,7 @@ const SideBar = ({ setDashboardState }) => {
     { name: "Stores", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Logs", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Employee", link: "/adminpanelbanau", icon: FaUserAlt },
+    { name: "Analytics", link: "/adminpanelbanau", icon: FaUserAlt },
     // { name: "Order", link: "/adminpanel", icon: FaClipboardList },
     // { name: "Product", link: "/adminpanel", icon: FaBox },
     // { name: "Edit Store", link: "/adminpanel", icon: MdEdit },

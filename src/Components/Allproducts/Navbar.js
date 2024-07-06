@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import CartDropDown from './CartDropDown';
 import { AiOutlineShoppingCart } from "react-icons/ai";
-
+import { Link } from 'react-router-dom';
 const Navbar = ({ color, store, addToCart, setStore }) => {
     const [scrolling, setScrolling] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -97,9 +97,9 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-4 mr-8">
-                    <a href="#" className="hover:underline">
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}`} className="hover:underline">
                         All Products
-                    </a>
+                    </Link>
                     <a href="#" className="hover:underline">
                         Featured
                     </a>

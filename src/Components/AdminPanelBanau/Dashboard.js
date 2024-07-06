@@ -11,6 +11,7 @@ import Employee from "./Dashboard/Employee";
 import TransactionLogs from "./TransactionLogs/TransactionLogs";
 import Loading from "../Loading/Loading";
 import { toast } from "react-toastify";
+import StoreList from "./StoreList/StoreList";
 
 const AdminDashboard = () => {
   const auth = useContext(AuthContext);
@@ -68,10 +69,13 @@ const AdminDashboard = () => {
         return <Home />;
       case 'Stores':
         return <Stores />;
+      case 'Analytics':
+        return <StoreList />;
       case 'Logs':
         return <TransactionLogs />;
       case 'Employee':
         return <Employee banau={store} />;
+        
 
       // if (role === 'Admin' || role === 'Owner') {
       //   console.log('Store:', store);
