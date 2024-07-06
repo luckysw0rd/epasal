@@ -106,7 +106,7 @@ const StoreList = () => {
                             className="border p-4 rounded shadow hover:shadow-lg transition-shadow"
                         >
                             <h2 className="text-lg font-bold">{store.storeName}</h2>
-                            <p>Revenue: ${store.revenueGenerated.toLocaleString()}</p>
+                            <p>Revenue: Nrs {store.revenueGenerated.toLocaleString()}</p>
                         </li>
                     ))}
                 </ul>
