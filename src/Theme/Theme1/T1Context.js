@@ -68,7 +68,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 1,
         name: "Product 1",
         price: 100,
-        discount : 10,
+        discount: 10,
         image: { imageUrl: grayshoes, imageID: '' },
         categories: ["Men"],
         subcategories: ["Category 1"],
@@ -118,7 +118,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 2,
         name: "Product 2",
         price: 200,
-        discount:50,
+        discount: 50,
         image: { imageUrl: grayjacket, imageID: '' },
         count: 0,
         categories: ["Men"],
@@ -168,7 +168,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 3,
         name: "Product 3",
         price: 100,
-        discount :20,
+        discount: 20,
         image: { imageUrl: grayjacket2, imageID: '' },
         categories: ["Men"],
         subcategories: ["Category 1"],
@@ -218,7 +218,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 4,
         name: "Product 4",
         price: 100,
-        discount:20,
+        discount: 20,
         image: { imageUrl: grayscarf, imageID: '' },
         categories: ["Men"],
         subcategories: ["Category 1"],
@@ -260,7 +260,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 5,
         name: "Product A",
         price: 300,
-        discount:50,
+        discount: 50,
         image: { imageUrl: grayhat, imageID: '' },
         count: 0,
         categories: ["Men"],
@@ -310,7 +310,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 6,
         name: "Product B",
         price: 300,
-        discount:200,
+        discount: 200,
         image: { imageUrl: "https://davidbeckhameyewear.com/cdn/shop/products/1034710KB700_P02.png?v=1633562490", imageID: '' },
         count: 0,
         categories: ["Men"],
@@ -360,7 +360,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 7,
         name: "Product C",
         price: 300,
-        discount:100,
+        discount: 100,
         image: { imageUrl: "https://mcc-jo.com/wp-content/uploads/2024/05/FANTECH-RAIGOR-III-WG12R-GAMING-MOUSE-GREY.png", imageID: '' },
         count: 0,
         categories: ["Men"],
@@ -410,7 +410,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         id: 8,
         name: "Product D",
         price: 300,
-        discount:120,
+        discount: 120,
         image: { imageUrl: "https://static.vecteezy.com/system/resources/thumbnails/010/175/452/small/white-cream-jar-bottle-beauty-cosmetic-blank-mockup-3d-illustration-free-png.png", imageID: '' },
         count: 0,
         categories: ["Men"],
@@ -701,32 +701,17 @@ export const StoreProvider = ({ children, passedStore }) => {
 
   useEffect(() => {
     if (store?.fetchedFromBackend) {
-      const initializeLocalStorage = () => {
-        if (!localStorage.getItem('store')) {
-          localStorage.setItem('store', JSON.stringify({ name: store.name }));
-        }
-      };
-
-      const storedStore = JSON.parse(localStorage.getItem('store'));
+      const storedStore = localStorage.getItem('store');
 
       if (storedStore && storedStore.name !== store.name) {
-        localStorage.setItem('cart', JSON.stringify([]));
-        localStorage.setItem('cartCount', '0');
+        localStorage.removeItem('cart');
+        localStorage.removeItem('cartCount');
         localStorage.setItem('store', JSON.stringify({ name: store.name }));
       }
 
-      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-      const storedCartCount = parseInt(localStorage.getItem('cartCount'), 10) || 0;
 
-      setStore(prevState => ({
-        ...prevState,
-        cart: storedCart,
-        cartCount: storedCartCount
-      }));
-
-      initializeLocalStorage();
     }
-  }, [store?.name, store?.fetchedFromBackend]);
+  }, [store?.name, store?.fetchedFromBackend ,store]);
 
   const addToCart = (product) => {
     console.log(product, "Product being added");
