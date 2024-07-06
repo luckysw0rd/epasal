@@ -257,7 +257,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         description: "A vintage-inspired chronometer with a nostalgic design, perfect for the modern man. ansod ansdoan oandosna onasda onadonadon oansdand andansd anaspdna daonsdoansd asndasda sdaonsdasd adooasd asdad asdnansd adoamds d adoandnald ",
       },
       {
-        id: 2,
+        id: 5,
         name: "Product A",
         price: 300,
         discount:50,
@@ -307,7 +307,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         }]
       },
       {
-        id: 2,
+        id: 6,
         name: "Product B",
         price: 300,
         discount:200,
@@ -357,7 +357,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         }]
       },
       {
-        id: 2,
+        id: 7,
         name: "Product C",
         price: 300,
         discount:100,
@@ -407,7 +407,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         }]
       },
       {
-        id: 2,
+        id: 8,
         name: "Product D",
         price: 300,
         discount:120,

@@ -63,7 +63,7 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
         if (store?.isEdit) {
             handleRemoveProduct({ id: product._id, storeId: store._id })
         } else {
-            handleRemoveProduct({ id: product._id })
+            handleRemoveProduct({ id: product.id })
         }
     }
 
