@@ -19,7 +19,7 @@ const Stores = () => {
     const [minDueAmount, setMinDueAmount] = useState(0);
     const [maxDueAmount, setMaxDueAmount] = useState(500);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(2);
+    const [limit, setLimit] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
     const [hasNextPage, setHasNextPage] = useState(true);
     const [selectedStore, setSelectedStore] = useState(null);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../../Hooks/AuthContext';
-import { FaSortAmountUpAlt, FaSortAmountDownAlt, FaFilter } from 'react-icons/fa';
+import { FaFilter } from 'react-icons/fa';
 import useFetch from '../../../Hooks/useFetch';
 
 const StoreList = () => {
@@ -35,7 +35,7 @@ const StoreList = () => {
 
     useEffect(() => {
         fetchStoreNames();
-    }, [page, limit]);
+    }, [page, limit, sort]);
 
     const handleFilter = () => {
         fetchStoreNames();
@@ -46,86 +46,91 @@ const StoreList = () => {
     };
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Total Revenue</h1>
-            <p1>{totalSales}</p1>
-            <h1 className="text-2xl font-bold mb-4">Store Names</h1>
-            <div className="flex flex-col md:flex-row md:items-end gap-4 mb-4">
-                <div className="flex flex-col">
-                    <label className="mb-2">Min Sales:</label>
-                    <input
-                        type="number"
-                        className="p-2 border rounded"
-                        value={minSales}
-                        onChange={(e) => setMinSales(e.target.value)}
-                    />
-                </div>
-                <div className="flex flex-col">
-                    <label className="mb-2">Max Sales:</label>
-                    <input
-                        type="number"
-                        className="p-2 border rounded"
-                        value={maxSales}
-                        onChange={(e) => setMaxSales(e.target.value)}
-                    />
-                </div>
-                <div className="flex flex-col">
-                    <label className="mb-2">Sort By Revenue:</label>
-                    <select
-                        className="p-2 border rounded"
-                        value={sort}
-                        onChange={(e) => setSort(e.target.value)}
+        <div className="p-6 bg-gray-50 min-h-screen">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+                    <div>
+                        <h1 className="text-4xl font-bold mb-2 text-gray-800">Total Revenue</h1>
+                        <p className="text-2xl text-gray-600">Nrs {totalSales.toLocaleString()}</p>
+                    </div>
+                    <button
+                        onClick={handleFilter}
+                        className="mt-4 md:mt-0 p-3 bg-blue-500 text-white rounded shadow hover:bg-blue-600 transition-colors flex items-center"
                     >
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
+                        <FaFilter className="mr-2" /> Apply Filters
+                    </button>
                 </div>
-                <div className="flex flex-col">
-                    <label className="mb-2">Items per page:</label>
-                    <input
-                        type="number"
-                        className="p-2 border rounded"
-                        value={limit}
-                        onChange={(e) => setLimit(e.target.value)}
-                    />
-                </div>
-                <button
-                    onClick={handleFilter}
-                    className="p-2 bg-blue-500 text-white rounded flex items-center"
-                >
-                    <FaFilter className="mr-2" /> Apply Filters
-                </button>
-            </div>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {storeData.map((store, index) => (
-                        <li
-                            key={index}
-                            className="border p-4 rounded shadow hover:shadow-lg transition-shadow"
+                <div className="flex flex-col md:flex-row md:items-end gap-6 mb-8">
+                    <div className="flex flex-col">
+                        <label className="mb-2 font-medium text-gray-700">Min Sales:</label>
+                        <input
+                            type="number"
+                            className="p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                            value={minSales}
+                            onChange={(e) => setMinSales(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="mb-2 font-medium text-gray-700">Max Sales:</label>
+                        <input
+                            type="number"
+                            className="p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                            value={maxSales}
+                            onChange={(e) => setMaxSales(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="mb-2 font-medium text-gray-700">Sort By Revenue:</label>
+                        <select
+                            className="p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                            value={sort}
+                            onChange={(e) => setSort(e.target.value)}
                         >
-                            <h2 className="text-lg font-bold">{store.storeName}</h2>
-                            <p>Revenue: Nrs {store.revenueGenerated.toLocaleString()}</p>
-                        </li>
-                    ))}
-                </ul>
-            )}
-            <div className="flex justify-between items-center mt-4">
-                <button
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={page === 1}
-                    className="p-2 bg-gray-200 rounded disabled:bg-gray-300"
-                >
-                    Previous
-                </button>
-                <p>Page {page}</p>
-                <button
-                    onClick={() => handlePageChange(page + 1)}
-                    className="p-2 bg-gray-200 rounded"
-                >
-                    Next
-                </button>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="mb-2 font-medium text-gray-700">Items per page:</label>
+                        <input
+                            type="number"
+                            className="p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                            value={limit}
+                            onChange={(e) => setLimit(e.target.value)}
+                        />
+                    </div>
+                </div>
+                {isLoading ? (
+                    <p className="text-center text-gray-500">Loading...</p>
+                ) : (
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        {storeData.map((store, index) => (
+                            <li
+                                key={index}
+                                className="border p-6 rounded shadow-lg hover:shadow-xl transition-shadow bg-white"
+                            >
+                                <h2 className="text-xl font-bold mb-2 text-gray-800">{store.storeName}</h2>
+                                <p className="text-gray-600">Revenue: Nrs {store.revenueGenerated.toLocaleString()}</p>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                <div className="flex justify-between items-center mt-8">
+                    <button
+                        onClick={() => handlePageChange(page - 1)}
+                        disabled={page === 1}
+                        className="p-3 bg-gray-200 rounded shadow disabled:bg-gray-300 hover:bg-gray-300 transition-colors"
+                    >
+                        Previous
+                    </button>
+                    <p className="text-lg font-medium">Page {page}</p>
+                    <button
+                        onClick={() => handlePageChange(page + 1)}
+                        className="p-3 bg-gray-200 rounded shadow hover:bg-gray-300 transition-colors"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     );
