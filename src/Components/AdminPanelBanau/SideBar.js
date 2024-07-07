@@ -6,7 +6,7 @@ import { FaUserAlt, FaClipboardList, FaBox } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
 import banau from '../../Assets/banau.png';
-
+import { IoAnalytics } from "react-icons/io5";
 const SideBar = ({ setDashboardState }) => {
   const navigate = useNavigate();
   const { open, setOpen } = useSiderBar();
@@ -25,7 +25,7 @@ const SideBar = ({ setDashboardState }) => {
     { name: "Stores", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Logs", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Employee", link: "/adminpanelbanau", icon: FaUserAlt },
-    { name: "Analytics", link: "/adminpanelbanau", icon: FaUserAlt },
+    { name: "Analytics", link: "/adminpanelbanau", icon: IoAnalytics  },
     // { name: "Order", link: "/adminpanel", icon: FaClipboardList },
     // { name: "Product", link: "/adminpanel", icon: FaBox },
     // { name: "Edit Store", link: "/adminpanel", icon: MdEdit },
