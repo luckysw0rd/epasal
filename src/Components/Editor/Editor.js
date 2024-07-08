@@ -1395,7 +1395,7 @@ const Editor = () => {
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
         <motion.div key='first' initial={{ x: 20 }} exit={{ x: 500 }} transition={{ duration: 0.3 }} animate={{ x: 0 }} className='fixed top-0 right-0 w-80 h-screen overflow-y-scroll bg-white z-20 border-2 border-gray-200 text-gray-600'>
           {/* <h1 className=' mt-[20px] text-[#6A6A6A] text-xl font-bold border-b-2 border-black pb-4 w-full px-4 font-Poppins'></h1> */}
-          <div className="fixed bg-white">
+          <div className="fixed bg-white z-10">
             <div className=" relative w-[100%] flex px-5 my-5 ">
               <div
                 className='text-gray-600  top-[26px] text-[16px]  flex items-center justify-between font-semibold border-2 px-3 py-2 border-gray-900 rounded-lg bg-white shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out'

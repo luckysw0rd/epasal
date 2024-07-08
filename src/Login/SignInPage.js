@@ -22,9 +22,11 @@ const SignInPage = () => {
     const [newPassword, setNewPassword] = useState('');
     const [otp, setOtp] = useState('');
     const [canResendOTP, setCanResendOTP] = useState(true);
+    const [isPolicyChecked,setIsPolicyChecked]=useState(false)
     const [timer, setTimer] = useState(0);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
+    const [isTimeOut,setIsTimeOut]=useState(false)
 
     useEffect(() => {
         if (window.location.pathname === '/login') {
@@ -44,6 +46,15 @@ const SignInPage = () => {
             }
         }
     }, []);
+
+    useEffect(()=>{
+        if(!isTimeOut){
+            setIsTimeOut(true)
+            setTimeout(()=>{
+                setIsTimeOut(false)
+            },3000)    //30sec timeout
+        }
+    },[isTimeOut])
 
     const toggleForm = () => {
         setIsSignIn(!isSignIn);
@@ -92,6 +103,8 @@ const SignInPage = () => {
     const handleSignUp = async (e) => {
         try {
             e.preventDefault();
+            if(!isTimeOut){
+            setIsTimeOut(true)
             const responseData = await sendRequest(
                 'users/signup',
                 'POST',
@@ -115,6 +128,9 @@ const SignInPage = () => {
                 toast.error(error.message || "Sign Up Failure");
                 console.error('Unexpected response format:', responseData);
             }
+        }else{
+            toast.error("You are in cooldown")
+        }
         } catch (error) {
             console.error(error.message || 'An error occurred during signup');
         }
@@ -249,9 +265,15 @@ const SignInPage = () => {
                                         <span onClick={() => setShowForgotPasswordModal(true)} className="font-semibold text-md cursor-pointer my-2">Forgot password</span>
                                     </div>
                                 ) : null}
+                                {
+                                    !isSignIn ? (
+                                            <span className='text-gray-600 my-2 ml-2'><input value={isPolicyChecked} onClick={(e)=>setIsPolicyChecked(e.target.checked)} type='checkbox'/> Accept <a className='text-blue-600 underline' target='_blank' href='/terms-and-conditions'>Terms and Conditions</a></span>
+                                    ):null
+                                }
                                 <button
                                     className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
                                     onClick={isSignIn ? handleSignIn : handleSignUp}
+                                    disabled={!isSignIn && !isPolicyChecked}
                                 >
                                     {isSignIn ? 'Sign in' : 'Sign up'}
                                 </button>
