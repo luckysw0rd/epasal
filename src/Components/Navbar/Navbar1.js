@@ -323,7 +323,7 @@ const Navbar1 = ({
 
     return (
         <motion.nav
-            className={`flex  items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${scrolling ? 'bg-brown-700' : 'bg-transparent'
+            className={`flex items-center justify-between px-6 py-4 shadow-md fixed w-screen z-20 transition-all duration-300 ${scrolling ? 'bg-brown-700' : 'bg-transparent'
                 }`}
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -401,7 +401,7 @@ const Navbar1 = ({
                             })}
                         </ul>}
                 </div>
-                <button onClick={handleCartClick} className="relative">
+                <button onClick={handleCartClick} className="relative hidden md:flex">
                     <FaShoppingCart className="text-2xl" />
                     {cartItems.length > 0 && (
                         <span className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 bg-red-500 rounded-full text-white px-1 py-0.5 text-xs">
@@ -415,7 +415,7 @@ const Navbar1 = ({
                         onClick={() => {
                             setStore(prev => ({ ...prev, previewMode: !store.previewMode }));
                         }}
-                        className={`h-12 bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 text-sm rounded transition duration-200  ${isAnimating ? 'animate-flashy-border border-2' : 'border-2 border-transparent hover:border-black'
+                        className={` bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 text-sm rounded transition duration-200  ${isAnimating ? 'animate-flashy-border border-2' : 'border-2 border-transparent hover:border-black'
                             }`}
                     >
                         {store.previewMode ? 'Preview Mode' : 'Edit'}

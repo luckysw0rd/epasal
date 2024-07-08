@@ -79,7 +79,7 @@ const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName }) => {
             className="w-full px-0  h-60 sm:h-[350px] md:h-[400px] lg:h-[400px] object-cover"
           />
         </div>
-        <div className="w-full gap-y-5  pl-16  sm:w-full ml-4 md:w-1/2  lg:w-1/2 flex flex-col justify-center items-start md:py-4 py-4 sm:py-5  h-full">
+        <div className="w-full gap-y-5  pl-16  sm:w-full md:w-1/2  lg:w-1/2 flex flex-col justify-center items-start md:py-4 py-4 sm:py-5  h-full">
           {previewMode ? (
             < >
               <h2

@@ -26,7 +26,6 @@ const SignInPage = () => {
     const [timer, setTimer] = useState(0);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
-    const [isTimeOut,setIsTimeOut]=useState(false)
 
     useEffect(() => {
         if (window.location.pathname === '/login') {
@@ -47,14 +46,7 @@ const SignInPage = () => {
         }
     }, []);
 
-    useEffect(()=>{
-        if(!isTimeOut){
-            setIsTimeOut(true)
-            setTimeout(()=>{
-                setIsTimeOut(false)
-            },3000)    //30sec timeout
-        }
-    },[isTimeOut])
+
     useEffect(() => {
         let interval;
         if (!canResendOTP) {
@@ -119,8 +111,6 @@ const SignInPage = () => {
     const handleSignUp = async (e) => {
         try {
             e.preventDefault();
-            if(!isTimeOut){
-            setIsTimeOut(true)
             const responseData = await sendRequest(
                 'users/signup',
                 'POST',
@@ -144,10 +134,8 @@ const SignInPage = () => {
                 toast.error(error.message || "Sign Up Failure");
                 console.error('Unexpected response format:', responseData);
             }
-        }else{
-            toast.error("You are in cooldown")
         }
-        } catch (error) {
+        catch (error) {
             console.error(error.message || 'An error occurred during signup');
         }
     };
