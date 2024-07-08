@@ -84,6 +84,9 @@ const Navbar = ({ navbarImage, setStores }) => {
 
     const searchStore = async (e) => {
         e.preventDefault();
+        if(searchTerm===''){
+            return
+        }
         try {
             console.log(searchTerm);
             const responseData = await sendRequest(
@@ -129,14 +132,14 @@ const Navbar = ({ navbarImage, setStores }) => {
                         </defs>
                     </svg>
                     <div >
-                        <form onSubmit={searchStore} className={`h-10 ${searchData.length > 0 ? 'rounded-t-3xl' : 'rounded-3xl'} bg-white items-center px-2 hidden md:flex`}>
+                        <form onSubmit={searchStore} className={`h-10 ${searchData.length > 0 && searchTerm!=='' ? 'rounded-t-3xl' : 'rounded-3xl'} bg-white items-center px-2 hidden md:flex`}>
 
                             <input onChange={(e) => { setSearchTerm(e.target.value) }} type='text' value={searchTerm} className='max-w-[160px] appearance-none border border-none rounded pl-2 focus:outline-none focus:border-none' />
                             <button className='p-2 rounded-full bg-[#F38825] text-white' type='submit' >
                                 <FaSearch />
                             </button>
                         </form>
-                        {searchData.length > 0 && <div className='relative hidden md:flex'>
+                        {searchData.length > 0 && searchTerm!=='' && <div className='relative hidden md:flex'>
                             <div className='absolute top-0 bg-white w-full rounded-b-3xl py-3 pl-3'>
                                 {searchData.map((n, i) => {
                                     return <div className='flex gap-4 py-1 items-center'>

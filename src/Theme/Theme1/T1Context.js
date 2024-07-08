@@ -51,7 +51,7 @@ export const StoreProvider = ({ children, passedStore }) => {
 
 
   const defaultStoreData = {
-    name: "",
+    name: "Store Name",
     location: "",
     email: "",
     phoneNumber: "",

@@ -9,8 +9,8 @@ import BanauThemeImage3 from "../../Assets/BanauthemeImage3.png"
 const BanauTheme = () => {
     return (
         <div className="p-4 py-8 md:py-10 lg:py-20 w-full">
-            <div className="flex gap-5 lg:gap-10 p-8 lg:p-10 xl:p-16 2xl:p-20 bg-gray-800 rounded-lg text-white">
-                <div className="flex flex-col gap-5 xl:gap-10">
+            <div className="flex justify-center gap-5 lg:gap-10 p-8 lg:p-10 xl:p-16 2xl:p-20 bg-gray-800 rounded-lg text-white">
+                <div className="flex flex-col gap-5 xl:gap-10 ">
                     <h1 className="text-2xl lg:text-3xl 2xl:text-5xl font-bold">Banau <span className="text-blue-400">Themes</span></h1>
                     <p className="md:text-xs xl:text-base 2xl:text-xl mt-2">
                         "Transform your online store with Banau's stunning skins, featuring customizable design cards and banners—some free, some premium!"
@@ -20,7 +20,7 @@ const BanauTheme = () => {
                         <FaPlay />
                     </button>
                 </div>
-                <div className="hidden md:flex">
+                <div className="hidden lg:flex">
                     <div className="flex items-center h-80 lg:h-96 2xl:h-[500px] space-x-4">
                         <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px] md:h-[302px] lg:h-[382px] 2xl:h-[500px] rounded-lg xl:rounded-xl bg-[#E6E6FA] flex card hover:card-flip">
                             <div className="card-inner ">

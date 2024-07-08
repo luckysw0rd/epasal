@@ -36,9 +36,9 @@ const StoreList = ({ stores }) => {
                 <h2 className="text-2xl text-center text-[#141414] mb-6 font-bold">Trending Stores</h2>
             }
             <div className="flex justify-center flex-wrap">
-                {stores.map(store => (
+                {stores.length>0 ?stores.map(store => (
                     <StoreCard key={store._id} store={store} auth={auth} />
-                ))}
+                )):<div className='text-center text-gray-400 text-xl my-20'>Store Unavailable</div>}
             </div>
         </div>
     );
