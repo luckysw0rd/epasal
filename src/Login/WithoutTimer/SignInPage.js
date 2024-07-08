@@ -22,11 +22,9 @@ const SignInPage = () => {
     const [newPassword, setNewPassword] = useState('');
     const [otp, setOtp] = useState('');
     const [canResendOTP, setCanResendOTP] = useState(true);
-    const [isPolicyChecked,setIsPolicyChecked]=useState(false)
     const [timer, setTimer] = useState(0);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
-    const [isTimeOut,setIsTimeOut]=useState(false)
 
     useEffect(() => {
         if (window.location.pathname === '/login') {
@@ -46,31 +44,6 @@ const SignInPage = () => {
             }
         }
     }, []);
-
-    useEffect(()=>{
-        if(!isTimeOut){
-            setIsTimeOut(true)
-            setTimeout(()=>{
-                setIsTimeOut(false)
-            },3000)    //30sec timeout
-        }
-    },[isTimeOut])
-    useEffect(() => {
-        let interval;
-        if (!canResendOTP) {
-            interval = setInterval(() => {
-                setTimer(prevTimer => {
-                    if (prevTimer <= 1) {
-                        clearInterval(interval);
-                        setCanResendOTP(true);
-                        return 0;
-                    }
-                    return prevTimer - 1;
-                });
-            }, 1000);
-        }
-        return () => clearInterval(interval);
-    }, [canResendOTP]);
 
     const toggleForm = () => {
         setIsSignIn(!isSignIn);
@@ -119,8 +92,6 @@ const SignInPage = () => {
     const handleSignUp = async (e) => {
         try {
             e.preventDefault();
-            if(!isTimeOut){
-            setIsTimeOut(true)
             const responseData = await sendRequest(
                 'users/signup',
                 'POST',
@@ -144,9 +115,6 @@ const SignInPage = () => {
                 toast.error(error.message || "Sign Up Failure");
                 console.error('Unexpected response format:', responseData);
             }
-        }else{
-            toast.error("You are in cooldown")
-        }
         } catch (error) {
             console.error(error.message || 'An error occurred during signup');
         }
@@ -171,9 +139,6 @@ const SignInPage = () => {
             console.log(responseData.message);
             setShowForgotPasswordModal(false);
             setShowUpdatePasswordModal(true);
-            setCanResendOTP(false);
-            setTimer(2 * 60);
-            localStorage.setItem('otpLastSentTime', Date.now().toString());
         } catch (error) {
             console.error(error.message || 'An error occurred during signup');
             toast.error(error.message);
@@ -284,18 +249,18 @@ const SignInPage = () => {
                                         <span onClick={() => setShowForgotPasswordModal(true)} className="font-semibold text-md cursor-pointer my-2">Forgot password</span>
                                     </div>
                                 ) : null}
-                                {
-                                    !isSignIn ? (
-                                            <span className='text-gray-600 my-2 ml-2'><input value={isPolicyChecked} onClick={(e)=>setIsPolicyChecked(e.target.checked)} type='checkbox'/> Accept <a className='text-blue-600 underline' target='_blank' href='/terms-and-conditions'>Terms and Conditions</a></span>
-                                    ):null
-                                }
                                 <button
                                     className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
                                     onClick={isSignIn ? handleSignIn : handleSignUp}
-                                    disabled={!isSignIn && !isPolicyChecked}
                                 >
                                     {isSignIn ? 'Sign in' : 'Sign up'}
                                 </button>
+                                {/* {!canResendOTP && (
+                            <div className="text-center text-sm text-gray-500 mb-4">
+                                Wait for {timer} seconds to resend OTP
+                            </div>
+                        )} */}
+
                                 <div className="cursor-pointer text-center flex flex-col text-gray-400" onClick={toggleForm}>
                                     {isSignIn ? "Don't have an account?" : "Already have an account?"}
                                     <span className="font-bold text-black">
@@ -322,15 +287,33 @@ const SignInPage = () => {
                                     onKeyDown={handleKeyDown}
                                 />
                                 <button
-                                    className="w-full mt-1 bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                                    className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
                                     onClick={handleForgotPassword}
-                                    disabled={!canResendOTP}
                                 >
-                                    {canResendOTP ? 'Send OTP' : `Resend OTP in ${timer} seconds`}
+                                    Send OTP
                                 </button>
-
+                            </div>
+                        </div>
+                    )}
+                    {showForgotPasswordModal && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="bg-white p-8 rounded-lg shadow-lg">
+                                <h2 className="text-xl font-semibold mb-4">Forgot Password</h2>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                                    placeholder="Enter your email"
+                                    value={forgotPasswordEmail}
+                                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                                />
                                 <button
-                                    className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300 w-full mt-1"
+                                    className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
+                                    onClick={handleForgotPassword}
+                                >
+                                    {canResendOTP ? 'Send OTP' : `Resend OTP in ${2} Minutes`}
+                                </button>
+                                <button
+                                    className="w-full bg-black text-white p-2 rounded-lg mb-2 hover:bg-white hover:text-black hover:border hover:border-gray-300"
                                     onClick={e => {
                                         try {
                                             if (!forgotPasswordEmail || forgotPasswordEmail === '')
@@ -345,19 +328,26 @@ const SignInPage = () => {
                                     Already have an OTP?
                                 </button>
                                 <button
-                                    className="bg-black text-white p-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300 w-full mt-1"
+                                    className="w-full bg-gray-300 text-black p-2 rounded-lg hover:bg-gray-400"
                                     onClick={() => setShowForgotPasswordModal(false)}
                                 >
                                     Cancel
                                 </button>
+
                             </div>
                         </div>
                     )}
-
                     {showUpdatePasswordModal && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white p-8 rounded-lg shadow-lg">
                                 <h2 className="text-xl font-semibold mb-4">Update Password</h2>
+                                {/* {forgotPasswordEmail === '' && <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                            placeholder="Enter your email"
+                            value={forgotPasswordEmail}
+                            onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                        />} */}
                                 <input
                                     type="text"
                                     className="w-full p-2 border border-gray-300 rounded-md mb-4"
@@ -397,6 +387,7 @@ const SignInPage = () => {
             }
         </>
     );
+
 };
 
 export default SignInPage;

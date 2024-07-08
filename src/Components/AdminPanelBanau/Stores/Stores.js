@@ -508,46 +508,7 @@ const Stores = () => {
                                     <FaPhone className="mr-2 text-green-500" />
                                     <u className='text-blue-600 cursor-pointer'>{store.phoneNumber}</u>
                                 </div>
-                                {/* <div className=" text-gray-700">
-                                    <FaEnvelope className="mr-2 text-red-500" />
-                                    <u className='text-blue-600 cursor-pointer'>{store.email}</u>
-                                </div> */}
-                                {/* <div>
-                                    <button
-                                        className="flex items-center text-sm bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 w-full"
-                                        onClick={() => console.log({ store })}
-                                    >
-                                        <FaEye className="mr-2" />
-                                        Transactions
-                                    </button>
-                                </div>
-                                <div>
-                                    <button
-                                        className="flex items-center text-sm bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 w-full"
-                                        onClick={() => console.log({ esewa: store.esewa })}
-                                    >
-                                        <img src={esewaIcon} alt="icon" className="mr-2 w-4 h-4 " />
-                                        Pay Now
-                                    </button>
-                                </div>
-                                <div>
-                                    <button
-                                        className="flex items-center text-sm bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 w-full"
-                                        onClick={() => console.log({ khalti: store.khalti })}
-                                    >
-                                        <img src={khaltiIcon} alt="icon" className="mr-2 w-4 h-4 " />
-                                        Pay Now
-                                    </button>
-                                </div>
-                                <div>
-                                    <button
-                                        className="flex items-center text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full"
-                                        onClick={() => console.log({ khalti: store.bank })}
-                                    >
-                                        <img src={fonepayIcon} alt="icon" className="mr-2 w-4 h-4 " />
-                                        Pay Now
-                                    </button>
-                                </div> */}
+
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-1 gap-1 mt-5">
