@@ -25,7 +25,6 @@ const AllProducts = () => {
   const [maxPrice, setMaxPrice] = useState(1000);
   const [name, setName] = useState(''); // State for the name filter input
   const [isFilterVisible, setIsFilterVisible] = useState(false); // State for filter visibility
-  const [checkedItems, setCheckedItems] = useState({});
 
   useEffect(() => {
     if (storeName) {
@@ -192,10 +191,6 @@ const AllProducts = () => {
 
   const handleFilterChange = (e) => {
     const { name, value, type, checked, id } = e.target;
-    setCheckedItems({
-      ...checkedItems,
-      [id]: checked,
-    });
 
     if (type === 'checkbox') {
       if (checked) {
@@ -217,28 +212,6 @@ const AllProducts = () => {
     }
   };
 
-  const clearFilter = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    if (type === 'checkbox') {
-      if (checked) {
-        setFilters(prevFilters => ({
-          ...prevFilters,
-          category: [...prevFilters.category, []]
-        }));
-      } else {
-        setFilters(prevFilters => ({
-          ...prevFilters,
-          category: prevFilters.category.filter(cat => cat !== value)
-        }));
-      }
-    } else {
-      setFilters(prevFilters => ({
-        ...prevFilters,
-        [name]: value
-      }));
-    }
-  };
 
   const clearSearch = () => {
     handleRatingChange(0)
@@ -365,7 +338,6 @@ const AllProducts = () => {
                       <input
                         type="checkbox"
                         id={`subCategory-${index}`}
-                        checked={checkedItems[`subCategory-${index}`] || false} name="category"
                         value={subCategory.name}
                         onChange={handleFilterChange}
                         className="mr-2"
