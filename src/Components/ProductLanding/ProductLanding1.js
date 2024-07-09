@@ -140,7 +140,7 @@ const ProjectLanding1 = () => {
                     const effectivePrice = variantPrice > 0 ? variantPrice - variantDiscount : basePrice - discount;
 
                     // Add to the total price
-                    return total + effectivePrice;
+                    return  effectivePrice;
                 }, 0);
             }
         }
