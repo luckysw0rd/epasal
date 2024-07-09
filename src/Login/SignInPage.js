@@ -99,7 +99,7 @@ const SignInPage = () => {
         } catch (error) {
             console.log(error.message);
             if (error?.message === 'User not verified') {
-                toast.warn("Please Verify Your Email Address");
+                toast.warn("OTP sent to email address , please verify yourself");
                 setShowOverlay(true);
             } else {
                 toast.error(error.message || "Sign In Failure");
@@ -127,8 +127,7 @@ const SignInPage = () => {
 
             if (responseData && responseData.message) {
                 console.log(responseData.message);
-                toast.warn("Please Verify Your Email Address");
-
+                toast.warn("OTP sent to email address , please verify yourself");
                 setShowOverlay(true);
             } else {
                 toast.error(error.message || "Sign Up Failure");
