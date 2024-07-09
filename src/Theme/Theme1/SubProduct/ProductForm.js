@@ -15,6 +15,7 @@ export default function ProductForm({ onClose }) {
     const [tempLoading , setTempLoading] = useState(false);
     const { setStore, store } = useStore();
     const auth = useContext(AuthContext);
+
     const initialState = {
         name: '',
         description: '',
