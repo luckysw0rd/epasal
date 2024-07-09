@@ -5,8 +5,7 @@ import { AuthContext } from '../../../Hooks/AuthContext';
 import { toast } from 'react-toastify';
 import { useImage } from '../../../Hooks/useImage';
 import { FaDollarSign, FaPercent, FaChartLine, FaBox, FaEdit } from 'react-icons/fa';
-import Loading from "../../Loading/Loading";
-import ProductForm from '../../../Theme/Theme1/SubProduct/ProductForm';
+import Loading from "../../Loading/Loading"
 
 const Product = ({ store }) => {
   const initialProducts = [];
@@ -28,6 +27,16 @@ const Product = ({ store }) => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [minPrice, setMinPrice] = useState(''); // Added state for minPrice
   const [maxPrice, setMaxPrice] = useState(''); // Added state for maxPrice
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
+
+  const handleSubCategoryChange = (event) => {
+    const { value } = event.target;
+    setSelectedSubCategory(value);
+    setEditProduct({
+      ...editProduct,
+      subCategory: value
+    });
+  };
 
   const fetchProducts = async (limit = 10, search = '', sortOrder = 'asc') => {
     try {
@@ -145,10 +154,11 @@ const Product = ({ store }) => {
       );
 
       updatedEditProduct.variant = updatedVariants;
-
+      updatedEditProduct.subCategories = selectedSubCategory;
       const updates = {
         name: updatedEditProduct.name,
         description: updatedEditProduct.description,
+        subcategories: [updatedEditProduct.subCategories],
         price: updatedEditProduct.price,
         rating: updatedEditProduct.rating,
         image: updatedEditProduct.image,
@@ -159,6 +169,7 @@ const Product = ({ store }) => {
         revenueGenerated: updatedEditProduct.revenueGenerated,
       };
 
+      console.log(updates);
       const response = await sendRequest(
         `product/updateProduct?storeID=${store._id}`,
         'PUT',
@@ -275,91 +286,64 @@ const Product = ({ store }) => {
 
   const ProductImageDropzone = ({ imageUrl, setImageUrl }) => {
     const { getRootProps, getInputProps } = useDropzone({
-      onDrop: (files) => handleImageUpload(files, setImageUrl),
+      accept: 'image/*',
+      onDrop: (acceptedFiles) => handleImageUpload(acceptedFiles, setImageUrl),
     });
-  
+
     return (
-      <div
-        {...getRootProps()}
-        className="border-dashed border-2 border-gray-500 cursor-pointer relative"
-        style={{ width: 'fit-content', height: 'fit-content' }}
-      >
+      <div {...getRootProps()} className="border-2 border-dashed border-gray-300 p-2 rounded-lg hover:border-blue-300 cursor-pointer transition duration-300 ease-in-out">
         <input {...getInputProps()} />
         {imageUrl ? (
-          <img 
-            className="object-contain" 
-            src={imageUrl} 
-            alt="Product"
-            style={{ maxWidth: '320px', maxHeight: '320px', display: 'block' }} 
-          />
+          <img src={imageUrl} alt="Product" className="h-32 w-32 object-cover mx-auto" />
         ) : (
-          <div
-            className="p-4 flex items-center justify-center"
-            style={{ width: '320px', height: '320px' }}
-          >
-            <p className="text-center">Drag 'n' drop some files here, or click to select files</p>
-          </div>
+          <p className="text-center text-gray-500">Drag 'n' drop an image here, or click to select an image</p>
         )}
       </div>
     );
   };
-
-  const [isProductFormVisible, setIsProductFormVisible] = useState(false);
-
-  const toggleProductForm = () => {
-    setIsProductFormVisible(!isProductFormVisible);
-  };
-  
-  
 
   return (
     isLoading ? <Loading /> :
       store && (
         <div>
           <div className="flex flex-col px-2 justify-between mb-4 gap-2">
-      <div className="flex gap-2">
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={searchQuery}
-          onChange={(event) => handleSearchChange(event)}
-          className="border p-2 px-3 h-10 flex-grow"
-        />
-        <button onClick={handleSearchButton} className="bg-gray-400 text-white h-10 px-5">
-          Go
-        </button>
-      </div>
-      <select value={sortOrder} onChange={handleSortChange} className="border p-2 mt-2">
-        <option value="asc">Sort by Revenue (Asc)</option>
-        <option value="desc">Sort by Revenue (Desc)</option>
-      </select>
-      <div className="flex mt-2">
-        <input
-          type="number"
-          placeholder="Min Price"
-          value={minPrice}
-          onChange={(e) => setMinPrice(e.target.value)}
-          className="border p-2 px-3 mr-2"
-        />
-        <input
-          type="number"
-          placeholder="Max Price"
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
-          className="border p-2 px-3 mr-2"
-        />
-        <button
-          className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
-          onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
-        >
-          Apply Filters
-        </button>
-        <button className="bg-green-500 text-white px-4 py-2 ml-2 rounded" onClick={toggleProductForm}>
-          Add Product
-        </button>
-      </div>
-      <ProductForm/ >
-    </div>
+            <div className='flex gap-2'>
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(event) => handleSearchChange(event)}
+                className="border p-2 px-3 h-10 flex-grow"
+              />
+              <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
+            </div>
+            <select value={sortOrder} onChange={handleSortChange} className="border p-2">
+              <option value="asc">Sort by Revenue (Asc)</option>
+              <option value="desc">Sort by Revenue (Desc)</option>
+            </select>
+            <div className="flex mt-2">
+              <input
+                type="number"
+                placeholder="Min Price"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+                className="border p-2 px-3 mr-2"
+              />
+              <input
+                type="number"
+                placeholder="Max Price"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+                className="border p-2 px-3 mr-2"
+              />
+              <button
+                className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
+                onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
+              >
+                Apply Filters
+              </button>
+            </div>
+          </div>
           <div className="flex flex-wrap gap-8 p-4 justify-center">
             {products.map((product, productIndex) => (
               <div
@@ -448,14 +432,24 @@ const Product = ({ store }) => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Categories</label>
-                  <textarea
-                    name="subcategories"
-                    value={editProduct.subcategories}
-                    onChange={handleInputChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
+                <div className=''>
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
+                    Category
+                  </label>
+                  <select
+                    id="subcategory"
+                    name="category"
+
+                    value={selectedSubCategory}
+                    onChange={handleSubCategoryChange}
+                    // multiple // Allow multiple selections
+                    onWheel={(e) => e.target.blur()}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
+                  >
+                    {store.subCategories.map(subcategory => (
+                      <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
@@ -617,4 +611,3 @@ const Product = ({ store }) => {
 };
 
 export default Product;
-

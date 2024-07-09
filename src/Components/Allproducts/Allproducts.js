@@ -212,19 +212,17 @@ const AllProducts = () => {
     }
   };
 
-
   const clearSearch = () => {
-    handleRatingChange(0)
-    handlePriceChange("max", 1000)
-    handlePriceChange("min", 0)
-
     setFilters({
       priceRange: '',
       rating: '',
       category: [],
       name: ''
-    })
-    console.log(filters)
+    });
+    setMinPrice(0);
+    setMaxPrice(Number.MAX_SAFE_INTEGER); // Set max price to the largest possible number
+    setName('');
+    setPage(1);
     fetchProducts();
   };
 
