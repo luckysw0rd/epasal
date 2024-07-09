@@ -5,7 +5,8 @@ import { AuthContext } from '../../../Hooks/AuthContext';
 import { toast } from 'react-toastify';
 import { useImage } from '../../../Hooks/useImage';
 import { FaDollarSign, FaPercent, FaChartLine, FaBox, FaEdit } from 'react-icons/fa';
-import Loading from "../../Loading/Loading"
+import Loading from "../../Loading/Loading";
+import ProductForm from '../../../Theme/Theme1/SubProduct/ProductForm';
 
 const Product = ({ store }) => {
   const initialProducts = [];
@@ -276,61 +277,89 @@ const Product = ({ store }) => {
     const { getRootProps, getInputProps } = useDropzone({
       onDrop: (files) => handleImageUpload(files, setImageUrl),
     });
-
+  
     return (
-      <div {...getRootProps()} className="border-dashed border-2 border-gray-500 p-4 cursor-pointer">
+      <div
+        {...getRootProps()}
+        className="border-dashed border-2 border-gray-500 cursor-pointer relative"
+        style={{ width: 'fit-content', height: 'fit-content' }}
+      >
         <input {...getInputProps()} />
         {imageUrl ? (
-          <img className="w-full" src={imageUrl} alt="Product" />
+          <img 
+            className="object-contain" 
+            src={imageUrl} 
+            alt="Product"
+            style={{ maxWidth: '320px', maxHeight: '320px', display: 'block' }} 
+          />
         ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <div
+            className="p-4 flex items-center justify-center"
+            style={{ width: '320px', height: '320px' }}
+          >
+            <p className="text-center">Drag 'n' drop some files here, or click to select files</p>
+          </div>
         )}
       </div>
     );
   };
+
+  const [isProductFormVisible, setIsProductFormVisible] = useState(false);
+
+  const toggleProductForm = () => {
+    setIsProductFormVisible(!isProductFormVisible);
+  };
+  
+  
 
   return (
     isLoading ? <Loading /> :
       store && (
         <div>
           <div className="flex flex-col px-2 justify-between mb-4 gap-2">
-            <div className='flex gap-2'>
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(event) => handleSearchChange(event)}
-                className="border p-2 px-3 h-10 flex-grow"
-              />
-              <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
-            </div>
-            <select value={sortOrder} onChange={handleSortChange} className="border p-2">
-              <option value="asc">Sort by Revenue (Asc)</option>
-              <option value="desc">Sort by Revenue (Desc)</option>
-            </select>
-            <div className="flex mt-2">
-              <input
-                type="number"
-                placeholder="Min Price"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-                className="border p-2 px-3 mr-2"
-              />
-              <input
-                type="number"
-                placeholder="Max Price"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                className="border p-2 px-3 mr-2"
-              />
-              <button
-                className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
-                onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
-              >
-                Apply Filters
-              </button>
-            </div>
-          </div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={(event) => handleSearchChange(event)}
+          className="border p-2 px-3 h-10 flex-grow"
+        />
+        <button onClick={handleSearchButton} className="bg-gray-400 text-white h-10 px-5">
+          Go
+        </button>
+      </div>
+      <select value={sortOrder} onChange={handleSortChange} className="border p-2 mt-2">
+        <option value="asc">Sort by Revenue (Asc)</option>
+        <option value="desc">Sort by Revenue (Desc)</option>
+      </select>
+      <div className="flex mt-2">
+        <input
+          type="number"
+          placeholder="Min Price"
+          value={minPrice}
+          onChange={(e) => setMinPrice(e.target.value)}
+          className="border p-2 px-3 mr-2"
+        />
+        <input
+          type="number"
+          placeholder="Max Price"
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(e.target.value)}
+          className="border p-2 px-3 mr-2"
+        />
+        <button
+          className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
+          onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
+        >
+          Apply Filters
+        </button>
+        <button className="bg-green-500 text-white px-4 py-2 ml-2 rounded" onClick={toggleProductForm}>
+          Add Product
+        </button>
+      </div>
+      <ProductForm/ >
+    </div>
           <div className="flex flex-wrap gap-8 p-4 justify-center">
             {products.map((product, productIndex) => (
               <div
@@ -415,6 +444,15 @@ const Product = ({ store }) => {
                   <textarea
                     name="description"
                     value={editProduct.description}
+                    onChange={handleInputChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Categories</label>
+                  <textarea
+                    name="subcategories"
+                    value={editProduct.subcategories}
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
