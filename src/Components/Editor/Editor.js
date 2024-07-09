@@ -104,14 +104,17 @@ const Editor = () => {
       try {
         const importedPreset = JSON.parse(event.target.result);
         console.log("Imported Preset:", importedPreset);  // Log the imported preset
-        setStore(prevStore => ({
-          ...prevStore,
-          color: {
-            ...prevStore.color,
-            ...importedPreset,  // Assume importedPreset is an object with color properties
-          }
-        }));
-        console.log("Updated Store:", store);  // Log the store after setting the imported preset
+        setStore(prevStore => {
+          const updatedStore = {
+            ...prevStore,
+            color: {
+              ...prevStore.color,
+              ...importedPreset,  // Assume importedPreset is an object with color properties
+            }
+          };
+          console.log("Updated Store:", updatedStore);  // Log the store after setting the imported preset
+          return updatedStore;
+        });
         toast.success("Preset imported successfully!");
       } catch (error) {
         console.error("Error importing preset:", error);
@@ -120,6 +123,8 @@ const Editor = () => {
     };
     reader.readAsText(file);
   };
+  
+  
 
   // Handle file export
   const handleExportPreset = () => {

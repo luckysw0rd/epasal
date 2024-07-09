@@ -22,7 +22,7 @@ const SignInPage = () => {
     const [newPassword, setNewPassword] = useState('');
     const [otp, setOtp] = useState('');
     const [canResendOTP, setCanResendOTP] = useState(true);
-    const [isPolicyChecked,setIsPolicyChecked]=useState(false)
+    const [isPolicyChecked, setIsPolicyChecked] = useState(false)
     const [timer, setTimer] = useState(0);
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
@@ -137,6 +137,7 @@ const SignInPage = () => {
         }
         catch (error) {
             console.error(error.message || 'An error occurred during signup');
+            toast.error(error.message || 'An error occurred during signup');
         }
     };
 
@@ -274,8 +275,8 @@ const SignInPage = () => {
                                 ) : null}
                                 {
                                     !isSignIn ? (
-                                            <span className='text-gray-600 my-2 ml-2'><input value={isPolicyChecked} onClick={(e)=>setIsPolicyChecked(e.target.checked)} type='checkbox'/> Accept <a className='text-blue-600 underline' target='_blank' href='/terms-and-conditions'>Terms and Conditions</a></span>
-                                    ):null
+                                        <span className='text-gray-600 my-2 ml-2'><input value={isPolicyChecked} onClick={(e) => setIsPolicyChecked(e.target.checked)} type='checkbox' /> Accept <a className='text-blue-600 underline' target='_blank' href='/terms-and-conditions'>Terms and Conditions</a></span>
+                                    ) : null
                                 }
                                 <button
                                     className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"

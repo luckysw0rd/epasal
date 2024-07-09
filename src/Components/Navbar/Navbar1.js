@@ -478,10 +478,9 @@ const Navbar1 = ({
                             })}
                         </ul>}
                             </div>
-                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</a>
-                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</a>
-                            <a to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</a>
-
+                            <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
+                            <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
+                            <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</Link>
                         </div>
                     </div>
                 )
