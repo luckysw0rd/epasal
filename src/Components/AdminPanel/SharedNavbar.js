@@ -7,7 +7,7 @@ import { useSiderBar } from "./SiderBarContext";
 const SharedNavbar = ({ storeLogo, storeName, open, setOpen }) => {
   console.log(storeName);
   return (
-    <div className=" w-full font-Roboto t-0 bg-white shadow-md z-10  px-6  flex items-center justify-between h-14 text-black">
+    <div className=" w-full font-Roboto t-0  bg-white shadow-md z-10  px-6  flex items-center justify-between h-[88px] text-black">
       <div className=" flex flex-row">
         <img
           src={storeLogo}

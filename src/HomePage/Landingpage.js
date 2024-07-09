@@ -28,7 +28,7 @@ function Landingpage() {
 
         <div className="flex flex-row sm:flex-row sm:justify-center lg:justify-start gap-6 mt-6">
           <Stat number="100+" label="Stores" />
-          <Stat number="♾️" label="Customization" />
+          <Stat clas number="∞" label="Customization" />
           <Stat number="10+" label="Presets" />
         </div>
       </div>

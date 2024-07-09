@@ -3,7 +3,7 @@ import esewa from '../../../Assets/esewa.webp';
 import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { FaClock, FaStar } from 'react-icons/fa';
-
+import {toast} from 'react-toastify';
 const plans = {
     monthly: [
         {
@@ -153,6 +153,10 @@ const SubscriptionPlans = ({ store }) => {
         console.log(selectedDuration);
         console.log(plan);
 
+        if(store.subscriptionStatus !== 'Silver'){
+            toast.error('Wait for older subscription to expire')
+            return;
+        }
         const price = selectedDuration === 'monthly' ? plan.price :
             selectedDuration === 'quarterly' ? plan.price :
             plan.price;
