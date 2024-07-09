@@ -52,11 +52,11 @@ const SideBar = ({ setDashboardState, role }) => {
         <div className=" flex fixed font-Roboto flex-col  h-full  bg-slate-100 sm:bg-white ">
           <div>
             <div className=" py-2 flex justify-center flex-row">
-              <h1 className="text-3xl font-bold text-black bg-black h-6 w-6 px-1 py-1 mr-1 sm:mr-4 mt-9 rounded-3xl decoration-underline decoration-blue-500">
-              </h1>
+              {/* <h1 className="text-3xl font-bold text-black bg-black  h-6 w-6 px-1 py-1 mr-1 sm:mr-4 mt-9 rounded-3xl decoration-underline decoration-blue-500">
+              </h1> */}
               {/* <img src={banau} className="h-10 mt-7 filter invert" alt="Logo" /> */}
-              <div className="h-full p-1 bg-red-700 borde-1 rounded-lg mt-7">
-                <svg width="100" height="40" viewBox="0 0 730 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div className="h-full p-1 bg-red-700 borde-1 ml-12 rounded-lg mt-2">
+                <svg width="140" height="40" viewBox="0 0 730 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 333.884V63.3499C0 44.5341 23.6191 36.1297 35.5046 50.7164L146.753 187.248C152.791 194.657 152.742 205.303 146.637 212.656L35.3881 346.659C23.4278 361.066 0 352.609 0 333.884Z" fill="#F4BD8A" />
                   <path d="M190.59 171.429H155.947C149.924 171.429 144.222 168.715 140.425 164.04L33.638 32.6119C23.0183 19.5416 32.3195 0 49.1603 0H219.266C225.166 0 230.764 2.60464 234.564 7.11723L274.959 55.0858C281.187 62.4809 281.233 73.2719 275.069 80.72L205.998 164.18C202.199 168.771 196.55 171.429 190.59 171.429Z" fill="url(#paint0_linear_342_32)" />
                   <path d="M190.59 228.571H155.947C149.924 228.571 144.222 231.285 140.425 235.96L33.638 367.388C23.0183 380.458 32.3195 400 49.1603 400H219.266C225.166 400 230.764 397.395 234.564 392.883L274.959 344.914C281.187 337.519 281.233 326.728 275.069 319.28L205.998 235.82C202.199 231.229 196.55 228.571 190.59 228.571Z" fill="url(#paint1_linear_342_32)" />
