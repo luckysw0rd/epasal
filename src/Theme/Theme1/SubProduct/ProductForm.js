@@ -12,7 +12,7 @@ import Loader from '../../../Components/Loading/Loading';
 export default function ProductForm({ onClose }) {
     const { sendRequest, isLoading } = useFetch()
     const { uploadImage } = useImage()
-    const [tempLoading , setTempLoading] = useState(false);
+    const [tempLoading, setTempLoading] = useState(false);
     const { setStore, store } = useStore();
     const auth = useContext(AuthContext);
     const initialState = {
@@ -246,25 +246,27 @@ export default function ProductForm({ onClose }) {
         }
     }, [onEditDataUpload, setOnEditDataUpload]);
 
-
     if (isLoading || tempLoading) {
         return <Loader></Loader>
     } else {
         return (
             <>
 
-                <div>
-
+                <div className=''>
                     <div className="fixed inset-0 flex h-3/4 items-center justify-center z-50 ">
                         <div className="fixed inset-0 bg-black opacity-50" onClick={() => onClose()}></div>
-                        <div className=" h-full bg-white p-8 rounded-lg mt-[200px] py-10 shadow-lg relative z-10 w-full max-w-3xl mx-auto overflow-y-scroll">
-                            <button
-                                className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
-                                onClick={() => onClose()}
-                            >
-                                &#x2715;
-                            </button>
-                            <h2 className="text-xl font-semibold mb-1">Product Information</h2>
+                        <div className="relative h-full bg-white p-8 rounded-lg mt-[200px] py-10 shadow-lg  z-10 w-full max-w-3xl mx-auto overflow-y-scroll">
+                            <div>
+                                <h2 className="text-xl font-semibold mb-1">Product Information</h2>
+                                <div className='flex justify-center absolute top-4 right-4 items-center w-6 h-6 border border-red-600 rounded-full'>
+                                    <button
+                                        className="text-lg text-red-600 hover:text-red-800"
+                                        onClick={() => onClose()}
+                                    >
+                                        &#x2715;
+                                    </button>
+                                </div>
+                            </div>
                             <hr className='mb-3' style={{ borderWidth: '1px', borderColor: '#DDDDDD' }} />
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto">
                                 <div className=''>
@@ -278,7 +280,8 @@ export default function ProductForm({ onClose }) {
                                         placeholder="Product Name"
                                         value={formState.name}
                                         onChange={handleInputChange}
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        onWheel={(e) => e.target.blur()}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                         required
                                     />
                                 </div>
@@ -292,7 +295,8 @@ export default function ProductForm({ onClose }) {
                                         value={formState.subcategories}
                                         onChange={handleCategoryChange}
                                         // multiple // Allow multiple selections
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        onWheel={(e) => e.target.blur()}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                     >
                                         {store.subCategories.map(subcategory => (
                                             <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
@@ -361,7 +365,8 @@ export default function ProductForm({ onClose }) {
                                         placeholder="Price (Nrs)"
                                         value={formState.price}
                                         onChange={handleInputChange}
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        onWheel={(e) => e.target.blur()}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                         required
                                     />
                                 </div>
@@ -382,7 +387,8 @@ export default function ProductForm({ onClose }) {
                                         placeholder="Discount"
                                         value={formState.discount}
                                         onChange={handleInputChange}
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        onWheel={(e) => e.target.blur()}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                     />
                                 </div>
                                 <div>
@@ -401,7 +407,8 @@ export default function ProductForm({ onClose }) {
                                         placeholder="Inventory"
                                         value={formState.inventory}
                                         onChange={handleInputChange}
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        onWheel={(e) => e.target.blur()}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                     />
                                 </div>
 
@@ -421,7 +428,7 @@ export default function ProductForm({ onClose }) {
                                                     Variant Name
                                                 </label>
                                                 <Tooltip message="Mention The Name of the Variant (color , Size , Quantity etc) , Not the Value (White,XL,200 gms)">
-                                                    <span className=' absolute -bottom-2 text-yellow-600 text-xl font-bold'>?</span>
+                                                    <span className=' absolute -bottom-3 text-yellow-600 text-xl font-bold'>?</span>
                                                 </Tooltip>
                                             </div>
                                             <button type="button" className="text-red-500" onClick={() => handleRemoveVariant(variantIndex)}>
@@ -435,7 +442,8 @@ export default function ProductForm({ onClose }) {
                                             placeholder="Eg: Size , Color , Quantity"
                                             value={variant.name}
                                             onChange={(e) => handleVariantChange(variantIndex, e)}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            onWheel={(e) => e.target.blur()}
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                             required
                                         />
                                         {variant.options.map((option, optionIndex) => (
@@ -460,7 +468,8 @@ export default function ProductForm({ onClose }) {
                                                         placeholder="if color then Red,Green , Size then L , XL etc "
                                                         value={option.name}
                                                         onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                        onWheel={(e) => e.target.blur()}
+                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                                         required
                                                     />
                                                 </div>
@@ -475,9 +484,10 @@ export default function ProductForm({ onClose }) {
                                                                 name="price"
                                                                 type="number"
                                                                 placeholder=" Different Price for the variant"
-                                                                value={option.price}
+                                                                defaultValue={formState.price}
                                                                 onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                onWheel={(e) => e.target.blur()}
+                                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                                                 required
                                                             />
                                                         </div>
@@ -490,9 +500,10 @@ export default function ProductForm({ onClose }) {
                                                                 name="discount"
                                                                 type="number"
                                                                 placeholder="Option Discount"
-                                                                value={option.discount}
+                                                                defaultValue={formState.discount}
                                                                 onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                onWheel={(e) => e.target.blur()}
+                                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                                             />
                                                         </div>
                                                     </>
@@ -510,7 +521,8 @@ export default function ProductForm({ onClose }) {
                                                                 placeholder="Option Count"
                                                                 value={option.count}
                                                                 onChange={(e) => handleOptionChange(variantIndex, optionIndex, e)}
-                                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                onWheel={(e) => e.target.blur()}
+                                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
                                                             />
                                                         </div>
                                                     </>
@@ -580,7 +592,19 @@ export default function ProductForm({ onClose }) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
+                <style jsx>{`
+  /* Hide the arrows for number input fields */
+  .no-arrows::-webkit-outer-spin-button,
+  .no-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .no-arrows {
+    -moz-appearance: textfield; /* Firefox */
+  }
+`}</style>
             </>
         );
     }

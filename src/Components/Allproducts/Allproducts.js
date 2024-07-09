@@ -190,7 +190,7 @@ const AllProducts = () => {
   };
 
   const handleFilterChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked, id } = e.target;
 
     if (type === 'checkbox') {
       if (checked) {
@@ -210,6 +210,22 @@ const AllProducts = () => {
         [name]: value
       }));
     }
+  };
+
+
+  const clearSearch = () => {
+    handleRatingChange(0)
+    handlePriceChange("max", 1000)
+    handlePriceChange("min", 0)
+
+    setFilters({
+      priceRange: '',
+      rating: '',
+      category: [],
+      name: ''
+    })
+    console.log(filters)
+    fetchProducts();
   };
 
   const handlePriceChange = (type, value) => {
@@ -245,8 +261,11 @@ const AllProducts = () => {
   };
 
   const handleSearch = () => {
-    fetchProducts(); // Trigger the fetchProducts function on search button click
+    fetchProducts();
+    console.log(filters)// Trigger the fetchProducts function on search button click
   };
+
+
 
   const toggleFilterVisibility = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
@@ -319,7 +338,6 @@ const AllProducts = () => {
                       <input
                         type="checkbox"
                         id={`subCategory-${index}`}
-                        name="category"
                         value={subCategory.name}
                         onChange={handleFilterChange}
                         className="mr-2"
@@ -329,15 +347,26 @@ const AllProducts = () => {
                   ))}
                 </div>
               )}
-              <button
-                onClick={handleSearch} // Handle click on search button
-                className="px-4 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2"
-                style={
-                  { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
-                }
-              >
-                Search
-              </button>
+              <div className="flex gap-5 ">
+                <button
+                  onClick={handleSearch} // Handle click on search button
+                  className="px-4 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2"
+                  style={
+                    { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
+                  }
+                >
+                  Search
+                </button>
+                <button
+                  onClick={clearSearch} // Handle click on search button
+                  className="px-6 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2"
+                  style={
+                    { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
+                  }
+                >
+                  Clear
+                </button>
+              </div>
             </div>
           )}
 
