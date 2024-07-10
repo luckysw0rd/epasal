@@ -84,7 +84,7 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
                     <img
                         src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
                         alt="Logo"
-                        className="h-8 mr-4"
+                        className="h-8 mr-4 rounded-full"
                     />
                 </div>
                 <span
@@ -96,7 +96,7 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
-                <div className="hidden md:flex space-x-4 mr-8">
+                <div className="hidden md:flex space-x-8 mr-8">
                     <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}`} className="hover:underline">
                         All Products
                     </Link>
@@ -145,7 +145,7 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
                     className="md:hidden fixed top-0 left-0 h-full w-64 text-white shadow-lg z-30"
                     style={{ backgroundColor: color?.navColor?.backgroundnavColor }}
                 >
-                    <div className="flex flex-col items-start space-y-4 p-4">
+                    <div className="flex flex-col items-start  space-y-4 p-4">
                         <div className="flex items-center mb-4">
                             {store.logo && (
                                 <img src={store?.logo?.logoUrl} alt="Logo" className="h-8 mr-4" />
