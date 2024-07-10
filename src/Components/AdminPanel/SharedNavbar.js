@@ -12,7 +12,7 @@ const SharedNavbar = ({ storeLogo, storeName, open, setOpen }) => {
         <img
           src={storeLogo}
           alt="Logo"
-          className="h-8 mr-4"
+          className="h-12 w-12 rounded-full object-cover mr-4"
         />
         <div className=" font-bold text-xl bg-gra  flex items-center">
           {storeName}
