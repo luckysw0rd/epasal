@@ -9,8 +9,8 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const redirectToStore = () => {
-        if (store && store.name) {
-            window.location.href = `${process.env.REACT_APP_BASE_URL}/store/${store.name}`;
+        if (store && store?.name) {
+            window.location.href = `${process.env.REACT_APP_BASE_URL}/store/${store?.name}`;
         }
     };
 
@@ -19,7 +19,7 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
         const { product: name, price, selectedVariant } = product;
 
         // Find the index of the item in cart
-        const existingCartItemIndex = store.cart.findIndex(item =>
+        const existingCartItemIndex = store?.cart?.findIndex(item =>
             item.product === name &&
             item.price === price &&
             JSON.stringify(item.selectedVariant) === JSON.stringify(selectedVariant)
@@ -27,15 +27,15 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
 
         // If item exists in cart
         if (existingCartItemIndex !== -1) {
-            const updatedCart = [...store.cart];
+            const updatedCart = [...store?.cart];
 
             // Decrease quantity or remove item if count is 1
-            if (updatedCart[existingCartItemIndex].count === 1) {
-                updatedCart.splice(existingCartItemIndex, 1);
+            if (updatedCart[existingCartItemIndex]?.count === 1) {
+                updatedCart?.splice(existingCartItemIndex, 1);
             } else {
                 updatedCart[existingCartItemIndex] = {
                     ...updatedCart[existingCartItemIndex],
-                    count: updatedCart[existingCartItemIndex].count - 1
+                    count: updatedCart[existingCartItemIndex]?.count - 1
                 };
             }
 
@@ -43,12 +43,12 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
             setStore(prevState => ({
                 ...prevState,
                 cart: updatedCart,
-                cartCount: prevState.cartCount - 1
+                cartCount: prevState?.cartCount - 1
             }));
 
             // Update localStorage
             localStorage.setItem('cart', JSON.stringify(updatedCart));
-            localStorage.setItem('cartCount', (store.cartCount - 1).toString());
+            localStorage.setItem('cartCount', (store?.cartCount - 1)?.toString());
         }
     };
 
@@ -82,22 +82,22 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
 
                 <div className="cursor-pointer flex items-center">
                     <img
-                        src={store?.logo?.logoUrl || 'https://via.placeholder.com/50'}
+                        src={store?.logo?.logoUrl || 'https://via?.placeholder?.com/50'}
                         alt="Logo"
                         className="h-8 mr-4"
                     />
                 </div>
                 <span
-      className="text-xl font-bold cursor-pointer"
-      onClick={redirectToStore}
-    >
-      {store?.name}
-    </span>
+                    className="text-xl font-bold cursor-pointer"
+                    onClick={redirectToStore}
+                >
+                    {store?.name}
+                </span>
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-4 mr-8">
-                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}`} className="hover:underline">
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store?.name}`} className="hover:underline">
                         All Products
                     </Link>
                     <a href="#" className="hover:underline">
@@ -113,14 +113,14 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
 
                     {store?.cart?.length > 0 && (
                         <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute -top-1 -right-1">
-                            {store.cart.length}
+                            {store?.cart?.length}
                         </span>
                     )}
                 </button>
 
                 {isCartOpen && (
                     <CartDropDown
-                        cart={store.cart}
+                        cart={store?.cart}
                         addToCart={addToCart}
                         deleteFromCart={deleteFromCart} // Pass deleteFromCart here
                         backgroundColor={color?.navColor?.backgroundnavColor}
@@ -147,7 +147,7 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
                 >
                     <div className="flex flex-col items-start space-y-4 p-4">
                         <div className="flex items-center mb-4">
-                            {store.logo && (
+                            {store?.logo && (
                                 <img src={store?.logo?.logoUrl} alt="Logo" className="h-8 mr-4" />
                             )}
                             <span className="text-xl font-bold">{store?.name}</span>
