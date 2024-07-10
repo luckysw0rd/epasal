@@ -1,10 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
 
+
 let logoutTimer;
 export const useAuth = () => {
     const [token, setToken] = useState(localStorage?.getItem('userData')?.token||null);
     const [userID, setUserId] = useState(localStorage?.getItem('userData')?.userID||null);
     const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
+
 console.log(localStorage.getItem('userData'));
     const login = useCallback((uid, token, expirationDate) => {
         setToken(token);
@@ -25,6 +27,8 @@ console.log(localStorage.getItem('userData'));
         localStorage.removeItem('userData');
         window.location.href = '/';
     }, []);
+
+
 
     useEffect(() => {
         const storedData = JSON.parse(localStorage.getItem('userData'));

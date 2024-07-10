@@ -3,6 +3,7 @@ import DashboardWrapper from "./DashboardWrapper";
 import { SiderBarProvider } from "./SiderBarContext";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
+import io from 'socket.io-client';
 import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,7 +21,7 @@ const Dashboard = () => {
   const [store, setStore] = useState(null); // Initialize store as null
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
-
+  const socket = io('http://localhost:8000');
   const navigate=useNavigate();
 
   useEffect(() => {
@@ -30,6 +31,22 @@ const Dashboard = () => {
 }, [window.location.pathname]);
 
 
+  //Socket Initialization Client Side
+
+  useEffect(() => {
+    socket.on('connect', () => {
+        console.log('Connected to Socket.IO server');
+        socket.emit('joinRoom',1 );
+        
+    });
+    socket.on('notification',(data)=>{
+      alert(data)
+    })
+    
+    return () => {
+        socket.disconnect();
+    };
+  }, [store]);
   const fetchStore = async () => {
     console.log("Store token", auth)
 
