@@ -206,11 +206,11 @@ const ProjectLanding1 = () => {
                                         {selectedProduct.image && (
                                             <div
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
-                                                onClick={() =>
+                                                onClick={() => 
                                                     setSelectedVariants(selectedProduct.variant.map(() => -1))
-                                                }
-                                            // onClick={() => setSelectedVariants(selectedProduct.variant.map(() => -1))}
-
+                                            }
+                                                // onClick={() => setSelectedVariants(selectedProduct.variant.map(() => -1))}
+                                                
                                             >
                                                 <img src={selectedProduct.image.imageUrl} alt="Default" className="w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                             </div>
