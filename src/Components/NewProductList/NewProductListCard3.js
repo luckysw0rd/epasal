@@ -56,12 +56,14 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
                     <FaTimes />
                 </button>
             )}
-            <a href="#">
+            <a >
+                <div onClick={() => handleProductClick(product)} >
                 <img
                     src={product.image.imageUrl}
                     alt={product.name}
                     className="h-60 w-full object-cover rounded-t-xl"
                 />
+                </div>
                 <div className="px-4 py-3 w-70 border-t-2"
                     style={{ borderColor: `${store?.color?.newProductColor?.borderColor}` }}
                 >

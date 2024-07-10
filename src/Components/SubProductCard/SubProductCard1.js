@@ -115,6 +115,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5 }}
+                    onClick={() => handleProductClick(product)}
                 />
             </div>
 
