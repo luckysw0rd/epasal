@@ -4,7 +4,7 @@ import SideBar from "./SideBar";
 
 import SharedNavbar from "./SharedNavbar";
 
-const DashboardWrapper = ({ children, store, setDashboardState ,role}) => {
+const DashboardWrapper = ({ children, store, setDashboardState ,role,hasNotification,setHasNotification}) => {
   const [open, setOpen] = useState(true);
   console.log(role);
   console.log(store);
@@ -12,7 +12,7 @@ const DashboardWrapper = ({ children, store, setDashboardState ,role}) => {
     <div className="flex relative overflow-hidden">
       {/* For Side bar */}
       {/* Conditionally render the SideBar */}
-      {open && <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role}/>}
+      {open && <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role} hasNotification={hasNotification} setHasNotification={setHasNotification}/>}
       {/* SideBar handler */}
 
 

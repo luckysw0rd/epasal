@@ -3,7 +3,6 @@ import DashboardWrapper from "./DashboardWrapper";
 import { SiderBarProvider } from "./SiderBarContext";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
-import io from 'socket.io-client';
 import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,6 +13,8 @@ import General from "./General/General.js";
 import Shop from "./Shop/Shop.js";
 import { toast } from "react-toastify";
 import Loading from "../Loading/Loading"
+
+
 const Dashboard = () => {
   const auth = useContext(AuthContext);
   const [dashboardState, setDashboardState] = useState('General');
@@ -21,9 +22,9 @@ const Dashboard = () => {
   const [store, setStore] = useState(null); // Initialize store as null
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
-  const socket = io('http://localhost:8000');
+  const [hasNotification,setHasNotification]=useState(false)
+  
   const navigate=useNavigate();
-
   useEffect(() => {
     if (window.location.pathname.includes("/adminpanel/") ){
         abc();
@@ -33,20 +34,6 @@ const Dashboard = () => {
 
   //Socket Initialization Client Side
 
-  useEffect(() => {
-    socket.on('connect', () => {
-        console.log('Connected to Socket.IO server');
-        socket.emit('joinRoom',1 );
-        
-    });
-    socket.on('notification',(data)=>{
-      alert(data)
-    })
-    
-    return () => {
-        socket.disconnect();
-    };
-  }, [store]);
   const fetchStore = async () => {
     console.log("Store token", auth)
 
@@ -160,7 +147,7 @@ const Dashboard = () => {
         {store && role && (
           <div className=""> {/* Apply overflow styling here */}
             <SiderBarProvider className="overflow-hidden">
-              <DashboardWrapper setDashboardState={setDashboardState} store={store} role={role}>
+              <DashboardWrapper setDashboardState={setDashboardState} store={store} role={role} hasNotification={hasNotification} setHasNotification={setHasNotification}>
                 <div className="text-black p-2 py-4 mt-8 overflow-hidden">
                   {renderDashboardContent(store)}
                 </div>
@@ -182,3 +169,4 @@ function abc(liveChatSource) {
   s1.setAttribute('crossorigin', '*');
   s0.parentNode.insertBefore(s1, s0);
 }
+

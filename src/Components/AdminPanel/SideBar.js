@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
 import banau from '../../Assets/banau.png';
 import { AuthContext } from "../../Hooks/AuthContext";
-const SideBar = ({ setDashboardState, role }) => {
+const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification }) => {
   const navigate = useNavigate();
   console.log(role);
   const { open, setOpen } = useSiderBar();
@@ -94,10 +94,13 @@ const SideBar = ({ setDashboardState, role }) => {
                   key={i}
                   onClick={() => {
                     setDashboardState(menu.name)
+                    if(menu.name==='Order'){
+                      setHasNotification(false)
+                    }
                   }}
-                  className={`flex w-40 items-center ml-12 text-lg gap-4  font-medium p-2 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-" : ""}`}
+                  className={`relative flex w-40 items-center ml-12 text-lg gap-4  font-medium p-2 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-" : ""}`}
                 >
-
+                  {menu.name==='Order' && hasNotification?<div className="absolute w-4 h-4 rounded-full bg-orange-500 top-4 right-0"></div>:''}
                   {React.createElement(menu.icon, { size: 20 })}
                   <span className="pl-0 m-2">{menu.name}</span>
                 </Link>

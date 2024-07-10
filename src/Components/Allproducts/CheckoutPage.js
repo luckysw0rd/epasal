@@ -5,7 +5,7 @@ import { AuthContext } from '../../Hooks/AuthContext';
 import PaymentConfirmation from '../CheckoutPage/PaymentConfirmation';
 import { toast } from 'react-toastify';
 import Loading from "../Loading/Loading"
-
+import socket from '../../Utils/SocketConfig';
 const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [promoCode, setPromoCode] = useState('');
@@ -102,6 +102,10 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                 }
             );
             toast.success(responseData.message || "Order made")
+            socket.emit("notification",{message:true,name:store.name,isAdmin:false})
+
+
+
             console.log(responseData);
             if (responseData?.payment?.paymentMethod === 'esewa' || responseData?.paymentMethod === 'esewa') {
                 esewaCall(responseData.formData);

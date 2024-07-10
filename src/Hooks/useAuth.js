@@ -1,13 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
-
-
+import socket from "../Utils/SocketConfig";
 let logoutTimer;
 export const useAuth = () => {
     const [token, setToken] = useState(localStorage?.getItem('userData')?.token||null);
     const [userID, setUserId] = useState(localStorage?.getItem('userData')?.userID||null);
     const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
 
-console.log(localStorage.getItem('userData'));
+console.log(localStorage.getItem('userData'),"local storage item");
     const login = useCallback((uid, token, expirationDate) => {
         setToken(token);
         setUserId(uid);
@@ -46,5 +45,28 @@ console.log(localStorage.getItem('userData'));
             };
         }
     }, [token, tokenExpirationDate, logout]);
+    console.log('Hi socket',JSON.parse(localStorage?.getItem('userData')));
+
+    const socketConnection=()=>{
+
+        socket.on('connect',() => {
+            console.log('Connected to Socket.IO server',localStorage?.getItem('userData')?.userID);
+            socket.emit('isAdmin',{userID: JSON.parse(localStorage?.getItem('userData'))?.userID} );
+            
+        });
+        socket.on('notification-admin',(data)=>{
+          console.log('notification');
+          alert("New Order Arrived")
+        })
+        
+        return () => {
+            socket.disconnect();
+        };
+
+    }
+    useEffect(() => {
+        socketConnection();
+      }, []);
+
     return { token, login, logout, userID };
 }
