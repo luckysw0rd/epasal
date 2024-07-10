@@ -90,6 +90,7 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
                     src={product.image.imageUrl}
                     alt={product.name}
                     className="object-cover w-[180px] h-[180px]"
+                    onClick={() => handleProductClick(product)}
                 />
                 <div
                     className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
