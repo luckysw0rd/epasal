@@ -38,7 +38,9 @@ const ProjectLanding1 = () => {
         setSelectedVariants(newSelectedVariants);
 
         const selectedOption = selectedProduct.variant[variantIndex]?.options[optionIndex]; // Use optional chaining
-        setDisplayedImage(selectedOption?.image?.imageUrl || selectedProduct?.image?.imageUrl); // Check if selectedOption is defined
+        if (variantIndex == 0) {
+            setDisplayedImage(selectedOption?.image?.imageUrl || selectedProduct?.image?.imageUrl); // Check if selectedOption is defined
+        }
     };
 
     const handleProductSelect = (newProduct) => {
@@ -146,7 +148,11 @@ const ProjectLanding1 = () => {
         }
     };
 
+    const changeDefaultImage = () => {
+        setSelectedVariants(selectedProduct.variant.map(() => -1))
 
+        setDisplayedImage(selectedProduct?.image?.imageUrl)
+    }
 
     const calculateTotalDiscount = () => {
         if (!selectedProduct.variant || selectedProduct.variant.length === 0) {
@@ -186,33 +192,27 @@ const ProjectLanding1 = () => {
         deliveryTime: store.expectedDeliveryTime,
 
     };
-
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-gray-50">
             <Navbar store={store} setStore={setStore} color={store.color} />
-            <div className="p-2 mt-10 md:mt-0 md:p-5 lg:p-16">
-                <div className='mt-5 flex flex-col gap-5'>
-                    <div className="flex flex-col md:flex-row md:gap-5 lg:gap-10">
-                        <div className="w-full md:w-[60%] flex flex-col gap-10 p-5 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                            <div className="flex flex-col md:flex-row gap-5">
-                                <div className="flex flex-col gap-5 md:w-[350px] lg:w-[450px]">
+            <div className="px-4 py-8 md:py-16 lg:px-24">
+                <div className="mt-10 flex flex-col gap-10">
+                    <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12">
+                        <div className="w-full md:w-2/3 flex flex-col gap-8 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div className="flex flex-col md:flex-row gap-6">
+                                <div className="flex flex-col gap-6 md:w-80 lg:w-96">
                                     <img
                                         src={displayedImage}
                                         alt={selectedProduct?.name}
-
-                                        className="w-full h-auto rounded-lg object-cover"
+                                        className="w-full h-auto rounded-lg object-cover shadow-md hover:shadow-lg transition-shadow duration-300"
                                     />
-                                    <div className="flex md:flex-row gap-2 mt-2">
+                                    <div className="flex gap-3 mt-4">
                                         {selectedProduct.image && (
                                             <div
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
-                                                onClick={() => 
-                                                    setSelectedVariants(selectedProduct.variant.map(() => -1))
-                                            }
-                                                // onClick={() => setSelectedVariants(selectedProduct.variant.map(() => -1))}
-                                                
+                                                onClick={changeDefaultImage}
                                             >
-                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                             </div>
                                         )}
                                         {selectedProduct.variant.map((variant, variantIndex) => (
@@ -223,35 +223,33 @@ const ProjectLanding1 = () => {
                                                     className={`cursor-pointer text-sm lg:text-base ${selectedVariants[variantIndex] === optionIndex ? 'font-bold' : ''} rounded-md`}
                                                     onClick={() => handleOptionSelect(variantIndex, optionIndex)}
                                                 >
-                                                    <img src={option.image?.imageUrl || selectedProduct.image.imageUrl} alt={option.name} className="w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                    <img src={option.image?.imageUrl || selectedProduct.image.imageUrl} alt={option.name} className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                                 </div>
                                             ))
                                         ))}
                                     </div>
                                 </div>
-                                <div className="flex flex-col gap-3 w-full">
-                                    <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-800">{selectedProduct.name}</h1>
-                                    <p className="text-sm text-gray-600">
-                                        {selectedProduct.description}
-                                    </p>
-                                    <div className='flex mb-2 md:justify-start'>
+                                <div className="flex flex-col gap-4 w-full">
+                                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">{selectedProduct.name}</h1>
+                                    <p className="text-sm md:text-base text-gray-700">{selectedProduct.description}</p>
+                                    <div className="flex mb-4 md:justify-start">
                                         {[...Array(5)].map((_, index) => (
                                             <StarIcon
                                                 key={index}
-                                                className={`w-5 h-5 ${index < parseFloat(Math.ceil(selectedProduct.rating)) ? 'text-yellow-500' : 'text-gray-300'} transition-transform duration-300 hover:scale-110`}
+                                                className={`w-5 h-5 ${index < Math.ceil(selectedProduct.rating) ? 'text-yellow-500' : 'text-gray-300'} transition-transform duration-300 hover:scale-110`}
                                             />
                                         ))}
                                     </div>
-                                    <div className="flex gap-5 items-center">
-                                        <span className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800">Rs {totalPrice}</span>
+                                    <div className="flex gap-6 items-center">
+                                        <span className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900">Rs {totalPrice}</span>
                                         <span className="line-through text-sm md:text-base lg:text-xl text-gray-500">Rs {totalDiscount + totalPrice}</span>
                                     </div>
                                     {selectedProduct.variant.map((variant, variantIndex) => (
-                                        <div className="flex gap-5 items-center" key={variantIndex}>
+                                        <div className="flex gap-4 items-center" key={variantIndex}>
                                             <label htmlFor={`variant-${variantIndex}`} className="block text-sm lg:text-base text-gray-700">{variant.name}:</label>
                                             <select
                                                 id={`variant-${variantIndex}`}
-                                                className="md:pr-3 lg:pr-5 pl-2 py-1 w-16 md:w-20 lg:w-24 text-xs md:text-sm lg:text-base border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                                className="md:pr-3 lg:pr-5 pl-2 py-1 w-20 md:w-24 lg:w-28 text-xs md:text-sm lg:text-base border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
                                                 value={selectedVariants[variantIndex] === -1 ? "" : variant.options[selectedVariants[variantIndex]].name}
                                                 onChange={(e) => handleVariantChange(variantIndex, e.target.value)}
                                             >
@@ -262,23 +260,23 @@ const ProjectLanding1 = () => {
                                             </select>
                                         </div>
                                     ))}
-                                    <div className="flex gap-5 items-center">
+                                    <div className="flex gap-4 items-center">
                                         <label htmlFor="quantity" className="block text-sm lg:text-base text-gray-700">Quantity:</label>
-                                        <div className='flex items-center gap-3'>
-                                            <button className="px-2 md:px-3 md:py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition" onClick={decrementQuantity}> - </button>
+                                        <div className="flex items-center gap-3">
+                                            <button className="px-2 md:px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-300" onClick={decrementQuantity}> - </button>
                                             <span className="text-sm md:text-base lg:text-xl">{productCount}</span>
-                                            <button className="px-2 md:px-3 md:py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition" onClick={incrementQuantity}> + </button>
+                                            <button className="px-2 md:px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-300" onClick={incrementQuantity}> + </button>
                                         </div>
                                     </div>
-                                    <button onClick={handleAddToCart} className="flex items-center justify-center gap-2 mt-3 md:mt-5 px-4 py-2 md:px-5 md:py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
+                                    <button onClick={handleAddToCart} className="flex items-center justify-center gap-2 mt-4 md:mt-6 px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
                                         <TbShoppingBagPlus className="w-5 h-5" />
                                         Add to Cart
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full md:w-[40%] flex flex-col gap-5 p-5 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                            <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">Store Details</h2>
+                        <div className="w-full md:w-1/3 flex flex-col gap-6 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900">Store Details</h2>
                             <div className="flex items-center gap-3">
                                 <LiaShippingFastSolid className="w-5 h-5 text-gray-800" />
                                 <span className="text-sm md:text-base text-gray-800">{storeDetails.deliveryTime}</span>
@@ -297,15 +295,14 @@ const ProjectLanding1 = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-5 mt-10">
+                    <div className="flex flex-col gap-6 mt-12">
                         <ProductReview product={selectedProduct} />
                     </div>
                 </div>
             </div>
         </div>
-
-
     );
+
 };
 
 export default ProjectLanding1;
