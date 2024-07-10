@@ -27,6 +27,16 @@ const Product = ({ store }) => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [minPrice, setMinPrice] = useState(''); // Added state for minPrice
   const [maxPrice, setMaxPrice] = useState(''); // Added state for maxPrice
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
+
+  const handleSubCategoryChange = (event) => {
+    const { value } = event.target;
+    setSelectedSubCategory(value);
+    setEditProduct({
+      ...editProduct,
+      subCategory: value
+    });
+  };
 
   const fetchProducts = async (limit = 10, search = '', sortOrder = 'asc') => {
     try {
@@ -144,10 +154,11 @@ const Product = ({ store }) => {
       );
 
       updatedEditProduct.variant = updatedVariants;
-
+      updatedEditProduct.subCategories = selectedSubCategory;
       const updates = {
         name: updatedEditProduct.name,
         description: updatedEditProduct.description,
+        subcategories: [updatedEditProduct.subCategories],
         price: updatedEditProduct.price,
         rating: updatedEditProduct.rating,
         image: updatedEditProduct.image,
@@ -158,6 +169,7 @@ const Product = ({ store }) => {
         revenueGenerated: updatedEditProduct.revenueGenerated,
       };
 
+      console.log(updates);
       const response = await sendRequest(
         `product/updateProduct?storeID=${store._id}`,
         'PUT',
@@ -274,16 +286,17 @@ const Product = ({ store }) => {
 
   const ProductImageDropzone = ({ imageUrl, setImageUrl }) => {
     const { getRootProps, getInputProps } = useDropzone({
-      onDrop: (files) => handleImageUpload(files, setImageUrl),
+      accept: 'image/*',
+      onDrop: (acceptedFiles) => handleImageUpload(acceptedFiles, setImageUrl),
     });
 
     return (
-      <div {...getRootProps()} className="border-dashed border-2 border-gray-500 p-4 cursor-pointer">
+      <div {...getRootProps()} className="border-2 border-dashed border-gray-300 p-2 rounded-lg hover:border-blue-300 cursor-pointer transition duration-300 ease-in-out">
         <input {...getInputProps()} />
         {imageUrl ? (
-          <img className="w-full" src={imageUrl} alt="Product" />
+          <img src={imageUrl} alt="Product" className="h-32 w-32 object-cover mx-auto" />
         ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p className="text-center text-gray-500">Drag 'n' drop an image here, or click to select an image</p>
         )}
       </div>
     );
@@ -418,6 +431,25 @@ const Product = ({ store }) => {
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
+                </div>
+                <div className=''>
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
+                    Category
+                  </label>
+                  <select
+                    id="subcategory"
+                    name="category"
+
+                    value={selectedSubCategory}
+                    onChange={handleSubCategoryChange}
+                    // multiple // Allow multiple selections
+                    onWheel={(e) => e.target.blur()}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
+                  >
+                    {store.subCategories.map(subcategory => (
+                      <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
@@ -579,4 +611,3 @@ const Product = ({ store }) => {
 };
 
 export default Product;
-

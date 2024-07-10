@@ -370,11 +370,11 @@ const Navbar1 = ({
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
-                <div className="hidden md:flex space-x-4 mr-8">
+                <div className="hidden md:flex space-x-8 mr-8">
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</Link>
-                    <Link to={!isEdit && previewMode && `/`} className="hover:underline">Banau Page</Link>
+                    <Link to={!isEdit && previewMode && `/`} className="hover:underline"> Shop At Banau</Link>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
                     <input

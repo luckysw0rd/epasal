@@ -84,54 +84,50 @@ const ProductReview = ({ product }) => {
     }, [product]);
 
     return (
-        <div className='flex flex-col gap-3'>
-            <h1 className="text-sm lg:text-lg font-semibold">Reviews and Rating</h1>
-            <div className='w-full flex flex-col gap-5 lg:gap-8'>
-                <div className="flex gap-3 lg:gap-10 bg-white">
-                    <div className='flex flex-col items-center gap-1 lg:gap-3 rounded-sm md:rounded-md border border-[#AD7A29] px-4 md:px-5 lg:px-7 py-2 lg:py-4'>
+        <div className='flex flex-col gap-6'>
+            <h1 className="text-lg lg:text-2xl font-semibold text-gray-900">Reviews and Rating</h1>
+            <div className='w-full flex flex-col gap-6 lg:gap-10'>
+                <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 bg-white p-5 rounded-lg shadow-md">
+                    <div className='flex flex-col items-center gap-3 rounded-lg border border-gray-300 px-5 py-4'>
                         <div className="flex flex-col items-center">
-                            <div className="text-xl md:text-2xl lg:text-3xl text-[#818181] font-semibold">{parseFloat(averageRating.toFixed(1))}</div>
-                            <div className="text-sm md:text-base lg:text-xl text-[#8B5A08]">
+                            <div className="text-3xl lg:text-4xl text-gray-900 font-semibold">{parseFloat(averageRating.toFixed(1))}</div>
+                            <div className="text-lg lg:text-xl text-blue-500">
                                 {getRatingText(averageRating)}
                             </div>
                         </div>
-                        <div className="flex justify-center">
-                            <div className="flex items-center">
-                                <div className='flex mb-2 justify-center md:justify-start'>
-                                    {[...Array(5)].map((option, index) => {
-                                        if (index < Math.ceil(averageRating))
-                                            return <StarIcon key={index} className='w-4 h-4 lg:w-6 lg:h-6 text-[#8B5A08]' />
-                                        else
-                                            return <StarIcon key={index} className='w-4 h-4 lg:w-6 lg:h-6 text-[#959595]' />
-                                    })}
-                                </div>
-                            </div>
+                        <div className="flex justify-center mt-2">
+                            {[...Array(5)].map((option, index) => (
+                                <StarIcon
+                                    key={index}
+                                    className={`w-5 h-5 lg:w-6 lg:h-6 ${index < Math.ceil(averageRating) ? 'text-blue-500' : 'text-gray-300'}`}
+                                />
+                            ))}
                         </div>
-                        <div className="hidden md:block text-xs lg:text-base text-gray-600">Reviews</div>
+                        <div className="text-base lg:text-lg text-gray-600 mt-2">Reviews</div>
                     </div>
 
-                    <div className='border rounded-sm md:rounded-md border-[#AD7A29] py-2 lg:py-5 px-5 md:px-7 lg:px-10 w-full'>
-                        <div className="flex flex-col justify-between">
+                    <div className='border rounded-lg border-gray-300 py-4 px-6 lg:py-5 lg:px-10 w-full'>
+                        <div className="flex flex-col justify-between gap-4">
                             {[5, 4, 3, 2, 1].map((rating, index) => (
-                                <div key={index} className="flex gap-5 md:gap-10 lg:gap-16 items-center">
+                                <div key={index} className="flex gap-4 lg:gap-6 items-center">
                                     <div className='flex items-center'>
-                                        {Array(5).fill('').map((_, idx) => {
-                                            if (idx < rating)
-                                                return <StarIcon key={idx} className='w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 text-[#8B5A08]' />
-                                            else
-                                                return <StarIcon key={idx} className='w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 text-[#959595]' />
-                                        })}
+                                        {Array(5).fill('').map((_, idx) => (
+                                            <StarIcon
+                                                key={idx}
+                                                className={`w-5 h-5 lg:w-6 lg:h-6 ${idx < rating ? 'text-blue-500' : 'text-gray-300'}`}
+                                            />
+                                        ))}
                                     </div>
-                                    <div className='flex gap-5 lg:gap-10 items-center'>
-                                        <div className="w-20 md:w-36 lg:w-56 h-1 md:h-2 bg-[#8C5A09] rounded-full">
+                                    <div className='flex gap-4 lg:gap-6 items-center w-full'>
+                                        <div className="w-32 lg:w-56 h-2 bg-gray-300 rounded-full overflow-hidden">
                                             <div
-                                                className={`h-1 md:h-2 rounded-full bg-[#F29C0F]`}
+                                                className="h-2 bg-blue-500 rounded-full"
                                                 style={{
                                                     width: `${(ratingsCount[rating] / reviews?.length) * 100 || 0}%`,
                                                 }}
                                             ></div>
                                         </div>
-                                        <span className='text-xs md:text-sm lg:text-base'>{ratingsCount[rating]}</span>
+                                        <span className='text-base lg:text-lg text-gray-600'>{ratingsCount[rating]}</span>
                                     </div>
                                 </div>
                             ))}
@@ -141,53 +137,53 @@ const ProductReview = ({ product }) => {
 
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="border border-gray-400 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mb-5"
+                    className="border border-gray-300 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700 hover:bg-gray-100 transition duration-300"
                 >
                     Write a Review
                 </button>
 
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg shadow-lg px-6 py-10 max-w-lg w-full">
-                            <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Submit Your Review</h2>
-                            <div className="space-y-4">
+                        <div className="bg-white rounded-lg shadow-lg px-8 py-10 max-w-lg w-full">
+                            <h2 className="text-2xl font-semibold mb-6 text-center text-gray-900">Submit Your Review</h2>
+                            <div className="space-y-6">
                                 <div>
-                                    <label className="block text-gray-700">Name</label>
+                                    <label className="block text-gray-700 mb-2">Name</label>
                                     <input
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        className="mt-1 p-2 w-full border rounded-md border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                        className="p-3 w-full border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
                                         required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700">Rating</label>
+                                    <label className="block text-gray-700 mb-2">Rating</label>
                                     <select
                                         value={userRating}
                                         onChange={(e) => setUserRating(e.target.value)}
-                                        className="mt-1 p-2 w-full border rounded-md border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        className="p-3 w-full border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
                                         required
                                     >
                                         <option value="" disabled>Select rating</option>
                                         <option value="1">1 Star</option>
-                                        <option value="2">2 Star</option>
-                                        <option value="3">3 Star</option>
-                                        <option value="4">4 Star</option>
-                                        <option value="5">5 Star</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="5">5 Stars</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700">Description</label>
+                                    <label className="block text-gray-700 mb-2">Description</label>
                                     <textarea
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
-                                        className="mt-1 p-2 w-full border rounded-md border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        className="p-3 w-full border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
                                         rows="4"
                                         required
                                     ></textarea>
                                 </div>
-                                <div className="flex justify-end space-x-2">
+                                <div className="flex justify-end space-x-3">
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
@@ -195,9 +191,10 @@ const ProductReview = ({ product }) => {
                                     >
                                         Cancel
                                     </button>
-                                    <button onClick={() => handleSubmit(product._id)}
+                                    <button
+                                        onClick={() => handleSubmit(product._id)}
                                         type="submit"
-                                        className="border border-gray-400 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     >
                                         Submit
                                     </button>
@@ -207,28 +204,30 @@ const ProductReview = ({ product }) => {
                     </div>
                 )}
 
-            </div>
-
-            {reviews?.map((review, index) => (
-                <div key={index} className="mb-3 text-[#808080]">
-                    <div className="flex w-full gap-2 items-center">
-                        <span className="text-sm lg:text-lg font-semibold flex items-center justify-center w-8 h-8 rounded-full border-2 border-black">{review?.name.charAt(0)}</span>
-                        <span className="text-sm lg:text-base font-medium">{review?.name}</span>
-                        <div className='flex items-center'>
-                            {[...Array(5)].map((option, idx) => {
-                                if (idx < review.rating)
-                                    return <StarIcon key={idx} className='w-3 h-3 text-[#8B5A08]' />
-                                else
-                                    return <StarIcon key={idx} className='w-3 h-3 text-[#959595]' />
-                            })}
+                {reviews?.map((review, index) => (
+                    <div key={index} className="bg-white p-5 rounded-lg shadow-md text-gray-800">
+                        <div className="flex items-center gap-4">
+                            <span className="text-lg font-semibold flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300">
+                                {review?.name.charAt(0)}
+                            </span>
+                            <div>
+                                <div className="text-lg font-medium">{review?.name}</div>
+                                <div className="flex items-center">
+                                    {[...Array(5)].map((_, idx) => (
+                                        <StarIcon
+                                            key={idx}
+                                            className={`w-5 h-5 ${idx < review.rating ? 'text-blue-500' : 'text-gray-300'}`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                        {/* <div className="ml-auto text-gray-400 text-xs lg:text-sm">2 mon</div> */}
+                        <div className="mt-3 text-gray-600">
+                            {review?.description}
+                        </div>
                     </div>
-                    <div className="mt-3 text-sm lg:text-base text-gray-600">
-                        {review?.description}
-                    </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
 };

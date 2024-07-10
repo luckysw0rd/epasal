@@ -140,7 +140,7 @@ const ProjectLanding1 = () => {
                     const effectivePrice = variantPrice > 0 ? variantPrice - variantDiscount : basePrice - discount;
 
                     // Add to the total price
-                    return total + effectivePrice;
+                    return effectivePrice;
                 }, 0);
             }
         }
@@ -188,59 +188,63 @@ const ProjectLanding1 = () => {
     };
 
     return (
-        <div>
+        <div className="min-h-screen bg-white">
             <Navbar store={store} setStore={setStore} color={store.color} />
             <div className="p-2 mt-10 md:mt-0 md:p-5 lg:p-16">
                 <div className='mt-5 flex flex-col gap-5'>
                     <div className="flex flex-col md:flex-row md:gap-5 lg:gap-10">
-                        <div className="w-full md:w-[75%] flex flex-col gap-10 p-5 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
-                            <div className="flex flex-col md:flex-row gap-3 md:gap-5 lg:gap-10">
-                                <div className="flex  flex-col md:flex-col gap-5 md:w-[250px] md:h-[250px] lg:w-[400px] lg:h-[400px]">
+                        <div className="w-full md:w-[60%] flex flex-col gap-10 p-5 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                            <div className="flex flex-col md:flex-row gap-5">
+                                <div className="flex flex-col gap-5 md:w-[350px] lg:w-[450px]">
                                     <img
                                         src={displayedImage}
                                         alt={selectedProduct?.name}
-                                        className="w-full h-auto rounded"
-                                        style={{ aspectRatio: '1/1' }}
+
+                                        className="w-full h-auto rounded-lg object-cover"
                                     />
-                                    <div className="flex  md:flex-row">
+                                    <div className="flex md:flex-row gap-2 mt-2">
                                         {selectedProduct.image && (
                                             <div
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
-                                                onClick={() => setSelectedVariants(selectedProduct.variant.map(() => -1))}
+                                                onClick={() => 
+                                                    setSelectedVariants(selectedProduct.variant.map(() => -1))
+                                            }
+                                                // onClick={() => setSelectedVariants(selectedProduct.variant.map(() => -1))}
+                                                
                                             >
-                                                <img src={selectedProduct.image.imageUrl} alt="Default" className='w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] me-2' />
+                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                             </div>
                                         )}
                                         {selectedProduct.variant.map((variant, variantIndex) => (
-                                            variantIndex == 0 &&
+                                            variantIndex === 0 &&
                                             selectedProduct.variant[0].options.map((option, optionIndex) => (
                                                 <div
                                                     key={`${variantIndex}-${optionIndex}`}
                                                     className={`cursor-pointer text-sm lg:text-base ${selectedVariants[variantIndex] === optionIndex ? 'font-bold' : ''} rounded-md`}
                                                     onClick={() => handleOptionSelect(variantIndex, optionIndex)}
                                                 >
-                                                    <img src={option.image?.imageUrl || selectedProduct.image.imageUrl} alt={option.name} className='w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] me-2' />
+                                                    <img src={option.image?.imageUrl || selectedProduct.image.imageUrl} alt={option.name} className="w-[60px] h-[60px] md:w-[55px] md:h-[55px] lg:w-[69px] lg:h-[69px] rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                                 </div>
                                             ))
                                         ))}
                                     </div>
                                 </div>
-                                <div className="flex flex-col gap-3 md:gap-4 w-full">
-                                    <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-[#555555]">{selectedProduct.name}</h1>
+                                <div className="flex flex-col gap-3 w-full">
+                                    <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-800">{selectedProduct.name}</h1>
                                     <p className="text-sm text-gray-600">
                                         {selectedProduct.description}
                                     </p>
                                     <div className='flex mb-2 md:justify-start'>
-                                        {[...Array(5)].map((option, index) => {
-                                            if (index < parseFloat(Math.ceil(selectedProduct.rating)))
-                                                return <StarIcon className='w-5 h-5 text-[#8B5A08]' key={index} />
-                                            else
-                                                return <StarIcon className='w-5 h-5 text-[#959595]' key={index} />;
-                                        })}
+                                        {[...Array(5)].map((_, index) => (
+                                            <StarIcon
+                                                key={index}
+                                                className={`w-5 h-5 ${index < parseFloat(Math.ceil(selectedProduct.rating)) ? 'text-yellow-500' : 'text-gray-300'} transition-transform duration-300 hover:scale-110`}
+                                            />
+                                        ))}
                                     </div>
                                     <div className="flex gap-5 items-center">
-                                        <span className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#545454]">Rs {totalPrice}</span>
-                                        <span className="line-through text-sm md:text-base lg:text-xl text-[#838383]">Rs {totalDiscount + totalPrice}</span>
+                                        <span className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800">Rs {totalPrice}</span>
+                                        <span className="line-through text-sm md:text-base lg:text-xl text-gray-500">Rs {totalDiscount + totalPrice}</span>
                                     </div>
                                     {selectedProduct.variant.map((variant, variantIndex) => (
                                         <div className="flex gap-5 items-center" key={variantIndex}>
@@ -261,54 +265,46 @@ const ProjectLanding1 = () => {
                                     <div className="flex gap-5 items-center">
                                         <label htmlFor="quantity" className="block text-sm lg:text-base text-gray-700">Quantity:</label>
                                         <div className='flex items-center gap-3'>
-                                            <button className="px-2 md:px-3 md:py-1 bg-gray-200 rounded-md" onClick={decrementQuantity}> - </button>
+                                            <button className="px-2 md:px-3 md:py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition" onClick={decrementQuantity}> - </button>
                                             <span className="text-sm md:text-base lg:text-xl">{productCount}</span>
-                                            <button className="px-2 md:px-3 md:py-1 bg-gray-200 rounded-md" onClick={incrementQuantity}> + </button>
+                                            <button className="px-2 md:px-3 md:py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition" onClick={incrementQuantity}> + </button>
                                         </div>
                                     </div>
-                                    <button onClick={handleAddToCart} className="flex items-center justify-center gap-2 mt-3 md:mt-5 px-4 py-2 md:px-5 md:py-3 bg-blue-600 text-white rounded-md">
+                                    <button onClick={handleAddToCart} className="flex items-center justify-center gap-2 mt-3 md:mt-5 px-4 py-2 md:px-5 md:py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
                                         <TbShoppingBagPlus className="w-5 h-5" />
                                         Add to Cart
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full md:w-[25%] flex flex-col gap-5 p-5 rounded-sm shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
-                            <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-[#555555]">Store Details</h2>
+                        <div className="w-full md:w-[40%] flex flex-col gap-5 p-5 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                            <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">Store Details</h2>
                             <div className="flex items-center gap-3">
-                                <LiaShippingFastSolid className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base text-[#555555]">{storeDetails.deliveryTime}</span>
+                                <LiaShippingFastSolid className="w-5 h-5 text-gray-800" />
+                                <span className="text-sm md:text-base text-gray-800">{storeDetails.deliveryTime}</span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <TbCash className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base text-[#555555]">COD {storeDetails.COD}</span>
+                                <TbCash className="w-5 h-5 text-gray-800" />
+                                <span className="text-sm md:text-base text-gray-800">COD {storeDetails.COD}</span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <FiClock className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base text-[#555555]">{storeDetails.returnPolicyTime} Return Policy</span>
+                                <FiClock className="w-5 h-5 text-gray-800" />
+                                <span className="text-sm md:text-base text-gray-800">{storeDetails.returnPolicyTime} Return Policy</span>
                             </div>
-                            {/* <div className="flex items-center gap-3">
-                                <MdVerifiedUser className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base text-[#555555]">{storeDetails.warranty} Warranty</span>
-                            </div> */}
                             <div className="flex items-center gap-3">
-                                <PiCreditCard className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base text-[#555555]">Secure Payment</span>
+                                <PiCreditCard className="w-5 h-5 text-gray-800" />
+                                <span className="text-sm md:text-base text-gray-800">Secure Payment</span>
                             </div>
-                            {/* <div className="flex items-center gap-3">
-                                <PiCreditCard className="w-5 h-5 text-[#555555]" />
-                                <span className="text-sm md:text-base lg:text-lg text-[#555555]"> </span>
-                            </div> */}
-
                         </div>
                     </div>
-                    <div className="flex flex-col gap-5">
+                    <div className="flex flex-col gap-5 mt-10">
                         <ProductReview product={selectedProduct} />
-                        {/* <SimilarProducts store={store || JSON.parse(localStorage.getItem('store'))} product={selectedProduct} onProductSelect={handleProductSelect} /> */}
                     </div>
                 </div>
             </div>
         </div>
+
+
     );
 };
 

@@ -3,8 +3,6 @@ import React from 'react';
 const StarRating = ({ value, onChange }) => {
     const stars = [1, 2, 3, 4, 5]; // Number of stars
 
-
-    
     return (
         <div className="flex items-center">
             {stars.map(star => (

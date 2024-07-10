@@ -11,7 +11,7 @@ import SalesGraph from './SalesGraph';
 import { AuthContext } from '../../../../Hooks/AuthContext';
 import Loading from "../../../Loading/Loading"
 import Tooltip from '../../../../Theme/Theme1/SubProduct/Tooltip';
-
+import { LuQrCode } from "react-icons/lu";
 //store 1 needs to be store
 const Home = ({ data }) => {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -78,7 +78,7 @@ const Home = ({ data }) => {
 
           {/* ROW SECTION  */}
           <div className="w-full">
-            <div className="w-full bg-white rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
+            <div className="w-full min-h-40 bg-white rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
               <div className="flex justify-between px-4 pt-4 ">
                 <h3 className="text-lg font-semibold text-[#888888]">Revenue Generated</h3>
                 <IoAnalyticsSharp size={25} className='text-green-700' />
@@ -150,10 +150,12 @@ const Home = ({ data }) => {
                     <div onClick={() => { handleBuyNow() }} className="flex items-center text-bold justify-center gap-2">
                       Pay Now <LuWallet size={20} />
                     </div>
-                    <Tooltip message="Please engage with our agent via the live chat. We would be delighted to assist you in real time.">
-                      <span className=' absolute left-40  -bottom-1 w-[120px] rounded-lg  text-gray-800 text-xl border-2  mt-2  border-gray-500 font-semibold'> QR CODE?</span>
+                    <Tooltip message="Please engage with our agent via the live chat to pay with QR ">
+                      <span className=' absolute left-40 w-[140px] justify-center   h-[45px] flex  items-center gap-2   -bottom-3  rounded-xl  text-gray-800 text-xl border-2    border-gray-500 font-semibold'> QR    <LuQrCode className='ml-2'  size={20}/></span>
+                    
                     </Tooltip>
                   </button>
+                  
 
                 </div>
               </div>
@@ -177,7 +179,7 @@ const Home = ({ data }) => {
             </div>
 
             <div className="w-full bg-white rounded-lg shadow-[5px_5px_5px_rgba(0,0,0,0.2)]">
-              <div className="flex justify-between px-4">
+              <div className="flex justify-between px-4 min-h-20">
                 <h3 className="text-lg font-semibold text-[#888888]">Most Sold</h3>
                 <TbBrandShopee size={25} className='text-green-500' />
               </div>
