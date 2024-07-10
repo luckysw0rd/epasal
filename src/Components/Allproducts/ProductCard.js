@@ -85,7 +85,7 @@ const ProductCard = ({ product, productColor, addToCart, store }) => {
       <div className="w-full">
         <div className="relative w-full">
           <div className="card cursor-pointer flex flex-col justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-            <div>
+            <div   onClick={handleDefaultImage}>
               <img src={displayedImage} alt={name} className=" w-[180px] h-[160px] md:w-[252px] md:h-[196px] object-contain mx-auto p-3" style={{ aspectRatio: '1/1' }} />
             </div>
             <div className="px-5 w-full">
