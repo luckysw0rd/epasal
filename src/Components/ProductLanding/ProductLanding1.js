@@ -58,7 +58,7 @@ const ProjectLanding1 = () => {
     };
 
     function handleDefaultImage() {
-        setDisplayedImage(selectedProduct?.image?.imageUrl)
+        // setDisplayedImage(selectedProduct?.image?.imageUrl)
         setSelectedVariants(selectedProduct?.variant?.map(() => -1))
     }
 

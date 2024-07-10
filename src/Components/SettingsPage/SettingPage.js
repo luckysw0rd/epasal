@@ -62,7 +62,6 @@ const SettingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submiting")
     // Basic validation
     if (!userName || !email) {
       setMessage('Please fill out all fields.');
@@ -74,9 +73,15 @@ const SettingPage = () => {
       return;
     }
 
-    if (editMode.password && (passwordChange.newPassword !== passwordChange.confirmPassword)) {
-      setMessage('New passwords do not match.');
-      return;
+    if (editMode.password) {
+      if (!validatePassword(passwordChange.newPassword)) {
+        setMessage('Password must be at least 8 characters long and contain at least one uppercase letter.');
+        return;
+      }
+      if (passwordChange.newPassword !== passwordChange.confirmPassword) {
+        setMessage('New passwords do not match.');
+        return;
+      }
     }
 
     try {
@@ -122,10 +127,14 @@ const SettingPage = () => {
     }
   };
 
-
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    const re = /^(?=.*[A-Z]).{8,}$/;
+    return re.test(password);
   };
 
   return (

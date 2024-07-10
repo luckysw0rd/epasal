@@ -46,7 +46,6 @@ const SignInPage = () => {
         }
     }, []);
 
-
     useEffect(() => {
         let interval;
         if (!canResendOTP) {
@@ -75,6 +74,11 @@ const SignInPage = () => {
             [name]: value
         }));
     };
+
+    const validatePassword = (password) => {
+        const re = /^(?=.*[A-Z]).{8,}$/;
+        return re.test(password);
+      };
 
     const handleSignIn = async (e) => {
         try {
@@ -111,6 +115,10 @@ const SignInPage = () => {
     const handleSignUp = async (e) => {
         try {
             e.preventDefault();
+            if (!validatePassword(formData.password)) {
+                toast.error('Password must be at least 8 characters long and contain at least one uppercase letter.');
+                return;
+            }
             const responseData = await sendRequest(
                 'users/signup',
                 'POST',
@@ -171,6 +179,10 @@ const SignInPage = () => {
     const handleUpdatePassword = async (e) => {
         console.log({ otp, newPassword });
         try {
+            if (!validatePassword(formData.password)) {
+                toast.error('Password must contain at least 8 characters, including one numeric digit and one uppercase letter.');
+                return;
+            }
             const responseData = await sendRequest(
                 'users/forgotpasswordnewpassword',
                 'POST',
