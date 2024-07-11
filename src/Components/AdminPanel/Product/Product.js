@@ -359,15 +359,15 @@ const Product = ({ store }) => {
               <div className="flex flex-col gap-2 text-sm text-gray-700 mb-4">
                 <div className="flex items-center border-b pb-2">
                   <FaDollarSign className="mr-2 text-blue-500" />
-                  <span>Price: ${product.price}</span>
+                  <span>Price: Rs. {product.price}</span>
                 </div>
                 <div className="flex items-center border-b pb-2">
                   <FaPercent className="mr-2 text-blue-500" />
-                  <span>Discount: {product.discount}</span>
+                  <span>Discount: Rs. {product.discount}</span>
                 </div>
                 <div className="flex items-center border-b pb-2">
                   <FaChartLine className="mr-2 text-blue-500" />
-                  <span>Revenue: ${product.revenueGenerated}</span>
+                  <span>Revenue: Rs. {product.revenueGenerated}</span>
                 </div>
                 <div className="flex items-center border-b pb-2">
                   <FaBox className="mr-2 text-blue-500" />
