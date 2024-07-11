@@ -158,27 +158,24 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
         }
     };
 
-    if (isLoading) {
-        return <Loader></Loader>
-    } else {
-        return (
 
-            <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
-                {renderProductList()}
-                <Link>
-                    <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
-                    >
-                        <span>
-                            <Link to={`/store/products/${store.name}`} >
-                                View More
-                            </Link>
-                        </span> <IoIosArrowForward />
-                    </button>
-                </Link>
-            </div>
+    return (
 
-        );
-    }
-};
+        <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
+            {renderProductList()}
+            <Link>
+                <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
+                >
+                    <span>
+                        <Link to={`/store/products/${store.name}`} >
+                            View More
+                        </Link>
+                    </span> <IoIosArrowForward />
+                </button>
+            </Link>
+        </div>
+
+    );
+}
 
 export default NewProductList;

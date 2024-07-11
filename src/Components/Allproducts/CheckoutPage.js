@@ -233,15 +233,14 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                 {paymentOptions.map(option => (
                                     <div
                                         key={option.id}
-                                        className={` w-[80px]  relative h-[60px] mr-4  object-contain border border-gray-100 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-500 ' : 'border-gray-200'
-                                            } ${option.label === 'esewa' ? 'border-2 border-blue-500' : ''}`}
+                                        className={` w-[80px]  relative h-[60px] mr-4  object-contain border rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-600 ' : 'border-gray-200'
+                                            } `}
                                         onClick={() => setSelectedPayment(option.label)}
                                     >
                                         <img src={option.src} alt={option.label} className="  h-full w-full" />
                                         {option.label === 'esewa' && (
                                             <span className="absolute top-0 right-0 px-1 bg-blue-500 text-white text-xs font-semibold rounded-bl-md">Popular</span>
                                         )}
-                                        {selectedPayment === option.label && <UnderlineSVG className='w-[800px] border-2 border-gray-600' />}
                                         <h3 className=' font-md text-center'>{option.label}</h3>
                                     </div>
                                 ))}
