@@ -146,16 +146,21 @@ const Home = ({ data }) => {
                   <div className="text-2xl font-semibold">Rs. {data?.dueAmount ? parseFloat(data.dueAmount).toFixed(2) : '0.00'}</div>
 
                   <div className="text-sm text-[#888888]">Amount you need to pay to Banau </div>
-                  <button className='w-[60%] border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-xl py-2 text-green-600'>
-                    <div onClick={() => { handleBuyNow() }} className="flex items-center text-bold justify-center gap-2">
-                      Pay Now <LuWallet size={20} />
-                    </div>
-                    <Tooltip message="Please engage with our agent via the live chat to pay with QR ">
-                      <span className=' absolute left-40 w-[140px] justify-center   h-[45px] flex  items-center gap-2   -bottom-3  rounded-xl  text-gray-800 text-xl border-2    border-gray-500 font-semibold'> QR    <LuQrCode className='ml-2'  size={20}/></span>
-                    
-                    </Tooltip>
-                  </button>
-                  
+                  <div className='flex gap-3'>
+                    <button className='w-[60%] border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-xl p-2 px-4 text-green-600'>
+                      <div onClick={() => { handleBuyNow() }} className="flex items-center text-bold justify-center gap-2">
+                        Pay Now <LuWallet size={20} />
+                      </div>
+
+                    </button>
+                    <button>
+                      <Tooltip message="Please engage with our agent via the live chat to pay with QR ">
+                        <div className='px-6 py-2 justify-center flex  items-center gap-2  rounded-xl  text-gray-800 text-xl border-2    border-gray-500 font-semibold'> QR <LuQrCode size={20} /></div>
+
+                      </Tooltip>
+                    </button>
+                  </div>
+
 
                 </div>
               </div>

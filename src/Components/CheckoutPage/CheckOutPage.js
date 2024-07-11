@@ -15,7 +15,7 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
     const [landmark, setLandmark] = useState('');
-    const { expectedDeliveryPrice } = store || 10;
+    const { expectedDeliveryPrice } = store || 100;
     const [discount, setDiscount] = useState(0);
     const [orderResponse, setOrderResponse] = useState(null);
     const auth = useContext(AuthContext);

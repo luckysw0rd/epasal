@@ -6,6 +6,8 @@ import Navbar from './Navbar';
 import StarRating from './StarRating'; // Import the StarRating component
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
 import Loader from '../Loading/Loading';
+import { GrClear } from "react-icons/gr";
+import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -212,20 +214,6 @@ const AllProducts = () => {
     }
   };
 
-  const clearSearch = () => {
-    setFilters({
-      priceRange: '',
-      rating: '',
-      category: [],
-      name: ''
-    });
-    setMinPrice(0);
-    setMaxPrice(Number.MAX_SAFE_INTEGER); // Set max price to the largest possible number
-    setName('');
-    setPage(1);
-    fetchProducts();
-  };
-
   const handlePriceChange = (type, value) => {
     if (type === 'min') {
       setMinPrice(value);
@@ -321,12 +309,23 @@ const AllProducts = () => {
                 <div className=' mb-2'>
                   Rating:
                 </div>
+              </label>
+              <div className="flex gap-8 mb-5 items-center">
                 <StarRating
-                  className=' '
+                  className=''
                   value={parseInt(filters.rating)}
                   onChange={handleRatingChange}
                 />
-              </label>
+                <Tooltip message="Clear Rating">
+                  <button
+                    onClick={() => handleRatingChange(0)}
+
+                  >
+                    <GrClear className='text-amber-700 mt-2' size={20} />
+                  </button>
+                </Tooltip>
+
+              </div>
 
               {store?.subCategories && (
                 <div className="mb-4">
@@ -355,15 +354,7 @@ const AllProducts = () => {
                 >
                   Search
                 </button>
-                <button
-                  onClick={clearSearch} // Handle click on search button
-                  className="px-6 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2"
-                  style={
-                    { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
-                  }
-                >
-                  Clear
-                </button>
+
               </div>
             </div>
           )}
@@ -429,7 +420,7 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     )
   );
 };
