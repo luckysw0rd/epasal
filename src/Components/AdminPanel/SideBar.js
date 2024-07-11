@@ -52,12 +52,11 @@ const SideBar = ({ setDashboardState, role }) => {
         <div className=" flex fixed font-Roboto flex-col  h-full  bg-slate-100 sm:bg-white ">
           <div>
             <div className=" py-2 flex justify-center flex-row">
-              {/* <h1 className="text-3xl font-bold text-black bg-black  h-6 w-6 px-1 py-1 mr-1 sm:mr-4 mt-9 rounded-3xl decoration-underline decoration-blue-500">
-              </h1> */}
+              
               <img src={banau} className="h-10 mt-7" alt="Logo" />
              
             </div>
-            {/* <hr className="mt-2 sm:mt-4 border-gray-400 px-8 w-[140px] sm:w-[175px] ml-9"></hr> */}
+            
             <Link
   onClick={() => {
     setDashboardState("Shop");
@@ -70,7 +69,7 @@ const SideBar = ({ setDashboardState, role }) => {
 
 
 
-            {/* <hr className="mt-0 border-gray-400 px-8 w-[140px] sm:w-[175px]  ml-9"></hr> */}
+           
 
             <div className="my-[40px] flex flex-col justify-center gap-1 text-gray-700">
               {menus.map((menu, i) => (
