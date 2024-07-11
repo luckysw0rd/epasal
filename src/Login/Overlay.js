@@ -50,6 +50,10 @@ const Overlay = ({ email, setShowOverlay }) => {
                 </button>
 
                 <h2 className="text-xl font-semibold mb-4">Enter Verification Code</h2>
+                <h2 className="text-sm  text-yellow-500 font-semibold mb-4">OTPS May take upto 10 minutes to arrive</h2>
+                <h2 className="text-sm font-semibold mb-4 text-green-400">Or you may contact an agent via the live chat for verification</h2>
+
+
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"

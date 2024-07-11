@@ -78,7 +78,7 @@ const SignInPage = () => {
     const validatePassword = (password) => {
         const re = /^(?=.*[A-Z]).{8,}$/;
         return re.test(password);
-      };
+    };
 
     const handleSignIn = async (e) => {
         try {
@@ -179,7 +179,7 @@ const SignInPage = () => {
     const handleUpdatePassword = async (e) => {
         console.log({ otp, newPassword });
         try {
-            if (!validatePassword(formData.password)) {
+            if (!validatePassword(newPassword)) {
                 toast.error('Password must contain at least 8 characters, including one numeric digit and one uppercase letter.');
                 return;
             }
