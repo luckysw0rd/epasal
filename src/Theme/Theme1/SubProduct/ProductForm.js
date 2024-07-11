@@ -24,12 +24,12 @@ export default function ProductForm({ onClose }) {
         inventory: '',
         image: { imageUrl: '' },
         variant: [
-            {
-                name: '',
-                options: [
-                    { name: '', price: '', discount: '', count: '', image: { imageUrl: '' } }
-                ]
-            }
+            // {
+            //     name: '',
+            //     options: [
+            //         { name: '', price: '', discount: '', count: '', image: { imageUrl: '' } }
+            //     ]
+            // }
         ],
         category: [], // Change to array
         subcategories: [store?.subCategories[0]?.name] // Change to array
@@ -78,7 +78,7 @@ export default function ProductForm({ onClose }) {
             ...formState,
             variant: [
                 ...formState.variant,
-                { name: '', options: [{ name: '', price: '', discount: '', count: '', image: { imageUrl: '' } }] }
+                { name: '', options: [{ name: '', price: formState?.price, discount: formState?.discount, count: '', image: { imageUrl: '' } }] }
             ]
         });
     };

@@ -303,310 +303,309 @@ const Product = ({ store }) => {
   };
 
   return (
-    isLoading ? <Loading /> :
-      store && (
-        <div>
-          <div className="flex flex-col px-2 justify-between mb-4 gap-2">
-            <div className='flex gap-2'>
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(event) => handleSearchChange(event)}
-                className="border p-2 px-3 h-10 flex-grow"
-              />
-              <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
-            </div>
-            <select value={sortOrder} onChange={handleSortChange} className="border p-2">
-              <option value="asc">Sort by Revenue (Asc)</option>
-              <option value="desc">Sort by Revenue (Desc)</option>
-            </select>
-            <div className="flex mt-2">
-              <input
-                type="number"
-                placeholder="Min Price"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-                className="border p-2 px-3 mr-2"
-              />
-              <input
-                type="number"
-                placeholder="Max Price"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                className="border p-2 px-3 mr-2"
-              />
+    store && (
+      <div>
+        <div className="flex flex-col px-2 justify-between mb-4 gap-2">
+          <div className='flex gap-2'>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(event) => handleSearchChange(event)}
+              className="border p-2 px-3 h-10 flex-grow"
+            />
+            <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
+          </div>
+          <select value={sortOrder} onChange={handleSortChange} className="border p-2">
+            <option value="asc">Sort by Revenue (Asc)</option>
+            <option value="desc">Sort by Revenue (Desc)</option>
+          </select>
+          <div className="flex mt-2">
+            <input
+              type="number"
+              placeholder="Min Price"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              className="border p-2 px-3 mr-2"
+            />
+            <input
+              type="number"
+              placeholder="Max Price"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              className="border p-2 px-3 mr-2"
+            />
+            <button
+              className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
+              onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
+            >
+              Apply Filters
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-8 p-4 justify-center">
+          {products.map((product, productIndex) => (
+            <div
+              key={productIndex}
+              className="bg-white max-w-[400px] shadow-lg p-5 rounded-lg overflow-hidden transform transition-transform hover:scale-105"
+            >
+              <div className="text-center border-b pb-4 mb-4">
+                <img className="w-80 h-60 mx-auto mb-4 rounded-md" src={product.image.imageUrl} alt={product.name} />
+                <h2 className="text-xl font-bold mb-2">{product.name}</h2>
+              </div>
+              <p className="text-gray-700 mb-4">
+                {truncateDescription(product.description, 15)}
+              </p>
+              <div className="flex flex-col gap-2 text-sm text-gray-700 mb-4">
+                <div className="flex items-center border-b pb-2">
+                  <FaDollarSign className="mr-2 text-blue-500" />
+                  <span>Price: Rs. {product.price}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaPercent className="mr-2 text-blue-500" />
+                  <span>Discount: Rs. {product.discount}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaChartLine className="mr-2 text-blue-500" />
+                  <span>Revenue: Rs. {product.revenueGenerated}</span>
+                </div>
+                <div className="flex items-center border-b pb-2">
+                  <FaBox className="mr-2 text-blue-500" />
+                  <span>Inventory: {product.inventory}</span>
+                </div>
+              </div>
               <button
-                className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
-                onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
+                className="bg-blue-500 text-white flex items-center justify-center gap-2 px-4 py-2 rounded transition-colors hover:bg-blue-600"
+                onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex); }}
               >
-                Apply Filters
+                <FaEdit />
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteProduct(product._id)}
+                className="bg-red-500 text-white px-4 py-2 rounded mt-2"
+              >
+                Delete
               </button>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-8 p-4 justify-center">
-            {products.map((product, productIndex) => (
-              <div
-                key={productIndex}
-                className="bg-white max-w-[400px] shadow-lg p-5 rounded-lg overflow-hidden transform transition-transform hover:scale-105"
-              >
-                <div className="text-center border-b pb-4 mb-4">
-                  <img className="w-80 h-60 mx-auto mb-4 rounded-md" src={product.image.imageUrl} alt={product.name} />
-                  <h2 className="text-xl font-bold mb-2">{product.name}</h2>
-                </div>
-                <p className="text-gray-700 mb-4">
-                  {truncateDescription(product.description, 15)}
-                </p>
-                <div className="flex flex-col gap-2 text-sm text-gray-700 mb-4">
-                  <div className="flex items-center border-b pb-2">
-                    <FaDollarSign className="mr-2 text-blue-500" />
-                    <span>Price: Nrs {product.price}</span>
-                  </div>
-                  <div className="flex items-center border-b pb-2">
-                    <FaPercent className="mr-2 text-blue-500" />
-                    <span>Discount:Nrs {product.discount}</span>
-                  </div>
-                  <div className="flex items-center border-b pb-2">
-                    <FaChartLine className="mr-2 text-blue-500" />
-                    <span>Revenue: Nrs {product.revenueGenerated}</span>
-                  </div>
-                  <div className="flex items-center border-b pb-2">
-                    <FaBox className="mr-2 text-blue-500" />
-                    <span>Inventory: {product.inventory}</span>
-                  </div>
-                </div>
-                <button
-                  className="bg-blue-500 text-white flex items-center justify-center gap-2 px-4 py-2 rounded transition-colors hover:bg-blue-600"
-                  onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex); }}
-                >
-                  <FaEdit />
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteProduct(product._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded mt-2"
-                >
-                  Delete
-                </button>
+          ))}
+        </div>
+        <div className="flex justify-between items-center mt-6 mx-16  md:mx-40">
+          <button
+            onClick={() => handlePageChange(page - 1)} disabled={page <= 1}
+            className={`px-4 py-2 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+          >
+            Previous
+          </button>
+          <span>Page {page} </span>
+          <button
+            onClick={() => handlePageChange(page + 1)}
+            //  disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+          >
+            Next
+          </button>
+        </div>
+        {editProductIndex !== null && (
+          <div className="  fixed top-0 left-0 w-full h-screen z-50 flex justify-center">
+            <div className='absolute bg-black opacity-50 w-screen top-0 left-0 h-screen'></div>
+            <div className='absolute w-[80%] mt-10 bg-white p-12 h-[80%] overflow-y-scroll'>
+              <div className='absolute top-3 right-5 text-red-500 cursor-pointer' onClick={() => { handleEditClick(null) }}>X</div>
+              <div className="mb-4">
+                <h2 className='text-2xl font-bold mb-4'>Edit Product</h2>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={editProduct.name}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
               </div>
-            ))}
-          </div>
-          <div className="flex justify-between items-center mt-6 mx-16  md:mx-40">
-            <button
-              onClick={() => handlePageChange(page - 1)} disabled={page <= 1}
-              className={`px-4 py-2 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
-            >
-              Previous
-            </button>
-            <span>Page {page} </span>
-            <button
-              onClick={() => handlePageChange(page + 1)}
-              //  disabled={currentPage === totalPages}
-              className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
-            >
-              Next
-            </button>
-          </div>
-          {editProductIndex !== null && (
-            <div className="  fixed top-0 left-0 w-full h-screen z-50 flex justify-center">
-              <div className='absolute bg-black opacity-50 w-screen top-0 left-0 h-screen'></div>
-              <div className='absolute w-[80%] mt-10 bg-white p-12 h-[80%] overflow-y-scroll'>
-                <div className='absolute top-3 right-5 text-red-500 cursor-pointer' onClick={() => { handleEditClick(null) }}>X</div>
-                <div className="mb-4">
-                  <h2 className='text-2xl font-bold mb-4'>Edit Product</h2>
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={editProduct.name}
-                    onChange={handleInputChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
-                  <textarea
-                    name="description"
-                    value={editProduct.description}
-                    onChange={handleInputChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div className=''>
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
-                    Category
-                  </label>
-                  <select
-                    id="subcategory"
-                    name="category"
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                <textarea
+                  name="description"
+                  value={editProduct.description}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className=''>
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
+                  Category
+                </label>
+                <select
+                  id="subcategory"
+                  name="category"
 
-                    value={selectedSubCategory}
-                    onChange={handleSubCategoryChange}
-                    // multiple // Allow multiple selections
-                    onWheel={(e) => e.target.blur()}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
-                  >
-                    {store.subCategories.map(subcategory => (
-                      <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
-                  <input
-                    type="number"
-                    name="price"
-                    value={editProduct.price}
-                    onChange={handleInputChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Discount</label>
-                  <input
-                    type="number"
-                    name="discount"
-                    value={editProduct.discount}
-                    onChange={handleInputChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Inventory</label>
-                  <input
-                    type="number"
-                    name="inventory"
-                    value={editProduct.inventory}
-                    onChange={handleInputChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
-                  <ProductImageDropzone
-                    imageUrl={editProduct.image.imageUrl}
-                    setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
-                    className="w-10 h-10"
-                  />
-                </div>
+                  value={selectedSubCategory}
+                  onChange={handleSubCategoryChange}
+                  // multiple // Allow multiple selections
+                  onWheel={(e) => e.target.blur()}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
+                >
+                  {store.subCategories.map(subcategory => (
+                    <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={editProduct.price}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+                <input
+                  type="number"
+                  name="discount"
+                  value={editProduct.discount}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Inventory</label>
+                <input
+                  type="number"
+                  name="inventory"
+                  value={editProduct.inventory}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+                <ProductImageDropzone
+                  imageUrl={editProduct.image.imageUrl}
+                  setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
+                  className="w-10 h-10"
+                />
+              </div>
 
-                {editProduct.variant.map((variant, variantIndex) => (
-                  <div key={variantIndex} className="mb-4">
-                    <div className="flex justify-between items-center">
-                      <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
-                      <button
-                        className="bg-red-500 text-white px-2 py-1 rounded mb-2"
-                        onClick={() => handleDeleteVariant(variantIndex)}
-                      >
-                        Delete Variant
-                      </button>
-                    </div>
-                    <input
-                      type="text"
-                      value={variant.name}
-                      onChange={(event) => handleVariantNameChange(event, variantIndex)}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                      placeholder="Variant Name"
-                    />
-                    {variant.options.map((option, optionIndex) => (
-                      <div key={optionIndex} className="mb-4">
-                        <div className="flex justify-between items-center">
-                          <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
-                          <button
-                            className="bg-red-500 text-white px-2 py-1 rounded mb-2"
-                            onClick={() => handleDeleteOption(variantIndex, optionIndex)}
-                          >
-                            Delete Option
-                          </button>
-                        </div>
-
-                        <input
-                          type="text"
-                          name="name"
-                          value={option.name}
-                          onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                          placeholder="Option Name"
-                        />
-                        {variantIndex === 0 && (
-                          <>
-                            <input
-                              type="number"
-                              name="price"
-                              value={option.price}
-                              onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                              placeholder="Option Price"
-                            />
-                            <input
-                              type="number"
-                              name="discount"
-                              value={option.discount}
-                              onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                              placeholder="Option Discount"
-                            />
-                            <input
-                              type="number"
-                              name="count"
-                              value={option.count}
-                              onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
-                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                              placeholder="Option Count"
-                            />
-                          </>
-                        )}
-                        {variantIndex === 0 && (
-                          <ProductImageDropzone
-                            imageUrl={option.image?.imageUrl}
-                            setImageUrl={(url) =>
-                              setEditProduct((prev) => {
-                                const updatedVariants = [...prev.variant];
-                                updatedVariants[variantIndex].options[optionIndex].image = {
-                                  ...updatedVariants[variantIndex].options[optionIndex].image,
-                                  imageUrl: url
-                                };
-                                return { ...prev, variant: updatedVariants };
-                              })
-                            }
-                          />
-                        )}
-                      </div>
-                    ))}
+              {editProduct.variant.map((variant, variantIndex) => (
+                <div key={variantIndex} className="mb-4">
+                  <div className="flex justify-between items-center">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Variant {variantIndex + 1}</label>
                     <button
-                      className="bg-blue-500 text-white px-2 py-1 rounded"
-                      onClick={() => handleAddOption(variantIndex)}
+                      className="bg-red-500 text-white px-2 py-1 rounded mb-2"
+                      onClick={() => handleDeleteVariant(variantIndex)}
                     >
-                      Add Option
+                      Delete Variant
                     </button>
                   </div>
-                ))}
-                <button
-                  className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-                  onClick={handleAddVariant}
-                >
-                  Add Variant
-                </button>
-                <div className="mt-4">
+                  <input
+                    type="text"
+                    value={variant.name}
+                    onChange={(event) => handleVariantNameChange(event, variantIndex)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                    placeholder="Variant Name"
+                  />
+                  {variant.options.map((option, optionIndex) => (
+                    <div key={optionIndex} className="mb-4">
+                      <div className="flex justify-between items-center">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Option {optionIndex + 1}</label>
+                        <button
+                          className="bg-red-500 text-white px-2 py-1 rounded mb-2"
+                          onClick={() => handleDeleteOption(variantIndex, optionIndex)}
+                        >
+                          Delete Option
+                        </button>
+                      </div>
+
+                      <input
+                        type="text"
+                        name="name"
+                        value={option.name}
+                        onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                        placeholder="Option Name"
+                      />
+                      {variantIndex === 0 && (
+                        <>
+                          <input
+                            type="number"
+                            name="price"
+                            value={option.price}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Price"
+                          />
+                          <input
+                            type="number"
+                            name="discount"
+                            value={option.discount}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Discount"
+                          />
+                          <input
+                            type="number"
+                            name="count"
+                            value={option.count}
+                            onChange={(event) => handleVariantChange(event, variantIndex, optionIndex)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                            placeholder="Option Count"
+                          />
+                        </>
+                      )}
+                      {variantIndex === 0 && (
+                        <ProductImageDropzone
+                          imageUrl={option.image?.imageUrl}
+                          setImageUrl={(url) =>
+                            setEditProduct((prev) => {
+                              const updatedVariants = [...prev.variant];
+                              updatedVariants[variantIndex].options[optionIndex].image = {
+                                ...updatedVariants[variantIndex].options[optionIndex].image,
+                                imageUrl: url
+                              };
+                              return { ...prev, variant: updatedVariants };
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+                  ))}
                   <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                    onClick={handleSaveClick}
+                    className="bg-blue-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleAddOption(variantIndex)}
                   >
-                    Save
-                  </button>
-                  <button
-                    className="bg-gray-500 text-white px-4 py-2 rounded"
-                    onClick={() => setEditProductIndex(null)}
-                  >
-                    Cancel
+                    Add Option
                   </button>
                 </div>
+              ))}
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded mt-4"
+                onClick={handleAddVariant}
+              >
+                Add Variant
+              </button>
+              <div className="mt-4">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                  onClick={handleSaveClick}
+                >
+                  Save
+                </button>
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 rounded"
+                  onClick={() => setEditProductIndex(null)}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-        </div>
-      )
+      </div>
+    )
   );
 };
 
