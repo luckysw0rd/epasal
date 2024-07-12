@@ -20,7 +20,8 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const [orderResponse, setOrderResponse] = useState(null);
     const auth = useContext(AuthContext);
 
-    const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + expectedDeliveryPrice - discount;
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.count, 0)
+    const totalAmount = totalPrice - totalPrice * (discount / 100) + expectedDeliveryPrice
 
     const UnderlineSVG = () => (
         <svg className="w-full  h-2 absolute bottom-0" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,8 +34,33 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
         }
     }, [cart, onClose]);
 
-    const handleApplyCode = () => {
-        alert(`Promo code ${promoCode} applied!`);
+    const handleApplyCode = async () => {
+        if (promoCode == "")
+            toast.error("Please provide promo code")
+        else {
+            console.log(promoCode)
+            try {
+
+                const responseData = await sendRequest(
+                    'store/applypromocode',
+                    'POST',
+                    JSON.stringify({ promoCode, id: store?._id }),
+                    {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + auth.token,
+                    }
+                );
+                console.log(responseData)
+                setDiscount(responseData?.discount)
+                toast.success("Promo code applied")
+
+            }
+            catch (err) {
+                toast.error(err.message)
+            }
+        }
+
+
     };
 
 
@@ -164,6 +190,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                     type="text"
                                     value={promoCode}
                                     onChange={(e) => setPromoCode(e.target.value)}
+                                    onWheel={(e) => e.target.blur()}
                                     placeholder="Promo code"
                                     className="border border-gray-300 rounded-md px-4 py-1 mr-3 w-2/5 placeholder-center"
                                 />
@@ -177,13 +204,14 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                             </div>
                             <div className="mt-4">
                                 <div className="flex justify-between">
+                                    <p className="text-sm font-medium">Discount</p>
+                                    <p className="text-sm">-रु {totalPrice * (discount / 100)}</p>
+                                </div>
+                                <div className="flex justify-between mt-8">
                                     <p className="text-sm font-medium">Delivery Charge</p>
                                     <p className="text-sm">रु {expectedDeliveryPrice}</p>
                                 </div>
-                                <div className="flex justify-between mt-8">
-                                    <p className="text-sm font-medium">Discount</p>
-                                    <p className="text-sm">-रु {discount}</p>
-                                </div>
+
                                 <hr className="my-4" />
                                 <div className="flex justify-between font-bold">
                                     <p className="text-lg">Total Amount</p>

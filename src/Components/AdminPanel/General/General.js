@@ -54,6 +54,7 @@ const General = ({ store, setDashboardState }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(formData)
         try {
             const uploadImages = async () => {
                 const updatedData = { ...formData };
@@ -463,13 +464,13 @@ const General = ({ store, setDashboardState }) => {
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Store URL :</h2>
                             <div className="flex items-center space-x-2">
                                 <li className='text-blue-500 hover:text-blue-700'>
-                                <Link 
-  to={`/store/${store?.name}`} 
-  target="_blank" 
-  rel="noopener noreferrer"
->
-  {`${process.env.REACT_APP_BASE_URL}/${store?.name}`}
-</Link>
+                                    <Link
+                                        to={`/store/${store?.name}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {`${process.env.REACT_APP_BASE_URL}/${store?.name}`}
+                                    </Link>
 
                                 </li>
                                 <button
