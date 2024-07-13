@@ -11,6 +11,7 @@ import Footer from "./Footer/T1Footer";
 import SaveStoreButton from "./SaveButton/SaveStoreButton";
 import Loading from "../../Components/Loading/Loading";
 import Task from "./Task/Task";
+import ModernReactPlayer from "./AudioPlayer/ModernReactPlayer";
 import {
   DndContext,
   KeyboardSensor,
@@ -47,6 +48,7 @@ const EStore = ({ Passedstore }) => {
     { id: 9, component: <T1ProductList /> },
     { id: 10, component: <OfferBanner /> },
     { id: 11, component: <Footer /> },
+    { id: 12, component: <ModernReactPlayer /> },
 
   ]);
 

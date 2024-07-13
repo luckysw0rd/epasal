@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
-
+import ReactPlayer from 'react-player';
 
 import { motion } from "framer-motion"
 const Footer1 = ({
@@ -20,12 +20,17 @@ const Footer1 = ({
     store,
     isEdit
 }) => {
+
     const { bgColor, textColor, linkColor, linkHeaderColor, btnBgColor, btnBgColorOnHover } = color.footerColor
     // const [location, setLocation] = useState(initialLocation || '');
     const [email, setEmail] = useState(initialEmail || '');
     const [phoneNumber, setPhoneNumber] = useState(initialPhoneNumber || '');
     const [newSocialMediaLinks, setNewSocialMediaLinks] = useState({ ...socialMediaLinks });
+    const [volume, setVolume] = useState(0.5);
 
+    const handleVolumeChange = (e) => {
+        setVolume(parseFloat(e.target.value));
+    };
     const handleLocationChange = (e) => {
         // setLocation(e.target.value);
         setStore(prevState => ({ ...prevState, location: e.target.value }));
@@ -79,6 +84,7 @@ const Footer1 = ({
                         </div>
                     </div>
                     <div>
+                  
                         <div className="flex flex-col md:flex-row gap-5 lg:gap-10">
                             <div className="flex flex-col">
                                 <p style={{ color: linkHeaderColor }} className="mb-2 font-bold text-base lg:text-lg text-center">Edit Contact:</p>
