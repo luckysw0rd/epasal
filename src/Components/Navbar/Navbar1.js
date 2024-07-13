@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiMenu } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { FaPlay, FaPause } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 // import CartDropdown from './CartDropDown';
 import CartDropdown from '../Allproducts/CartDropDown';
@@ -33,6 +34,7 @@ const Navbar1 = ({
     const sidebarRef = useRef();
     const [searchItem, setSearchItem] = useState([])
     const [isAnimating, setIsAnimating] = useState(true);
+
     const [cartItems, setCartItems] = useState([
     ]);
     useEffect(() => {
@@ -335,6 +337,7 @@ const Navbar1 = ({
             }}
 
         >
+
             <div className="flex items-center ">
                 {!isSidebarOpen && (
                     <button
@@ -367,6 +370,7 @@ const Navbar1 = ({
                 <span className="text-xl font-bold" onClick={() => navigate('./')}>
                     {store.name}
                 </span>
+          
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
@@ -463,20 +467,20 @@ const Navbar1 = ({
                                 />
                                 <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
                                 {searchItem.length > 0 &&
-                        <ul className='absolute top-10 -left-2 flex flex-col gap-3 w-full px-3 py-3 rounded-b-2xl' style={{
-                            fontFamily: store?.fonts?.Navbar,
-                            backgroundColor: color?.navColor?.backgroundnavColor,
-                            color: color?.navColor?.storeNameTextColor,
-                        }}>
-                            {searchItem.map((n, i) => {
-                                return <li   onClick={() => {
-                                    handleProductClick(n)
-                                }} key={i} className='flex items-center gap-4'>
-                                    <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black ' />
-                                    <div>{n.name}</div>
-                                </li>
-                            })}
-                        </ul>}
+                                    <ul className='absolute top-10 -left-2 flex flex-col gap-3 w-full px-3 py-3 rounded-b-2xl' style={{
+                                        fontFamily: store?.fonts?.Navbar,
+                                        backgroundColor: color?.navColor?.backgroundnavColor,
+                                        color: color?.navColor?.storeNameTextColor,
+                                    }}>
+                                        {searchItem.map((n, i) => {
+                                            return <li onClick={() => {
+                                                handleProductClick(n)
+                                            }} key={i} className='flex items-center gap-4'>
+                                                <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black ' />
+                                                <div>{n.name}</div>
+                                            </li>
+                                        })}
+                                    </ul>}
                             </div>
                             <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
                             <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>

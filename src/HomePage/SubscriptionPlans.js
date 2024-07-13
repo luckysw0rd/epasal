@@ -14,7 +14,8 @@ const plans = {
             seo: "Basic",
             customDomain: false,
             limitedOffer: true,
-            promoCode: false
+            promoCode: false,
+            Music:false
         },
         {
             name: "Gold",
@@ -28,7 +29,9 @@ const plans = {
             customDomain: true,
             popular: true,
             limitedOffer: true,
-            promoCode: true
+            promoCode: true,
+            Music:false
+
         },
         {
             name: "Platinum",
@@ -41,7 +44,9 @@ const plans = {
             seo: "Advanced",
             customDomain: true,
             limitedOffer: true,
-            promoCode: true
+            promoCode: true,
+            Music:true
+
         }
     ],
     quarterly: [
@@ -56,7 +61,9 @@ const plans = {
             seo: "Basic",
             customDomain: false,
             limitedOffer: true,
-            promoCode: false
+            promoCode: false,
+            Music:false
+
         },
         {
             name: "Gold",
@@ -70,7 +77,9 @@ const plans = {
             customDomain: true,
             popular: true,
             limitedOffer: true,
-            promoCode: true
+            promoCode: true,
+            Music:false
+
         },
         {
             name: "Platinum",
@@ -83,7 +92,9 @@ const plans = {
             seo: "Advanced",
             customDomain: true,
             limitedOffer: true,
-            promoCode: true
+            promoCode: true,
+            Music:true
+
         }
     ],
     yearly: [
@@ -98,7 +109,9 @@ const plans = {
             seo: "Basic",
             customDomain: false,
             limitedOffer: true,
-            promoCode: false
+            promoCode: false,
+            Music:false
+
         },
         {
             name: "Gold",
@@ -112,7 +125,9 @@ const plans = {
             customDomain: true,
             popular: true,
             limitedOffer: true,
-            promoCode: true
+            promoCode: true,
+            Music:false
+
         },
         {
             name: "Platinum",
@@ -125,7 +140,9 @@ const plans = {
             seo: "Advanced",
             customDomain: true,
             limitedOffer: true,
-            promoCode: true
+            promoCode: true,
+            Music:true
+
         }
     ]
 };
@@ -189,7 +206,7 @@ const SubscriptionPlans = () => {
                         return (
                             <div
                                 key={index}
-                                className={`flex-1 bg-white max-h-[518px] border rounded-lg shadow-lg overflow-hidden relative ${plan.popular ? 'border-green-500' : 'border-gray-200'}`}
+                                className={`flex-1 bg-white max-h-[620px] border rounded-lg shadow-lg overflow-hidden relative ${plan.popular ? 'border-green-500' : 'border-gray-200'}`}
                             >
                                 {plan.popular && (
                                     <div className="absolute top-0 right-0 mt-4 mr-4 px-2 py-1 bg-purple-600 text-white text-xs font-bold rounded-full shadow-md">
@@ -255,6 +272,10 @@ const SubscriptionPlans = () => {
                                         <li className="flex items-center justify-between">
                                             <span>Promo Code:</span>
                                             <span>{plan.promoCode ? '✔️' : '❌'}</span>
+                                        </li>
+                                        <li className="flex items-center justify-between">
+                                            <span>Background Music</span>
+                                            <span>{plan.Music ? '✔️' : '❌'}</span>
                                         </li>
                                     </ul>
                                 </div>
