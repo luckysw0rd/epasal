@@ -55,7 +55,6 @@ const Product = ({ store }) => {
       setProducts(response.products);
       setTotalProducts(response.totalProducts);
       setTotalPages(response.totalPages);
-
     } catch (error) {
       toast.error(error.message);
     }
