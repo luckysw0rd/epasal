@@ -259,14 +259,27 @@ const Navbar = ({ navbarImage, setStores }) => {
                                         </motion.div>}
 
                                         <li>
-                                            {!auth.isLoggedIn && <div onClick={() => { navigate('/login') }} >
-                                                Login
-                                            </div>}
-                                            {auth.isLoggedIn && <div onClick={() => { auth.logout(); }} >
-                                                Logout
-                                            </div>}
-                                        </li>
-                                        {/* <li>Bye</li> */}
+  {!auth.isLoggedIn && (
+    <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row ml-4'>
+      Login
+      <IoIosLogIn className=' text-2xl font-bold  ml-2 items-center' />
+    </div>
+  )}
+  {auth.isLoggedIn && (
+    <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row ml-4'>
+      Logout
+      <IoLogOut className=' font-bold ml-2 items-center mt-1' />
+    </div>
+  )}
+</li>
+<hr className='my-4 border-t border-gray-300' />
+<li>
+  <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-semibold text-center text-md cursor-pointer'>
+    Pricing
+    <RiPriceTagLine />
+  </ScrollLink>
+</li>
+
 
                                     </ul>
                                 </motion.div>
