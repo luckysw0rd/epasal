@@ -43,7 +43,7 @@ const General = ({ store, setDashboardState }) => {
     };
 
     const handleCopyLink = () => {
-        const link = `${process.env.REACT_APP_BASE_URL}/${store?.name}`;
+        const link = `${process.env.REACT_APP_DIRECT_URL}/${store?.name}`;
         navigator.clipboard.writeText(link).then(() => {
             setCopySuccess('Link copied!');
             setTimeout(() => setCopySuccess(''), 2000);
@@ -469,7 +469,7 @@ const General = ({ store, setDashboardState }) => {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        {`${process.env.REACT_APP_BASE_URL}/${store?.name}`}
+                                        {`${process.env.REACT_APP_DIRECT_URL}/${store?.name}`}
                                     </Link>
 
                                 </li>
