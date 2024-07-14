@@ -4,7 +4,7 @@ import { FaPlay, FaPause } from 'react-icons/fa';
 import { useStore } from '../T1Context';
 const ModernReactPlayer = () => {
     const [volume, setVolume] = useState(0.5);
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(false);
     const { store, setStore } = useStore();
 
 
