@@ -5,7 +5,7 @@ import { AuthContext } from '../../Hooks/AuthContext';
 import PaymentConfirmation from '../CheckoutPage/PaymentConfirmation';
 import { toast } from 'react-toastify';
 import Loading from "../Loading/Loading"
-import socket from '../../Utils/SocketConfig';
+import io from 'socket.io-client'
 const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [promoCode, setPromoCode] = useState('');
@@ -18,6 +18,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const expectedDeliveryPrice = store?.expectedDeliveryPrice || 10;
     const [discount, setDiscount] = useState(0);
     const [orderResponse, setOrderResponse] = useState(null);
+    const [isOrderSubmit,setIsOrderSubmit]=useState(false)
     const auth = useContext(AuthContext);
 
     const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + expectedDeliveryPrice - discount;
@@ -62,6 +63,22 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
         form.submit();
     };
 
+    const socketConnection=()=>{
+        const socket = io('http://localhost:8000');
+            socket.on('connect',() => {
+                socket.emit("notification",{message:true,name:store.name,isAdmin:false})
+                socket.disconnect();
+            });
+            
+            
+    }
+    useEffect(()=>{
+        if(isOrderSubmit){
+            console.log("connection created");
+            socketConnection()
+        }
+    },[isOrderSubmit])
+
     const handleSubmitOrder = async () => {
         console.log(cart);
         const orderData = {
@@ -102,8 +119,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                 }
             );
             toast.success(responseData.message || "Order made")
-            socket.emit("notification",{message:true,name:store.name,isAdmin:false})
-
+            setIsOrderSubmit(true)
 
 
             console.log(responseData);

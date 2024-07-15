@@ -32,7 +32,6 @@ const Dashboard = () => {
 }, [window.location.pathname]);
 
 
-  //Socket Initialization Client Side
 
   const fetchStore = async () => {
     console.log("Store token", auth)

@@ -1,12 +1,24 @@
 import { useState, useCallback, useEffect } from "react";
-import socket from "../Utils/SocketConfig";
+import io from 'socket.io-client';
+import logo from '../Assets/banau.png'
+import { useNavigate } from "react-router-dom";
 let logoutTimer;
 export const useAuth = () => {
     const [token, setToken] = useState(localStorage?.getItem('userData')?.token||null);
     const [userID, setUserId] = useState(localStorage?.getItem('userData')?.userID||null);
     const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
+    const [store,setStore]=useState(null);
+    const navigate=useNavigate()
+    if (Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            console.log('Notification permission granted.');
+          } else {
+            console.log('Notification permission denied.');
+          }
+        });
+      }
 
-console.log(localStorage.getItem('userData'),"local storage item");
     const login = useCallback((uid, token, expirationDate) => {
         setToken(token);
         setUserId(uid);
@@ -48,7 +60,7 @@ console.log(localStorage.getItem('userData'),"local storage item");
     console.log('Hi socket',JSON.parse(localStorage?.getItem('userData')));
 
     const socketConnection=()=>{
-
+        const socket = io('http://localhost:8000');
         socket.on('connect',() => {
             console.log('Connected to Socket.IO server',localStorage?.getItem('userData')?.userID);
             socket.emit('isAdmin',{userID: JSON.parse(localStorage?.getItem('userData'))?.userID} );
@@ -56,7 +68,17 @@ console.log(localStorage.getItem('userData'),"local storage item");
         });
         socket.on('notification-admin',(data)=>{
           console.log('notification');
-          alert("New Order Arrived")
+          if (Notification.permission === 'granted') {
+            const notification=new Notification('Order', {body:"New Order Recieved",icon:logo});
+            notification.onclick = function() {
+                window.focus();
+                navigate(`/adminpanel/${store.name}`)
+                console.log('Notification clicked');
+              };
+          } else {
+            alert("New Order Recieved")
+            alert("Enable notification to get it on time")
+          }
         })
         
         return () => {
@@ -65,8 +87,11 @@ console.log(localStorage.getItem('userData'),"local storage item");
 
     }
     useEffect(() => {
-        socketConnection();
-      }, []);
+        
+        if( store){
+            socketConnection();
+        }
+      }, [store]);
 
-    return { token, login, logout, userID };
+    return { token, login, logout, userID,store,setStore };
 }

@@ -31,6 +31,7 @@ const Navbar = ({ navbarImage, setStores }) => {
     const [scrolledFromTop, setScrolledFromTop] = useState(false);
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
+    console.log(auth.token,"this is the token")
 
     const fetchUserInfo = async () => {
         try {
@@ -46,6 +47,8 @@ const Navbar = ({ navbarImage, setStores }) => {
             console.log(responseData.stores, "response Data"); // Handle response data as needed
             setUserStore(responseData.stores);
             setStores(responseData.stores);
+            auth.setStore(responseData.stores)
+
         } catch (error) {
             // Handle error if needed
 
