@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useImage } from '../../../Hooks/useImage';
 import { FaDollarSign, FaPercent, FaChartLine, FaBox, FaEdit } from 'react-icons/fa';
 import Loading from "../../Loading/Loading"
+import ProductForm from './ProductForm';
 
 const Product = ({ store }) => {
   const initialProducts = [];
@@ -28,6 +29,7 @@ const Product = ({ store }) => {
   const [minPrice, setMinPrice] = useState(''); // Added state for minPrice
   const [maxPrice, setMaxPrice] = useState(''); // Added state for maxPrice
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [showProductForm, setShowProductForm] = useState(false);
 
   const handleSubCategoryChange = (event) => {
     const { value } = event.target;
@@ -55,10 +57,14 @@ const Product = ({ store }) => {
       setProducts(response.products);
       setTotalProducts(response.totalProducts);
       setTotalPages(response.totalPages);
+      
 
     } catch (error) {
       toast.error(error.message);
     }
+  };
+  const handleAddProduct = (newProduct) => {
+    setProducts(prevProducts => [newProduct, ...prevProducts]);
   };
 
   useEffect(() => {
@@ -222,6 +228,14 @@ const Product = ({ store }) => {
     });
   };
 
+  const handleAddProductsClick = () => {
+    setShowProductForm(true);
+  };
+
+  const handleCloseProductForm = () => {
+    setShowProductForm(false);
+  };
+
   const handleVariantNameChange = (event, variantIndex) => {
     const { value } = event.target;
     const updatedVariant = editProduct.variant.map((variant, vIndex) => {
@@ -341,7 +355,15 @@ const Product = ({ store }) => {
             >
               Apply Filters
             </button>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
+              onClick={handleAddProductsClick}
+            >
+              Add Products
+            </button>
+            {showProductForm && <ProductForm onClose={handleCloseProductForm} store={store} onProductAdded={handleAddProduct} />}
           </div>
+          
         </div>
         <div className="flex flex-wrap gap-8 p-4 justify-center">
           {products.map((product, productIndex) => (
