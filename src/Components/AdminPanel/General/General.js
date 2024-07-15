@@ -43,7 +43,7 @@ const General = ({ store, setDashboardState }) => {
     };
 
     const handleCopyLink = () => {
-        const link = `${process.env.REACT_APP_BASE_URL}/${store?.name}`;
+        const link = `${process.env.REACT_APP_DIRECT_URL}/${store?.name}`;
         navigator.clipboard.writeText(link).then(() => {
             setCopySuccess('Link copied!');
             setTimeout(() => setCopySuccess(''), 2000);
@@ -54,6 +54,7 @@ const General = ({ store, setDashboardState }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(formData)
         try {
             const uploadImages = async () => {
                 const updatedData = { ...formData };
@@ -174,7 +175,8 @@ const General = ({ store, setDashboardState }) => {
         liveChatSource,
         subscriptionExpiry,
         componentSkin,
-        skin
+        skin,
+        audioUrl
     } = formData;
 
     return (
@@ -268,6 +270,7 @@ const General = ({ store, setDashboardState }) => {
                                 />
                             </section>
                         ) : ''}
+
                         <section className="mb-8 border-b pb-4">
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Categories</h2>
                             {subCategories.map((subCategory, index) => (
@@ -382,17 +385,23 @@ const General = ({ store, setDashboardState }) => {
 
                         }
 
-                        {/* <section className="mb-8 border-b pb-4">
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Owner</h2>
-                        <input
-                            type="text"
-                            name="owner"
-                            value={owner}
-                            onChange={handleInputChange}
-                            placeholder="Owner"
-                            className="mb-2 p-2 w-full border rounded"
-                        />
-                    </section> */}
+                        {
+                            (subscriptionStatus === 'Platinum') ? (
+                                <section className='mb-8 border-b pb-4'>
+                                    <div className='flex flex-col'>
+                                        <label className="capitalize">Audio Url</label>
+                                        <input
+                                            type="text"
+                                            name="audioUrl"
+                                            value={audioUrl}
+                                            onChange={handleInputChange}
+                                            placeholder="Audio Url"
+                                            className="p-2 border rounded flex-grow"
+                                        />
+                                    </div>
+                                </section>
+                            ) : ''
+                        }
                         <section className="mb-8 border-b pb-4">
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Payment Details</h2>
                             <div className="mb-4">
@@ -463,13 +472,13 @@ const General = ({ store, setDashboardState }) => {
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Store URL :</h2>
                             <div className="flex items-center space-x-2">
                                 <li className='text-blue-500 hover:text-blue-700'>
-                                <Link 
-  to={`/store/${store?.name}`} 
-  target="_blank" 
-  rel="noopener noreferrer"
->
-  {`${process.env.REACT_APP_BASE_URL}/${store?.name}`}
-</Link>
+                                    <Link
+                                        to={`/store/${store?.name}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {`${process.env.REACT_APP_DIRECT_URL}/${store?.name}`}
+                                    </Link>
 
                                 </li>
                                 <button

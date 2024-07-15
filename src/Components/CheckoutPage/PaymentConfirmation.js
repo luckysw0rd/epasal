@@ -59,7 +59,7 @@ const PaymentConfirmation = ({ order, onClose }) => {
                                 <div id="updated-order-details" className="bg-gray-50 p-4 rounded-lg mb-4 border-t border-gray-200">
                                     <h2 className="text-xl font-semibold mb-4">Order Details</h2>
                                     <div className="text-left">
-                                    <p><strong>Order ID :</strong>{order?._id}</p>
+                                        <p><strong>Order ID :</strong>{order?._id}</p>
 
                                         <p><strong>Full Name:</strong> {order.fullName}</p>
                                         <p><strong>Phone Number:</strong> {order.phoneNumber}</p>
@@ -81,7 +81,7 @@ const PaymentConfirmation = ({ order, onClose }) => {
                                         </ul>
                                         <p><strong>Price:</strong> {order.price}</p>
                                         <p><strong>Delivery Charge:</strong> {order.deliveryCharge}</p>
-                                        <p><strong>Promo Discount:</strong> {order.promoDiscount}</p>
+                                        <p><strong>Promo Discount:</strong> {order.promoDiscount}%</p>
                                         <p><strong>Total Price:</strong> {order.totalPrice}</p>
                                         <p><strong>Address:</strong> {order.address}</p>
                                         <p><strong>Landmark:</strong> {order.landmark}</p>

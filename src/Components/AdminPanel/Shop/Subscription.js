@@ -3,7 +3,8 @@ import esewa from '../../../Assets/esewa.webp';
 import useFetch from '../../../Hooks/useFetch';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import { FaClock, FaStar } from 'react-icons/fa';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
+
 const plans = {
     monthly: [
         {
@@ -16,7 +17,9 @@ const plans = {
             analytics: "Basic",
             seo: "Basic",
             customDomain: false,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: false,
+            Music: false
         },
         {
             name: "Gold",
@@ -29,7 +32,9 @@ const plans = {
             seo: "Intermediate",
             customDomain: true,
             popular: true,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: true,
+            Music: false
         },
         {
             name: "Platinum",
@@ -41,7 +46,10 @@ const plans = {
             analytics: "Advanced",
             seo: "Advanced",
             customDomain: true,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: true,
+            Music: true
+
         }
     ],
     quarterly: [
@@ -55,7 +63,10 @@ const plans = {
             analytics: "Basic",
             seo: "Basic",
             customDomain: false,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: false,
+            Music: false
+
         },
         {
             name: "Gold",
@@ -68,7 +79,10 @@ const plans = {
             seo: "Intermediate",
             customDomain: true,
             popular: true,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: true,
+            Music: false
+
         },
         {
             name: "Platinum",
@@ -80,7 +94,10 @@ const plans = {
             analytics: "Advanced",
             seo: "Advanced",
             customDomain: true,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: true,
+            Music: true
+
         }
     ],
     yearly: [
@@ -94,7 +111,10 @@ const plans = {
             analytics: "Basic",
             seo: "Basic",
             customDomain: false,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: false,
+            Music: false
+
         },
         {
             name: "Gold",
@@ -107,7 +127,10 @@ const plans = {
             seo: "Intermediate",
             customDomain: true,
             popular: true,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: true,
+            Music: false
+
         },
         {
             name: "Platinum",
@@ -119,7 +142,9 @@ const plans = {
             analytics: "Advanced",
             seo: "Advanced",
             customDomain: true,
-            limitedOffer: true
+            limitedOffer: true,
+            promoCode: true,
+            Music: true
         }
     ]
 };
@@ -153,13 +178,13 @@ const SubscriptionPlans = ({ store }) => {
         console.log(selectedDuration);
         console.log(plan);
 
-        if(store.subscriptionStatus !== 'Silver'){
+        if (store.subscriptionStatus !== 'Silver') {
             toast.error('Wait for older subscription to expire')
             return;
         }
         const price = selectedDuration === 'monthly' ? plan.price :
             selectedDuration === 'quarterly' ? plan.price :
-            plan.price;
+                plan.price;
         const data = {
             amount: price,
             duration: selectedDuration,
@@ -174,7 +199,7 @@ const SubscriptionPlans = ({ store }) => {
                 JSON.stringify({ data }),
                 {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+ auth.token
+                    'Authorization': 'Bearer ' + auth.token
                 }
             );
             console.log(responseData); // Handle response data as needed
@@ -296,6 +321,14 @@ const SubscriptionPlans = ({ store }) => {
                                         <li className="flex items-center justify-between">
                                             <span>Custom Domain:</span>
                                             <span>{plan.customDomain ? '✔️' : '❌'}</span>
+                                        </li>
+                                        <li className="flex items-center justify-between">
+                                            <span>Promo Code:</span>
+                                            <span>{plan.promoCode ? '✔️' : '❌'}</span>
+                                        </li>
+                                        <li className="flex items-center justify-between">
+                                            <span>Background Music</span>
+                                            <span>{plan.Music ? '✔️' : '❌'}</span>
                                         </li>
                                     </ul>
                                     <div className="p-6 text-center">

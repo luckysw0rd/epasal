@@ -4,12 +4,15 @@ import { useDropzone } from 'react-dropzone';
 import banner from "../../Assets/banner2.png"
 import { AuthContext } from '../../Hooks/AuthContext';
 import { toast } from 'react-toastify';
+import ReactPlayer from 'react-player';
+
 const HeroSection1 = ({ previewMode, store, setStore }) => {
 
     const auth = useContext(AuthContext);
     const [bgImage, setBgImage] = useState(banner);
     const [logoImage, setLogoImage] = useState(null);
     const [heroText, setHeroText] = useState("Welcome to Our Store");
+
 
     useEffect(() => {
         if (!auth.token && !store.fetchedFromBackend) {
@@ -78,6 +81,7 @@ const HeroSection1 = ({ previewMode, store, setStore }) => {
                 }}
                 {...(!previewMode && getRootPropsBackground())}
             >
+
                 {!previewMode && <input {...getInputPropsBackground()} />}
 
                 {!previewMode && (
