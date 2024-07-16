@@ -373,7 +373,7 @@ const General = ({ store, setDashboardState }) => {
                                                 className="p-2 border rounded flex-grow"
                                             />
                                         </div>
-
+                                        <button>Add promo</button>
                                     </div>
 
                                 </section>
