@@ -51,11 +51,11 @@ const SideBar = ({ setDashboardState, role }) => {
       >
         <div className=" flex fixed font-Roboto flex-col  h-full  bg-slate-100 sm:bg-white ">
           <div>
-            <div className=" py-2 flex justify-center flex-row">
-              
-              <img src={banau} className="h-10 mt-7" alt="Logo" />
-             
-            </div>
+          <div className="py-2 flex justify-center flex-row">
+  <Link to="/">
+    <img src={banau} className="h-10 mt-7" alt="Logo" />
+  </Link>
+</div>
             
             <Link
   onClick={() => {

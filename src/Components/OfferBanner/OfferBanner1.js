@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useDropzone } from "react-dropzone";
 import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as necessary
+import { Link } from 'react-router-dom';
 
 const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
   const { store, setStore } = useStore();
@@ -71,6 +72,7 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
               className=" border-2 md:h-[270px] lg:h-[200px] 2xl:h-[300px] flex flex-col justify-center items-center   mx-4 my-4 p-4  py-4 text-center"
               style={{ borderColor: color.offerBannerColor.textColor }}
             >
+              <Link to={!isEdit && `/store/products/${store.name}`} className="hover:underline">
               {previewMode ? (
                 <>
                   <p
@@ -93,6 +95,7 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
                   </p>
                 </>
               ) : (
+                
                 <>
                   <textarea
                     name="para1"
@@ -120,6 +123,7 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
                   />{" "}
                 </>
               )}
+              </Link>
             </div>
           </div>
         </div>
@@ -133,7 +137,7 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
               className="relative rounded-md  md:h-[400px]   w-[400px] sm:w-[600px] md:w-[800px] lg:w-[600px] lg:h-[300px] xl:w-[800px] xl:h-[380px] xl:pr-10 2xl:w-[800px] 2xl:h-[380px]  "
             />
           </div>
-        </div>
+        </div> 
 
         {(!previewMode) && (
           <div className="absolute top-0 right-0 mt-2 mr-2">
