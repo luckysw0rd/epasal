@@ -174,9 +174,7 @@ const SubscriptionPlans = ({ store }) => {
     const auth = useContext(AuthContext);
 
     const handleBuy = async (plan, selectedDuration) => {
-        console.log(store);
-        console.log(selectedDuration);
-        console.log(plan);
+       
 
         if (store.subscriptionStatus !== 'Silver') {
             toast.error('Wait for older subscription to expire')
@@ -202,17 +200,17 @@ const SubscriptionPlans = ({ store }) => {
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
-            console.log(responseData); // Handle response data as needed
+           // Handle response data as needed
             if (responseData.payment.payment_method === 'esewa') {
                 esewaCall(responseData.formData);
             }
         } catch (error) {
-            console.log(error);
+            
         }
     };
 
     const esewaCall = (formData) => {
-        console.log(formData);
+        
         var path = process.env.REACT_APP_ESEWA_URL;
 
         var form = document.createElement("form");

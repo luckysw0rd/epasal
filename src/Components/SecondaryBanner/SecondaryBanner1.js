@@ -54,7 +54,7 @@ const handleExploreClick=(e)=>{
   } = useDropzone({ onDrop: onDropBackground });
 
   useEffect(() => {
-    console.log(store.secondaryBanner)
+    
   }, [store])
   return (
     <div className="box-border py-8 relative mb-16" style={{

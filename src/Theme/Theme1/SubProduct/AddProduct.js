@@ -75,7 +75,7 @@ const AddProduct = ({ onClose }) => {
         };
 
         // Add product logic here
-        console.log(newProduct);
+       
 
         // Close the AddProduct overlay
         onClose();

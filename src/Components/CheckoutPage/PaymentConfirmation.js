@@ -6,7 +6,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 const PaymentConfirmation = ({ order, onClose }) => {
 
     useEffect(() => {
-        console.log(order);
+        
     }, [order]);
 
     const handleDownloadPDF = () => {

@@ -39,8 +39,7 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
     };
 
     const handleRemoveProduct = async (productName) => {
-        console.log(store.isEdit);
-        console.log(productName);
+        
         if (store?.isEdit) {
             try {
                 const response = await sendRequest(
@@ -54,7 +53,7 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
                 );
                 toast(response.message);
             } catch (err) {
-                console.log(err)
+               
                 toast("Error Deleting Product")
             }
             setStore(prevStore => ({
@@ -63,7 +62,7 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
             }));
         }
         else {
-            console.log(productName);
+            
             setStore(prevStore => ({
                 ...prevStore,
                 products: prevStore.products.filter(product => product.id !== productName.id)

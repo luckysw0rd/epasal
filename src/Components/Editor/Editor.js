@@ -103,7 +103,7 @@ const Editor = () => {
     reader.onload = (event) => {
       try {
         const importedPreset = JSON.parse(event.target.result);
-        console.log("Imported Preset:", importedPreset);  // Log the imported preset
+         // Log the imported preset
         setStore(prevStore => {
           const updatedStore = {
             ...prevStore,
@@ -112,7 +112,7 @@ const Editor = () => {
               ...importedPreset,  // Assume importedPreset is an object with color properties
             }
           };
-          console.log("Updated Store:", updatedStore);  // Log the store after setting the imported preset
+          // Log the store after setting the imported preset
           return updatedStore;
         });
         toast.success("Preset imported successfully!");
@@ -162,7 +162,7 @@ const Editor = () => {
         },
       },
     }));
-    console.log(color);
+   
   };
 
   const handleHexCodeChange = (e, field) => {
@@ -205,7 +205,7 @@ const Editor = () => {
         [field]: newValue,
       },
     }));
-    console.log(color);
+
   };
 
   const handleFeaturedChange = (e) => {
@@ -1623,7 +1623,7 @@ const Editor = () => {
                     <FontSelector section="Footer " />
                   </div>
                   <label className='text-[12px]  font-Ubuntu'>Location</label><br />
-                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); console.log(store.location) }} ></input><br />
+                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value }));  }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Email</label><br />
                   <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' placeholder='email@abc.com' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Phone Number</label><br />

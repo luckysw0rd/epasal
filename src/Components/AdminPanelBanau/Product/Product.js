@@ -326,7 +326,7 @@ const Product = ({ store }) => {
                 </div>
                 <button
                   className="bg-blue-500 text-white ml-2 px-4 py-2 rounded mt-3"
-                  onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex) }}
+                  onClick={() => {  handleEditClick(productIndex) }}
                 >
                   Edit
                 </button>

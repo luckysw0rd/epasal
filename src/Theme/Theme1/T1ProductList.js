@@ -10,7 +10,7 @@ const T1ProductList = () => {
 
     // Map featured product indices to their actual product objects
     const featuredProductList = featuredProducts.map(index => products[index]);
-    console.log(featuredProductList)
+  
 
     var categoryType;
     if (store?.componentSkin[3]?.activeSkin && store?.componentSkin[3]?.activeSkin !== '') {

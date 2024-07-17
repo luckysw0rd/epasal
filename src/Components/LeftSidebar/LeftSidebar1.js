@@ -7,15 +7,15 @@ const LeftSidebar1 = ({ isOpen, onClose, store, setStore }) => {
     const [newCategory, setNewCategory] = useState('');
 
     const handleCategoryClick = (category) => {
-        console.log(`Clicked on category: ${category}`);
+      
     };
 
     const handleLogoClick = () => {
-        console.log("Clicked on logo");
+       
     };
 
     const handleSearchClick = () => {
-        console.log("Clicked on search");
+        
     };
 
     const addCategory = () => {
