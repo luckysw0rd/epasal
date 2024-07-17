@@ -21,13 +21,13 @@ const Dashboard = () => {
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (window.location.pathname.includes("/adminpanel/") ){
-        abc();
+    if (window.location.pathname.includes("/adminpanel/")) {
+      abc();
     }
-}, [window.location.pathname]);
+  }, [window.location.pathname]);
 
 
   const fetchStore = async () => {
@@ -56,7 +56,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if(!auth.isLoggedIn){
+    if (!auth.isLoggedIn) {
       navigate('/login')
     }
     fetchStore();
@@ -86,17 +86,17 @@ const Dashboard = () => {
   const renderDashboardContent = (store) => {
     switch (dashboardState) {
       case 'Home':
-        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+        if (role === 'Admin' || role === 'Owner' || role === 'Staff') {
           console.log('Store:', store);
           return <Home data={store} />;
         } else {
           return <Order store={store}></Order>
         }
-        
+
       case 'Employee':
         if (role === 'Admin' || role === 'Owner') {
           console.log('Store:', store);
-          return <Employee store={store} />;
+          return <Employee store={store} setDashboardState={setDashboardState} />;
         } else {
           return <Home data={store} />;
         }
@@ -110,30 +110,30 @@ const Dashboard = () => {
       case 'Order':
         return <Order store={store}></Order>
       case 'Product':
-        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+        if (role === 'Admin' || role === 'Owner' || role === 'Staff') {
           console.log('Store:', store);
           return <Product store={store}></Product>
         } else {
           return <Home data={store} />;
         }
       case 'General':
-        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+        if (role === 'Admin' || role === 'Owner' || role === 'Staff') {
           console.log('Store:', store);
           return <General store={store} setDashboardState={setDashboardState}></General>
         } else {
           return <Order store={store} />;
         }
-        
+
       case 'Shop':
-          return <Shop store={store} ></Shop>
+        return <Shop store={store} ></Shop>
       default:
-        if (role === 'Admin' || role === 'Owner' || role==='Staff') {
+        if (role === 'Admin' || role === 'Owner' || role === 'Staff') {
           console.log('Store:', store);
-          return <Home data={store}/>;
+          return <Home data={store} />;
         } else {
           return <Order store={store}></Order>
         }
-        
+
     }
   };
 
@@ -158,7 +158,7 @@ const Dashboard = () => {
 export default Dashboard;
 function abc(liveChatSource) {
   var s1 = document.createElement('script'),
-      s0 = document.getElementsByTagName('script')[0];
+    s0 = document.getElementsByTagName('script')[0];
   s1.async = true;
   s1.src = 'https://embed.tawk.to/66827eb5eaf3bd8d4d16c22f/1i1mrtts8';
   s1.charset = 'UTF-8';

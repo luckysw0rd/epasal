@@ -329,6 +329,28 @@ const General = ({ store, setDashboardState }) => {
                                 )
                             }
                         </section>
+
+                        <section className="mb-8 border-b pb-4">
+                            <h2 className="text-2xl font-semibold mb-4 text-gray-700">Audio Url</h2>
+                            {(subscriptionStatus !== 'Platinum') && <div className='text-gray-400'>Upgrade to Platinum tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                            {
+                                (subscriptionStatus === 'Platinum') && (
+                                    <>
+                                        <div className='flex flex-col'>
+                                            <input
+                                                type="text"
+                                                name="audioUrl"
+                                                value={audioUrl}
+                                                onChange={handleInputChange}
+                                                placeholder="Audio Url"
+                                                className="p-2 border rounded flex-grow"
+                                            />
+                                        </div>
+                                    </>
+                                )
+                            }
+                        </section>
+
                         <section className="mb-8 border-b pb-4">
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Social Media Links</h2>
                             {Object.entries(socialMediaLinks).map(([platform, url], index) => (
@@ -385,7 +407,10 @@ const General = ({ store, setDashboardState }) => {
 
                         }
 
-                        {
+
+
+
+                        {/* {
                             (subscriptionStatus === 'Platinum') ? (
                                 <section className='mb-8 border-b pb-4'>
                                     <div className='flex flex-col'>
@@ -401,7 +426,7 @@ const General = ({ store, setDashboardState }) => {
                                     </div>
                                 </section>
                             ) : ''
-                        }
+                        } */}
                         <section className="mb-8 border-b pb-4">
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Payment Details</h2>
                             <div className="mb-4">
@@ -516,9 +541,13 @@ const General = ({ store, setDashboardState }) => {
                             {
                                 (subscriptionStatus !== 'Silver') && <p className="text-gray-600">Url Source: {liveChatSource} </p>
                             }
-
-
-
+                        </section>
+                        <section className="mb-8 border-b pb-4">
+                            <h2 className="text-2xl font-semibold mb-4 text-gray-700">Audio Url</h2>
+                            {(subscriptionStatus !== 'Platinum') && <div className='text-gray-400'>Upgrade to Platinum tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                            {
+                                (subscriptionStatus === 'Platinum') && <p className="text-gray-600">Url Source: {audioUrl} </p>
+                            }
                         </section>
                         <section className="mb-8 border-b pb-4">
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Categories</h2>
