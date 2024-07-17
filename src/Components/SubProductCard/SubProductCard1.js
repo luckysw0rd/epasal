@@ -49,7 +49,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         // This logic should be replaced with your actual implementation for checking the cart
         // For demonstration purposes, it's set to false by default
         setAddedToCart(false);
-        console.log(previewMode);
+       
     }, [product.id]);
 
     const handleAddToCart = () => {

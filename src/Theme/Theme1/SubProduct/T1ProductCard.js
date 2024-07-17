@@ -12,7 +12,7 @@ const ProductCard = ({ product, handleStyleSelect, handleRemoveProduct, store })
     }
     // const categoryType = store?.componentSkin[1]?.activeSkin ||  'default';
     const ProductProps = { categoryType, product, handleStyleSelect, handleRemoveProduct, store };
-    console.log(categoryType);
+ 
     return (
         <SubProductCard {...ProductProps} />
     );

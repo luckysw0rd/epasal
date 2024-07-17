@@ -151,17 +151,17 @@ export default function ProductCards({ store }) {
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
-            console.log(responseData); // Handle response data as needed
+      // Handle response data as needed
             if (responseData.payment.payment_method === 'esewa') {
                 esewaCall(responseData.formData);
             }
         } catch (error) {
-            console.log(error);
+           
         }
 
     };
     const esewaCall = (formData) => {
-        console.log(formData);
+        
         var path = process.env.REACT_APP_ESEWA_URL;
 
         var form = document.createElement("form");

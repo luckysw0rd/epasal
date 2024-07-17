@@ -4,7 +4,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa'; // Importing 
 import { useNavigate } from 'react-router-dom';
 const ProductCard = ({ product, productColor, addToCart, store }) => {
   const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, buttonBorderColor } = productColor;
-  console.log(productColor);
+
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
   const [rating, setRating] = useState(4.5); // Dummy rating data

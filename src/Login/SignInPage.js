@@ -82,7 +82,7 @@ const SignInPage = () => {
 
     const handleSignIn = async (e) => {
         try {
-            console.log(process.env.REACT_APP_BACKEND_URL + 'users/signin');
+            
             const responseData = await sendRequest(
                 'users/signin',
                 'POST',
@@ -94,14 +94,14 @@ const SignInPage = () => {
                     'Content-Type': 'application/json'
                 }
             );
-            console.log(responseData); // Handle response data as needed
+        // Handle response data as needed
 
             auth.login(responseData.user.id, responseData.token);
             toast('Sign In successful');
             window.location.href = "/";
 
         } catch (error) {
-            console.log(error.message);
+           
             if (error?.message === 'User not verified') {
                 toast.warn("OTP sent to email address , please verify yourself");
                 setShowOverlay(true);
@@ -134,7 +134,7 @@ const SignInPage = () => {
             );
 
             if (responseData && responseData.message) {
-                console.log(responseData.message);
+                
                 toast.warn("OTP sent to email address , please verify yourself");
                 setShowOverlay(true);
             } else {
@@ -150,7 +150,7 @@ const SignInPage = () => {
 
     const handleForgotPassword = async (e) => {
         e.preventDefault();
-        console.log(forgotPasswordEmail);
+       
         setShowForgotPasswordModal(false);
         // setShowUpdatePasswordModal(true);
         try {
@@ -164,7 +164,7 @@ const SignInPage = () => {
                     'Content-Type': 'application/json'
                 }
             );
-            console.log(responseData.message);
+            
             setShowForgotPasswordModal(false);
             setShowUpdatePasswordModal(true);
             setCanResendOTP(false);
@@ -177,7 +177,7 @@ const SignInPage = () => {
     };
 
     const handleUpdatePassword = async (e) => {
-        console.log({ otp, newPassword });
+        
         try {
             if (!validatePassword(newPassword)) {
                 toast.error('Password must contain at least 8 characters, including one numeric digit and one uppercase letter.');
@@ -195,7 +195,6 @@ const SignInPage = () => {
                     'Content-Type': 'application/json'
                 }
             );
-            console.log(responseData.message);
             toast.success('Password Changed');
             setShowUpdatePasswordModal(false);
         } catch (error) {

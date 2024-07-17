@@ -20,10 +20,10 @@ const TransactionLogs = () => {
 
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
-    console.log({ page, hasNextPage, dataArr, auth });
+ 
 
     const fetchTransactionLogs = async () => {
-        console.log(`[+] Called Fetch Logs`);
+       
         try {
             const params = new URLSearchParams({
                 search,
@@ -45,7 +45,7 @@ const TransactionLogs = () => {
             if (!response)
                 throw new Error('[+] No response');
 
-            console.log({ response });
+ 
             setHasNextPage(response.hasNextPage);
             setDataArr(response.logs);
             setTotalCount(response.totalCount);

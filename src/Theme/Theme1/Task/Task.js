@@ -4,7 +4,7 @@
 
 
   const Task = ({ id, component }) => {
-    // console.log(component);
+
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id });
 

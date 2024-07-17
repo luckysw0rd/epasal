@@ -62,7 +62,7 @@ const General = ({ store }) => {
             };
 
             const updatedFormData = await uploadImages();
-            console.log(updatedFormData);
+            
             const responseData = await sendRequest(
                 'store/update/dashboard/' + store._id,
                 'PUT',

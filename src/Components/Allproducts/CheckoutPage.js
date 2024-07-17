@@ -38,7 +38,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
         if (promoCode == "")
             toast.error("Please provide promo code")
         else {
-            console.log(promoCode)
+           
             try {
 
                 const responseData = await sendRequest(
@@ -50,7 +50,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                         Authorization: 'Bearer ' + auth.token,
                     }
                 );
-                console.log(responseData)
+               
                 setDiscount(responseData?.discount)
                 toast.success("Promo code applied")
 
@@ -71,7 +71,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     };
 
     const esewaCall = (formData) => {
-        console.log(process.env.REACT_APP_ESEWA_URL);
+        
         var path = process.env.REACT_APP_ESEWA_URL;
         var form = document.createElement("form");
         form.setAttribute("method", "POST");
@@ -89,7 +89,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     };
 
     const handleSubmitOrder = async () => {
-        console.log(cart);
+        
         const orderData = {
             fullName,
             phoneNumber,
@@ -115,9 +115,9 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
             deliveryCode: null,
         };
         const success_url = process.env.REACT_APP_BASE_URL + '/esewa/order';
-        console.log(orderData);
+        
         try {
-            console.log(store);
+           
             const responseData = await sendRequest(
                 'order/create/' + store._id,
                 'POST',
@@ -128,7 +128,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                 }
             );
             toast.success(responseData.message || "Order made")
-            console.log(responseData);
+           
             if (responseData?.payment?.paymentMethod === 'esewa' || responseData?.paymentMethod === 'esewa') {
                 esewaCall(responseData.formData);
             }
@@ -138,7 +138,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
         } catch (error) {
             toast.error(error.message || "Error Creating Order")
 
-            console.log(error);
+            
         }
     };
 

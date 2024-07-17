@@ -35,7 +35,7 @@ const Order = ({ store }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData);
+            
             if (responseData.orders.length === 0) {
                 setHasMore(false);
             } else {
@@ -108,7 +108,7 @@ const Order = ({ store }) => {
                 updateData.deliveryCode = deliveryCode;
             }
             updateData.storeID = store._id;
-            console.log(store._id);
+          
             const response = await sendRequest(
                 `order/update/${store._id}/${orderId}?storeId=${store._id}`,
                 'PUT',

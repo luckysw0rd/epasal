@@ -22,11 +22,11 @@ const AdminDashboard = () => {
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
   const userData = localStorage.getItem('userData');
-  console.log(`[+] Admin banel banau`, { auth, banau, token: auth.token });
+ 
   let token = auth.token || JSON.parse(userData)?.token;
   const fetchbanau = async () => {
     try {
-      console.log(`[+] Token:`, token);
+    
       const responseData = await sendRequest(
         'banau/getbanau',
         'GET',
@@ -36,12 +36,12 @@ const AdminDashboard = () => {
           Authorization: 'Bearer ' + token,
         }
       );
-      console.log({ responseData }); // Handle response data as needed
+     // Handle response data as needed
 
       setBanau(responseData.banau);
     } catch (error) {
       // Handle error if needed
-      console.log(`[+] Fetch banau error`, error);
+     
       toast.error('Access denied')
       return navigate('/');
     }
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
         
 
       // if (role === 'Admin' || role === 'Owner') {
-      //   console.log('Store:', store);
+    
       //   return <Employee store={store} />;
       // } else {
       //   return <Home data={store} />;
