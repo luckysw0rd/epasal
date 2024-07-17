@@ -569,29 +569,30 @@ const ExampleWithProviders = ({ store, setDashboardState }) => {
     //Put this with your other react-query providers near root of your app
     return (
         <>
-            <section className="mb-8 border-b pb-4 pl-4">
-                <h2 className="text-xl font-semibold mb-2 text-gray-700">Staff Members</h2>
-                {(subscriptionStatus === 'Silver') &&
-                    <div className='text-gray-400'>
-                        You can currently add up to 2 staff members.
-                    </div>
-                }
-                {(subscriptionStatus === 'Gold') &&
-                    <div className='text-gray-400'>
-                        You can currently add up to 5 staff members.
-                    </div>
-                }
-                {(subscriptionStatus === 'Platinum') &&
-                    <div className='text-gray-400'>
-                        You can add up to 10 staff members.
-                    </div>
-                }
-                {((subscriptionStatus === 'Silver') || (subscriptionStatus === 'Gold')) &&
-                    <div className='text-gray-400'>
-                        Upgrade to higher tier to add more staff members <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button>
-
-                    </div>
-                }
+            <section className="mb-4 border-b pb-4 pl-4">
+                {/* <h2 className="text-xl font-semibold mb-2 text-gray-700">Staff Members</h2> */}
+                <div className="flex items-center space-x-3">
+                    {(subscriptionStatus === 'Silver') &&
+                        <div className='text-base text-black'>
+                            Max: 2 staff members.
+                        </div>
+                    }
+                    {(subscriptionStatus === 'Gold') &&
+                        <div className='text-base text-black'>
+                            Max: 5 staff members.
+                        </div>
+                    }
+                    {(subscriptionStatus === 'Platinum') &&
+                        <div className='text-base text-black'>
+                            Max: 10 staff members.
+                        </div>
+                    }
+                    {((subscriptionStatus === 'Silver') || (subscriptionStatus === 'Gold')) &&
+                        <div className='text-sm text-black'>
+                            <button onClick={() => { setDashboardState('Shop') }} className='px-4 py-1 bg-black text-white rounded-xl'>Upgrade</button>
+                        </div>
+                    }
+                </div>
 
             </section>
             <QueryClientProvider client={queryClient}>

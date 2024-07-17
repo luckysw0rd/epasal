@@ -1,24 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SideBar from "./SideBar";
-
-
 import SharedNavbar from "./SharedNavbar";
 
-const DashboardWrapper = ({ children, store, setDashboardState ,role}) => {
+const DashboardWrapper = ({ children, store, setDashboardState, role }) => {
   const [open, setOpen] = useState(true);
-  console.log(role);
-  console.log(store);
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (window.innerWidth < 768 && sidebarRef.current && !sidebarRef.current.contains(event.target))
+        // console.log("first")
+        setOpen(false);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex relative overflow-hidden">
       {/* For Side bar */}
-      {/* Conditionally render the SideBar */}
-      {open && <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role}/>}
-      {/* SideBar handler */}
-
-
+      {open && (
+        <div ref={sidebarRef}>
+          <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role} />
+        </div>
+      )}
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
-        <SharedNavbar storeLogo={store.logo.logoUrl} storeName={store.name} open={open} setOpen={setOpen} />
+        <div>
+          <SharedNavbar storeLogo={store.logo.logoUrl} storeName={store.name} open={open} setOpen={setOpen} />
+        </div>
         <div>{children}</div>
       </div>
     </div>

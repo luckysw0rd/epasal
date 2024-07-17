@@ -332,7 +332,7 @@ const General = ({ store, setDashboardState }) => {
 
                         <section className="mb-8 border-b pb-4">
                             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Audio Url</h2>
-                            {(subscriptionStatus !== 'Platinum') && <div className='text-gray-400'>Upgrade to Platinum tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
+                            {(subscriptionStatus !== 'Platinum') && <div className='text-gray-400'>Upgrade to Platinum tier for this section <button onClick={() => { setDashboardState('Shop') }} className='ml-2 mt-2 md:mt-0 px-4 py-1 bg-black text-white rounded-2xl'>Go</button></div>}
                             {
                                 (subscriptionStatus === 'Platinum') && (
                                     <>
