@@ -52,7 +52,7 @@ const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName }) => {
   } = useDropzone({ onDrop: onDropBackground });
 
   useEffect(() => {
-    console.log(store.thirdBanner)
+   
   }, [store])
   return (
     <div className="box-border py-8 mb-16" style={{

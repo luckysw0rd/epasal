@@ -33,7 +33,7 @@ const Order = ({ store }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData);
+           
             if (responseData.orders.length === 0) {
                 setHasMore(false);
             } else {

@@ -73,7 +73,7 @@ const EStore = ({ Passedstore }) => {
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-    console.log({ event });
+    
     if (active.id === over.id) return;
 
     setTasks((tasks) => {
@@ -85,7 +85,7 @@ const EStore = ({ Passedstore }) => {
   };
 
   useEffect(() => {
-    console.log(tasks);
+    
   }, [tasks]);
   const { store, isLoading } = useStore();
   const { previewMode } = store;
@@ -149,7 +149,7 @@ const EStore = ({ Passedstore }) => {
 
 const EStoreWithStoreProvider = (passedStore = { passedStore }) => {
   useEffect(() => {
-    console.log(passedStore);
+    
   }, [passedStore]);
   return (
     <StoreProvider passedStore={passedStore}>

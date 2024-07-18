@@ -65,7 +65,7 @@ const Footer1 = ({
         setNewSocialMediaLinks(prevLinks => ({ ...prevLinks, linkedin: e.target.value }));
         setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } }));
     };
-    console.log(previewMode);
+   
     if (!previewMode) {
         return (
             <footer style={{ backgroundColor: bgColor, color: textColor, fontFamily: store?.fonts?.Footer }} className="px-10 lg:px-16 py-10">

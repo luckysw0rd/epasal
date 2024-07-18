@@ -44,14 +44,14 @@ const ProductReview = ({ product }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData); // Handle response data as needed
+            // Handle response data as needed
             setReviews(prevReviews => [...prevReviews, reviewData]);
             setRatingsCount(prevCounts => ({
                 ...prevCounts,
                 [rating]: prevCounts[rating] + 1
             }));
         } catch (error) {
-            console.log(error); // Handle error if needed
+             // Handle error if needed
         } finally {
             setIsModalOpen(false); // Close the modal after submission           
             setDescription("");
@@ -75,7 +75,7 @@ const ProductReview = ({ product }) => {
             responseData.forEach(review => counts[review.rating]++);
             setRatingsCount(counts);
         } catch (error) {
-            console.log(error); // Handle error if needed
+          // Handle error if needed
         }
     }
 

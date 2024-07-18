@@ -53,7 +53,7 @@ const Product = ({ store }) => {
           'Authorization': 'Bearer ' + auth.token
         }
       );
-      console.log(response);
+     
       setProducts(response.products);
       setTotalProducts(response.totalProducts);
       setTotalPages(response.totalPages);
@@ -126,9 +126,9 @@ const Product = ({ store }) => {
 
   const handleSaveClick = async () => {
     try {
-      console.log(editProduct);
+      
       let updatedEditProduct = { ...editProduct };
-      console.log(updatedEditProduct);
+      
       // Check if the product image URL is empty and retain the existing image
       if (updatedEditProduct.image.imageUrl) {
         const uploadedProductImage = await uploadImage(updatedEditProduct.image.imageUrl);
@@ -173,7 +173,7 @@ const Product = ({ store }) => {
         revenueGenerated: updatedEditProduct.revenueGenerated,
       };
 
-      console.log(updates);
+     
       const response = await sendRequest(
         `product/updateProduct?storeID=${store._id}`,
         'PUT',
@@ -288,7 +288,7 @@ const Product = ({ store }) => {
   }
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    console.log("search query", searchQuery);
+    
   };
 
   const handleSortChange = (event) => {
@@ -396,7 +396,7 @@ const Product = ({ store }) => {
               </div>
               <button
                 className="bg-blue-500 text-white flex items-center justify-center gap-2 px-4 py-2 rounded transition-colors hover:bg-blue-600"
-                onClick={() => { console.log(productIndex, "product Index"); handleEditClick(productIndex); }}
+                onClick={() => { handleEditClick(productIndex); }}
               >
                 <FaEdit />
                 Edit

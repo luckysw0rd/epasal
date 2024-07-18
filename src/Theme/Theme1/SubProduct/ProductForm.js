@@ -44,7 +44,7 @@ export default function ProductForm({ onClose }) {
 
     const handleCategoryChange = (e) => {
         const { value } = e.target;
-        console.log(e.target.value, "options")
+
         // const selectedCategories = Array.from(value)
         //     .filter(option => option.selected)
         //     .map(option => option.value);
@@ -135,7 +135,7 @@ export default function ProductForm({ onClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formState);
+       
 
         const updatedVariants = formState.variant.map((variant, variantIndex) => {
             const updatedOptions = variant.options.map((option, optionIndex) => ({

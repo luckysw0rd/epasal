@@ -34,7 +34,7 @@ useEffect(()=>{
     
 },[])
         
-console.log(color)
+
     return (
         <AllProducts
             allProductsProps={navbarProps}

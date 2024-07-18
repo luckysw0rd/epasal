@@ -17,11 +17,11 @@ const Home = ({ data }) => {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const auth = useContext(AuthContext);
   const { revenueGenerated, salesChange, orders, dueAmount, pendingAmount, customers, balance, mostSold } = store;
-  console.log({ home: data });
+
 
   const handleBuyNow = async () => {
 
-    console.log(data);
+   
     // Function to handle the purchase action with this card's details
     const bodyData = {
       amount: data?.dueAmount,
@@ -42,18 +42,18 @@ const Home = ({ data }) => {
           'Authorization': 'Bearer ' + auth.token
         }
       );
-      console.log(responseData); // Handle response data as needed
+      // Handle response data as needed
       if (responseData.payment.payment_method === 'esewa') {
         esewaCall(responseData.formData);
       }
     } catch (error) {
-      console.log(error);
+     
     }
 
   };
 
   const esewaCall = (formData) => {
-    console.log(formData);
+    
     var path = process.env.REACT_APP_ESEWA_URL;
 
     var form = document.createElement("form");

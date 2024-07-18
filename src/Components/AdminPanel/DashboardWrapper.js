@@ -6,8 +6,7 @@ import SharedNavbar from "./SharedNavbar";
 
 const DashboardWrapper = ({ children, store, setDashboardState ,role}) => {
   const [open, setOpen] = useState(true);
-  console.log(role);
-  console.log(store);
+ 
   return (
     <div className="flex relative overflow-hidden">
       {/* For Side bar */}

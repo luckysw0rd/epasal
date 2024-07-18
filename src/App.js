@@ -36,9 +36,9 @@ function App() {
 
   const { token, login, logout, userID } = useAuth();
   const userData = localStorage.getItem('userData');
-  console.log({ userData, data: JSON.parse(userData)?.token });
+
   const auth = useContext(AuthContext);
-  console.log({ token });
+ 
   const RedirectToStore = () => {
     const { storeID } = useParams();
     return <Navigate to={`/store/${storeID}`} />;
@@ -49,7 +49,7 @@ function App() {
 
   let routes;
   if (token || auth.token || (userData && JSON.parse(userData)?.token)) {
-    console.log(`[+] I was freaking calledy:....`);
+ 
 
     routes = (
       <React.Fragment>
@@ -78,7 +78,7 @@ function App() {
       </React.Fragment>
     );
   } else {
-    console.log(`[+] I was freaking calledm:....`);
+   
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />

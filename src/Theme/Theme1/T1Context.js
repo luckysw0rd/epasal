@@ -42,7 +42,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   /*   useEffect(() => {
       const savedCart = localStorage.getItem('cart');
       if (savedCart) {
-          console.log('Loaded cart from localStorage:', JSON.parse(savedCart));
+         
           setStore(prevStore => ({ ...prevStore, cart: JSON.parse(savedCart) }));
       }
   }, []); */
@@ -649,14 +649,14 @@ export const StoreProvider = ({ children, passedStore }) => {
   };
 
   // useEffect(() => {
-  //   console.log(passedStore);
+  //   
   // }, [passedStore]);
 
   const [store, setStore] = useState(defaultStoreData); // Start with null while fetching
   useEffect(() => {
     const fetchStoreData = async (isEdit) => {
       try {
-        console.log("inside fetching");
+        
         const response = await sendRequest(
           `store/get/${storeID}`,
           "GET",
@@ -666,7 +666,7 @@ export const StoreProvider = ({ children, passedStore }) => {
             Authorization: "Bearer " + auth.token,
           }
         );
-        console.log(response);
+        
         setStore({
           ...response.store,
           fetchedFromBackend: true,
@@ -691,7 +691,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     if (window.location.pathname.includes("/store/edit/")) {
       fetchStoreData(true);
       setStore(prev => ({ ...prev, previewMode: false, fetchedFromBackend: false }));
-      console.log("I reached here");
+      
     } else if (window.location.pathname.includes("/store/")) {
       fetchStoreData(false);
     } else {
@@ -714,7 +714,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   }, [store?.name, store?.fetchedFromBackend ,store]);
 
   const addToCart = (product) => {
-    console.log(product, "Product being added");
+    
 
     const selectedOption = product.variant[0]?.options.find(option => option.price === product.price) || null;
 
@@ -755,7 +755,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       updatedCart = [...store.cart, cartItem];
     }
 
-    console.log(updatedCart);
+   
     setStore((prevState) => {
       const newStore = {
         ...prevState,
@@ -769,18 +769,17 @@ export const StoreProvider = ({ children, passedStore }) => {
   };
 
   const deleteFromCart = (product) => {
-    console.log(product.product);
+    
     const { price, selectedVariant } = product;
     const name = product.product;
-    console.log(name, price, selectedVariant);
-    console.log(store.cart);
+    
 
     const existingCartItemIndex = store.cart.findIndex(item =>
       item.product === name &&
       item.price === price &&
       JSON.stringify(item.selectedVariant) === JSON.stringify(selectedVariant)
     );
-    console.log(existingCartItemIndex);
+   
     if (existingCartItemIndex !== -1) {
       const updatedCart = [...store.cart];
 
@@ -793,7 +792,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         };
       }
 
-      console.log(updatedCart);
+      
       setStore(prevState => ({
         ...prevState,
         cart: updatedCart,
