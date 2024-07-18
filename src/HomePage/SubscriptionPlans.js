@@ -15,7 +15,7 @@ const plans = {
             customDomain: false,
             limitedOffer: true,
             promoCode: false,
-            Music:false
+            Music: false
         },
         {
             name: "Gold",
@@ -30,7 +30,7 @@ const plans = {
             popular: true,
             limitedOffer: true,
             promoCode: true,
-            Music:false
+            Music: false
 
         },
         {
@@ -45,7 +45,7 @@ const plans = {
             customDomain: true,
             limitedOffer: true,
             promoCode: true,
-            Music:true
+            Music: true
 
         }
     ],
@@ -62,7 +62,7 @@ const plans = {
             customDomain: false,
             limitedOffer: true,
             promoCode: false,
-            Music:false
+            Music: false
 
         },
         {
@@ -78,7 +78,7 @@ const plans = {
             popular: true,
             limitedOffer: true,
             promoCode: true,
-            Music:false
+            Music: false
 
         },
         {
@@ -93,7 +93,7 @@ const plans = {
             customDomain: true,
             limitedOffer: true,
             promoCode: true,
-            Music:true
+            Music: true
 
         }
     ],
@@ -110,7 +110,7 @@ const plans = {
             customDomain: false,
             limitedOffer: true,
             promoCode: false,
-            Music:false
+            Music: false
 
         },
         {
@@ -126,7 +126,7 @@ const plans = {
             popular: true,
             limitedOffer: true,
             promoCode: true,
-            Music:false
+            Music: false
 
         },
         {
@@ -141,7 +141,7 @@ const plans = {
             customDomain: true,
             limitedOffer: true,
             promoCode: true,
-            Music:true
+            Music: true
 
         }
     ]
