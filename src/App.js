@@ -34,7 +34,7 @@ const ProjectLanding1 = React.lazy(() => import('./Components/ProductLanding/Pro
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
-  const { token, login, logout, userID,setStore } = useAuth();
+  const { token, login, logout, userID,setStore ,hasOrder,setHasOrder} = useAuth();
   const userData = localStorage.getItem('userData');
   console.log({ userData, data: JSON.parse(userData)?.token });
   const auth = useContext(AuthContext);
@@ -99,25 +99,27 @@ function App() {
   }
 
   return (
-    <Router>
     <PrimeReactProvider>
-      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout,setStore:setStore }}>
+      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout,setStore:setStore,hasOrder:hasOrder,setHasOrder:setHasOrder }}>
         <div className="App">
           
             <Suspense fallback=
               {
                 <Loading />
               }>
+    <Router>
+
               <Routes>
                 {routes}
               </Routes>
+    </Router>
+
             </Suspense>
           
         </div >
         <ToastContainer />
       </AuthContext.Provider >
     </PrimeReactProvider >
-    </Router>
   );
 }
 

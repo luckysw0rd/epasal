@@ -5,7 +5,7 @@ import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Hooks/AuthContext";
 import Home from "./Dashboard/Home/Home";
 import Employee from "./Dashboard/Employee";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import EditStore from './EditStore/EditStore.js';
 import Order from './Dashboard/Order/Order.js';
 import Product from "./Product/Product.js";
@@ -17,14 +17,18 @@ import Loading from "../Loading/Loading"
 
 const Dashboard = () => {
   const auth = useContext(AuthContext);
-  const [dashboardState, setDashboardState] = useState('General');
+  let location = useLocation();
+  let searchParams = new URLSearchParams(location.search);
+  let page = searchParams.get('page');
+  console.log(page,"page")
+  const [dashboardState, setDashboardState] = useState(page ||'General');
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [store, setStore] = useState(null); // Initialize store as null
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
-  const [hasNotification,setHasNotification]=useState(false)
-  
+  const {hasOrder,setHasOrder}=useContext(AuthContext)
   const navigate=useNavigate();
+
   useEffect(() => {
     if (window.location.pathname.includes("/adminpanel/") ){
         abc();
@@ -83,6 +87,8 @@ const Dashboard = () => {
     };
 
     fetchUserRole();
+
+
   }, []);
 
 
@@ -146,7 +152,7 @@ const Dashboard = () => {
         {store && role && (
           <div className=""> {/* Apply overflow styling here */}
             <SiderBarProvider className="overflow-hidden">
-              <DashboardWrapper setDashboardState={setDashboardState} store={store} role={role} hasNotification={hasNotification} setHasNotification={setHasNotification}>
+              <DashboardWrapper setDashboardState={setDashboardState} store={store} role={role} hasNotification={hasOrder} setHasNotification={setHasOrder}>
                 <div className="text-black p-2 py-4 mt-8 overflow-hidden">
                   {renderDashboardContent(store)}
                 </div>
