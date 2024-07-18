@@ -72,7 +72,7 @@ export const useAuth = () => {
             const notification=new Notification('Order', {body:"New Order Recieved",icon:logo});
             notification.onclick = function() {
                 window.focus();
-                window.location.href=`http://localhost:3000/adminpanel/${data}?page=Order`;
+                window.location.href=`http://localhost:3000/adminpanel/${data.name}?page=Order`;
                 console.log('Notification clicked');
               };
           } else {

@@ -7,10 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
 import banau from '../../Assets/banau.png';
 import { AuthContext } from "../../Hooks/AuthContext";
-const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification,PendingOrderToView }) => {
+import useFetch from "../../Hooks/useFetch";
+// import { store } from "./Dashboard/Home/homeStore";
+const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification,PendingOrderToView ,store}) => {
   const navigate = useNavigate();
   
   const { open, setOpen } = useSiderBar();
+  const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const auth = useContext(AuthContext);
   const handleLogout = () => {
     try {
@@ -19,11 +22,6 @@ const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification,Pe
       /* Handle logout error */
     }
   };
-  useEffect(()=>{
-    if(PendingOrderToView>0){
-      setHasNotification(hasNotification+PendingOrderToView)
-    }
-  },[])
   const menus = [
     ...(role === 'Admin' || role === 'Owner' || role === 'Staff' ? [{ name: "General", link: "/adminpanel", icon: MdEdit }] : []),
     ...(role === 'Admin' || role === 'Owner' || role === 'Staff' ? [{ name: "Home", link: "/adminpanel", icon: MdOutlineDashboard }] : []),
@@ -33,7 +31,21 @@ const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification,Pe
     ...(role === 'Admin' || role === 'Owner' ? [{ name: "Edit Store", link: "/adminpanel", icon: MdEdit }] : []),
 
   ];
-
+  const resetOrderList=async()=>{
+    console.log("storeead",store)
+    await sendRequest(
+      `order/refreshOrder/${store._id}`,
+      'PATCH',
+      null,
+      {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token,
+      }
+    );
+  }
+  useEffect(()=>{
+    setHasNotification(store.pendingViewOrder)
+  },[])
   return (
     <section className="flex gap-6 relative">
       <div
@@ -79,10 +91,11 @@ const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification,Pe
               {menus.map((menu, i) => (
                 <Link
                   key={i}
-                  onClick={() => {
+                  onClick={()=> {
                     setDashboardState(menu.name)
                     if(menu.name==='Order'){
                       setHasNotification(0);
+                      resetOrderList()
                     }
                   }}
                   className={`flex relative w-40 items-center ml-12 text-lg gap-4  font-Poppins p-2 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-" : ""}`}

@@ -11,7 +11,7 @@ const DashboardWrapper = ({ children, store, setDashboardState ,role,hasNotifica
     <div className="flex relative overflow-hidden">
       {/* For Side bar */}
       {/* Conditionally render the SideBar */}
-      {open && <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role} hasNotification={hasNotification} setHasNotification={setHasNotification} PendingOrderToView={store?.pendingViewOrder}/>}
+      {open && <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role} hasNotification={hasNotification} setHasNotification={setHasNotification} PendingOrderToView={store?.pendingViewOrder} store={store}/>}
       {/* SideBar handler */}
 
 
