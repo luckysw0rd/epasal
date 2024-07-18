@@ -9,7 +9,6 @@ const DashboardWrapper = ({ children, store, setDashboardState, role }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (window.innerWidth < 768 && sidebarRef.current && !sidebarRef.current.contains(event.target))
-        // console.log("first")
         setOpen(false);
     };
 
