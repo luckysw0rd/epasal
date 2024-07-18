@@ -6,9 +6,11 @@ import Loading from "../Components/Loading/Loading";
 import { toast } from 'react-toastify';
 import { FaDiscord, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
 const SignInPage = () => {
     const [isSignIn, setIsSignIn] = useState(true);
+    const navigate = useNavigate();
     const [showOverlay, setShowOverlay] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -28,6 +30,9 @@ const SignInPage = () => {
     const auth = useContext(AuthContext);
 
     useEffect(() => {
+        if (auth.isLoggedIn) {
+            navigate('/');
+        }
         if (window.location.pathname === '/login') {
             abc();
         }

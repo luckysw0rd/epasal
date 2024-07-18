@@ -54,6 +54,7 @@ function App() {
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<SignInPage />}></Route>
         <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/:storeID" element={<RedirectToStore />} />
