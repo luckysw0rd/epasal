@@ -38,7 +38,7 @@ const Dashboard = () => {
 
 
   const fetchStore = async () => {
-    console.log("Store token", auth)
+ 
 
     try {
       const responseData = await sendRequest(
@@ -50,15 +50,15 @@ const Dashboard = () => {
           'Authorization': 'Bearer ' + auth.token,
         }
       );
-      console.log(responseData); // Handle response data as needed
+       // Handle response data as needed
       toast(responseData?.message)
       setStore(responseData.store);
     } catch (error) {
-      console.log(error);
+     
       // Handle error if needed
       toast(error?.message)
 
-      console.log(error);
+      
     }
   };
 
@@ -72,14 +72,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchUserRole = async () => {
-      console.log("user role token", auth.token)
+     
       try {
         const userResponse = await sendRequest('users/getLoggedInUser', 'GET', null, {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + auth.token,
         });
         const userRole = userResponse.user.roles[0].role;
-        console.log(userRole);
+        
         setRole(userRole);
       } catch (error) {
         console.error('Error fetching user role:', error);
@@ -96,7 +96,7 @@ const Dashboard = () => {
     switch (dashboardState) {
       case 'Home':
         if (role === 'Admin' || role === 'Owner' || role==='Staff') {
-          console.log('Store:', store);
+        
           return <Home data={store} />;
         } else {
           return <Order store={store}></Order>
@@ -104,14 +104,14 @@ const Dashboard = () => {
         
       case 'Employee':
         if (role === 'Admin' || role === 'Owner') {
-          console.log('Store:', store);
+        
           return <Employee store={store} />;
         } else {
           return <Home data={store} />;
         }
       case 'Edit Store':
         if (role === 'Admin' || role === 'Owner') {
-          console.log('Store:', store);
+         
           return <EditStore store={store} />;
         } else {
           return <Home data={store} />;
@@ -120,14 +120,14 @@ const Dashboard = () => {
         return <Order store={store}></Order>
       case 'Product':
         if (role === 'Admin' || role === 'Owner' || role==='Staff') {
-          console.log('Store:', store);
+          
           return <Product store={store}></Product>
         } else {
           return <Home data={store} />;
         }
       case 'General':
         if (role === 'Admin' || role === 'Owner' || role==='Staff') {
-          console.log('Store:', store);
+         
           return <General store={store} setDashboardState={setDashboardState}></General>
         } else {
           return <Order store={store} />;
@@ -137,7 +137,7 @@ const Dashboard = () => {
           return <Shop store={store} ></Shop>
       default:
         if (role === 'Admin' || role === 'Owner' || role==='Staff') {
-          console.log('Store:', store);
+          
           return <Home data={store}/>;
         } else {
           return <Order store={store}></Order>

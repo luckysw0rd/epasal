@@ -21,7 +21,8 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     const [isOrderSubmit,setIsOrderSubmit]=useState(false)
     const auth = useContext(AuthContext);
 
-    const totalAmount = cart.reduce((total, item) => total + item.price * item.count, 0) + expectedDeliveryPrice - discount;
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.count, 0)
+    const totalAmount = totalPrice - totalPrice * (discount / 100) + expectedDeliveryPrice
 
     const UnderlineSVG = () => (
         <svg className="w-full  h-2 absolute bottom-0" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,8 +35,33 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
         }
     }, [cart, onClose]);
 
-    const handleApplyCode = () => {
-        alert(`Promo code ${promoCode} applied!`);
+    const handleApplyCode = async () => {
+        if (promoCode == "")
+            toast.error("Please provide promo code")
+        else {
+           
+            try {
+
+                const responseData = await sendRequest(
+                    'store/applypromocode',
+                    'POST',
+                    JSON.stringify({ promoCode, id: store?._id }),
+                    {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + auth.token,
+                    }
+                );
+               
+                setDiscount(responseData?.discount)
+                toast.success("Promo code applied")
+
+            }
+            catch (err) {
+                toast.error(err.message)
+            }
+        }
+
+
     };
 
 
@@ -46,7 +72,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     };
 
     const esewaCall = (formData) => {
-        console.log(process.env.REACT_APP_ESEWA_URL);
+        
         var path = process.env.REACT_APP_ESEWA_URL;
         var form = document.createElement("form");
         form.setAttribute("method", "POST");
@@ -80,7 +106,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     },[isOrderSubmit])
 
     const handleSubmitOrder = async () => {
-        console.log(cart);
+        
         const orderData = {
             fullName,
             phoneNumber,
@@ -106,9 +132,9 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
             deliveryCode: null,
         };
         const success_url = process.env.REACT_APP_BASE_URL + '/esewa/order';
-        console.log(orderData);
+        
         try {
-            console.log(store);
+           
             const responseData = await sendRequest(
                 'order/create/' + store._id,
                 'POST',
@@ -132,7 +158,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
         } catch (error) {
             toast.error(error.message || "Error Creating Order")
 
-            console.log(error);
+            
         }
     };
 
@@ -184,6 +210,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                     type="text"
                                     value={promoCode}
                                     onChange={(e) => setPromoCode(e.target.value)}
+                                    onWheel={(e) => e.target.blur()}
                                     placeholder="Promo code"
                                     className="border border-gray-300 rounded-md px-4 py-1 mr-3 w-2/5 placeholder-center"
                                 />
@@ -197,13 +224,14 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                             </div>
                             <div className="mt-4">
                                 <div className="flex justify-between">
+                                    <p className="text-sm font-medium">Discount</p>
+                                    <p className="text-sm">-रु {totalPrice * (discount / 100)}</p>
+                                </div>
+                                <div className="flex justify-between mt-8">
                                     <p className="text-sm font-medium">Delivery Charge</p>
                                     <p className="text-sm">रु {expectedDeliveryPrice}</p>
                                 </div>
-                                <div className="flex justify-between mt-8">
-                                    <p className="text-sm font-medium">Discount</p>
-                                    <p className="text-sm">-रु {discount}</p>
-                                </div>
+
                                 <hr className="my-4" />
                                 <div className="flex justify-between font-bold">
                                     <p className="text-lg">Total Amount</p>
@@ -253,15 +281,14 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                                 {paymentOptions.map(option => (
                                     <div
                                         key={option.id}
-                                        className={` w-[80px]  relative h-[60px] mr-4  object-contain border border-gray-100 rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-500 ' : 'border-gray-200'
-                                            } ${option.label === 'esewa' ? 'border-2 border-blue-500' : ''}`}
+                                        className={` w-[80px]  relative h-[60px] mr-4  object-contain border rounded-md mb-4 sm:w-1/6 sm:self-center cursor-pointer ${selectedPayment === option.label ? 'border-2 border-blue-600 ' : 'border-gray-200'
+                                            } `}
                                         onClick={() => setSelectedPayment(option.label)}
                                     >
                                         <img src={option.src} alt={option.label} className="  h-full w-full" />
                                         {option.label === 'esewa' && (
                                             <span className="absolute top-0 right-0 px-1 bg-blue-500 text-white text-xs font-semibold rounded-bl-md">Popular</span>
                                         )}
-                                        {selectedPayment === option.label && <UnderlineSVG className='w-[800px] border-2 border-gray-600' />}
                                         <h3 className=' font-md text-center'>{option.label}</h3>
                                     </div>
                                 ))}

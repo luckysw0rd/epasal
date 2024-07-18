@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Header1 = ({ color, text }) => {
-    console.log(color);
+    
     return (
         <div
             className="font-sans w-full h-8 flex justify-center items-center"

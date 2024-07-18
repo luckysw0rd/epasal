@@ -66,7 +66,7 @@ const ProjectLanding1 = () => {
     };
 
     const handleAddToCart = () => {
-        console.log(selectedProduct);
+        
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const selectedVariant = selectedProduct.variant.map((variant, index) => ({
             name: variant.name,
@@ -75,7 +75,7 @@ const ProjectLanding1 = () => {
                 image: variant.options[selectedVariants[index]]?.image?.imageUrl
             }
         }));
-        console.log(selectedProduct);
+        
         const newCartItem = {
             product: selectedProduct._id || product._id,
             productName: selectedProduct.name,
@@ -99,8 +99,7 @@ const ProjectLanding1 = () => {
             return updatedStore;
         });
 
-        console.log(newCartItem);
-        console.log(store);
+       
 
         toast.success("Product Added To Cart", {
             position: "top-center",
@@ -117,7 +116,7 @@ const ProjectLanding1 = () => {
             // Handle products without variants or unselected variants
             const basePrice = parseFloat(selectedProduct.price) || 0;
             const discount = parseFloat(selectedProduct.discount) || 0;
-            console.log("hereerer");
+           
 
             return basePrice - discount;
         } else {
@@ -135,9 +134,7 @@ const ProjectLanding1 = () => {
                     const variantPrice = selectedOption ? parseFloat(selectedOption.price) : 0;
                     const discount = parseFloat(selectedProduct.discount) || 0;
                     const variantDiscount = selectedOption && parseFloat(selectedOption.discount) || 0;
-                    console.log(selectedOption);
-                    console.log(variantPrice);
-                    console.log(variantDiscount);
+                   
                     // Calculate the effective price for the current variant selection
                     const effectivePrice = variantPrice > 0 ? variantPrice - variantDiscount : basePrice - discount;
 
@@ -182,9 +179,9 @@ const ProjectLanding1 = () => {
         window.scrollTo(0, 0);
     }, [selectedProduct]);
 
-    console.log(productCount);
+
     const totalPrice = calculateTotalPrice() * productCount;
-    console.log(totalPrice);
+
     const totalDiscount = calculateTotalDiscount() * productCount;
     const storeDetails = {
         deliveryCharge: store.expectedDeliveryPrice,

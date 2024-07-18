@@ -49,7 +49,7 @@ const SubProduct1 = ({
                 );
                 toast(response.message);
             }catch(err){
-                console.log(err)
+                
                 toast("Error Deleting Product")
             }
             setStore(prevStore => ({

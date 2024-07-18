@@ -16,7 +16,7 @@ const EsewaRouteComponent = () => {
     const { field } = useParams();
     const updateStoreSubscription = async (data) => {
         try {
-            console.log("Data to be sent:", data);
+           
             const responseData = await sendRequest(
                 'store/upgrade/storeSubscription/' + data.transaction_uuid,
                 'PATCH',
@@ -26,7 +26,7 @@ const EsewaRouteComponent = () => {
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
-            console.log("Response data:", responseData);
+            
             setIsSuccess(true);
         } catch (error) {
             console.error("Error message:", error.message);
@@ -38,7 +38,7 @@ const EsewaRouteComponent = () => {
 
     const updateStoreSkin = async (data) => {
         try {
-            console.log("Data to be sent:", data);
+           
             const responseData = await sendRequest(
                 'store/upgrade/storeSkin/' + data.transaction_uuid,
                 'PATCH',
@@ -48,7 +48,7 @@ const EsewaRouteComponent = () => {
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
-            console.log("Response data:", responseData);
+            
             setIsSuccess(true);
         } catch (error) {
             console.error("Error message:", error.message);
@@ -60,11 +60,11 @@ const EsewaRouteComponent = () => {
 
     const updateOrder = async (data) => {
         //TODO CHECK ESEWA API CONFIRMATION FIRST
-        console.log({ updatedOrder });
+       
         if (updatedOrder)
             return;
         try {
-            console.log("Data to be sent:", data);
+            
             const responseData = await sendRequest(
                 'order/update/' + data.transaction_uuid,
                 'PUT',
@@ -74,7 +74,7 @@ const EsewaRouteComponent = () => {
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
-            console.log("Response data:", responseData);
+           
             setIsSuccess(true);
 
             setUpdatedOrder(responseData.updatedOrder);
@@ -90,7 +90,7 @@ const EsewaRouteComponent = () => {
     const updateDueAMount = async (data) => {
         //TODO CHECK ESEWA API CONFIRMATION FIRST
         try {
-            console.log("Data to be sent:", data);
+           
             const responseData = await sendRequest(
                 'store/payDue/' + data.transaction_uuid,
                 'PATCH',
@@ -100,7 +100,7 @@ const EsewaRouteComponent = () => {
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
-            console.log("Response data:", responseData);
+            
             setIsSuccess(true);
         } catch (error) {
             console.error("Error message:", error.message);
@@ -118,26 +118,25 @@ const EsewaRouteComponent = () => {
             const decodedData = atob(data);
             const parsedJson = JSON.parse(decodedData);
             setParsedData(parsedJson);
-            console.log("Parsed data:", parsedJson);
-            console.log("Field:", field);
+          
 
             if (field === "subscription" && parsedJson) {
-                console.log("subscription now...");
+                
                 updateStoreSubscription(parsedJson);
             }
 
             if (field === 'skin' && parsedJson) {
-                console.log("skin update");
+              
                 updateStoreSkin(parsedJson);
             }
 
             if (field === 'order' && parsedJson) {
-                console.log("order update");
+               
                 updateOrder(parsedJson);
             }
 
             if (field === 'dueAmount' && parsedJson) {
-                console.log('Paying Due Amount');
+              
                 updateDueAMount(parsedJson);
             }
         }

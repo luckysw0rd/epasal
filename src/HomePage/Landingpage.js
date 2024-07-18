@@ -6,7 +6,7 @@ import './landingpage.css'
 
 function Landingpage() {
   return (
-    <div className="lg:flex mx-5 lg:max-h-[800px] bg-white">
+    <div className="lg:flex mx-5 lg:max-h-[800px] bg-white" id="video-section">
       <div className="flex flex-col mb-5 mt-5 lg:w-1/2 gap-5 items-center p-6 lg:p-8 space-y-8 lg:space-y-0 bg-gray-50 border border-gray-200 rounded-xl shadow-lg">
         <div className="w-full flex flex-col items-center lg:items-start text-center lg:text-left">
           <h1 className="text-4xl flex mx-auto font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 animate-slide-in">
@@ -35,7 +35,7 @@ function Landingpage() {
 
       <div className="w-full lg:w-1/2 p-4">
         <div className="relative p-2 md:p-6 border flex items-center justify-center border-gray-200 rounded-xl shadow-lg h-full">
-          <iframe className="w-full h-[350px] md:h-[500px] lg:h-[400px] 2xl:h-[520px] rounded-xl" src="https://www.youtube.com/embed/GpeRIjffJXk?si=6j0u7LEKRGjZDL3W" title="Why Banau?" frameBorder="0" allowFullScreen></iframe>
+          <iframe className="w-full h-[350px] md:h-[500px] lg:h-[400px] 2xl:h-[520px] rounded-xl" src="https://www.youtube.com/embed/L9S9Ci_mgrE" title="Why Banau?" frameBorder="0" allowFullScreen></iframe>
         </div>
       </div>
     </div>

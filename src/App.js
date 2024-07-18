@@ -36,9 +36,9 @@ function App() {
 
   const { token, login, logout, userID,setStore ,hasOrder,setHasOrder} = useAuth();
   const userData = localStorage.getItem('userData');
-  console.log({ userData, data: JSON.parse(userData)?.token });
+
   const auth = useContext(AuthContext);
-  console.log({ token });
+ 
   const RedirectToStore = () => {
     const { storeID } = useParams();
     return <Navigate to={`/store/${storeID}`} />;
@@ -49,11 +49,12 @@ function App() {
 
   let routes;
   if (token || auth.token || (userData && JSON.parse(userData)?.token)) {
-    console.log(`[+] I was freaking calledy:....`);
+ 
 
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<SignInPage />}></Route>
         <Route path="/adminpanelbanau" element={<AdminDashboard />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/:storeID" element={<RedirectToStore />} />
@@ -77,7 +78,7 @@ function App() {
       </React.Fragment>
     );
   } else {
-    console.log(`[+] I was freaking calledm:....`);
+   
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />

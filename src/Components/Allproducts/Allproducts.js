@@ -248,7 +248,7 @@ const AllProducts = () => {
 
   const handleSearch = () => {
     fetchProducts();
-    console.log(filters)// Trigger the fetchProducts function on search button click
+    // Trigger the fetchProducts function on search button click
   };
 
 

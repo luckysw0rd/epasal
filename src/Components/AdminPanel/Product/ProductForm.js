@@ -1,19 +1,23 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaImage } from "react-icons/fa6";
-import { useStore } from '../T1Context';
+import { useStore } from '../../../Theme/Theme1/T1Context';
 import ImageDrop from '../../../Components/Editor/ImageDrop';
 import useFetch from '../../../Hooks/useFetch';
 import { useImage } from '../../../Hooks/useImage';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../Hooks/AuthContext';
-import Tooltip from './Tooltip';
+import Tooltip from '../../../Theme/Theme1/SubProduct/Tooltip';
 import Loader from '../../../Components/Loading/Loading';
-export default function ProductForm({ onClose }) {
+export default function ProductForm({ onClose,store,onProductAdded}) {
+    const storeContext = useStore();
+  const setStore = storeContext?.setStore;
+  /* const store = storeContext?.store; */
+
     const { sendRequest, isLoading } = useFetch()
     const { uploadImage } = useImage()
     const [tempLoading, setTempLoading] = useState(false);
-    const { setStore, store } = useStore();
+    /* const { setStore, store } = useStore(); */
     const auth = useContext(AuthContext);
 
     const initialState = {
@@ -44,7 +48,7 @@ export default function ProductForm({ onClose }) {
 
     const handleCategoryChange = (e) => {
         const { value } = e.target;
-
+       
         // const selectedCategories = Array.from(value)
         //     .filter(option => option.selected)
         //     .map(option => option.value);
@@ -155,7 +159,7 @@ export default function ProductForm({ onClose }) {
             variant: updatedVariants
         }));
 
-        if (store.isEdit) {
+        if (true) {
             try {
                 setTempLoading(true);
                 const productImg = await uploadImage(formState?.image?.imageUrl);
@@ -194,6 +198,7 @@ export default function ProductForm({ onClose }) {
                 setTempLoading(false);
                 await new Promise(resolve => setTimeout(resolve, 0));
                 setOnEditDataUpload(prev => !prev);
+                onProductAdded(formState);
             } catch (err) {
                 toast("error uploading variant images ");
             }
@@ -215,37 +220,55 @@ export default function ProductForm({ onClose }) {
     // Function to upload data
     const uploadData = async () => {
         try {
-            const response = await sendRequest(
-                `product/addProduct`,
-                'POST',
-                JSON.stringify({ formState, storeID: store._id }),
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + auth.token
-                }
-            );
-            toast.success(response.message)
+          const response = await sendRequest(
+            'product/addProduct',
+            'POST',
+            JSON.stringify({ formState, storeID: store._id }),
+            {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + auth.token
+            }
+          );
+          toast.success(response.message);
+      
+          if (typeof setStore === 'function') {
+            const newProduct = {
+              ...formState,
+              id: Math.random().toString(36).substr(2, 9),
+            };
+            setStore(prevStore => ({
+              ...prevStore,
+              products: [...prevStore.products, newProduct]
+            }));
+          } else {
+            console.error('setStore is not a function:', setStore);
+          }
+      
+          onClose();
+          setOnEditDataUpload(false);
         } catch (err) {
-            toast.error(err.message)
+         /*  toast.error(err.message); */
         }
-        const newProduct = {
-            ...formState,
-            id: Math.random().toString(36).substr(2, 9), // Generates a random id
-        };
-        setStore(prevStore => ({
-            ...prevStore,
-            products: [...prevStore.products, newProduct]
-        }));
-        onClose();
-        setOnEditDataUpload(false)
-    };
+      };
 
 
-    useEffect(() => {
+      useEffect(() => {
         if (onEditDataUpload) {
-            uploadData();
+          uploadData();
+          if (typeof setStore === 'function') {
+            const newProduct = {
+              ...formState,
+              id: Math.random().toString(36).substr(2, 9),
+            };
+            setStore(prevStore => ({
+              ...prevStore,
+              products: [...prevStore.products, newProduct]
+            }));
+          }
+          onClose();
+          setOnEditDataUpload(false);
         }
-    }, [onEditDataUpload, setOnEditDataUpload]);
+      }, [onEditDataUpload, setStore, formState]);
 
     if (isLoading || tempLoading) {
         return <Loader></Loader>
@@ -290,19 +313,21 @@ export default function ProductForm({ onClose }) {
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
                                         Category
                                     </label>
-                                    <select
-                                        id="subcategory"
-                                        name="category"
-                                        value={formState.subcategories}
-                                        onChange={handleCategoryChange}
-                                        // multiple // Allow multiple selections
-                                        onWheel={(e) => e.target.blur()}
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
-                                    >
-                                        {store.subCategories.map(subcategory => (
-                                            <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
-                                        ))}
-                                    </select>
+                                    {store && store.subCategories ? (
+  <select
+    id="subcategory"
+    name="category"
+    value={formState.subcategories}
+    onChange={handleCategoryChange}
+    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
+  >
+    {store.subCategories.map(subcategory => (
+      <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+    ))}
+  </select>
+) : (
+  <p>Loading categories...</p>
+)}
                                 </div>
                                 <div className=''>
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
@@ -590,6 +615,7 @@ export default function ProductForm({ onClose }) {
                                         Add product
                                     </button>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

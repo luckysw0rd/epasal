@@ -70,7 +70,7 @@ function HomePage() {
                 <BanauTheme />
                 <SkinSection />
                 <SubscriptionPlans />
-                <div className="mt-[850px] md:mt-0">
+                <div className="mt-[1100px] md:mt-0">
                     <SliderNavbar />
                     <ProgressBar />
                 </div>

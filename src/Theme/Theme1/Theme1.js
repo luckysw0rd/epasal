@@ -11,6 +11,7 @@ import Footer from "./Footer/T1Footer";
 import SaveStoreButton from "./SaveButton/SaveStoreButton";
 import Loading from "../../Components/Loading/Loading";
 import Task from "./Task/Task";
+import ModernReactPlayer from "./AudioPlayer/ModernReactPlayer";
 import {
   DndContext,
   KeyboardSensor,
@@ -47,6 +48,7 @@ const EStore = ({ Passedstore }) => {
     { id: 9, component: <T1ProductList /> },
     { id: 10, component: <OfferBanner /> },
     { id: 11, component: <Footer /> },
+    { id: 12, component: <ModernReactPlayer /> },
 
   ]);
 
@@ -71,7 +73,7 @@ const EStore = ({ Passedstore }) => {
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-    console.log({ event });
+    
     if (active.id === over.id) return;
 
     setTasks((tasks) => {
@@ -83,7 +85,7 @@ const EStore = ({ Passedstore }) => {
   };
 
   useEffect(() => {
-    console.log(tasks);
+    
   }, [tasks]);
   const { store, isLoading } = useStore();
   const { previewMode } = store;
@@ -147,7 +149,7 @@ const EStore = ({ Passedstore }) => {
 
 const EStoreWithStoreProvider = (passedStore = { passedStore }) => {
   useEffect(() => {
-    console.log(passedStore);
+    
   }, [passedStore]);
   return (
     <StoreProvider passedStore={passedStore}>

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, index ,setStore }) => {
-    console.log(index);
+  
     const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend, } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
     const navigate = useNavigate()
@@ -19,7 +19,7 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
 
     const handleDeleteProduct = (productIndex) => {
-        console.log(productIndex);
+        
         setStore(prevStore => ({
             ...prevStore,
             featuredProducts: prevStore.featuredProducts.filter((_, index) => index !== productIndex)

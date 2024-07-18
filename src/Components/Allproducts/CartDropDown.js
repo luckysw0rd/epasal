@@ -16,8 +16,7 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
 
     useEffect(() => {
         // Remove items from the cart that are not present in store.products
-        console.log(cart);
-        console.log(store);
+        
         const validCartItems = cart.filter(item =>
             store.products.some(product => product._id === item.product)
         );

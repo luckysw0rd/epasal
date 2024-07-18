@@ -23,7 +23,7 @@ const Navbar = ({ navbarImage, setStores }) => {
         setIsRotated(!isRotated);
     };
     const handleClickStore = () => {
-        console.log(isStoreOpen)
+        
         setIsStoreOpen(!isStoreOpen)
     }
 
@@ -44,7 +44,7 @@ const Navbar = ({ navbarImage, setStores }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData.stores, "response Data"); // Handle response data as needed
+             // Handle response data as needed
             setUserStore(responseData.stores);
             setStores(responseData.stores);
             auth.setStore(responseData.stores)
@@ -52,7 +52,7 @@ const Navbar = ({ navbarImage, setStores }) => {
         } catch (error) {
             // Handle error if needed
 
-            console.log(error);
+            
         }
     }
 
@@ -67,13 +67,13 @@ const Navbar = ({ navbarImage, setStores }) => {
                     // Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData.stores, "response Data"); // Handle response data as needed
+            // Handle response data as needed
             // setUserStore(responseData.stores);
             setStores(responseData.stores);
         } catch (error) {
             // Handle error if needed
 
-            console.log(error);
+         
         }
     }
 
@@ -91,7 +91,7 @@ const Navbar = ({ navbarImage, setStores }) => {
             return
         }
         try {
-            console.log(searchTerm);
+            
             const responseData = await sendRequest(
                 `store/getstorebyfilter?limit=${4}&search=${searchTerm}`,
                 'GET',
@@ -101,12 +101,12 @@ const Navbar = ({ navbarImage, setStores }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData.stores, "search response"); // Handle response data as needed
+             // Handle response data as needed
             setSearchData(responseData.stores)
         } catch (error) {
             // Handle error if needed
 
-            console.log(error);
+         
         }
     }
 
@@ -262,14 +262,27 @@ const Navbar = ({ navbarImage, setStores }) => {
                                         </motion.div>}
 
                                         <li>
-                                            {!auth.isLoggedIn && <div onClick={() => { navigate('/login') }} >
-                                                Login
-                                            </div>}
-                                            {auth.isLoggedIn && <div onClick={() => { auth.logout(); }} >
-                                                Logout
-                                            </div>}
-                                        </li>
-                                        {/* <li>Bye</li> */}
+  {!auth.isLoggedIn && (
+    <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row ml-4'>
+      Login
+      <IoIosLogIn className=' text-2xl font-bold  ml-2 items-center' />
+    </div>
+  )}
+  {auth.isLoggedIn && (
+    <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row ml-4'>
+      Logout
+      <IoLogOut className=' font-bold ml-2 items-center mt-1' />
+    </div>
+  )}
+</li>
+<hr className='my-4 border-t border-gray-300' />
+<li>
+  <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-semibold text-center text-md cursor-pointer'>
+    Pricing
+    <RiPriceTagLine />
+  </ScrollLink>
+</li>
+
 
                                     </ul>
                                 </motion.div>

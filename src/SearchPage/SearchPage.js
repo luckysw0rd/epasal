@@ -16,7 +16,7 @@ const SearchPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Search term:', searchTerm);
+       
     };
 
     const handleResize = () => {

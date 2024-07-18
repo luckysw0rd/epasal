@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { FaShoppingCart, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiMenu } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { FaPlay, FaPause } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 // import CartDropdown from './CartDropDown';
 import CartDropdown from '../Allproducts/CartDropDown';
@@ -33,6 +34,7 @@ const Navbar1 = ({
     const sidebarRef = useRef();
     const [searchItem, setSearchItem] = useState([])
     const [isAnimating, setIsAnimating] = useState(true);
+
     const [cartItems, setCartItems] = useState([
     ]);
     useEffect(() => {
@@ -83,13 +85,13 @@ const Navbar1 = ({
     };
 
     const loadCartFromLocalStorage = () => {
-        console.log('Attempting to load cart from localStorage');
+       
         const savedCart = localStorage.getItem('cart');
         if (savedCart) {
             try {
                 const parsedCart = JSON.parse(savedCart);
                 if (Array.isArray(parsedCart)) {
-                    console.log('Loaded cart from localStorage:', parsedCart);
+                    
                     setStore(prevStore => ({ ...prevStore, cart: parsedCart }));
                 } else {
                     console.warn('Invalid cart data in localStorage');
@@ -98,12 +100,12 @@ const Navbar1 = ({
                 console.error('Error parsing cart data from localStorage:', error);
             }
         } else {
-            console.log('No cart data found in localStorage');
+            
         }
     };
     useEffect(() => {
         loadCartFromLocalStorage();
-        console.log("hellleoeoeoeoe", isEdit, fetchedFromBackend)
+       
     }, [setStore]);
 
     // Save cart to localStorage whenever it changes
@@ -111,7 +113,7 @@ const Navbar1 = ({
         const saveCartToLocalStorage = () => {
             // Load existing cart data from localStorage
             const savedCart = localStorage.getItem('cart');
-            console.log(savedCart);
+            
             // Initialize mergedCart with store.cart
             let mergedCart = [...store.cart];
 
@@ -134,7 +136,7 @@ const Navbar1 = ({
             }
 
             // Save mergedCart to localStorage
-            console.log('Cart updated: saving to localStorage', mergedCart);
+          
             localStorage.setItem('cart', JSON.stringify(mergedCart));
         };
 
@@ -177,7 +179,7 @@ const Navbar1 = ({
         };
     }, [isSidebarOpen]);
 
-    console.log(store.cartCount)
+  
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -286,7 +288,7 @@ const Navbar1 = ({
 
     const handleCartClick = () => {
         setIsCartOpen(!isCartOpen);
-        console.log(store.cart);  // Log the cart items to the console
+       // Log the cart items to the console
     };
 
     const handleEditableTextChange = (e) => {
@@ -335,6 +337,7 @@ const Navbar1 = ({
             }}
 
         >
+
             <div className="flex items-center ">
                 {!isSidebarOpen && (
                     <button
@@ -367,6 +370,7 @@ const Navbar1 = ({
                 <span className="text-xl font-bold" onClick={() => navigate('./')}>
                     {store.name}
                 </span>
+          
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
@@ -463,20 +467,20 @@ const Navbar1 = ({
                                 />
                                 <FaSearch className="text-2xl cursor-pointer" onClick={handleSearchIconClick} />
                                 {searchItem.length > 0 &&
-                        <ul className='absolute top-10 -left-2 flex flex-col gap-3 w-full px-3 py-3 rounded-b-2xl' style={{
-                            fontFamily: store?.fonts?.Navbar,
-                            backgroundColor: color?.navColor?.backgroundnavColor,
-                            color: color?.navColor?.storeNameTextColor,
-                        }}>
-                            {searchItem.map((n, i) => {
-                                return <li   onClick={() => {
-                                    handleProductClick(n)
-                                }} key={i} className='flex items-center gap-4'>
-                                    <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black ' />
-                                    <div>{n.name}</div>
-                                </li>
-                            })}
-                        </ul>}
+                                    <ul className='absolute top-10 -left-2 flex flex-col gap-3 w-full px-3 py-3 rounded-b-2xl' style={{
+                                        fontFamily: store?.fonts?.Navbar,
+                                        backgroundColor: color?.navColor?.backgroundnavColor,
+                                        color: color?.navColor?.storeNameTextColor,
+                                    }}>
+                                        {searchItem.map((n, i) => {
+                                            return <li onClick={() => {
+                                                handleProductClick(n)
+                                            }} key={i} className='flex items-center gap-4'>
+                                                <img src={n.image.imageUrl} className='w-10 h-10 rounded-full border border-2 border-black ' />
+                                                <div>{n.name}</div>
+                                            </li>
+                                        })}
+                                    </ul>}
                             </div>
                             <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
                             <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>

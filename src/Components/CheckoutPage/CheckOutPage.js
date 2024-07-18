@@ -101,7 +101,7 @@ const Checkout = ({ cart, onClose, deleteItem }) => {
                 setOrderResponse(responseData);
             }
         } catch (error) {
-            console.log(error);
+            
         }
     };
 

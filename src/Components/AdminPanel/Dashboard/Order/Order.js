@@ -36,7 +36,7 @@ const Order = ({ store }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData);
+            
             if (responseData.orders.length === 0) {
                 setHasMore(false);
             } else {
@@ -110,7 +110,7 @@ const Order = ({ store }) => {
                 updateData.deliveryCode = deliveryCode;
             }
             updateData.storeID = store._id;
-            console.log(store._id);
+          
             const response = await sendRequest(
                 `order/update/${store._id}/${orderId}?storeId=${store._id}`,
                 'PUT',
@@ -308,7 +308,7 @@ const Order = ({ store }) => {
                                     <div>
                                         <p className="text-gray-600">{`Payment Method: ${order.paymentMethod}`}</p>
                                         <p className="text-gray-600">Price : Nrs {order.price}</p>
-                                        <p className="text-gray-600">{`Promo Discount: Nrs ${order.promoDiscount}`}</p>
+                                        <p className="text-gray-600">{`Promo Discount: ${order.promoDiscount}%`}</p>
                                         <p className="text-gray-600">{`Delivery Charge: Nrs ${order.deliveryCharge}`}</p>
                                         <p className="text-gray-600">{`Final Amount: Nrs ${order.totalPrice}`}</p>
                                     </div>

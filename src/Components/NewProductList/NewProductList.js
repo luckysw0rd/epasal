@@ -39,8 +39,7 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
     };
 
     const handleRemoveProduct = async (productName) => {
-        console.log(store.isEdit);
-        console.log(productName);
+        
         if (store?.isEdit) {
             try {
                 const response = await sendRequest(
@@ -54,7 +53,7 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
                 );
                 toast(response.message);
             } catch (err) {
-                console.log(err)
+               
                 toast("Error Deleting Product")
             }
             setStore(prevStore => ({
@@ -63,7 +62,7 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
             }));
         }
         else {
-            console.log(productName);
+            
             setStore(prevStore => ({
                 ...prevStore,
                 products: prevStore.products.filter(product => product.id !== productName.id)
@@ -158,27 +157,24 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
         }
     };
 
-    if (isLoading) {
-        return <Loader></Loader>
-    } else {
-        return (
 
-            <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
-                {renderProductList()}
-                <Link>
-                    <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
-                    >
-                        <span>
-                            <Link to={`/store/products/${store.name}`} >
-                                View More
-                            </Link>
-                        </span> <IoIosArrowForward />
-                    </button>
-                </Link>
-            </div>
+    return (
 
-        );
-    }
-};
+        <div className='mb-16' style={{ fontFamily: store?.fonts?.NewProduct }}>
+            {renderProductList()}
+            <Link>
+                <button className="flex items-center absolute right-10  font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
+                >
+                    <span>
+                        <Link to={`/store/products/${store.name}`} >
+                            View More
+                        </Link>
+                    </span> <IoIosArrowForward />
+                </button>
+            </Link>
+        </div>
+
+    );
+}
 
 export default NewProductList;

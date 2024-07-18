@@ -69,7 +69,7 @@ const Footer = () => {
                         <a href="https://www.instagram.com/shopatbanau/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-400">
                             <FaInstagram className="h-6 w-6 bg-orange-500 rounded-full p-1" />
                         </a>
-                        <a href="https://discord.gg/4673CfDwqk" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-400">
+                        <a href="https://discord.gg/2AAEsymapB" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-400">
                             <FaDiscord className="h-6 w-6 bg-orange-500 rounded-full p-1" />
                         </a>
                     </div>

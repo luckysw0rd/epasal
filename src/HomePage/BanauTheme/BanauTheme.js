@@ -4,6 +4,7 @@ import './BanauTheme.css';
 import BanauThemeImage1 from "../../Assets/BanauthemeImage1.png"
 import BanauThemeImage2 from "../../Assets/BanauthemeImage2.png"
 import BanauThemeImage3 from "../../Assets/BanauthemeImage3.png"
+import { Link as ScrollLink } from 'react-scroll';
 
 
 const BanauTheme = () => {
@@ -15,10 +16,12 @@ const BanauTheme = () => {
                     <p className="md:text-xs xl:text-base 2xl:text-xl mt-2">
                         "Transform your online store with Banau's stunning skins, featuring customizable design cards and banners—some free, some premium!"
                     </p>
+                   
+        <ScrollLink to='video-section' smooth={true} duration={500}>
                     <button className="text-xs xl:text-base 2xl:text-xl mt-5 lg:mt-10 w-1/2 md:w-[90%] xl:w-2/3 2xl:w-1/2 bg-gray-700 border border-white text-white py-2 px-2 lg:px-3 rounded-lg flex justify-center items-center gap-3 md:gap-1 lg:gap-3">
                         Watch Video
                         <FaPlay />
-                    </button>
+                    </button></ScrollLink>
                 </div>
                 <div className="hidden lg:flex">
                     <div className="flex items-center h-80 lg:h-96 2xl:h-[500px] space-x-4">
