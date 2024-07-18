@@ -23,7 +23,7 @@ const Navbar = ({ navbarImage, setStores }) => {
         setIsRotated(!isRotated);
     };
     const handleClickStore = () => {
-        
+
         setIsStoreOpen(!isStoreOpen)
     }
 
@@ -43,13 +43,13 @@ const Navbar = ({ navbarImage, setStores }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-             // Handle response data as needed
+            // Handle response data as needed
             setUserStore(responseData.stores);
             setStores(responseData.stores);
         } catch (error) {
             // Handle error if needed
 
-            
+
         }
     }
 
@@ -70,7 +70,7 @@ const Navbar = ({ navbarImage, setStores }) => {
         } catch (error) {
             // Handle error if needed
 
-         
+
         }
     }
 
@@ -84,11 +84,11 @@ const Navbar = ({ navbarImage, setStores }) => {
 
     const searchStore = async (e) => {
         e.preventDefault();
-        if(searchTerm===''){
+        if (searchTerm === '') {
             return
         }
         try {
-            
+
             const responseData = await sendRequest(
                 `store/getstorebyfilter?limit=${4}&search=${searchTerm}`,
                 'GET',
@@ -98,12 +98,12 @@ const Navbar = ({ navbarImage, setStores }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-             // Handle response data as needed
+            // Handle response data as needed
             setSearchData(responseData.stores)
         } catch (error) {
             // Handle error if needed
 
-         
+
         }
     }
 
@@ -113,7 +113,7 @@ const Navbar = ({ navbarImage, setStores }) => {
 
             <div className='relative z-20 mx-auto w-full md:w-[90%] flex justify-between'>
                 {/* <div><img src={Logo} alt="Logo" /></div> */}
-                <div className='flex items-center gap-10 pl-4 md:pl-0'>
+                <div className='flex items-center gap-10 mt-1 pl-4 md:pl-0'>
                     <svg width="103" height="56" viewBox="0 0 730 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 333.884V63.3499C0 44.5341 23.6191 36.1297 35.5046 50.7164L146.753 187.248C152.791 194.657 152.742 205.303 146.637 212.656L35.3881 346.659C23.4278 361.066 0 352.609 0 333.884Z" fill="#F4BD8A" />
                         <path d="M190.59 171.429H155.947C149.924 171.429 144.222 168.715 140.425 164.04L33.638 32.6119C23.0183 19.5416 32.3195 0 49.1603 0H219.266C225.166 0 230.764 2.60464 234.564 7.11723L274.959 55.0858C281.187 62.4809 281.233 73.2719 275.069 80.72L205.998 164.18C202.199 168.771 196.55 171.429 190.59 171.429Z" fill="url(#paint0_linear_342_32)" />
@@ -132,14 +132,14 @@ const Navbar = ({ navbarImage, setStores }) => {
                         </defs>
                     </svg>
                     <div >
-                        <form onSubmit={searchStore} className={`h-10 ${searchData.length > 0 && searchTerm!=='' ? 'rounded-t-3xl' : 'rounded-3xl'} bg-white items-center px-2 hidden md:flex`}>
+                        <form onSubmit={searchStore} className={`h-10 ${searchData.length > 0 && searchTerm !== '' ? 'rounded-t-3xl' : 'rounded-3xl'} bg-white items-center px-2 hidden md:flex`}>
 
                             <input onChange={(e) => { setSearchTerm(e.target.value) }} type='text' value={searchTerm} className='max-w-[160px] appearance-none border border-none rounded pl-2 focus:outline-none focus:border-none' />
                             <button className='p-2 rounded-full bg-[#F38825] text-white' type='submit' >
                                 <FaSearch />
                             </button>
                         </form>
-                        {searchData.length > 0 && searchTerm!=='' && <div className='relative hidden md:flex'>
+                        {searchData.length > 0 && searchTerm !== '' && <div className='relative hidden md:flex'>
                             <div className='absolute top-0 bg-white w-full rounded-b-3xl py-3 pl-3'>
                                 {searchData.map((n, i) => {
                                     return <div className='flex gap-4 py-1 items-center'>
@@ -159,34 +159,48 @@ const Navbar = ({ navbarImage, setStores }) => {
                     </div>
 
                 </div>
-                <div className='flex gap-10 items-center mr-4 md:mr-0'>
+                <div className='flex gap-3 items-center md:mr-0'>
 
                     <div className='flex items-center gap-1 text-white hidden md:flex'>
-                        <div className='h-10 relative rounded-full w-10 bg-[#F38825] flex items-center justify-center text-lg' onMouseEnter={() => { setMouseHover(true) }} onMouseLeave={() => { setMouseHover(false) }}>
-                            <Link to='/buildstore' target='_blank'>
-                                <IoBagHandleOutline />
-                            </Link>
-                            {
-                                mouseHover && <motion.div
-                                    className="absolute -bottom-14 w-20 rounded text-center text-xs bg-black px-3 py-2"
-                                    transition={{ delay: 0.2 }} // Delay the animation by 0.2 seconds
-                                    animate={{ opacity: 1 }} // Animate opacity to 1 for visibility
-                                    initial={{ opacity: 0 }} // Set initial opacity to 0 for fade-in effect
-                                >
-                                    Build a store
-                                </motion.div>
-                            }
+                        <div className='flex gap-16'>
+                            <div className='h-10 relative rounded-full w-10 bg-[#F38825] flex items-center justify-center text-lg' onMouseEnter={() => { setMouseHover(true) }} onMouseLeave={() => { setMouseHover(false) }}>
+                                <Link to='/buildstore' target='_blank'>
+                                    <IoBagHandleOutline />
+                                </Link>
+                                {
+                                    mouseHover && <motion.div
+                                        className="absolute -bottom-14 w-20 rounded text-center text-xs bg-black px-3 py-2"
+                                        transition={{ delay: 0.2 }} // Delay the animation by 0.2 seconds
+                                        animate={{ opacity: 1 }} // Animate opacity to 1 for visibility
+                                        initial={{ opacity: 0 }} // Set initial opacity to 0 forfade-in effect
+                                    >
+                                        Build a store
+                                    </motion.div>
+                                }
+                            </div>
+                            {/* <p>Build Your Store</p> */}
+
+                            <div className='flex items-center gap-1 text-white hidden md:flex'>
+                                <div className='h-10 relative hidden  rounded-lg w-[120px] bg-[#F38825] xl:flex items-center justify-center text-lg'>
+                                    <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-bold text-center cursor-pointer'>
+                                        Pricing
+                                        <RiPriceTagLine />
+                                    </ScrollLink>
+                                </div>
+                            </div>
+
+                            <div>
+                                {!auth.token && <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row px-5 h-10 rounded-lg bg-[#F38825] text-white hidden  cursor-pointer items-center md:flex justify-center '>
+                                    Login
+                                    <IoIosLogIn className=' text-xl font-bold  ml-2 items-center' />
+                                </div>}
+                                {auth.token && <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center cursor-pointer md:flex justify-center '>
+                                    Logout
+                                    <IoLogOut className=' font-bold ml-2 items-center' />
+                                </div>}
+                            </div>
                         </div>
-                        {/* <p>Build Your Store</p> */}
                     </div>
-                    <div className='flex items-center gap-1 text-white hidden md:flex'>
-    <div className='h-10 relative hidden  rounded-lg w-[120px] bg-[#F38825] xl:flex items-center justify-center text-lg'>
-        <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-semibold text-center text-md cursor-pointer'>
-            Pricing
-            <RiPriceTagLine />
-        </ScrollLink>
-    </div>
-</div>
 
                     <div className='relative'>
                         {/* {auth.isLoggedIn && <motion.div onClick={handleClick} className=' px-4 h-10 rounded-lg bg-[#F38825] text-white hidden  flex-col items-center md:flex justify-center'>
@@ -211,14 +225,6 @@ const Navbar = ({ navbarImage, setStores }) => {
                             )}
                         </AnimatePresence>
                     </div>
-                    {!auth.token && <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
-                        Login
-                        <IoIosLogIn className=' text-xl font-bold  ml-2 items-center' />
-                    </div>}
-                    {auth.token && <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row items-center px-5 h-10 rounded-lg bg-[#F38825] text-white hidden   items-center md:flex justify-center '>
-                        Logout
-                        <IoLogOut className=' font-bold ml-2 items-center' />
-                    </div>}
 
 
                     <div className='relative'>
@@ -259,26 +265,26 @@ const Navbar = ({ navbarImage, setStores }) => {
                                         </motion.div>}
 
                                         <li>
-  {!auth.isLoggedIn && (
-    <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row ml-4'>
-      Login
-      <IoIosLogIn className=' text-2xl font-bold  ml-2 items-center' />
-    </div>
-  )}
-  {auth.isLoggedIn && (
-    <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row ml-4'>
-      Logout
-      <IoLogOut className=' font-bold ml-2 items-center mt-1' />
-    </div>
-  )}
-</li>
-<hr className='my-4 border-t border-gray-300' />
-<li>
-  <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-semibold text-center text-md cursor-pointer'>
-    Pricing
-    <RiPriceTagLine />
-  </ScrollLink>
-</li>
+                                            {!auth.isLoggedIn && (
+                                                <div onClick={() => { navigate('/login') }} className=' font-bold  flex flex-row ml-4'>
+                                                    Login
+                                                    <IoIosLogIn className=' text-2xl font-bold  ml-2 items-center' />
+                                                </div>
+                                            )}
+                                            {auth.isLoggedIn && (
+                                                <div onClick={() => { auth.logout(); }} className=' font-bold  flex flex-row ml-4'>
+                                                    Logout
+                                                    <IoLogOut className=' font-bold ml-2 items-center mt-1' />
+                                                </div>
+                                            )}
+                                        </li>
+                                        <hr className='my-4 border-t border-gray-300' />
+                                        <li>
+                                            <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-semibold text-center text-md cursor-pointer'>
+                                                Pricing
+                                                <RiPriceTagLine />
+                                            </ScrollLink>
+                                        </li>
 
 
                                     </ul>
