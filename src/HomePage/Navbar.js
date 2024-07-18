@@ -37,28 +37,28 @@ const SideBar = () => {
     };
 
     const handleContactsClick = () => {
-        console.log('Contacts clicked');
+       
         setIsHovered(false);
         setIsOpen(false);
         // Add your logic here
     };
 
     const handleProductsClick = () => {
-        console.log('Products clicked');
+       
         setIsHovered(false);
         setIsOpen(false);
         // Add your logic here
     };
 
     const handleStoreClick = () => {
-        console.log('Store clicked');
+       
         setIsHovered(false);
         setIsOpen(false);
         // Add your logic here
     };
 
     const handleCartClick = () => {
-        console.log('Cart clicked');
+      
         setIsHovered(false);
         setIsOpen(false);
         // Add your logic here
@@ -66,7 +66,7 @@ const SideBar = () => {
 
     const handleBuildStoreClick = () => {
         window.location.href = "/buildstore";
-        console.log('Build Store clicked');
+        
         setIsHovered(false);
         setIsOpen(false);
         // Call any function related to building a store

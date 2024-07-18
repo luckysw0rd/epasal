@@ -37,7 +37,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
     //   };
 
     // const handleClickSuggestion = (suggestion) => {
-    //   console.log(suggestion)
+    //  
     //   setInputValue(suggestion);
     //   setFilteredSuggestions([]);
     //   setShowSuggestions(false);
@@ -47,7 +47,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
 
     // };
     const handleSelectSubCategory = (subcategory) => {
-        console.log(subcategory, "subb")
+       
         setSelectedSubCategoryLocally(subcategory); // Update the local state
         setSelectedSubCategory(subcategory.name); // Update the selectedSubCategory in the store
 

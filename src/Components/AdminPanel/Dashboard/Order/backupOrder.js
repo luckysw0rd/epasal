@@ -33,7 +33,7 @@ const Example = () => {
     const [validationErrors, setValidationErrors] = useState({});
 
     const handleFieldChange = (field, value, row) => {
-        console.log(`Field changed: ${field}, New value: ${value}, Row:`, row);
+        
         // Your custom logic for handling field changes
     };
 
@@ -469,7 +469,7 @@ function useGetUsers() {
 
 //UPDATE hook (put user in api)
 function useUpdateUser() {
-    console.log("inside here doing something");
+ 
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (user) => {

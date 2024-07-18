@@ -23,7 +23,7 @@ const Navbar = ({ navbarImage, setStores }) => {
         setIsRotated(!isRotated);
     };
     const handleClickStore = () => {
-        console.log(isStoreOpen)
+        
         setIsStoreOpen(!isStoreOpen)
     }
 
@@ -43,13 +43,13 @@ const Navbar = ({ navbarImage, setStores }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData.stores, "response Data"); // Handle response data as needed
+             // Handle response data as needed
             setUserStore(responseData.stores);
             setStores(responseData.stores);
         } catch (error) {
             // Handle error if needed
 
-            console.log(error);
+            
         }
     }
 
@@ -64,13 +64,13 @@ const Navbar = ({ navbarImage, setStores }) => {
                     // Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData.stores, "response Data"); // Handle response data as needed
+            // Handle response data as needed
             // setUserStore(responseData.stores);
             setStores(responseData.stores);
         } catch (error) {
             // Handle error if needed
 
-            console.log(error);
+         
         }
     }
 
@@ -88,7 +88,7 @@ const Navbar = ({ navbarImage, setStores }) => {
             return
         }
         try {
-            console.log(searchTerm);
+            
             const responseData = await sendRequest(
                 `store/getstorebyfilter?limit=${4}&search=${searchTerm}`,
                 'GET',
@@ -98,12 +98,12 @@ const Navbar = ({ navbarImage, setStores }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData.stores, "search response"); // Handle response data as needed
+             // Handle response data as needed
             setSearchData(responseData.stores)
         } catch (error) {
             // Handle error if needed
 
-            console.log(error);
+         
         }
     }
 

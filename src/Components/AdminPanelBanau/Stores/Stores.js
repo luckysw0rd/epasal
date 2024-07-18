@@ -41,7 +41,7 @@ const Stores = () => {
     });
 
     const openPaymentModal = (methodDetails) => {
-        console.log({ methodDetails });
+        
         setTransactionLogs((prevLogs) => ({ ...prevLogs, store: methodDetails.store._id }));
         setTransactionLogs((prevLogs) => ({ ...prevLogs, subscriptionStatus: methodDetails.store.subscriptionStatus }));
         setTransactionLogs((prevLogs) => ({ ...prevLogs, paymentMethod: methodDetails.paymentMethod }));
@@ -56,7 +56,7 @@ const Stores = () => {
     * * This is for paynow 
     */
     const handlePaymentSubmit = async () => {
-        console.log('Payment Transferred:', transactionLogs);
+       
 
         try {
 
@@ -88,7 +88,7 @@ const Stores = () => {
                 transactionLog,
             };
 
-            console.log('[+] Payment Transferred:', data, { selectedStore });
+          
 
             const responseData = await sendRequest(
                 'store/update/dashboard/banau/paymenttostore/' + selectedStore._id,
@@ -130,10 +130,10 @@ const Stores = () => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [updatingStore, setUpdatingStore] = useState(false);
 
-    console.log({ page, hasNextPage, storesArr, auth });
+   
 
     const fetchStores = async (flag = false) => {
-        console.log(`[+] Called Fetch stores`);
+        
         try {
             const order = orderType;
             const params = new URLSearchParams({
@@ -166,7 +166,7 @@ const Stores = () => {
             );
             if (!response)
                 throw new Error('[+] No response');
-            console.log({ response });
+            
             setHasNextPage(response.hasNextPage);
             setStoresArr(response.stores);
             setTotalCount(response.totalCount);
@@ -232,7 +232,7 @@ const Stores = () => {
                 duration
             };
 
-            console.log({ updatedData, transactionLog, duration });
+            
             const responseData = await sendRequest(
                 'store/update/dashboard/banau/' + selectedStore._id,
                 'PUT',
@@ -325,13 +325,13 @@ const Stores = () => {
 
     const handleEnable = (store) => {
         // Implement your logic for enabling the store
-        console.log('Enabling store', store);
+        
         enableDisableStoreFunction(store, true);
     };
 
     const handleDisable = (store) => {
         // Implement your logic for disabling the store
-        console.log('Disabling store', store);
+        
         enableDisableStoreFunction(store, false);
     };
 
@@ -531,7 +531,7 @@ const Stores = () => {
                                     <button
                                         className="flex items-center text-sm bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 w-full"
                                         onClick={() => {
-                                            console.log({ esewa: store.esewa });
+                                            
                                             openPaymentModal(
                                                 {
                                                     name: store.name,
@@ -551,7 +551,7 @@ const Stores = () => {
                                     <button
                                         className="flex items-center text-sm bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 w-full"
                                         onClick={() => {
-                                            console.log({ khalti: store.khalti });
+                                           
                                             openPaymentModal(
                                                 {
                                                     name: store.name,
@@ -571,7 +571,7 @@ const Stores = () => {
                                     <button
                                         className="flex items-center text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full"
                                         onClick={() => {
-                                            console.log({ khalti: store.bank });
+                                           
                                             openPaymentModal(
                                                 {
                                                     name: store.name,

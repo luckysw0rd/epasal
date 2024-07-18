@@ -25,7 +25,7 @@ const Overlay = ({ email, setShowOverlay }) => {
             );
 
             if (responseData && responseData.message) {
-                console.log(responseData);
+              
                 auth.login(responseData.user.id, responseData.token);
                 toast.success('Verification Successfull')
                 navigate('/');
@@ -34,7 +34,7 @@ const Overlay = ({ email, setShowOverlay }) => {
                 console.error('Unexpected response format:', responseData);
             }
         } catch (error) {
-            console.log("here");
+            
             console.error(error.message || 'An error occurred during login');
             toast.error(error.message || 'verfication failed');
         }

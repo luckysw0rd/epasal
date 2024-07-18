@@ -8,7 +8,7 @@ const Heading = ({ setnavbarImage }) => {
   //   const observer = new IntersectionObserver(
   //     ([entry]) => {
   //       if (!entry.isIntersecting) {
-  //         console.log('Heading component is out of view');
+  //         
   //         setnavbarImage(true);
   //       } else {
   //         setnavbarImage(false);

@@ -9,7 +9,7 @@ import banau from '../../Assets/banau.png';
 import { AuthContext } from "../../Hooks/AuthContext";
 const SideBar = ({ setDashboardState, role }) => {
   const navigate = useNavigate();
-  console.log(role);
+  
   const { open, setOpen } = useSiderBar();
   const auth = useContext(AuthContext);
   const handleLogout = () => {

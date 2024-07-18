@@ -54,7 +54,7 @@ const General = ({ store, setDashboardState }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
+
         try {
             const uploadImages = async () => {
                 const updatedData = { ...formData };
@@ -77,7 +77,7 @@ const General = ({ store, setDashboardState }) => {
             };
 
             const updatedFormData = await uploadImages();
-            console.log(updatedFormData);
+
             const responseData = await sendRequest(
                 'store/update/dashboard/' + store._id,
                 'PUT',

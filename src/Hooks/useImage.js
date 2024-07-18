@@ -68,7 +68,7 @@ export const useImage = () => {
                 id: result.public_id
             };
         } catch (error) {
-            console.log(error.message);
+            
             return {
                 img: "",
                 id: "",

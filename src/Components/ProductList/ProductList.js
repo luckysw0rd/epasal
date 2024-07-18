@@ -24,7 +24,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
     }, [products]);
 
     const handleDeleteProduct = (productIndex) => {
-        console.log(store.featuredProducts);
+        
         setStore(prevStore => ({
             ...prevStore,
             featuredProducts: prevStore.featuredProducts.filter((_, index) => index !== productIndex)
@@ -45,7 +45,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                 );
                 toast(response.message);
             } catch (err) {
-                console.log(err)
+                
                 toast("Error Deleting Product")
             }
             setStore(prevStore => ({

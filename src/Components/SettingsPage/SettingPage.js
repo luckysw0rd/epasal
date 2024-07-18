@@ -107,7 +107,7 @@ const SettingPage = () => {
           Authorization: `Bearer ${auth.token}`, // Retrieve token from AuthContext
         }
       );
-      console.log(response);
+      
       // Handle success response
       setMessage('Settings updated successfully!');
       setEditMode({

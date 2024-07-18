@@ -85,13 +85,13 @@ const Navbar1 = ({
     };
 
     const loadCartFromLocalStorage = () => {
-        console.log('Attempting to load cart from localStorage');
+       
         const savedCart = localStorage.getItem('cart');
         if (savedCart) {
             try {
                 const parsedCart = JSON.parse(savedCart);
                 if (Array.isArray(parsedCart)) {
-                    console.log('Loaded cart from localStorage:', parsedCart);
+                    
                     setStore(prevStore => ({ ...prevStore, cart: parsedCart }));
                 } else {
                     console.warn('Invalid cart data in localStorage');
@@ -100,12 +100,12 @@ const Navbar1 = ({
                 console.error('Error parsing cart data from localStorage:', error);
             }
         } else {
-            console.log('No cart data found in localStorage');
+            
         }
     };
     useEffect(() => {
         loadCartFromLocalStorage();
-        console.log("hellleoeoeoeoe", isEdit, fetchedFromBackend)
+       
     }, [setStore]);
 
     // Save cart to localStorage whenever it changes
@@ -113,7 +113,7 @@ const Navbar1 = ({
         const saveCartToLocalStorage = () => {
             // Load existing cart data from localStorage
             const savedCart = localStorage.getItem('cart');
-            console.log(savedCart);
+            
             // Initialize mergedCart with store.cart
             let mergedCart = [...store.cart];
 
@@ -136,7 +136,7 @@ const Navbar1 = ({
             }
 
             // Save mergedCart to localStorage
-            console.log('Cart updated: saving to localStorage', mergedCart);
+          
             localStorage.setItem('cart', JSON.stringify(mergedCart));
         };
 
@@ -179,7 +179,7 @@ const Navbar1 = ({
         };
     }, [isSidebarOpen]);
 
-    console.log(store.cartCount)
+  
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -288,7 +288,7 @@ const Navbar1 = ({
 
     const handleCartClick = () => {
         setIsCartOpen(!isCartOpen);
-        console.log(store.cart);  // Log the cart items to the console
+       // Log the cart items to the console
     };
 
     const handleEditableTextChange = (e) => {

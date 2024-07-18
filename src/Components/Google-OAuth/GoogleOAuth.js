@@ -8,10 +8,10 @@ const GoogleOAuth = () => {
             <GoogleLogin
                 onSuccess={credentialResponse => {
                     const response = jwtDecode(credentialResponse.credential);
-                    console.log({ response });
+                   
                 }}
                 onError={() => {
-                    console.log('Login Failed');
+                    
                 }}
             />
         </div>

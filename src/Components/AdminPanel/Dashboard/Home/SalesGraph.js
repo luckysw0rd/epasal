@@ -49,7 +49,7 @@ const SalesGraph = ({ storeId }) => {
                 }));
                 setData(formattedData);
             } catch (error) {
-                console.log(error);
+               
             }
         };
         fetchData();

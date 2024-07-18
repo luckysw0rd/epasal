@@ -43,7 +43,7 @@ export const useFetch = () => {
         } catch (error) {
             if (error.name === 'AbortError') {
                 // If the error is an abort error, we don't set the error state
-                console.log('Fetch aborted');
+               
                 setIsLoading(false);
 
             } else {

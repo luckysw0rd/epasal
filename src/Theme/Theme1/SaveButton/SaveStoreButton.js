@@ -103,7 +103,7 @@ const SaveStoreButton = () => {
             storeNewImage = store;
             setTempLoading(false);
             PostData(storeNewImage)
-            console.log(ImageData, "image Data")
+            
             setStoreNew(true)
         } catch (err) {
             setTempLoading(false);
@@ -112,7 +112,7 @@ const SaveStoreButton = () => {
                 pauseOnFocusLoss: false,
                 pauseOnHover: false
             })
-            console.log(err, "error uploading image")
+           
         }
     }
     useEffect(() => {
@@ -122,7 +122,7 @@ const SaveStoreButton = () => {
     }, [storeNew, setStoreNew])
     const PostData = async () => {
         try {
-            console.log(store, "store my")
+            
             if (!store.isEdit && !storeMade) {
                 const responseData = await sendRequest(
                     'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
@@ -160,7 +160,7 @@ const SaveStoreButton = () => {
         }
     }
     const saveStore = async () => {
-        console.log(store, "store is this");
+        
         if (auth.token) {
             await ImageUpload();
         } else {

@@ -42,7 +42,7 @@ const Example = ({ banau }) => {
     const [validationErrors, setValidationErrors] = useState({});
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
-    console.log({ banau,auth });
+    
 
     /* Custom Handle Updating User */
     const [editingRow, setEditingRow] = useState(null);
@@ -61,7 +61,7 @@ const Example = ({ banau }) => {
         role: 'Staff',
     });
 
-    console.log({ userState });
+  
     // Get fake data from the staff array using the banau ID
     const staffFakeData = useMemo(() => extractData(banau?.staff, banau?._id), [banau?.staff, banau?._id]);
 
@@ -119,7 +119,7 @@ const Example = ({ banau }) => {
                 }
             );
 
-            console.log(responseData); // Handle response data as needed
+          // Handle response data as needed
             window.location.reload();
             table.setCreatingRow(null); //exit creating mode
         } catch (error) {
@@ -133,7 +133,7 @@ const Example = ({ banau }) => {
      */
     const addUserV1 = async () => {
         try {
-            console.log({ userState });
+           
             if (userState.email === '' || userState.role === '')
                 return alert('[+] Info required');
             const responseData = await sendRequest(
@@ -149,17 +149,17 @@ const Example = ({ banau }) => {
                 }
             );
 
-            console.log(`[+] User Created`, { responseData }); // Handle response data as needed
+             // Handle response data as needed
             // window.location.reload();
             table.setCreatingRow(null); //exit creating mode
         } catch (error) {
-            console.log(`[+] Error while creating a user:`, { error });
+            
             return alert(error.message);
         }
     };
     //CREATE action
     const handleCreateUser = async ({ values, table }) => {
-        console.log(values);
+       
         await addUser(values, table);
         table.setCreatingRow(null); //exit editing mode
     };
@@ -182,7 +182,7 @@ const Example = ({ banau }) => {
                     Authorization: 'Bearer ' + auth.token,
                 }
             );
-            console.log(responseData); // Handle response data as needed
+          // Handle response data as needed
             table.setEditingRow(null); //exit editing mode
 
             // table.setCreatingRow(null); ; //exit creating mode
@@ -196,14 +196,13 @@ const Example = ({ banau }) => {
      */
     const editEmployeeV1 = async (userData) => {
         try {
-            console.log(`[+]Edit EmployeeV1`);
-            console.log(updateUser.role === '', (updateUser.role === userData.role));
+           
             if (updateUser.role === '')
                 return alert('No Role Specified');
             if (updateUser.role === userData.role)
                 throw new Error('same role');
             userData.role = updateUser.role;
-            console.log({ updateUser, userData });
+            
 
             const responseData = await sendRequest(
                 `banau/updateemployee/${userData._id}`,
@@ -218,14 +217,14 @@ const Example = ({ banau }) => {
             );
 
 
-            console.log(`[+] Edit Employee : `, { responseData }); // Handle response data as needed
+             // Handle response data as needed
             // toast.success("UserRole Updated ");
             /* This is just for testing */
             // window.location.reload();
             table.setEditingRow(null); //exit editing mode
 
         } catch (error) {
-            console.log(`[-] Edit Employee Error:`, { error });
+           
             toast.error(error.message);
         }
     };
@@ -236,7 +235,7 @@ const Example = ({ banau }) => {
     };
     // Custom Update Action no default MRT
     const handleCustomSave = async () => {
-        console.log(updateUser);
+        
         // Here you can add the logic to update the user in the backend
         setEditingRow(null); // Exit editing mode
     };
@@ -262,7 +261,7 @@ const Example = ({ banau }) => {
 
     const deleteEmployee = async (value) => {
         try {
-            console.log(value);
+           
             const responseData = await sendRequest(
                 `banau/deleteemployee/${value._id}`,
                 'DELETE',
@@ -273,7 +272,7 @@ const Example = ({ banau }) => {
                 }
             );
 
-            console.log(responseData); // Handle response data as needed
+            // Handle response data as needed
 
             // Refresh the page
             // window.location.reload();
@@ -285,7 +284,7 @@ const Example = ({ banau }) => {
 
     //DELETE action
     const openDeleteConfirmModal = (row) => {
-        console.log(row.original);
+     
         if (window.confirm('Are you sure you want to delete this user?')) {
             deleteEmployee(row.original);
             // deleteUser(row.id); // Pass the id directly to deleteUser
@@ -531,10 +530,10 @@ function useUpdateUserRole() {
 //DELETE hook (delete user in api)
 function useDeleteUser() {
     const queryClient = useQueryClient();
-    console.log(queryClient);
+    
     return useMutation({
         mutationFn: async (userId) => {
-            console.log(userId);
+          
             //send api update request here
             await new Promise((resolve) => setTimeout(resolve, 1000)); //fake api call
             return Promise.resolve();
