@@ -38,6 +38,8 @@ import { fakeDataFromStaffArray } from './makeData'; // Import the fake data gen
 import { toast } from 'react-toastify';
 
 const Example = ({ store }) => {
+
+
     const [validationErrors, setValidationErrors] = useState({});
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const auth = useContext(AuthContext);
@@ -560,11 +562,44 @@ function useDeleteUser() {
 
 const queryClient = new QueryClient();
 
-const ExampleWithProviders = ({ store }) => (
+const ExampleWithProviders = ({ store, setDashboardState }) => {
+    const [formData, setFormData] = useState({ ...store });
+    const { subscriptionStatus } = formData
+
     //Put this with your other react-query providers near root of your app
-    <QueryClientProvider client={queryClient}>
-        <Example store={store} />
-    </QueryClientProvider>
-);
+    return (
+        <>
+            <section className="mb-4 border-b pb-4 pl-4">
+                {/* <h2 className="text-xl font-semibold mb-2 text-gray-700">Staff Members</h2> */}
+                <div className="flex items-center space-x-3">
+                    {(subscriptionStatus === 'Silver') &&
+                        <div className='text-base text-black'>
+                            Max: 2 staff members.
+                        </div>
+                    }
+                    {(subscriptionStatus === 'Gold') &&
+                        <div className='text-base text-black'>
+                            Max: 5 staff members.
+                        </div>
+                    }
+                    {(subscriptionStatus === 'Platinum') &&
+                        <div className='text-base text-black'>
+                            Max: 10 staff members.
+                        </div>
+                    }
+                    {((subscriptionStatus === 'Silver') || (subscriptionStatus === 'Gold')) &&
+                        <div className='text-sm text-black'>
+                            <button onClick={() => { setDashboardState('Shop') }} className='px-4 py-1 bg-black text-white rounded-xl'>Upgrade</button>
+                        </div>
+                    }
+                </div>
+
+            </section>
+            <QueryClientProvider client={queryClient}>
+                <Example store={store} />
+            </QueryClientProvider>
+        </>
+    )
+};
 
 export default ExampleWithProviders;
