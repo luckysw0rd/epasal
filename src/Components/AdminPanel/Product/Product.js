@@ -36,7 +36,7 @@ const Product = ({ store }) => {
     setSelectedSubCategory(value);
     setEditProduct({
       ...editProduct,
-      subCategory: value
+      subcategories: value
     });
   };
 
@@ -455,11 +455,12 @@ const Product = ({ store }) => {
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
                   Category
                 </label>
+                {console.log(editProduct,"edit product")}
                 <select
                   id="subcategory"
                   name="category"
 
-                  value={selectedSubCategory}
+                  value={editProduct.subcategories }
                   onChange={handleSubCategoryChange}
                   // multiple // Allow multiple selections
                   onWheel={(e) => e.target.blur()}

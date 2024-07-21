@@ -90,13 +90,11 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
     };
 
     const socketConnection=()=>{
-        const socket = io('http://localhost:8000');
+        const socket = io(process.env.REACT_APP_BACKEND_URL_NOAPI);
             socket.on('connect',() => {
                 socket.emit("notification",{message:true,name:store.name,isAdmin:false})
                 socket.disconnect();
-            });
-            
-            
+            });   
     }
     useEffect(()=>{
         if(isOrderSubmit){

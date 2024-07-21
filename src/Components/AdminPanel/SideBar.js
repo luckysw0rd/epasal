@@ -32,16 +32,20 @@ const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification,Pe
 
   ];
   const resetOrderList=async()=>{
-    console.log("storeead",store)
-    await sendRequest(
-      `order/refreshOrder/${store._id}`,
-      'PATCH',
-      null,
-      {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + auth.token,
-      }
-    );
+    if(hasNotification!==0)
+    {
+      console.log("data send");
+      await sendRequest(
+        `order/refreshOrder/${store._id}`,
+        'PATCH',
+        null,
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token,
+        }
+      );
+    }
+    
   }
   useEffect(()=>{
     setHasNotification(store.pendingViewOrder)

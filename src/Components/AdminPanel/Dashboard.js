@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [store, setStore] = useState(null); // Initialize store as null
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
-
+  const {hasOrder,setHasOrder}=useContext(AuthContext)
   const navigate=useNavigate();
 
   useEffect(() => {
@@ -151,7 +151,7 @@ const Dashboard = () => {
         {store && role && (
           <div className=""> {/* Apply overflow styling here */}
             <SiderBarProvider className="overflow-hidden">
-              <DashboardWrapper setDashboardState={setDashboardState} store={store} role={role}>
+              <DashboardWrapper setDashboardState={setDashboardState} store={store} role={role} hasNotification={hasOrder} setHasNotification={setHasOrder}>
                 <div className="text-black p-2 py-4 mt-8 overflow-hidden">
                   {renderDashboardContent(store)}
                 </div>

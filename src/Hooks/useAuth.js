@@ -59,7 +59,7 @@ export const useAuth = () => {
     console.log('Hi socket',JSON.parse(localStorage?.getItem('userData')));
 
     const socketConnection=()=>{
-        const socket = io('http://localhost:8000');
+        const socket = io(process.env.REACT_APP_BACKEND_URL_NOAPI);
         socket.on('connect',() => {
             console.log('Connected to Socket.IO server',localStorage?.getItem('userData')?.userID);
             socket.emit('isAdmin',{userID: JSON.parse(localStorage?.getItem('userData'))?.userID} );
@@ -67,12 +67,12 @@ export const useAuth = () => {
         });
         socket.on('notification-admin',(data)=>{
           console.log('notification',data);
-          setHasOrder(hasOrder+1)
+          setHasOrder(1)
           if (Notification.permission === 'granted') {
             const notification=new Notification('Order', {body:"New Order Recieved",icon:logo});
             notification.onclick = function() {
                 window.focus();
-                window.location.href=`http://localhost:3000/adminpanel/${data.name}?page=Order`;
+                window.location.href=`${process.env.REACT_APP_FRONTEND_URL}adminpanel/${data.name}?page=Order`;
                 console.log('Notification clicked');
               };
           } else {
