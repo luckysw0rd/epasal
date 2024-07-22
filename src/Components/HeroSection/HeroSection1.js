@@ -98,7 +98,7 @@ const HeroSection1 = ({ previewMode, store, setStore }) => {
                                     <div className="w-full mb-5 px-2">
                                         <label className="block text-gray-700 text-sm font-bold mb-2">For Mobile</label>
                                         <div className="relative" {...getRootPropsMobile()}>
-                                            <img src={store?.mobileBanner.bannerUrl || Bgpng} className="border border-gray-300 rounded w-full h-40 object-cover mb-2" alt="Mobile Image" />
+                                            <img src={store?.mobileBanner.bannerUrl || Bgpng} className="border border-gray-300 rounded w-full h-40 object-contain mb-2" alt="Mobile Image" />
                                             <input {...getInputPropsMobile()} />
                                             <button className="mt-2 w-full py-2 bg-gray-500 text-white font-bold rounded">Upload Image</button>
                                         </div>

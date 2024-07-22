@@ -17,7 +17,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
-    "browser-image-compression": "^2.0.2",
     "cloudinary-core": "^2.13.1",
     "clsx": "^2.1.0",
     "crypto-js": "^4.2.0",
