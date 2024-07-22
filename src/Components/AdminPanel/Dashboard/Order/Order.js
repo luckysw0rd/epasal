@@ -8,6 +8,7 @@ import Loading from "../../../Loading/Loading"
 
 
 
+
 const Order = ({ store }) => {
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
     const [orders, setOrders] = useState([]);
@@ -45,6 +46,7 @@ const Order = ({ store }) => {
             // Handle error
         }
     };
+
 
     useEffect(() => {
         fetchOrders(page, searchQuery);
@@ -160,7 +162,6 @@ const Order = ({ store }) => {
                 return 'border-white'; // Default background color
         }
     };
-
     return (
         isLoading ? <Loading /> :
 

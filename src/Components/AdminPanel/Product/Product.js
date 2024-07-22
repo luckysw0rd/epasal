@@ -36,10 +36,15 @@ const Product = ({ store }) => {
     setSelectedSubCategory(value);
     setEditProduct({
       ...editProduct,
-      subCategory: value
+      subcategories: [value]
     });
   };
-
+useEffect(()=>{
+  if(editProductIndex){
+    console.log(editProduct.subcategories[0],'subcategory')
+    setSelectedSubCategory(editProduct.subcategories[0])
+  }
+},[editProductIndex])
   const fetchProducts = async (limit = 10, search = '', sortOrder = 'asc') => {
     try {
       const response = await sendRequest(
@@ -420,7 +425,7 @@ const Product = ({ store }) => {
           <span>Page {page} </span>
           <button
             onClick={() => handlePageChange(page + 1)}
-            //  disabled={currentPage === totalPages}
+             disabled={products.length===0}
             className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
           >
             Next
@@ -459,7 +464,7 @@ const Product = ({ store }) => {
                   id="subcategory"
                   name="category"
 
-                  value={selectedSubCategory}
+                  value={editProduct.subcategories[0] }
                   onChange={handleSubCategoryChange}
                   // multiple // Allow multiple selections
                   onWheel={(e) => e.target.blur()}

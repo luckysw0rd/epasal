@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { MdOutlineDashboard, MdStore, MdEdit, MdShop2 } from "react-icons/md";
@@ -7,10 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSiderBar } from "./SiderBarContext";
 import banau from '../../Assets/banau.png';
 import { AuthContext } from "../../Hooks/AuthContext";
-const SideBar = ({ setDashboardState, role }) => {
+import useFetch from "../../Hooks/useFetch";
+// import { store } from "./Dashboard/Home/homeStore";
+const SideBar = ({ setDashboardState, role,hasNotification,setHasNotification,PendingOrderToView ,store}) => {
   const navigate = useNavigate();
   
   const { open, setOpen } = useSiderBar();
+  const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const auth = useContext(AuthContext);
   const handleLogout = () => {
     try {
@@ -19,7 +22,6 @@ const SideBar = ({ setDashboardState, role }) => {
       /* Handle logout error */
     }
   };
-
   const menus = [
     ...(role === 'Admin' || role === 'Owner' || role === 'Staff' ? [{ name: "General", link: "/adminpanel", icon: MdEdit }] : []),
     ...(role === 'Admin' || role === 'Owner' || role === 'Staff' ? [{ name: "Home", link: "/adminpanel", icon: MdOutlineDashboard }] : []),
@@ -29,7 +31,25 @@ const SideBar = ({ setDashboardState, role }) => {
     ...(role === 'Admin' || role === 'Owner' ? [{ name: "Edit Store", link: "/adminpanel", icon: MdEdit }] : []),
 
   ];
-
+  const resetOrderList=async()=>{
+    if(hasNotification!==0)
+    {
+      console.log("data send");
+      await sendRequest(
+        `order/refreshOrder/${store._id}`,
+        'PATCH',
+        null,
+        {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token,
+        }
+      );
+    }
+    
+  }
+  useEffect(()=>{
+    setHasNotification(store.pendingViewOrder)
+  },[])
   return (
     <section className="flex gap-6 relative">
       <div
@@ -75,12 +95,16 @@ const SideBar = ({ setDashboardState, role }) => {
               {menus.map((menu, i) => (
                 <Link
                   key={i}
-                  onClick={() => {
+                  onClick={()=> {
                     setDashboardState(menu.name)
+                    if(menu.name==='Order'){
+                      setHasNotification(0);
+                      resetOrderList()
+                    }
                   }}
-                  className={`flex w-40 items-center ml-12 text-lg gap-4  font-Poppins p-2 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-" : ""}`}
+                  className={`flex relative w-40 items-center ml-12 text-lg gap-4  font-Poppins p-2 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-" : ""}`}
                 >
-
+                  {menu.name==='Order' && hasNotification>0?<div className="absolute w-4 h-4 rounded-full bg-orange-500 top-4 right-0 text-center text-xs text-white">{hasNotification}</div>:''}
                   {React.createElement(menu.icon, { size: 20 })}
                   <span className="pl-0 m-2">{menu.name}</span>
                 </Link>
