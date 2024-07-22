@@ -318,7 +318,7 @@ const AllProducts = () => {
                 />
                 <Tooltip message="Clear Rating">
                   <button
-                    onClick={() => handleRatingChange(0)}
+                    onClick={() => handleRatingChange(null)}
 
                   >
                     <GrClear className='text-amber-700 mt-2' size={20} />
@@ -411,9 +411,9 @@ const AllProducts = () => {
               ))}
 
               <button
-                // disabled={page >= totalPages}
+                disabled={products.length===0}
                 onClick={() => handlePageChange(page + 1)}
-                className={`px-4 py-2 roundedbg-white text-gray-700 border border-gray-300`}
+                className={`px-4 py-2 roundedbg-white ${products.length===0 ? 'cursor-not-allowed' : ''} text-gray-700 border border-gray-300`}
               >
                 &gt;
               </button>
