@@ -8,7 +8,8 @@ export const useAuth = () => {
     const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
     const [store,setStore]=useState(null);
     const [hasOrder,setHasOrder]=useState(0)
-    if (Notification.permission === 'default') {
+    if ('Notification' in window) {
+      if (Notification.permission === 'default') {
         Notification.requestPermission().then(permission => {
           if (permission === 'granted') {
             console.log('Notification permission granted.');
@@ -16,7 +17,15 @@ export const useAuth = () => {
             console.log('Notification permission denied.');
           }
         });
+      } else if (Notification.permission === 'granted') {
+        console.log('Notification permission already granted.');
+      } else if (Notification.permission === 'denied') {
+        console.log('Notification permission already denied.');
       }
+    } else {
+      console.log('This browser does not support notifications.');
+    }
+    
 
     const login = useCallback((uid, token, expirationDate) => {
         setToken(token);
