@@ -15,6 +15,7 @@ import ProgressBar from './ProgressBar';
 import Footer from './Footer';
 import DomainSection from './DomainSection';
 import SkinSection from './SkinSelection';
+import SkinSection1 from './SkinSelection1';
 import SliderNavbar from './SliderNavbar';
 import StoreList from './StoreList'; // Import StoreList if it exists
 
@@ -68,7 +69,7 @@ function HomePage() {
                 <DragdropSection />
                 <Card />
                 <BanauTheme />
-                <SkinSection />
+                <SkinSection1 />
                 <SubscriptionPlans />
                 <div className="mt-[1100px] md:mt-0">
                     <SliderNavbar />
