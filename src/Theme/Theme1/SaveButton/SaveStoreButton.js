@@ -160,6 +160,8 @@ const SaveStoreButton = () => {
         } catch (error) {
             console.error('Error saving store data:', error);
             // Handle response data as needed
+            if (error.message)
+                toast.error(error.message);
 
         }
     }
