@@ -65,7 +65,7 @@ const HeroSection1 = ({ previewMode, store, setStore }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{
-                    backgroundImage: `url(${isMobile ? store?.mobileBanner.bannerUrl : store?.banner.bannerUrl})`,
+                    backgroundImage: `url(${isMobile ? store?.mobileBanner?.bannerUrl : store?.banner?.bannerUrl})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
@@ -98,16 +98,16 @@ const HeroSection1 = ({ previewMode, store, setStore }) => {
                                     <div className="w-full mb-5 px-2">
                                         <label className="block text-gray-700 text-sm font-bold mb-2">For Mobile</label>
                                         <div className="relative" {...getRootPropsMobile()}>
-                                            <img src={store?.mobileBanner.bannerUrl || Bgpng} className="border border-gray-300 rounded w-full h-40 object-contain mb-2" alt="Mobile Image" />
+                                            <img src={store?.mobileBanner?.bannerUrl || Bgpng || store?.banner?.bannerUrl } className="border border-gray-300 rounded w-full h-40 object-contain mb-2" alt="Mobile Image" />
                                             <input {...getInputPropsMobile()} />
                                             <button className="mt-2 w-full py-2 bg-gray-500 text-white font-bold rounded">Upload Image</button>
                                         </div>
-                                    </div>
+                                    </div>a
 
                                     <div className="w-full px-2">
                                         <label className="block text-gray-700 text-sm font-bold mb-2">For Desktop/Laptop</label>
                                         <div className="w-full relative" {...getRootPropsDesktop()}>
-                                            <img src={store?.banner.bannerUrl || Bgpng} className="border border-gray-300 rounded w-full h-48 object-cover mb-2" alt="Desktop Image" />
+                                            <img src={store?.banner.bannerUrl || Bgpng || store?.mobileBanner?.bannerUrl} className="border border-gray-300 rounded w-full h-48 object-cover mb-2" alt="Desktop Image" />
                                             <input {...getInputPropsDesktop()} />
                                             <button className="mt-2 w-full py-2 bg-gray-500 text-white font-bold rounded">Upload Image</button>
                                         </div>
