@@ -117,7 +117,7 @@ const ProductCard = ({ product, productColor, addToCart, store }) => {
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-col gap-3 text-xl font-bold md:flex-row text-gray-900 mb-5">
+                <div className="flex flex-col gap-3 text-xl font-bold lg:flex-row text-gray-900 mb-5">
                   <div style={{ color: priceColor }} className="flex md:gap-1 w-[80px] items-center">
                     {renderStars(product.rating)}
                   </div>
