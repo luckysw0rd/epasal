@@ -22,6 +22,7 @@ const SaveStoreButton = () => {
         try {
             setTempLoading(true);
             const ImageData = await uploadImage(store.logo.logoUrl)
+            const MobileBannerData = await uploadImage(store.mobileBanner.bannerUrl)
             const BannerData = await uploadImage(store.banner.bannerUrl)
             const secondaryBannerData = await uploadImage(store.secondaryBanner.secondaryBannerUrl)
             const offerBannerData = await uploadImage(store.offerBanner.offerBannerUrl)
@@ -88,7 +89,11 @@ const SaveStoreButton = () => {
                     }, banner: {
                         bannerUrl: BannerData.img,
                         bannerID: BannerData.id
-                    }, secondaryBanner: {
+                    }, mobileBanner: {
+                        bannerUrl: MobileBannerData.img,
+                        bannerID: MobileBannerData.id
+                    }
+                    , secondaryBanner: {
                         secondaryBannerUrl: secondaryBannerData.img,
                         secondaryBannerID: secondaryBannerData.id
                     }, offerBanner: {
@@ -103,7 +108,7 @@ const SaveStoreButton = () => {
             storeNewImage = store;
             setTempLoading(false);
             PostData(storeNewImage)
-            
+
             setStoreNew(true)
         } catch (err) {
             setTempLoading(false);
@@ -112,7 +117,7 @@ const SaveStoreButton = () => {
                 pauseOnFocusLoss: false,
                 pauseOnHover: false
             })
-           
+
         }
     }
     useEffect(() => {
@@ -122,7 +127,7 @@ const SaveStoreButton = () => {
     }, [storeNew, setStoreNew])
     const PostData = async () => {
         try {
-            
+
             if (!store.isEdit && !storeMade) {
                 const responseData = await sendRequest(
                     'store/create', // Replace 'your-api-endpoint' with your actual API endpoint
@@ -154,13 +159,12 @@ const SaveStoreButton = () => {
             }
         } catch (error) {
             console.error('Error saving store data:', error);
-            if (error.message)
-                toast.error(error.message); // Handle response data as needed
+            // Handle response data as needed
 
         }
     }
     const saveStore = async () => {
-        
+
         if (auth.token) {
             await ImageUpload();
         } else {

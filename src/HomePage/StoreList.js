@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../Hooks/AuthContext';
 
 const StoreCard = ({ store, auth }) => {
-
+    console.log(store)
     return (
         <div className="max-w-md rounded-lg overflow-hidden shadow-lg m-4 relative  border-1 border-gray-900">
             <img className="w-[500px] h-[320px] object-cover text-center items-center font-bold" src={store?.banner?.bannerUrl} alt={store.name} />
@@ -12,7 +12,7 @@ const StoreCard = ({ store, auth }) => {
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white px-4 py-4 flex justify-between items-center ">
                 {auth.isLoggedIn && (
-                    <Link to={`/adminpanel/${store.name}`}  className="">
+                    <Link to={`/adminpanel/${store.name}`} className="">
                         Dashboard
                     </Link>)
                 }
@@ -36,9 +36,9 @@ const StoreList = ({ stores }) => {
                 <h2 className="text-2xl text-center text-[#141414] mb-6 font-bold">Trending Stores</h2>
             }
             <div className="flex justify-center flex-wrap">
-                {stores.length>0 ?stores.map(store => (
+                {stores.length > 0 ? stores.map(store => (
                     <StoreCard key={store._id} store={store} auth={auth} />
-                )):<div className='text-center text-gray-400 text-xl my-20'>Store Unavailable</div>}
+                )) : <div className='text-center text-gray-400 text-xl my-20'>Store Unavailable</div>}
             </div>
         </div>
     );

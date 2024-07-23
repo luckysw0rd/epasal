@@ -63,6 +63,7 @@ export const StoreProvider = ({ children, passedStore }) => {
 
     subCategories: [{ name: "Category 1" }, { name: "Category 2" }, { name: "Category 3" }],
     banner: { bannerUrl: `${graybg}`, bannerID: '' },
+    mobileBanner: { bannerUrl: `${graybg}`, bannerID: '' },
     products: [
       {
         id: 1,
@@ -656,7 +657,7 @@ export const StoreProvider = ({ children, passedStore }) => {
   useEffect(() => {
     const fetchStoreData = async (isEdit) => {
       try {
-        
+
         const response = await sendRequest(
           `store/get/${storeID}`,
           "GET",
@@ -666,7 +667,7 @@ export const StoreProvider = ({ children, passedStore }) => {
             Authorization: "Bearer " + auth.token,
           }
         );
-        
+
         setStore({
           ...response.store,
           fetchedFromBackend: true,
@@ -691,7 +692,7 @@ export const StoreProvider = ({ children, passedStore }) => {
     if (window.location.pathname.includes("/store/edit/")) {
       fetchStoreData(true);
       setStore(prev => ({ ...prev, previewMode: false, fetchedFromBackend: false }));
-      
+
     } else if (window.location.pathname.includes("/store/")) {
       fetchStoreData(false);
     } else {
@@ -711,10 +712,10 @@ export const StoreProvider = ({ children, passedStore }) => {
 
 
     }
-  }, [store?.name, store?.fetchedFromBackend ,store]);
+  }, [store?.name, store?.fetchedFromBackend, store]);
 
   const addToCart = (product) => {
-    
+
 
     const selectedOption = product.variant[0]?.options.find(option => option.price === product.price) || null;
 
@@ -755,7 +756,7 @@ export const StoreProvider = ({ children, passedStore }) => {
       updatedCart = [...store.cart, cartItem];
     }
 
-   
+
     setStore((prevState) => {
       const newStore = {
         ...prevState,
@@ -769,17 +770,17 @@ export const StoreProvider = ({ children, passedStore }) => {
   };
 
   const deleteFromCart = (product) => {
-    
+
     const { price, selectedVariant } = product;
     const name = product.product;
-    
+
 
     const existingCartItemIndex = store.cart.findIndex(item =>
       item.product === name &&
       item.price === price &&
       JSON.stringify(item.selectedVariant) === JSON.stringify(selectedVariant)
     );
-   
+
     if (existingCartItemIndex !== -1) {
       const updatedCart = [...store.cart];
 
@@ -792,7 +793,7 @@ export const StoreProvider = ({ children, passedStore }) => {
         };
       }
 
-      
+
       setStore(prevState => ({
         ...prevState,
         cart: updatedCart,

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import SideBar from "./SideBar";
 import SharedNavbar from "./SharedNavbar";
 
-const DashboardWrapper = ({ children, store, setDashboardState, role }) => {
+const DashboardWrapper = ({ children, store, setDashboardState ,role,hasNotification,setHasNotification}) => {
   const [open, setOpen] = useState(true);
   const sidebarRef = useRef(null);
 
@@ -21,11 +21,11 @@ const DashboardWrapper = ({ children, store, setDashboardState, role }) => {
   return (
     <div className="flex relative overflow-hidden">
       {/* For Side bar */}
-      {open && (
-        <div ref={sidebarRef}>
-          <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role} />
-        </div>
-      )}
+      {/* Conditionally render the SideBar */}
+      {open && <SideBar setOpen={setOpen} setDashboardState={setDashboardState} role={role} hasNotification={hasNotification} setHasNotification={setHasNotification} PendingOrderToView={store?.pendingViewOrder} store={store}/>}
+      {/* SideBar handler */}
+
+
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
         <div>

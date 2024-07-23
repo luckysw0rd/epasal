@@ -103,7 +103,7 @@ const Editor = () => {
     reader.onload = (event) => {
       try {
         const importedPreset = JSON.parse(event.target.result);
-         // Log the imported preset
+        // Log the imported preset
         setStore(prevStore => {
           const updatedStore = {
             ...prevStore,
@@ -123,8 +123,8 @@ const Editor = () => {
     };
     reader.readAsText(file);
   };
-  
-  
+
+
 
   // Handle file export
   const handleExportPreset = () => {
@@ -162,7 +162,7 @@ const Editor = () => {
         },
       },
     }));
-   
+
   };
 
   const handleHexCodeChange = (e, field) => {
@@ -1367,23 +1367,6 @@ const Editor = () => {
         }
       }
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   ];
 
 
@@ -1470,9 +1453,17 @@ const Editor = () => {
                     />
                   </div>
                   <div className='font-normal mt-4'>
-                    <label className='text-sm font-Poppins mb-2 block'>Background:</label>
-                    <ImageDrop setStore={setStore} imageData='banner.bannerUrl' />
+                    <label className='text-base font-Poppins mb-2 block'>Background:</label>
+                    <div className='mb-2'>
+                      <h1 className='text-sm font-Poppins block mb-1'>Mobile:</h1>
+                      <ImageDrop setStore={setStore} imageData='mobileBanner.bannerUrl' />
+                    </div>
+                    <div>
+                      <h1 className='text-sm font-Poppins block mb-1'>Desktop:</h1>
+                      <ImageDrop setStore={setStore} imageData='banner.bannerUrl' />
+                    </div>
                   </div>
+
                 </li>
 
                 <li className='font-bold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
@@ -1623,7 +1614,7 @@ const Editor = () => {
                     <FontSelector section="Footer " />
                   </div>
                   <label className='text-[12px]  font-Ubuntu'>Location</label><br />
-                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value }));  }} ></input><br />
+                  <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Email</label><br />
                   <input value={store.email} type='text' className='border-2 border-gray-300 rounded px-2' placeholder='email@abc.com' onChange={(e) => { setStore(prev => ({ ...prev, email: e.target.value })) }} ></input><br />
                   <label className='text-[12px]  font-Ubuntu'>Phone Number</label><br />

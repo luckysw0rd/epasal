@@ -55,6 +55,7 @@
     "react-typewriter-effect": "^1.1.0",
     "react-use-draggable-scroll": "^0.4.7",
     "recharts": "^2.12.7",
+    "socket.io-client": "^4.7.5",
     "swiper": "^11.0.7",
     "tailwind-merge": "^2.2.2",
     "uuid": "^10.0.0",
