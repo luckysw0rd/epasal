@@ -78,24 +78,24 @@ const ProductCard = ({ product, productColor, addToCart, store }) => {
 
   return (
     <motion.div
-      className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[300px] md:h-full mx-auto"
+      className="font-roboto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg overflow-hidden transform transition duration-300 relative border-solid border-2 w-full xl:w-[270px] h-[300px] md:h-full mx-auto"
       style={{ borderColor: productColor.borderColor }}
       whileTap={{ scale: 0.98 }}
     >
       <div className="w-full">
         <div className="relative w-full">
           <div className="card cursor-pointer flex flex-col justify-center rounded-xl shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
-            <div   onClick={handleDefaultImage}>
+            <div onClick={handleDefaultImage}>
               <img src={displayedImage} alt={name} className=" w-[180px] h-[160px] md:w-[252px] md:h-[196px] object-contain mx-auto p-3" style={{ aspectRatio: '1/1' }} />
             </div>
-            <div className="px-5 w-full">
+            <div className="px-3 md:px-5  w-full">
               <hr className="border-t-2" style={{ borderColor: borderColor }} />
               <div className="py-2">
-                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
-                <div className='flex gap-3'>
-                  <p className="my-1 font-bold text-sm" style={{ color: priceColor }}>Rs. {price - discount}</p>
+                <p className="text-base md:text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 10)}</p>
+                <div className='flex justify-between'>
+                  <p className="my-1 font-bold text-xs md:text-sm" style={{ color: priceColor }}>Rs. {price - discount}</p>
                   {discount > 0 &&
-                    <del className=' text-sm text-nowrap flex items-center text-[#838383]'>Rs. {price}</del>
+                    <del className=' text-xs md:text-sm text-nowrap flex items-center text-[#838383]'>Rs. {price}</del>
                   }
                 </div>
               </div>
@@ -117,13 +117,13 @@ const ProductCard = ({ product, productColor, addToCart, store }) => {
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-col gap-3 text-xl font-bold md:flex-row text-gray-900 mb-5">
-                  <div style={{ color: priceColor }} className="flex gap-1 w-[80px] items-center">
+                <div className="flex flex-col gap-3 text-xl font-bold lg:flex-row text-gray-900 mb-5">
+                  <div style={{ color: priceColor }} className="flex md:gap-1 w-[80px] items-center">
                     {renderStars(product.rating)}
                   </div>
                   <button
                     style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }}
-                    className={`px-6 md:px-2 lg:px-6 py-1 md:py-2 text-xs transition ease-in duration-200 border-solid border rounded-md focus:outline-none addToCartBtn`}
+                    className={`px-2 lg:px-6 py-1 md:py-2 text-xs transition ease-in duration-200 border-solid border rounded-md focus:outline-none addToCartBtn`}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                     onClick={() => {

@@ -8,6 +8,7 @@ import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
 import Loader from '../Loading/Loading';
 import { GrClear } from "react-icons/gr";
 import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
+import { FaFilter } from "react-icons/fa";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -268,20 +269,21 @@ const AllProducts = () => {
       <div className="flex flex-col mt-16 ">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
-        <div className="flex flex-col lg:flex-row px-3 md:px-5 lg:px-0"
+        <div className="flex flex-col lg:flex-row px-2 md:px-5 lg:px-0"
           style={{ backgroundColor: color.productListColor.backgroundColor }}
         >
-          <button
-            onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
-            className="lg:hidden px-4 py-2 bg-blue-500 text-white rounded m-2"
-          >
-            {isFilterVisible ? <FaTimes /> : <FaBars />}
-          </button>
+
 
           {(isFilterVisible || window.innerWidth >= 1260) && ( // Conditionally render the filter section based on visibility state or screen width
-            <div className="relative top-8 lg:left-12  w-full lg:w-1/4 lg:max-w-[250px] p-5 py-0  md:-mt-4 rounded-lg border-2 mb-16 shadow-xl"
+            <div className="relative top-8 lg:left-12  w-full lg:w-1/4 lg:max-w-[250px] p-5 py-0  md:-mt-4 rounded-lg border-2 mb-10 md:mb-16 shadow-xl"
               style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor }}
             >
+              {isFilterVisible && <button
+                onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
+                className={`absolute top-1 right-1 lg:hidden p-2 rounded-full bg-red-500 text-white m-2`}
+              >
+                <FaTimes size={15} />
+              </button>}
               <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10">Filters</h3>
               <div className="block mb-4">
                 <label className="block mb-2 font-semibold">Price Range:</label>
@@ -376,6 +378,14 @@ const AllProducts = () => {
                 >
                   <FaSearch className="text-gray-500" />
                 </button>
+                {!isFilterVisible &&
+                  <button
+                    onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
+                    className={`lg:hidden px-4 py-2 bg-blue-500 text-white rounded m-2`}
+                  >
+                    <FaFilter size={15} />
+                  </button>
+                }
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-x-8 md:gap-y-8 md:w-[900px] rounded-lg 2xl:w-[1500px]">
                 {products.map(product => (
@@ -411,9 +421,9 @@ const AllProducts = () => {
               ))}
 
               <button
-                disabled={products.length===0}
+                disabled={products.length === 0}
                 onClick={() => handlePageChange(page + 1)}
-                className={`px-4 py-2 roundedbg-white ${products.length===0 ? 'cursor-not-allowed' : ''} text-gray-700 border border-gray-300`}
+                className={`px-4 py-2 roundedbg-white ${products.length === 0 ? 'cursor-not-allowed' : ''} text-gray-700 border border-gray-300`}
               >
                 &gt;
               </button>
