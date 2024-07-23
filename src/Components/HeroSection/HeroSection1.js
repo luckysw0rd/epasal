@@ -107,7 +107,7 @@ const HeroSection1 = ({ previewMode, store, setStore }) => {
                                     <div className="w-full px-2">
                                         <label className="block text-gray-700 text-sm font-bold mb-2">For Desktop/Laptop</label>
                                         <div className="w-full relative" {...getRootPropsDesktop()}>
-                                            <img src={store?.banner.bannerUrl || Bgpng || store?.mobileBanner?.bannerUrl} className="border border-gray-300 rounded w-full h-48 object-cover mb-2" alt="Desktop Image" />
+                                            <img src={store?.banner?.bannerUrl || Bgpng || store?.mobileBanner?.bannerUrl} className="border border-gray-300 rounded w-full h-48 object-cover mb-2" alt="Desktop Image" />
                                             <input {...getInputPropsDesktop()} />
                                             <button className="mt-2 w-full py-2 bg-gray-500 text-white font-bold rounded">Upload Image</button>
                                         </div>
