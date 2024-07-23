@@ -85,18 +85,18 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                     )}
                     <div className="card cursor-pointer  flex flex-col  justify-center rounded-sm shadow-2xl w-full" style={{ backgroundColor: cardBackground }}>
                         <button>
-                            <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[252px] h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
+                            <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[182px] h-[126px] md:w-[252px] md:h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                         </button>
                         <div className="px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
                             <div className=" py-2 onClick={() => handleProductClick(product)}"
                             // className="prod-title mt-2 flex justify-between items-center"
                             >
-                                <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
-                                <div className=' flex flex-row space-x-2'>
-                                    <p className="my-1 font-bold text-md" style={{ color: priceColor }}>Rs. {price - discount}</p>
+                                <p className="text-lg md:text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 10)}</p>
+                                <div className=' flex flex-row justify-between'>
+                                    <p className="md:my-1 font-bold text-sm md:text-base" style={{ color: priceColor }}>Rs. {price - discount}</p>
                                     {discount > 0 &&
-                                        <del className='  text-sm    text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>Rs. {price}</del>
+                                        <del className='  text-sm md:text-sm    text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>Rs. {price}</del>
                                     }
                                 </div>
                             </div>
@@ -106,7 +106,7 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                                         className={`cursor-pointer text-sm sm:text-base ${selectedOptionIndex === -1 ? 'font-bold' : ''} rounded-md`}
                                         onClick={handleDefaultImage}
                                     >
-                                        <img src={image?.imageUrl} alt="Default" style={{ height: "48px", width: "48px" }} className='me-2 object-contain' />
+                                        <img src={image?.imageUrl} alt="Default" className='md:w-[48px] md:h-[48px] w-[30px] h-[30px] me-2 object-contain' />
                                     </div>
                                     {firstVariant?.options?.map((option, index) => (
                                         <div
@@ -115,7 +115,7 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                                             onClick={() => handleOptionSelect(index)}
                                         >
                                             {option?.image?.imageUrl &&
-                                                <img src={option?.image?.imageUrl} alt={option.name} style={{ height: "48px", width: "48px" }} className='me-2' />
+                                                <img src={option?.image?.imageUrl} alt={option.name} className='me-2 md:w-[48px] md:h-[48px] w-[30px] h-[30px]' />
                                             }
                                         </div>
                                     ))}
@@ -123,9 +123,9 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                                 {/* <div className='absolute right-1 top-1'>
                                     <FaHeart style={{ color: heartColor }} size={15} />
                                 </div> */}
-                                <div className="flex mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
+                                <div className="flex mb-3 md:mb-5 text-xl font-bold md:flex-row justify-between items-center text-gray-900">
 
-                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-3 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
+                                    <button style={{ color: buttonTextColor, borderColor: buttonBorderColor, backgroundColor: buttonBgColor }} className={`px-3 py-[6px] md:py-3 md:mt-2 text-xs transition ease-in duration-200 border-solid border rounded-md md:rounded-lg focus:outline-none addToCartBtn w-[100%]`}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                         onClick={() => {
