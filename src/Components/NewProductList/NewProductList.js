@@ -97,10 +97,10 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
                 );
             case 'Modern Minimalistic':
                 return (
-                    <div className='space-y-10 py-20 w-full flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                    <div className='space-y-5 md:space-y-10 py-20 w-full flex items-center relative flex-col px-3 ' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">New Products</h1>
                         <div style={{}} className=''>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
+                            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-x-10 gap-y-8 md:gap-y-12 lg:gap-10 ">
                                 {filteredProducts.map((product, i) => (
                                     (product?.id || product?._id) && <NewProductListCard3
                                         key={product.id}
@@ -117,10 +117,10 @@ const NewProductList = ({ productListProps, productListType, storeName }) => {
                 );
             case 'Slider':
                 return (
-                    <div className='space-y-10 py-20 w-full flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                    <div className='space-y-5 md:space-y-10 py-20 w-full flex items-center relative flex-col px-3' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">New Products</h1>
                         <div style={{}} className=''>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-12 lg:gap-10 ">
+                            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-x-10 gap-y-8 md:gap-y-12 lg:gap-10  ">
                                 {filteredProducts.map((product, i) => (
                                     (product?.id || product?._id) && <NewProductListCard2
                                         key={product.id}

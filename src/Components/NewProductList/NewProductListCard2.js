@@ -37,6 +37,14 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
         }
     };
 
+    const truncateName = (name, charLimit) => {
+        if (name.length > charLimit) {
+            return name.slice(0, charLimit) + '...';
+        }
+        return name;
+    };
+
+
     // Function to limit text to a certain number of words
     const limitDescription = (description, limit = 20) => {
         const words = description.split(' ');
@@ -48,7 +56,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
 
     return (
         <motion.div
-            className="product-card w-[300px]  rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
+            className="product-card w-full md:w-[300px] rounded-lg shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 p-3 py-5 md:py-8 md:px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.newProductColor.cardBackground, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.borderColor}` }}
@@ -65,32 +73,34 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                 </button>
             )}
 
-            <div className="para uppercase text-center leading-none">
-                <p
-                    style={{
-                        WebkitTextStroke: `1px ${store.color.newProductColor.strokeColor}`,
-                        WebkitTextFillColor: 'transparent',
-                    }}
-                    className="z-10 font-bold text-lg -mb-5 tracking-wider "
-                >
-                </p>
-                <p className="font-bold text-xl tracking-wider ">
-                    {product.name}
-                </p>
-            </div>
+
             <div
-                className="w-[180px] aspect-square relative after:absolute after:h-1 after:w-full after:opacity-0 after:bg-[#7b956a] after:top-8 after:left-0 after:group-hover:opacity-100 after:translate-x-1/2 after:translate-y-1/2 after:-z-20 after:group-hover:w-full after:transition-all after:duration-300 after:group-hover:origin-right after:group-hover:-translate-x-1/2 group-hover:translate-x-1/2 transition-all duration-300"
+                className="w-[180px] md:aspect-square relative after:absolute after:h-1 after:w-full after:opacity-0 after:bg-[#7b956a] after:top-8 after:left-0 after:group-hover:opacity-100 after:translate-x-1/2 after:translate-y-1/2 after:-z-20 after:group-hover:w-full after:transition-all after:duration-300 after:group-hover:origin-right after:group-hover:-translate-x-1/2 group-hover:translate-x-1/2 transition-all duration-300"
                 style={{
                     backgroundColor: store.color.newProductColor.aspectBackground,
                 }}
 
+
             >
+                <div className="para uppercase text-center leading-none">
+                    <p
+                        style={{
+                            WebkitTextStroke: `1px ${store.color.newProductColor.strokeColor}`,
+                            WebkitTextFillColor: 'transparent',
+                        }}
+                        className="z-10 font-bold text-sm md:text-lg -mb-5 tracking-wider "
+                    >
+                    </p>
+                    <p className="font-semibold md:font-bold text-base md:text-xl tracking-wider my-2 md:mb-0">
+                        {truncateName(product.name, 10)}
+                    </p>
+                </div>
                 <div onClick={() => handleProductClick(product)}>
-                <img
-                    src={product.image.imageUrl}
-                    alt={product.name}
-                    className="object-cover w-[180px] h-[180px]"
-                />
+                    <img
+                        src={product.image.imageUrl}
+                        alt={product.name}
+                        className="object-cover w-full h-[140px] md:h-[180px]"
+                    />
                 </div>
                 <div
                     className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
@@ -129,14 +139,14 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     </ul>
                 </div>
             </div>
-            <div className="flex flex-col items-center mt-2">
-                <p className="text-lg font-semibold " style={{ color: `${store.color.newProductColor.priceColor}` }} >Rs {product.price - product.discount}</p>
+            <div className="flex md:flex-col items-center gap-4 md:gap-2 mt-2">
+                <p className="text-sm md:text-lg font-semibold " style={{ color: `${store.color.newProductColor.priceColor}` }} >Rs {product.price - product.discount}</p>
 
-                <del className="ml-2 "> Rs {product.price}</del>
+                <del className="text-sm md:text-base "> Rs {product.price}</del>
             </div>
             <button
                 style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}`, }}
-                className="py-2 px-6 rounded-full duration-300 mt-4"
+                className="py-2 px-6 rounded-full duration-300 mt-1 md:mt-4"
 
                 onClick={() => {
                     handleProductClick(product)

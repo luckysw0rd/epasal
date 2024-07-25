@@ -40,9 +40,16 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
         return description;
     };
 
+    const truncateName = (name, charLimit) => {
+        if (name.length > charLimit) {
+            return name.slice(0, charLimit) + '...';
+        }
+        return name;
+    };
+
     return (
         <motion.div
-            className="w-[260px]  shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+            className="w-full md:w-[260px]  shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.newProductColor.cardBackground, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.borderColor}` }}
@@ -58,31 +65,31 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
             )}
             <a >
                 <div onClick={() => handleProductClick(product)} >
-                <img
-                    src={product.image.imageUrl}
-                    alt={product.name}
-                    className="h-60 w-full object-cover rounded-t-xl"
-                />
+                    <img
+                        src={product.image.imageUrl}
+                        alt={product.name}
+                        className="h-44 md:h-60 w-full object-cover rounded-t-xl"
+                    />
                 </div>
-                <div className="px-4 py-3 w-70 border-t-2"
+                <div className="px-4 py-1 md:py-3 w-70 border-t-2"
                     style={{ borderColor: `${store?.color?.newProductColor?.borderColor}` }}
                 >
                     <span className=" mr-3 uppercase text-xs">{product.subcategories[0]}</span>
-                    <p className="text-lg font-bold truncate block capitalize">{product.name}</p>
-                    <div className="flex  items-center justify-between">
-                        <div className=' flex justify-start items-center'>
-                            <p className="text-md text-nowrap font-semibold cursor-auto my-3" style={{ color: `${store.color.newProductColor.priceColor}` }}>
+                    <p className="text-lg font-bold truncate block capitalize">{truncateName(product.name, 10)}</p>
+                    <div className="flex my-2 md:mt-0 items-center justify-between">
+                        <div className=' flex md:flex-row flex-col justify-start items-center'>
+                            <p className="text-md text-nowrap font-semibold cursor-auto md:my-3" style={{ color: `${store.color.newProductColor.priceColor}` }}>
                                 Rs {product.price - product.discount}
                             </p>
                             {product.discount > 0 &&
                                 <del>
-                                    <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto ml-2">Rs {product.price}</p>
+                                    <p className="text-sm text-nowrap  text-center  text-gray-600 cursor-auto md:ml-2">Rs {product.price}</p>
                                 </del>}
                         </div>
                         <div className=" ">
 
                             <button
-                                className="py-2 px-6 border-2 rounded-full duration-300"
+                                className="py-2 px-4 md:px-6 border md:border-2 rounded-full duration-300"
                                 onClick={() => {
                                     handleProductClick(product)
                                 }}
