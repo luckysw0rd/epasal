@@ -7,10 +7,10 @@ import ThirdBanner1 from "../../Components/ThirdBanner/ThirdBanner1";
 
 const T1ThirdBanner = () => {
   const { store } = useStore();
-  const { previewMode,isEdit } = store;
+  const { previewMode,isEdit,fetchedFromBackend } = store;
 
   return (
-    <ThirdBanner1 previewMode={previewMode} isEdit={isEdit} defaultBgImage={secondary} /> 
+    <ThirdBanner1 previewMode={previewMode} isEdit={isEdit} fetchedFromBackend={fetchedFromBackend} defaultBgImage={secondary} /> 
   );
 };
 
