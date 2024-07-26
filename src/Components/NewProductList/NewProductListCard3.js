@@ -49,7 +49,7 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
 
     return (
         <motion.div
-            className="w-full md:w-[260px]  shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+            className="w-full md:w-[260px]  shadow-md rounded-lg duration-500 hover:scale-105 hover:shadow-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.newProductColor.cardBackground, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.borderColor}` }}
@@ -68,7 +68,7 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
                     <img
                         src={product.image.imageUrl}
                         alt={product.name}
-                        className="h-36 md:h-60 w-full object-cover rounded-t-xl"
+                        className="h-36 md:h-60 w-full object-cover rounded-t-lg"
                     />
                 </div>
                 <div className="px-4 py-1 md:py-3 w-70 border-t-2"
