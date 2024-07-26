@@ -56,7 +56,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
 
     return (
         <motion.div
-            className="product-card w-full md:w-[300px] rounded-lg shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 p-3 py-5 md:py-8 md:px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
+            className="product-card w-full md:w-[300px] rounded-lg shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 p-2 py-5 md:py-8 md:px-4  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.newProductColor.cardBackground, color: store.color.newProductColor.textColor, border: `2px solid ${store.color.newProductColor.borderColor}` }}
@@ -72,29 +72,25 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     <FaTimes />
                 </button>
             )}
-
-
+            <div className="para uppercase text-center leading-none">
+                <p
+                    style={{
+                        WebkitTextStroke: `1px ${store.color.newProductColor.strokeColor}`,
+                        WebkitTextFillColor: 'transparent',
+                    }}
+                    className="z-10 font-bold text-sm md:text-lg -mb-5 tracking-wider "
+                >
+                </p>
+                <p className="font-bold text-sm md:text-xl mt-1">
+                    {truncateName(product.name, 15)}
+                </p>
+            </div>
             <div
                 className="w-[180px] md:aspect-square relative after:absolute after:h-1 after:w-full after:opacity-0 after:bg-[#7b956a] after:top-8 after:left-0 after:group-hover:opacity-100 after:translate-x-1/2 after:translate-y-1/2 after:-z-20 after:group-hover:w-full after:transition-all after:duration-300 after:group-hover:origin-right after:group-hover:-translate-x-1/2 group-hover:translate-x-1/2 transition-all duration-300"
                 style={{
                     backgroundColor: store.color.newProductColor.aspectBackground,
                 }}
-
-
             >
-                <div className="para uppercase text-center leading-none">
-                    <p
-                        style={{
-                            WebkitTextStroke: `1px ${store.color.newProductColor.strokeColor}`,
-                            WebkitTextFillColor: 'transparent',
-                        }}
-                        className="z-10 font-bold text-sm md:text-lg -mb-5 tracking-wider "
-                    >
-                    </p>
-                    <p className="font-semibold md:font-bold text-base md:text-xl tracking-wider my-2 md:mb-0">
-                        {truncateName(product.name, 10)}
-                    </p>
-                </div>
                 <div onClick={() => handleProductClick(product)}>
                     <img
                         src={product.image.imageUrl}
@@ -103,7 +99,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     />
                 </div>
                 <div
-                    className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
+                    className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-5 transition-all duration-300 group-hover:-translate-x-full"
                 >
                     <p
                         className=" pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
@@ -139,14 +135,13 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     </ul>
                 </div>
             </div>
-            <div className="flex md:flex-col items-center gap-4 md:gap-2 mt-2">
+            <div className="flex w-full md:flex-col items-center justify-between px-1 gap-4 md:gap-2 mt-2">
                 <p className="text-sm md:text-lg font-semibold " style={{ color: `${store.color.newProductColor.priceColor}` }} >Rs {product.price - product.discount}</p>
-
                 <del className="text-sm md:text-base "> Rs {product.price}</del>
             </div>
             <button
                 style={{ backgroundColor: `${store.color.newProductColor.buttonBgColor}`, color: `${store.color.newProductColor.buttonTextColor}`, }}
-                className="py-2 px-6 rounded-full duration-300 mt-1 md:mt-4"
+                className="py-2 px-6 text-xs md:text-base rounded-full w-full  duration-300 mt-1 md:mt-4"
 
                 onClick={() => {
                     handleProductClick(product)

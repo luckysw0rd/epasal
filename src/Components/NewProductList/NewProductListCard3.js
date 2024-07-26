@@ -68,14 +68,14 @@ const NewProductListCard3 = ({ product, handleRemoveProduct, store }) => {
                     <img
                         src={product.image.imageUrl}
                         alt={product.name}
-                        className="h-44 md:h-60 w-full object-cover rounded-t-xl"
+                        className="h-36 md:h-60 w-full object-cover rounded-t-xl"
                     />
                 </div>
                 <div className="px-4 py-1 md:py-3 w-70 border-t-2"
                     style={{ borderColor: `${store?.color?.newProductColor?.borderColor}` }}
                 >
                     <span className=" mr-3 uppercase text-xs">{product.subcategories[0]}</span>
-                    <p className="text-lg font-bold truncate block capitalize">{truncateName(product.name, 10)}</p>
+                    <p className="text-base md:text-lg font-bold truncate block capitalize">{truncateName(product.name, 10)}</p>
                     <div className="flex my-2 md:mt-0 items-center justify-between">
                         <div className=' flex md:flex-row flex-col justify-start items-center'>
                             <p className="text-md text-nowrap font-semibold cursor-auto md:my-3" style={{ color: `${store.color.newProductColor.priceColor}` }}>

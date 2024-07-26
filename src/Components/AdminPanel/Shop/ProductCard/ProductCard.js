@@ -5,7 +5,7 @@ import useFetch from '../../../../Hooks/useFetch';
 import Loading from "../../../Loading/Loading"
 import { AuthContext } from '../../../../Hooks/AuthContext';
 const ProductCard2 = () => (
-    <div className="w-[300px] hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="w-[300px] hover:scale-105 hover:shadow-xl product-card w-62 rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-4 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <a href="#">
             <img
                 src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -45,7 +45,7 @@ const ProductCard2 = () => (
 );
 
 const ProductCard3 = () => (
-    <div className="product-card w-[300px] rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="product-card w-[300px] rounded-md shadow-xl overflow-hidden  relative cursor-pointer snap-start shrink-0 py-8 px-4 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         <div className="para uppercase text-center leading-none ">
             <p
                 style={{
@@ -69,7 +69,7 @@ const ProductCard3 = () => (
                 className="object-cover w-full flex justify-center flex-col items-center h-full flex justify-center flex-col items-center"
             />
             <div
-                className="tooltips absolute top-0 left-10 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full flex justify-center flex-col items-center"
+                className="tooltips absolute top-0 left-10 -translate-x-[150%] p-2 flex flex-col items-start gap-5 transition-all duration-300 group-hover:-translate-x-full flex justify-center flex-col items-center"
             >
                 <p
                     className="text-[#7b956a] pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"
@@ -105,7 +105,7 @@ const ProductCard3 = () => (
             <p className="text-lg font-semibold text-black">Rs 99</p>
             <del className="ml-2 text-gray-600"> Rs 150</del>
         </div>
-        <button className="bg-blue-600 text-white py-2 px-6 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4">
+        <button className="bg-blue-600 text-white py-2 px-4 rounded-full flex justify-center flex-col items-center hover:bg-blue-600 duration-300 mt-4">
             Add to Cart
         </button>
     </div>
@@ -151,17 +151,17 @@ export default function ProductCards({ store }) {
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
-      // Handle response data as needed
+            // Handle response data as needed
             if (responseData.payment.payment_method === 'esewa') {
                 esewaCall(responseData.formData);
             }
         } catch (error) {
-           
+
         }
 
     };
     const esewaCall = (formData) => {
-        
+
         var path = process.env.REACT_APP_ESEWA_URL;
 
         var form = document.createElement("form");

@@ -74,7 +74,7 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
             whileTap={{ scale: 0.98 }}
         >
             <div className="w-full">
-                <div className="relative w-full">
+                <div className="relative w-full h-full">
                     {!previewMode && (
                         <button
                             className="absolute top-2 right-2 p-2 rounded-full bg-red-500 z-10 text-white flex items-center justify-center"
@@ -87,13 +87,13 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                         <button>
                             <img onClick={() => handleProductClick(product)} src={displayedImage} alt={name} className="w-[182px] h-[126px] md:w-[252px] md:h-[196px] object-contain  mx-auto p-3" style={{ aspectRatio: '1/1' }} />
                         </button>
-                        <div className="px-5 w-full">
+                        <div className="px-2 md:px-5 w-full">
                             <hr className="border-t-2" style={{ borderColor: borderColor }} />
                             <div className=" py-2 onClick={() => handleProductClick(product)}"
                             // className="prod-title mt-2 flex justify-between items-center"
                             >
-                                <p className="text-lg md:text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 10)}</p>
-                                <div className=' flex flex-row justify-between'>
+                                <p className="text-lg md:text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 12)}</p>
+                                <div className=' flex md:flex-row justify-between'>
                                     <p className="md:my-1 font-bold text-sm md:text-base" style={{ color: priceColor }}>Rs. {price - discount}</p>
                                     {discount > 0 &&
                                         <del className='  text-sm md:text-sm    text-nowrap flex items-center' style={{ color: `${store.color.subProductColor.priceColor}` }}>Rs. {price}</del>
