@@ -24,7 +24,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
     }, [products]);
 
     const handleDeleteProduct = (productIndex) => {
-        
+
         setStore(prevStore => ({
             ...prevStore,
             featuredProducts: prevStore.featuredProducts.filter((_, index) => index !== productIndex)
@@ -45,7 +45,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                 );
                 toast(response.message);
             } catch (err) {
-                
+
                 toast("Error Deleting Product")
             }
             setStore(prevStore => ({
@@ -69,7 +69,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
         switch (productListType) {
             case 'default':
                 return (
-                    <div className='space-y-10 py-10 flex items-center relative flex-col mb-16 rounded-sm' style={{ backgroundColor: productColor.backgroundColor }}>
+                    <div className='space-y-10 py-10 flex items-center flex-col mb-16 rounded-sm' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 rounded-lg gap-x-10 gap-y-12 lg:gap-10">
                             {filteredProducts?.map((product, i) => (
@@ -91,7 +91,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
 
             case 'Modern Minimalistic':
                 return (
-                    <div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                    <div className='space-y-10 py-20 flex items-center  flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
                         <div >
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 rounded-sm gap-x-10 gap-y-12 lg:gap-10 ">
@@ -112,7 +112,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
 
             case 'Slider':
                 return (
-                    <div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                    <div className='space-y-10 py-20 flex items-center  flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
                         <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
                         <div >
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 rounded-sm gap-x-10 gap-y-12 lg:gap-10 ">
@@ -132,7 +132,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                 );
             // Add more cases for other product list types
             default:
-                return (<div className='space-y-10 py-20 flex items-center relative flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
+                return (<div className='space-y-10 py-20 flex items-center  flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
                     <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
                     <div >
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 rounded-sm gap-x-10 gap-y-12 lg:gap-10 ">
@@ -153,18 +153,20 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
     };
     return (
 
-        <div className='relative' style={{ fontFamily: store?.fonts?.Featured, backgroundColor: "#ffff" }}>
+        <div style={{ fontFamily: store?.fonts?.Featured, backgroundColor: "#ffff" }}>
             {renderProductList()}
-            <Link>
-                <button className="flex  items-center absolute right-10 bottom-0 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
-                >
-                    <span>
-                        <Link to={`/store/products/${store.name}`} >
-                            View More
-                        </Link>
-                    </span> <IoIosArrowForward />
-                </button>
-            </Link>
+            <div className='relative'>
+                <Link>
+                    <button className="flex  items-center absolute right-10 bottom-0 font-semibold pt-6 px-4 transition ease-in duration-200 border-nore focus:outline-none"
+                    >
+                        <span>
+                            <Link to={`/store/products/${store.name}`} >
+                                View More
+                            </Link>
+                        </span> <IoIosArrowForward />
+                    </button>
+                </Link>
+            </div>
         </div>
 
     );

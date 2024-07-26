@@ -5,12 +5,12 @@ import { AuthContext } from '../../Hooks/AuthContext';
 
 const SubProduct1 = ({
     products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
-,addToCart}) => {
+    , addToCart }) => {
     const ref = useRef();
     const containerRef = useRef(null);
     const { events } = useDraggable(ref);
-    const {sendRequest}=useFetch();
-    const auth=useContext(AuthContext);
+    const { sendRequest } = useFetch();
+    const auth = useContext(AuthContext);
 
     const selectedSubCategory = store.selectedSubCategory || subCategories[0].name;
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -35,10 +35,10 @@ const SubProduct1 = ({
         }));
     };
 
-    const handleRemoveProduct =async (productName) => {
-        if(store.isEdit){
-            try{
-                const response=await sendRequest(
+    const handleRemoveProduct = async (productName) => {
+        if (store.isEdit) {
+            try {
+                const response = await sendRequest(
                     `product/deleteProduct`,
                     'POST',
                     JSON.stringify(productName),
@@ -48,8 +48,8 @@ const SubProduct1 = ({
                     }
                 );
                 toast(response.message);
-            }catch(err){
-                
+            } catch (err) {
+
                 toast("Error Deleting Product")
             }
             setStore(prevStore => ({
@@ -57,12 +57,12 @@ const SubProduct1 = ({
                 products: prevStore.products.filter(product => product._id !== productName.id)
             }));
         }
-        else{
-        setStore(prevStore => ({
-            ...prevStore,
-            products: prevStore.products.filter(product => product.id !== productName.id)
-        }));
-    }
+        else {
+            setStore(prevStore => ({
+                ...prevStore,
+                products: prevStore.products.filter(product => product.id !== productName.id)
+            }));
+        }
     };
 
     const toggleAddProduct = () => {
@@ -72,10 +72,10 @@ const SubProduct1 = ({
     const subProductColor = store.color.subProductColor;
 
     return (
-        <div className='   mb-16' style={{ fontFamily: store?.fonts?.Categories ,backgroundColor: subProductColor.categoryColor}}>
+        <div className='   mb-16' style={{ fontFamily: store?.fonts?.Categories, backgroundColor: subProductColor.categoryColor }}>
             <CategorySelector />
-            <div className="px-20  pb-8 overflow-x-scroll" style={{
-                maxWidth: '100vw', 
+            <div className="px-10 md:px-20  pb-8 overflow-x-scroll" style={{
+                maxWidth: '100vw',
             }}
                 {...events}
                 ref={ref}
@@ -106,7 +106,7 @@ const SubProduct1 = ({
                             />
                         </div>
                     ))}
-                    {(!previewMode||store.isEdit) && (
+                    {(!previewMode || store.isEdit) && (
                         <div className="flex-none mr-4">
                             <button onClick={toggleAddProduct} className="flex flex-col items-center justify-center w-32 h-40 border border-dashed border-gray-300 rounded-md hover:bg-gray-50/50 focus:outline-none">
                                 <svg className="w-12 h-12 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
