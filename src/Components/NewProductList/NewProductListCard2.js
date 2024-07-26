@@ -95,7 +95,7 @@ const NewProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, 
                     <img
                         src={product.image.imageUrl}
                         alt={product.name}
-                        className="object-cover w-full h-[140px] md:h-[180px]"
+                        className="object-cover rounded-t-lg w-full h-[140px] md:h-[180px]"
                     />
                 </div>
                 <div
