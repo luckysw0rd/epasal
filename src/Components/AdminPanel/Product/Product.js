@@ -364,7 +364,7 @@ useEffect(()=>{
             >
               Add Products
             </button>
-            {showProductForm && <ProductForm onClose={handleCloseProductForm} store={store} onProductAdded={handleAddProduct} />}
+            {showProductForm && <ProductForm onClose={handleCloseProductForm} store={store} onProductAdded={handleAddProduct}/>}
           </div>
           
         </div>

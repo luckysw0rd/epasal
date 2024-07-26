@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
-import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as necessary
+import { useStore } from "../../Theme/ThemeContext"; // Adjust the path as necessary
 import { useImage } from "../../Hooks/useImage";
 import { Link } from "react-router-dom";
-const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName }) => {
-  const { store, setStore } = useStore();
+const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName,store,setStore }) => {
   const { color, secondaryBannerText, thirdBannerText } = store;
   const { uploadImage } = useImage();
   const navigate = useNavigate()

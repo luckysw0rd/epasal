@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AddCategoryModal from "../../Theme/Theme1/AddCategoryModal";
 
 
-const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, removeSubCategory,isEdit }) => {
+const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, removeSubCategory,isEdit ,addSubCategory}) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -125,7 +125,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                         </select>
                     </div>
                 </div>
-                {showModal && <AddCategoryModal onClose={handleCloseModal} />}
+                {showModal && <AddCategoryModal onClose={handleCloseModal} addSubCategory={addSubCategory}/>}
             </div>
         </div>
     );

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useDropzone } from "react-dropzone";
-import { useStore } from "../../Theme/Theme1/T1Context"; // Adjust the path as necessary
+import { useStore } from "../../Theme/ThemeContext"; // Adjust the path as necessary
 import { Link } from 'react-router-dom';
 
-const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage }) => {
-  const { store, setStore } = useStore();
+const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage,store,setStore }) => {
   const { color, offerBannerText } = store;
   const [bgImage, setBgImage] = useState(store.offerBanner.offerBannerUrl);
 

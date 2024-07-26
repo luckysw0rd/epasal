@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Import FaTimes for the remove icon
-import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
     // Component state
-    const { addToCart } = useStore();
     const [selectedStyle, setSelectedStyle] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0)
     const [addedToCart, setAddedToCart] = useState(false);

@@ -1,30 +1,20 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // Import useParams
-import { BrowserRouter } from "react-router-dom"; // Import BrowserRouter
-import useFetch from "../../Hooks/useFetch";
-import { AuthContext } from "../../Hooks/AuthContext";
-import controller from "../../Assets/controller.png";
-import offerBannerImg from '../../Assets/offerbanner.webp'
-import secondaryBannerImg from '../../Assets/ImageGroup.png'
-import herobanner from '../../Assets/firstbanner.webp'
-import Shirt from '../../Assets/shirt.webp'
-import fiveHundred from '../../Assets/ratio/500.png';
-import sevenForty from '../../Assets/ratio/740.png';
-import oneFourty from '../../Assets/ratio/140.png';
-import twoFiftySix from '../../Assets/ratio/256.png';
-import sixTeenHundred from '../../Assets/ratio/1600.png';
-import graybg from '../../Assets/graybg.webp';
-import grayjacket from '../../Assets/grayjacket.png';
-import grayjacket2 from '../../Assets/grayjacket2.webp';
-import grayscarf from '../../Assets/grayscarf.png';
+import useFetch from "../Hooks/useFetch";
+import { AuthContext } from "../Hooks/AuthContext";
 
-import grayshoes from '../../Assets/grayshoes.png';
+import graybg from '../Assets/graybg.webp';
+import grayjacket from '../Assets/grayjacket.png';
+import grayjacket2 from '../Assets/grayjacket2.webp';
+import grayscarf from '../Assets/grayscarf.png';
+
+import grayshoes from '../Assets/grayshoes.png';
 
 
-import grayhat from '../../Assets/grayhat.webp'
-import b1 from '../../Assets/Banners/b1.webp';
-import b2 from '../../Assets/Banners/b2.webp';
-import b3 from '../../Assets/Banners/b3.webp';
+import grayhat from '../Assets/grayhat.webp'
+import b1 from '../Assets/Banners/b1.webp';
+import b2 from '../Assets/Banners/b2.webp';
+import b3 from '../Assets/Banners/b3.webp';
 import { toast } from "react-toastify";
 
 const StoreContext = createContext();

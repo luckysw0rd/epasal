@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { useStore } from '../../Theme/Theme1/T1Context';
+import { useStore } from '../../Theme/ThemeContext';
 import useFetch from '../../Hooks/useFetch';
 import { AuthContext } from '../../Hooks/AuthContext';
 import PaymentConfirmation from './PaymentConfirmation';
