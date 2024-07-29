@@ -22,11 +22,11 @@ const AdminDashboard = () => {
   const { storeName } = useParams();
   const [role, setRole] = useState(null);
   const userData = localStorage.getItem('userData');
- 
+
   let token = auth.token || JSON.parse(userData)?.token;
   const fetchbanau = async () => {
     try {
-    
+
       const responseData = await sendRequest(
         'banau/getbanau',
         'GET',
@@ -36,12 +36,12 @@ const AdminDashboard = () => {
           Authorization: 'Bearer ' + token,
         }
       );
-     // Handle response data as needed
+      // Handle response data as needed
 
       setBanau(responseData.banau);
     } catch (error) {
       // Handle error if needed
-     
+
       toast.error('Access denied')
       return navigate('/');
     }
@@ -75,10 +75,10 @@ const AdminDashboard = () => {
         return <TransactionLogs />;
       case 'Employee':
         return <Employee banau={store} />;
-        
+
 
       // if (role === 'Admin' || role === 'Owner') {
-    
+
       //   return <Employee store={store} />;
       // } else {
       //   return <Home data={store} />;
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
           <div className=""> {/* Apply overflow styling here */}
             <SiderBarProvider className="overflow-hidden">
               <DashboardWrapper setDashboardState={setDashboardState} store={banau}>
-                <div className="text-black p-2 py-4 mt-8 overflow-hidden">
+                <div className="text-black py-2 px-4 overflow-hidden">
                   {renderDashboardContent(banau)}
                 </div>
               </DashboardWrapper>
