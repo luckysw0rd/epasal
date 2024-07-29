@@ -197,8 +197,8 @@ const Home = ({ data }) => {
             </div>
           </div>
           {/* Graph Section  */}
-          <div className='-mx-6 sm:mx-0 md:col-span-2 flex items-center justify-center'>
-            <div className="bg-white rounded-lg">
+          <div className='-mx-6 sm:mx-0 md:col-span-2 flex items-center w-full'>
+            <div className="bg-white rounded-lg w-full">
               <SalesGraph storeId={data._id} />
             </div>
           </div>
