@@ -347,7 +347,7 @@ const Stores = () => {
         <div className="min-h-screen p-4">
             <h1 className="text-3xl font-bold mb-4 text-start text-md">Stores</h1>
             <div className="mb-4 flex gap-2 flex-col overflow-scroll">
-                <div className="flex w-full gap-3">
+                <div className="flex w-full gap-2 md:gap-3">
                     <input
                         className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                         type="text"
@@ -359,7 +359,7 @@ const Stores = () => {
                         }}
                     />
                     <button
-                        className="px-10 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                        className="px-4 md:px-10 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                         onClick={fetchStores}
                     >
                         Search
@@ -367,7 +367,7 @@ const Stores = () => {
                     {!isFilterVisible && (
                         <button
                             onClick={toggleFilterVisibility}
-                            className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                            className="px-3 md:px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                         >
                             <FaFilter size={15} />
                         </button>
@@ -375,7 +375,7 @@ const Stores = () => {
 
                     {isFilterVisible && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-5 py-0 z-50">
-                            <div className="bg-white w-[60%] p-8 py-10 rounded-lg shadow-xl relative">
+                            <div className="bg-white w-full md:w-[60%] p-8 py-10 rounded-lg shadow-xl relative">
                                 <button
                                     onClick={toggleFilterVisibility}
                                     className="absolute top-3 right-3 p-2 rounded-full bg-red-500 text-white"
@@ -408,8 +408,33 @@ const Stores = () => {
                                         />
                                     </div>
                                 </div>
+
+                                <label className="block mb-8">
+                                    <div className="mb-8 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
+                                        <div className="flex items-center">
+                                            <select
+                                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                                value={filterType}
+                                                onChange={(e) => setFilterType(e.target.value)}
+                                            >
+                                                <option value="pendingAmount">Pending Amount</option>
+                                                <option value="dueAmount">Due Amount</option>
+                                            </select>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <select
+                                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                                value={orderType}
+                                                onChange={(e) => setOrderType(e.target.value)}
+                                            >
+                                                <option value="dsc">Descending</option>
+                                                <option value="asc">Ascending</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </label>
                                 <div className="mb-8">
-                                    <label className='font-semibold'>Price range:</label>
+                                    <label className='font-semibold'>Price range on the basis of {filterType === 'pendingAmount' ? "Pending amount" : "Due Amount"}:</label>
                                     <div className='mt-2 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll'>
                                         {filterType === 'pendingAmount' ? (
                                             <>
@@ -458,30 +483,7 @@ const Stores = () => {
                                         )}
                                     </div>
                                 </div>
-                                <label className="block mb-8">
-                                    <div className="mb-8 flex gap-2 flex-col sm:flex-col md:flex-row lg:flex-row overflow-scroll">
-                                        <div className="flex items-center">
-                                            <select
-                                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                                                value={filterType}
-                                                onChange={(e) => setFilterType(e.target.value)}
-                                            >
-                                                <option value="pendingAmount">Pending Amount</option>
-                                                <option value="dueAmount">Due Amount</option>
-                                            </select>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <select
-                                                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                                                value={orderType}
-                                                onChange={(e) => setOrderType(e.target.value)}
-                                            >
-                                                <option value="dsc">Descending</option>
-                                                <option value="asc">Ascending</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </label>
+
                                 <button
                                     className="px-10 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                                     onClick={fetchStores}
@@ -494,10 +496,10 @@ const Stores = () => {
                     {/* ENDS HERE  */}
 
                 </div>
-                <div className="py-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto h-64 md:h-96 lg:h-full flex-1 w-full md:w-3/4 lg:w-full">
+                <div className="py-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto h-64 md:h-96 lg:h-full flex-1 w-full">
                     {storesArr.length > 0 ? (
                         storesArr.map((store) => (
-                            <div key={store._id} className="bg-white p-6 text-sm rounded-xl shadow-lg transform transition duration-500 hover:scale-105 w-full h-64 md:h-96 lg:h-96 overflow-auto">
+                            <div key={store._id} className="bg-white p-6 text-sm rounded-xl shadow-lg transform transition duration-500 hover:scale-105 w-full h-full overflow-auto">
                                 <div className="flex justify-between items-center mb-8">
                                     <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-2 py-1 rounded">
                                         {store.name.toUpperCase()}
@@ -509,7 +511,7 @@ const Stores = () => {
                                         <FaEdit />
                                     </button>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-5">
+                                <div className="grid grid-cols-2 md:grid-cols-2 gap-1 mt-5">
                                     <div className="flex items-center text-gray-700">
                                         <FaMapMarkerAlt className="mr-2 text-red-500" />
                                         <span>{store.location}</span>
@@ -524,11 +526,11 @@ const Stores = () => {
                                     </div>
                                     <div className="flex items-center text-gray-700">
                                         <FaDollarSign className="mr-2 text-green-500" />
-                                        <span>Amount From Store: <span className="text-green-500">{store.dueAmount}</span></span>
+                                        <span>Due Amount: <span className="text-green-500">{store.dueAmount}</span></span>
                                     </div>
                                     <div className="flex items-center text-gray-700">
                                         <FaDollarSign className="mr-2 text-red-500" />
-                                        <span>Amount To Store: <span className="text-red-500">{store.pendingAmount}</span></span>
+                                        <span>Pending Amount: <span className="text-red-500">{store.pendingAmount}</span></span>
                                     </div>
                                     <div className="flex items-center text-gray-700">
                                         {store.subscriptionStatus === 'Gold' && <IoMedalSharp className='text-yellow-400 mr-2' />}
@@ -554,10 +556,10 @@ const Stores = () => {
                                         <u className='text-blue-600 cursor-pointer'>{store.email}</u>
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-5">
+                                <div className="grid grid-cols-2 md:grid-cols-2 gap-2 md:gap-1 mt-5">
                                     <div>
                                         <button
-                                            className="flex items-center text-sm border border-blue-500 text-black px-2 py-1 rounded hover:bg-blue-700 w-full"
+                                            className="flex items-center text-sm border border-blue-500 text-black px-2 py-1 rounded hover:bg-blue-700 hover:text-white w-full"
                                             onClick={() => console.log({ store })}
                                         >
                                             <FaEye className="mr-2" />
@@ -566,7 +568,7 @@ const Stores = () => {
                                     </div>
                                     <div>
                                         <button
-                                            className="flex items-center text-sm border border-green-500 text-black px-2 py-1 rounded hover:bg-green-700 w-full"
+                                            className="flex items-center text-sm border border-green-500 text-black px-2 py-1 rounded hover:bg-green-700 hover:text-white w-full"
                                             onClick={() => {
 
                                                 openPaymentModal(
@@ -586,7 +588,7 @@ const Stores = () => {
                                     </div>
                                     <div>
                                         <button
-                                            className="flex items-center text-sm border border-indigo-500 text-black px-2 py-1 rounded hover:bg-indigo-700 w-full"
+                                            className="flex items-center text-sm border border-indigo-500 text-black px-2 py-1 rounded hover:bg-indigo-700 hover:text-white w-full"
                                             onClick={() => {
 
                                                 openPaymentModal(
@@ -606,7 +608,7 @@ const Stores = () => {
                                     </div>
                                     <div>
                                         <button
-                                            className="flex items-center text-sm border border-red-500 text-black px-2 py-1 rounded hover:bg-red-700 w-full"
+                                            className="flex items-center text-sm border-2 border-red-500 text-black px-2 py-1 rounded hover:bg-red-600 hover:text-white w-full"
                                             onClick={() => {
 
                                                 openPaymentModal(
@@ -657,7 +659,7 @@ const Stores = () => {
                                         </button>
                                     ) : (
                                         <button
-                                            className="flex items-center text-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full md:w-auto"
+                                            className="flex items-center text-sm bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 w-full md:w-auto"
                                             onClick={(e) => handleDisable(store)}
                                         >
                                             <FaToggleOff className="mr-2" />
