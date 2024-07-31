@@ -27,7 +27,7 @@ const fonts = [
 // Handle file import
 
 
-const Editor = () => {
+const Editor = ({ handleDesignClick, handleContentClick }) => {
   const { store, setStore } = useStore();
   const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
@@ -1402,13 +1402,38 @@ const Editor = () => {
             </div>
           </div>
 
-          <div className='flex justify-between  font-Poppins  mt-24 font-semibold text-[#6A6A6A] border-t-2  pt-4'>
-            <button className={`flex-1   text-lg text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content </button>
-            <button className={`flex-1  text-lg text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
-            {store.isEdit &&
-              <button className={`flex-1  text-lg text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
-            }
-          </div>
+          <div className='flex justify-between font-Poppins mt-24 font-semibold text-[#6A6A6A] border-t-2 pt-4'>
+          <button
+        id="contentButtonId"
+        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 1 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
+        onClick={e => {
+          e.preventDefault();
+          setOpenType(1);
+          handleContentClick();
+        }}
+      >
+        Content
+      </button>
+      <button
+        id="designButtonId"
+        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 2 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
+        onClick={e => {
+          e.preventDefault();
+          setOpenType(2);
+          handleDesignClick();
+        }}
+      >
+        Design
+      </button>
+  {store.isEdit && (
+    <button
+      className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 3 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
+      onClick={e => { e.preventDefault(); setOpenType(3); }}
+    >
+      Skin
+    </button>
+  )}
+</div>
 
           {openType === 1 && (
             <motion.div

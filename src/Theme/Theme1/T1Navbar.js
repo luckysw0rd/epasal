@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from './T1Context';
 import Navbar from "../../Components/Navbar/Navbar";
-const EStoreNavbar = () => {
+const EStoreNavbar = ({highlightedButtonId, onClick}) => {
     const { store, setStore, addCategory, removeCategory, deleteFromCart } = useStore();
     const { color, previewMode, cartCount, cart, isEdit, fetchedFromBackend } = store;
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,16 +23,17 @@ const EStoreNavbar = () => {
         setIsSidebarOpen,
         setSearchInput,
         setLogoFile,
-        cart,
+        cart, 
         cartCount,
         deleteFromCart,
         isEdit,
-        fetchedFromBackend
+        fetchedFromBackend,
     };
     return (
         <Navbar
             navbarProps={navbarProps}
             navbarType="Navbar1" // Change this to "Navbar2" or "Navbar3" to switch navbar types
+            onClick={onClick}
         />
     );
 };

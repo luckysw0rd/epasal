@@ -3,11 +3,11 @@ import Navbar1 from './Navbar1';
 // import Navbar2 from './Navbar2';
 // import Navbar3 from './Navbar3';
 
-const Navbar = ({ navbarProps, navbarType }) => {
+const Navbar = ({ navbarProps, navbarType,onClick }) => {
     const renderNavbar = () => {
         switch (navbarType) {
             case 'Navbar1':
-                return <Navbar1 {...navbarProps} />;
+                return <Navbar1 {...navbarProps} onClick={onClick} />;
             // case 'Navbar2':
             //     return <Navbar2 {...navbarProps} />;
             // case 'Navbar3':
@@ -19,4 +19,5 @@ const Navbar = ({ navbarProps, navbarType }) => {
     return <>{renderNavbar()}</>;
 };
 
-export default Navbar;
+export default Navbar; 
+
