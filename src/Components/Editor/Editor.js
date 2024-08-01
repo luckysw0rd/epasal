@@ -27,7 +27,7 @@ const fonts = [
 // Handle file import
 
 
-const Editor = ({ handleDesignClick, handleContentClick }) => {
+const Editor = ({ handleDesignClick, handleContentClick, currentStep }) => {
   const { store, setStore } = useStore();
   const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
@@ -1378,6 +1378,18 @@ const Editor = ({ handleDesignClick, handleContentClick }) => {
     setStore(prevState => ({ ...prevState, fontFamily: selectedFont }));
   };
 
+  const blinkingBorderStyle = {
+    animation: 'blink 1s linear infinite',
+  };
+
+  const keyframes = `
+    @keyframes blink {
+      0% { border-color: red; }
+      50% { border-color: transparent; }
+      100% { border-color: red; }
+    }
+  `;
+
   return (
     <AnimatePresence>
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
@@ -1403,10 +1415,14 @@ const Editor = ({ handleDesignClick, handleContentClick }) => {
           </div>
 
           <div className='flex justify-between font-Poppins mt-24 font-semibold text-[#6A6A6A] border-t-2 pt-4'>
-          <button
+          <style>{keyframes}</style>
+      <button
         id="contentButtonId"
-        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 1 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
-        onClick={e => {
+        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${
+          openType === 1 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
+        }`}
+        style={currentStep === 2 ? blinkingBorderStyle : {}}
+        onClick={(e) => {
           e.preventDefault();
           setOpenType(1);
           handleContentClick();
@@ -1416,8 +1432,11 @@ const Editor = ({ handleDesignClick, handleContentClick }) => {
       </button>
       <button
         id="designButtonId"
-        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 2 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
-        onClick={e => {
+        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${
+          openType === 2 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
+        }`}
+        style={currentStep === 1 ? blinkingBorderStyle : {}}
+        onClick={(e) => {
           e.preventDefault();
           setOpenType(2);
           handleDesignClick();

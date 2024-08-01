@@ -25,7 +25,7 @@ const EStore = ({ Passedstore }) => {
   const [tasks, setTasks] = useState([
     { id: 2, component: <T1Navbar /> },
     { id: 3, component: <AboutPage /> },
-    { id: 4, component: null }, // We'll update this with the Editor component later
+    { id: 4, component: null },
     { id: 5, component: <T1SubProduct /> },
     { id: 6, component: <T1ThirdBanner /> },
     { id: 7, component: <T1NewProducts /> },
@@ -38,6 +38,8 @@ const EStore = ({ Passedstore }) => {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isOverlayActive, setIsOverlayActive] = useState(true);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [instructionsCompleted, setInstructionsCompleted] = useState(false);
 
   const addTask = (component) => {
     setTasks((tasks) => [...tasks, { id: tasks.length + 1, component }]);
@@ -78,19 +80,41 @@ const EStore = ({ Passedstore }) => {
     setShowColorPicker(!showColorPicker);
   };
 
+  useEffect(() => {
+    // Check if instructions have been completed
+    const completedInstructions = localStorage.getItem('instructionsCompleted');
+    if (completedInstructions === 'true') {
+      setInstructionsCompleted(true);
+      setIsOverlayActive(false);
+    }
+
+    // Check if the current path includes "/buildstore"
+    setShowOverlay(window.location.pathname.includes("/buildstore"));
+  }, []);
+
+  useEffect(() => {
+    // Update local storage whenever instructionsCompleted changes
+    localStorage.setItem('instructionsCompleted', instructionsCompleted.toString());
+  }, [instructionsCompleted]);
+
   useEffect(() => {}, [tasks]);
 
   const handleOverlayClick = () => {
-    if (currentStep < 2) {
+    if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
-      setIsOverlayActive(false);
+      completeInstructions();
     }
   };
 
   const handleSkip = () => {
+    completeInstructions();
+  };
+
+  const completeInstructions = () => {
     setCurrentStep(tasks.length);
     setIsOverlayActive(false);
+    setInstructionsCompleted(true);
   };
 
   const handleDesignClick = () => {
@@ -100,7 +124,7 @@ const EStore = ({ Passedstore }) => {
 
   const handleContentClick = () => {
     setCurrentStep(3);
-    setIsOverlayActive(false);
+    completeInstructions();
   };
 
   useEffect(() => {
@@ -140,28 +164,41 @@ const EStore = ({ Passedstore }) => {
     };
   }, []);
 
-  // Update the Editor component in the tasks state
   useEffect(() => {
     setTasks(prevTasks => {
       return prevTasks.map(task => {
         if (task.id === 4) {
-          return { ...task, component: <Editor handleDesignClick={handleDesignClick} handleContentClick={handleContentClick} /> };
+          return { 
+            ...task, 
+            component: <Editor 
+              handleDesignClick={handleDesignClick} 
+              handleContentClick={handleContentClick}
+              currentStep={currentStep}
+            /> 
+          };
         }
         return task;
       });
     });
-  }, []);
+  }, [currentStep]);
 
   const renderOverlay = () => {
+    if (!showOverlay || instructionsCompleted) return null;
+
     if (currentStep === 0) {
       return (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mt-20"></div>
-          <div className="fixed inset-0 flex flex-col items-center justify-center mt-20 z-50 text-white text-xl">
-            <div>Click on the <strong>Preview Mode</strong> button to start building</div>
+          <div className="fixed inset-0 flex flex-col items-center justify-center mt-20 z-50 text-white text-2xl">
+            <div>
+              Click on the <strong className="text-blue-500">Preview Mode</strong> button to start building
+              <div className="text-lg mt-2">
+                This will open up the editor for your webpage where you can change almost everything about the webpage.
+              </div>
+            </div>
             <button
               onClick={handleSkip}
-              className="mt-4 px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
+              className="absolute bottom-4 left-4 px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
             >
               Skip
             </button>
@@ -172,11 +209,15 @@ const EStore = ({ Passedstore }) => {
       return (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mr-80"></div>
-          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-xl">
-            <div>Click on the <strong>Design</strong> button to start adding design to your page</div>
+          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-2xl">
+            <div>Click on the <strong className="text-red-500">Design</strong> button to start adding design to your page
+              <div className="text-lg mt-2">
+                In this section you can add the styling of your website like colours, and its looks.
+              </div>
+            </div>
             <button
               onClick={handleSkip}
-              className="mt-4 px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
+              className="absolute bottom-4 left-4 px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
             >
               Skip
             </button>
@@ -187,11 +228,15 @@ const EStore = ({ Passedstore }) => {
       return (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mr-80"></div>
-          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-xl">
-            <div>Click on the <strong>Content</strong> button to add content to your page</div>
+          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-2xl">
+            <div>Click on the <strong className="text-green-500">Content</strong> button to add content to your page
+              <div className="text-lg mt-2">
+                In this section you add all the required data to your websites and relevant images of your website.
+              </div>
+            </div>
             <button
               onClick={handleSkip}
-              className="mt-4 px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
+              className="absolute bottom-4 left-4 px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
             >
               Skip
             </button>
@@ -213,7 +258,7 @@ const EStore = ({ Passedstore }) => {
     return (
       store && (
         <div className="h-full overflow-auto" style={{ backgroundColor: store.color.backgroundThemeColor }}>
-          {isOverlayActive && renderOverlay()}
+          {isOverlayActive && !instructionsCompleted && renderOverlay()}
           <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
             <SortableContext disabled={true} items={tasks} strategy={horizontalListSortingStrategy}>
               {tasks.map((item, index) => (
