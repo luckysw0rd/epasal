@@ -9,10 +9,10 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import Tooltip from '../../../Theme/Theme1/SubProduct/Tooltip';
 import Loader from '../../../Components/Loading/Loading';
-export default function ProductForm({ onClose,store,onProductAdded}) {
+export default function ProductForm({ onClose, store, onProductAdded }) {
     const storeContext = useStore();
-  const setStore = storeContext?.setStore;
-  /* const store = storeContext?.store; */
+    const setStore = storeContext?.setStore;
+    /* const store = storeContext?.store; */
 
     const { sendRequest, isLoading } = useFetch()
     const { uploadImage } = useImage()
@@ -48,7 +48,7 @@ export default function ProductForm({ onClose,store,onProductAdded}) {
 
     const handleCategoryChange = (e) => {
         const { value } = e.target;
-       
+
         // const selectedCategories = Array.from(value)
         //     .filter(option => option.selected)
         //     .map(option => option.value);
@@ -139,7 +139,7 @@ export default function ProductForm({ onClose,store,onProductAdded}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
+
 
         const updatedVariants = formState.variant.map((variant, variantIndex) => {
             const updatedOptions = variant.options.map((option, optionIndex) => ({
@@ -163,7 +163,6 @@ export default function ProductForm({ onClose,store,onProductAdded}) {
             try {
                 setTempLoading(true);
                 const productImg = await uploadImage(formState?.image?.imageUrl);
-
                 setFormState(prev => ({
                     ...prev,
                     image: {
@@ -220,55 +219,55 @@ export default function ProductForm({ onClose,store,onProductAdded}) {
     // Function to upload data
     const uploadData = async () => {
         try {
-          const response = await sendRequest(
-            'product/addProduct',
-            'POST',
-            JSON.stringify({ formState, storeID: store._id }),
-            {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + auth.token
+            const response = await sendRequest(
+                'product/addProduct',
+                'POST',
+                JSON.stringify({ formState, storeID: store._id }),
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.token
+                }
+            );
+            toast.success(response.message);
+
+            if (typeof setStore === 'function') {
+                const newProduct = {
+                    ...formState,
+                    id: Math.random().toString(36).substr(2, 9),
+                };
+                setStore(prevStore => ({
+                    ...prevStore,
+                    products: [...prevStore.products, newProduct]
+                }));
+            } else {
+                console.error('setStore is not a function:', setStore);
             }
-          );
-          toast.success(response.message);
-      
-          if (typeof setStore === 'function') {
-            const newProduct = {
-              ...formState,
-              id: Math.random().toString(36).substr(2, 9),
-            };
-            setStore(prevStore => ({
-              ...prevStore,
-              products: [...prevStore.products, newProduct]
-            }));
-          } else {
-            console.error('setStore is not a function:', setStore);
-          }
-      
-          onClose();
-          setOnEditDataUpload(false);
+
+            onClose();
+            setOnEditDataUpload(false);
         } catch (err) {
-         /*  toast.error(err.message); */
+            /*  toast.error(err.message); */
         }
-      };
+    };
 
 
-      useEffect(() => {
+    useEffect(() => {
         if (onEditDataUpload) {
-          uploadData();
-          if (typeof setStore === 'function') {
-            const newProduct = {
-              ...formState,
-              id: Math.random().toString(36).substr(2, 9),
-            };
-            setStore(prevStore => ({
-              ...prevStore,
-              products: [...prevStore.products, newProduct]
-            }));
-          }
-          onClose();
-          setOnEditDataUpload(false);
+            uploadData();
+            if (typeof setStore === 'function') {
+                const newProduct = {
+                    ...formState,
+                    id: Math.random().toString(36).substr(2, 9),
+                };
+                setStore(prevStore => ({
+                    ...prevStore,
+                    products: [...prevStore.products, newProduct]
+                }));
+            }
+            onClose();
+            setOnEditDataUpload(false);
         }
-      }, [onEditDataUpload, setStore, formState]);
+    }, [onEditDataUpload]);
 
     if (isLoading || tempLoading) {
         return <Loader></Loader>
@@ -314,20 +313,20 @@ export default function ProductForm({ onClose,store,onProductAdded}) {
                                         Category
                                     </label>
                                     {store && store.subCategories ? (
-  <select
-    id="subcategory"
-    name="category"
-    value={formState.subcategories}
-    onChange={handleCategoryChange}
-    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
-  >
-    {store.subCategories.map(subcategory => (
-      <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
-    ))}
-  </select>
-) : (
-  <p>Loading categories...</p>
-)}
+                                        <select
+                                            id="subcategory"
+                                            name="category"
+                                            value={formState.subcategories}
+                                            onChange={handleCategoryChange}
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline no-arrows"
+                                        >
+                                            {store.subCategories.map(subcategory => (
+                                                <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+                                            ))}
+                                        </select>
+                                    ) : (
+                                        <p>Loading categories...</p>
+                                    )}
                                 </div>
                                 <div className=''>
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
@@ -615,7 +614,7 @@ export default function ProductForm({ onClose,store,onProductAdded}) {
                                         Add product
                                     </button>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
