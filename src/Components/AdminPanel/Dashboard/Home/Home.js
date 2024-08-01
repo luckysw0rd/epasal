@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { TbReportAnalytics } from "react-icons/tb";
 import { RiUserFollowLine } from "react-icons/ri";
@@ -51,7 +51,7 @@ const Home = ({ data }) => {
     }
 
   };
-
+  
   const esewaCall = (formData) => {
     
     var path = process.env.REACT_APP_ESEWA_URL;
@@ -178,7 +178,7 @@ const Home = ({ data }) => {
               </div>
               <div className="p-4 flex items-center justify-between">
                 <div className='flex flex-col gap-5'>
-                  <div className="text-2xl font-semibold">Rs. {data?.pendingAmount || 0}</div>
+                  <div className="text-2xl font-semibold">Rs. {data?.pendingAmount.toFixed(2) || 0}</div>
                   <div className="text-sm text-[#888888]">Amount will be transfered to you in 3 to 4 business days </div>              </div>
               </div>
             </div>

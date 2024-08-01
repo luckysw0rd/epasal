@@ -60,10 +60,11 @@ const SalesGraph = ({ storeId }) => {
     };
 
     const periodOptions = [
-        { value: 'day', label: 'Daily', dataKey: 'hour' },
-        { value: 'week', label: 'Weekly', dataKey: 'day' },
-        { value: 'month', label: 'Monthly', dataKey: 'week' },
-        { value: 'year', label: 'Yearly', dataKey: 'month' },
+        {value:'hour',label:'Hourly',dataKey:'hour'},
+        { value: 'day', label: 'Daily', dataKey: 'day' },
+        { value: 'week', label: 'Weekly', dataKey: 'week' },
+        { value: 'month', label: 'Monthly', dataKey: 'month' },
+        { value: 'year', label: 'Yearly', dataKey: 'year' },
     ];
 
     const currentPeriod = periodOptions.find(option => option.value === selectedPeriod);
@@ -102,7 +103,7 @@ const SalesGraph = ({ storeId }) => {
                     </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="periodKey" angle={-20} />
+                    <XAxis dataKey="periodKey" />
                     <YAxis />
                     <Tooltip />
                     <Area type="monotone" dataKey="totalRevenue" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" strokeWidth={2} />
