@@ -131,6 +131,8 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                     </div>
                 );
             // Add more cases for other product list types
+            
+       
             default:
                 return (<div className='space-y-10 py-20 flex items-center  flex-col' style={{ backgroundColor: productColor.backgroundColor }}>
                     <h1 style={{ color: productColor.headerColor }} className="text-3xl font-semibold">Featured Products</h1>
