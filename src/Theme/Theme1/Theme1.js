@@ -184,12 +184,12 @@ const EStore = ({ Passedstore }) => {
 
   const renderOverlay = () => {
     if (!showOverlay || instructionsCompleted) return null;
-
+  
     if (currentStep === 0) {
       return (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mt-20"></div>
-          <div className="fixed inset-0 flex flex-col items-center justify-center mt-20 z-50 text-white text-2xl">
+          <div className="fixed inset-0 flex flex-col items-center justify-center mt-20 z-50 text-white text-xl px-4 text-center sm:text-left">
             <div>
               Click on the <strong className="text-blue-500">Preview Mode</strong> button to start building
               <div className="text-lg mt-2">
@@ -209,10 +209,11 @@ const EStore = ({ Passedstore }) => {
       return (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mr-80"></div>
-          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-2xl">
-            <div>Click on the <strong className="text-red-500">Design</strong> button to start adding design to your page
-              <div className="text-lg mt-2">
-                In this section you can add the styling of your website like colours, and its looks.
+          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-xl px-4 text-center sm:text-left">
+            <div>
+              Click on the <strong>Design</strong> button to start adding design to your page
+              <div className="hidden sm:block text-lg mt-2">
+                This is where you add the design to your page.
               </div>
             </div>
             <button
@@ -228,10 +229,11 @@ const EStore = ({ Passedstore }) => {
       return (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mr-80"></div>
-          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-2xl">
-            <div>Click on the <strong className="text-green-500">Content</strong> button to add content to your page
-              <div className="text-lg mt-2">
-                In this section you add all the required data to your websites and relevant images of your website.
+          <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-xl px-4 text-center sm:text-left">
+            <div>
+              Click on the <strong>Content</strong> button to add content to your page
+              <div className="hidden sm:block text-lg mt-2">
+                This is where you add the content to your page.
               </div>
             </div>
             <button
@@ -247,6 +249,8 @@ const EStore = ({ Passedstore }) => {
       return null;
     }
   };
+  
+    
 
   if (window.location.pathname.includes("/store/") && !store.fetchedFromBackend) {
     return (
