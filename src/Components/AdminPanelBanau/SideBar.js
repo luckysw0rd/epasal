@@ -25,7 +25,7 @@ const SideBar = ({ setDashboardState }) => {
     { name: "Stores", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Logs", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Employee", link: "/adminpanelbanau", icon: FaUserAlt },
-    { name: "Analytics", link: "/adminpanelbanau", icon: IoAnalytics  },
+    { name: "Analytics", link: "/adminpanelbanau", icon: IoAnalytics },
     // { name: "Order", link: "/adminpanel", icon: FaClipboardList },
     // { name: "Product", link: "/adminpanel", icon: FaBox },
     // { name: "Edit Store", link: "/adminpanel", icon: MdEdit },
@@ -39,7 +39,8 @@ const SideBar = ({ setDashboardState }) => {
           h-full
           w-[250px] 
           bg-white
-          relative
+          fixed
+          lg:relative
           top-0 
           left-0 
           z-50 
@@ -59,7 +60,7 @@ const SideBar = ({ setDashboardState }) => {
               {menus.map((menu, i) => (
                 <Link
                   key={i}
-                  onClick={()=>{
+                  onClick={() => {
                     setDashboardState(menu.name)
                   }}
                   className={`flex w-40 items-center ml-12 text-lg gap-4 font-medium p-3 hover:bg-orange-100 rounded-md transition-colors duration-200 ${menu.margin ? "mt-5" : ""}`}
