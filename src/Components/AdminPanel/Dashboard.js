@@ -20,7 +20,8 @@ const Dashboard = () => {
   let location = useLocation();
   let searchParams = new URLSearchParams(location.search);
   let page = searchParams.get('page');
-  console.log(page,"page")
+  const date=new Date();
+  console.log(date,"page")
   const [dashboardState, setDashboardState] = useState(page ||'General');
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [store, setStore] = useState(null); // Initialize store as null
@@ -89,7 +90,6 @@ const Dashboard = () => {
 
 
   }, []);
-
 
   const renderDashboardContent = (store) => {
     switch (dashboardState) {

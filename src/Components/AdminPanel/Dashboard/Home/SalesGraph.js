@@ -1,4 +1,4 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import React, { useContext, useEffect, useState } from 'react';
 import useFetch from '../../../../Hooks/useFetch';
 import { AuthContext } from '../../../../Hooks/AuthContext';
@@ -40,56 +40,44 @@ const SalesGraph = ({ storeId }) => {
                     }
                 );
                 // Ensure data is formatted correctly
-                const formattedData = responseData.orders.map(order => ({
-                    totalRevenue: order.totalRevenue,
-                    periodKey: selectedPeriod === 'day' ? `Hour ${order._id.hour}` :
-                                selectedPeriod === 'week' ? `Day ${order._id.dayOfWeek}` :
-                                selectedPeriod === 'month' ? `Week ${order._id.week}` :
-                                `Month ${order._id.month}`,
-                }));
-                setData(formattedData);
+                // const formattedData = responseData.orders.map(order => ({
+                //     totalRevenue: order.totalRevenue,
+                //     periodKey: selectedPeriod === 'day' ? `Hour ${order._id?.hour}` :
+                //                 selectedPeriod === 'week' ? `Day ${order._id?.dayOfWeek}` :
+                //                 selectedPeriod === 'month' ? `Week ${order.periodKey}` :
+                //                 `Month ${order._id.month}`,
+                // }));
+                setData(responseData.orders);
             } catch (error) {
-               
+               console.error(error,"error in getting chart")
             }
         };
         fetchData();
     }, [storeId, selectedPeriod]);
-
+    useEffect(()=>{console.log(data,"data")},[data])
     const handleChange = (event) => {
         setSelectedPeriod(event.target.value);
     };
 
     const periodOptions = [
-        { value: 'day', label: 'Daily', dataKey: 'hour' },
-        { value: 'week', label: 'Weekly', dataKey: 'day' },
-        { value: 'month', label: 'Monthly', dataKey: 'week' },
-        { value: 'year', label: 'Yearly', dataKey: 'month' },
+        {value:'hour',label:'Hourly',dataKey:'hour'},
+        { value: 'day', label: 'Daily', dataKey: 'day' },
+        { value: 'week', label: 'Weekly', dataKey: 'week' },
+        { value: 'month', label: 'Monthly', dataKey: 'month' },
+        { value: 'year', label: 'Yearly', dataKey: 'year' },
     ];
 
     const currentPeriod = periodOptions.find(option => option.value === selectedPeriod);
 
     return (
         <div className=''>
-            {/* <div className="flex px-6 pb-6 items-center justify-between">
+            <div className="flex px-6 pb-6 items-center justify-between">
                 <h3 className="text-lg font-semibold text-[#888888] sm:ml-10">Sales Overview</h3>
-                <div className='flex gap-10'>
-
-                    <div className='hidden sm:flex items-center gap-5'>
-                        <div className='w-4 h-4 rounded-full bg-blue-400'></div>
-                        <h4 className="text-md font-semibold text-[#888888]">Earning</h4>
-                    </div>
-
-                    <div className='hidden sm:flex items-center gap-5'>
-                        <div className='w-4 h-4 rounded-full bg-green-400'></div>
-                        <h3 className="text-md font-semibold text-[#888888]">Profit</h3>
-                    </div>
-
-                </div>
                 <div>
+                    <p>Increase than Last {selectedPeriod}: { data?.length>1?data[1]?.totalRevenue-data[0]?.totalRevenue:0}</p>
                 </div>
-
                 {/* DROPDOWN  */}
-                {/* <select
+                <select
                     id="timePeriod"
                     value={selectedPeriod}
                     onChange={handleChange}
@@ -100,24 +88,30 @@ const SalesGraph = ({ storeId }) => {
                             {option.label}
                         </option>
                     ))}
-                </select> */}
+                </select> 
 
-            {/* </div>  */}
+            </div> 
 
-            {/* GRAPH  */}
-            {/* <ResponsiveContainer width="100%" height={chartDimensions.height}>
-                <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                    <Line type="monotone" dataKey="totalRevenue" stroke="#000000" strokeWidth={2} />
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+         
+            <div className='w-full'>
+            <ResponsiveContainer width="100%" height={chartDimensions.height}>
+                <AreaChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                    </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="periodKey" />
                     <YAxis />
                     <Tooltip />
-                    
-
-                </LineChart>
-                
-            </ResponsiveContainer> */}
-            <div className="flex mx-auto my-auto justify-center items-center text-xl lg:text-3xl font-bold">......MORE TO COME.........</div>
+                    <Area type="monotone" dataKey="totalRevenue" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" strokeWidth={2} />
+                </AreaChart>
+            </ResponsiveContainer>
+           
+            </div>
+            {/* <div className="flex mx-auto my-auto justify-center items-center text-xl lg:text-3xl font-bold">......MORE TO COME.........</div> */}
 
         </div>  
     );

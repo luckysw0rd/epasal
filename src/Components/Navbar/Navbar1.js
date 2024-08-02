@@ -22,7 +22,7 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
-    isEdit, fetchedFromBackend
+    isEdit, fetchedFromBackend,highlightedButtonId,onClick
 }) => {
 
     const [scrolling, setScrolling] = useState(false);
@@ -107,6 +107,11 @@ const Navbar1 = ({
         loadCartFromLocalStorage();
        
     }, [setStore]);
+    const handleButtonClick = () => {
+        if (onClick) {
+          onClick();
+        }
+      };
 
     // Save cart to localStorage whenever it changes
     useEffect(() => {
@@ -143,6 +148,7 @@ const Navbar1 = ({
         saveCartToLocalStorage(); // Invoke the function on mount and whenever store.cart changes
 
     }, [store.cart]);
+
 
 
     useEffect(() => {
@@ -416,10 +422,13 @@ const Navbar1 = ({
                 {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} store={store} setStore={setStore} />} {/* Conditionally render the CartDropdown */}
                 {(store.isEdit || !store.fetchedFromBackend) &&
                     <button
+                    id="navbarButtonId"
                         onClick={() => {
                             setStore(prev => ({ ...prev, previewMode: !store.previewMode }));
+                            handleButtonClick();
+                            
                         }}
-                        className={` bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 text-sm rounded transition duration-200  ${isAnimating ? 'animate-flashy-border border-2' : 'border-2 border-transparent hover:border-black'
+                        className={` bg-black ${highlightedButtonId === 'navbarButtonId' ? 'bg-yellow-300 border-2 border-red-500 animate-pulse z-50' : ''} hover:bg-white text-white hover:text-black font-bold py-2 px-4 text-sm rounded transition duration-200  ${isAnimating ? 'animate-flashy-border border-2' : 'border-2 border-transparent hover:border-black'
                             }`}
                     >
                         {store.previewMode ? 'Preview Mode' : 'Edit'}
