@@ -27,7 +27,7 @@ const fonts = [
 // Handle file import
 
 
-const Editor = ({ handleDesignClick, handleContentClick, currentStep }) => {
+const Editor = ({ handleDesignClick, handleContentClick, currentStep ,instructionsCompleted}) => {
   const { store, setStore } = useStore();
   const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
@@ -1421,7 +1421,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep }) => {
         className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${
           openType === 1 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
         }`}
-        style={currentStep === 2 ? blinkingBorderStyle : {}}
+        style={currentStep === 2 && !instructionsCompleted ? blinkingBorderStyle : {}}
         onClick={(e) => {
           e.preventDefault();
           setOpenType(1);
@@ -1435,7 +1435,8 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep }) => {
         className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${
           openType === 2 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
         }`}
-        style={currentStep === 1 ? blinkingBorderStyle : {}}
+        style={currentStep === 1 && !instructionsCompleted ? blinkingBorderStyle : {}}
+
         onClick={(e) => {
           e.preventDefault();
           setOpenType(2);

@@ -174,6 +174,7 @@ const EStore = ({ Passedstore }) => {
               handleDesignClick={handleDesignClick} 
               handleContentClick={handleContentClick}
               currentStep={currentStep}
+              instructionsCompleted={instructionsCompleted}
             /> 
           };
         }
