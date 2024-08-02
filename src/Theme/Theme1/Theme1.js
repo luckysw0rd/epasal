@@ -211,7 +211,7 @@ const EStore = ({ Passedstore }) => {
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mr-80"></div>
           <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-xl px-4 text-center sm:text-left">
             <div>
-              Click on the <strong>Design</strong> button to start adding design to your page
+              Click on the <strong className="text-green-500">Design</strong> button to start adding design to your page
               <div className="hidden sm:block text-lg mt-2">
                 This is where you add the design to your page.
               </div>
@@ -231,7 +231,7 @@ const EStore = ({ Passedstore }) => {
           <div className="fixed inset-0 bg-black bg-opacity-75 z-40 mr-80"></div>
           <div className="fixed inset-0 flex flex-col items-center justify-center mr-80 z-50 text-white text-xl px-4 text-center sm:text-left">
             <div>
-              Click on the <strong>Content</strong> button to add content to your page
+              Click on the <strong className="text-red-500">Content</strong> button to add content to your page
               <div className="hidden sm:block text-lg mt-2">
                 This is where you add the content to your page.
               </div>
