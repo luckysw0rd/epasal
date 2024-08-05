@@ -141,8 +141,11 @@ const SaveStoreButton = () => {
                 setStoreMade(true)
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
+                const storeName = encodeURIComponent(store.name.trim());
+                const url = `${process.env.REACT_APP_BASE_URL}/adminpanel/${storeName}`;
 
-                navigate('/')
+                console.log(url);
+                navigate(url);
             } else {
                 const responseData = await sendRequest(
                     `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
@@ -155,14 +158,16 @@ const SaveStoreButton = () => {
                 );
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
-                navigate('/')
+                const storeName = encodeURIComponent(store.name.trim());
+                const url = `${process.env.REACT_APP_BASE_URL}/adminpanel/${storeName}`;
+                console.log(url);
+                navigate(url);
             }
         } catch (error) {
             console.error('Error saving store data:', error);
-            // Handle response data as needed
-            if (error.message)
+            if (error.message && error.message.includes("Store Name Already Taken")) {
                 toast.error(error.message);
-
+            }
         }
     }
     const saveStore = async () => {
