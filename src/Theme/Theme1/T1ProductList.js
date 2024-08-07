@@ -3,7 +3,7 @@ import ProductList from '../../Components/ProductList/ProductList';
 import { useStore } from './T1Context';
 
 const T1ProductList = () => {
-    const { store, setStore, addToCart } = useStore();
+    const { store, setStore, addToCart,isVisitorAddToCart,setIsVisitorAddToCart } = useStore();
     const { previewMode, featuredProducts, products, isEdit, fetchedFromBackend } = store;
     const { productListColor } = store.color;
     const productColor = { ...productListColor };
@@ -19,7 +19,7 @@ const T1ProductList = () => {
         categoryType = 'default';
     }
 
-    const productListProps = { store, isEdit, productColor, products: featuredProductList, previewMode, setStore, addToCart, store, fetchedFromBackend };
+    const productListProps = { store, isEdit, productColor, products: featuredProductList, previewMode, setStore, addToCart, store, fetchedFromBackend,isVisitorAddToCart,setIsVisitorAddToCart };
 
 
 
