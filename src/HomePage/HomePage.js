@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Header/Navbar';
 import SearchPage from '../SearchPage/SearchPage';
@@ -18,8 +18,35 @@ import SkinSection from './SkinSelection';
 import SkinSection1 from './SkinSelection1';
 import SliderNavbar from './SliderNavbar';
 import StoreList from './StoreList'; // Import StoreList if it exists
+import { motion, useInView } from "framer-motion";
+
 
 function HomePage() {
+
+    const landingRef = useRef(null);
+    const dragDropSecRef = useRef(null);
+    const cardRef = useRef(null);
+    const themeRef = useRef(null);
+    const skinRef = useRef(null);
+    const footerRef = useRef(null);
+    const subscriptionPlanRef = useRef(null);
+
+    const [landingAnimated, setLandingAnimated] = useState(false)
+    const [dragDropSecAnimated, setdragDropSecAnimated] = useState(false)
+    const [cardAnimated, setCardAnimated] = useState(false)
+    const [themeAnimated, setThemeAnimated] = useState(false)
+    const [skinAnimated, setSkinAnimated] = useState(false)
+    const [footerAnimated, setFooterAnimated] = useState(false)
+    const [subscriptionPlanAnimated, setSubcriptionPlanAnimated] = useState(false)
+
+    const landingInView = useInView(landingRef, { margin: "-100px 0px" });
+    const dragDropSecInView = useInView(dragDropSecRef, { margin: "-100px 0px" });
+    const cardInView = useInView(cardRef, { margin: "-100px 0px" });
+    const themeInView = useInView(themeRef, { margin: "-100px 0px" });
+    const skinInView = useInView(skinRef, { margin: "-100px 0px" });
+    const footerInView = useInView(footerRef, { margin: "-100px 0px" });
+    const subscriptionPlanRefInView = useInView(subscriptionPlanRef, { margin: "-100px 0px" });
+
     const [stores, setStores] = useState([]);
     const [livechatUrl, setLiveUrl] = useState('');
     const [navbarImage, setnavbarImage] = useState(false);
@@ -30,11 +57,46 @@ function HomePage() {
         }
     }, [window.location.pathname]);
 
+    const variants = {
+        hidden: { opacity: 0, x: -100 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } },
+    };
 
+    useEffect(() => {
+        if (landingInView && !landingAnimated) {
+            setLandingAnimated(true);
+        }
+        if (dragDropSecInView && !dragDropSecAnimated) {
+            setdragDropSecAnimated(true);
+        }
+        if (cardInView && !cardAnimated) {
+            setCardAnimated(true);
+        }
+        if (themeInView && !themeAnimated) {
+            setThemeAnimated(true);
+        }
+        if (skinInView && !skinAnimated) {
+            setSkinAnimated(true);
+        }
+        if (footerInView && !footerAnimated) {
+            setFooterAnimated(true);
+        }
+        if (subscriptionPlanRefInView && !subscriptionPlanAnimated) {
+            setSubcriptionPlanAnimated(true);
+        }
+    }, [
+        landingInView, dragDropSecInView, cardInView, themeInView, skinInView, footerInView, subscriptionPlanRefInView,
+    ]);
 
     return (
         <div className="flex flex-col relative h-full items-center">
-            <Navbar setStores={setStores} navbarImage={navbarImage} />
+            <Navbar setStores={setStores} navbarImage={navbarImage}
+                landingRef={landingRef}
+                dragDropSecRef={dragDropSecRef}
+                cardRef={cardRef}
+                skinRef={skinRef}
+                footerRef={footerRef}
+            />
             <Heading setnavbarImage={setnavbarImage} />
             <div className="relative flex justify-center z-40 bg-white w-full">
                 <div className="-mt-[76px] h-[30vh] absolute -z-10">
@@ -65,17 +127,74 @@ function HomePage() {
             <div className="bg-white h-4 w-screen z-10"></div>
             <div className="w-full flex flex-col gap-2 bg-white">
                 {stores && <StoreList stores={stores} />}
-                <Landingpage />
-                <DragdropSection />
-                <Card />
-                <BanauTheme />
-                <SkinSection1 />
-                <SubscriptionPlans />
+                <motion.div
+                    ref={landingRef}
+                    initial="hidden"
+                    animate={landingAnimated ? "visible" : "hidden"}
+                    variants={variants}
+                >
+                    <Landingpage />
+                </motion.div>
+
+                <motion.div
+                    ref={dragDropSecRef}
+                    initial="hidden"
+                    animate={dragDropSecAnimated ? "visible" : "hidden"}
+                    variants={variants}
+                >
+                    <DragdropSection />
+                </motion.div>
+
+                <motion.div
+                    ref={cardRef}
+                    initial="hidden"
+                    animate={cardAnimated ? "visible" : "hidden"}
+                    variants={variants}
+                >
+                    <Card />
+                </motion.div>
+
+                <motion.div
+                    ref={themeRef}
+                    initial="hidden"
+                    animate={themeAnimated ? "visible" : "hidden"}
+                    variants={variants}
+                >
+                    <BanauTheme />
+                </motion.div>
+
+                <motion.div
+                    ref={skinRef}
+                    initial="hidden"
+                    animate={skinAnimated ? "visible" : "hidden"}
+                    variants={variants}
+                >
+                    <SkinSection1 />
+                </motion.div>
+
+                <motion.div
+                    ref={subscriptionPlanRef}
+                    initial="hidden"
+                    animate={subscriptionPlanAnimated ? "visible" : "hidden"}
+                    variants={variants}
+                >
+                    <SubscriptionPlans />
+                </motion.div>
+
                 <div className="mt-[1100px] md:mt-0">
                     <SliderNavbar />
                     <ProgressBar />
                 </div>
-                <Footer />
+
+                <motion.div
+                    ref={footerRef}
+                    initial="hidden"
+                    animate={footerAnimated ? "visible" : "hidden"}
+                    variants={variants}
+                >
+                    <Footer />
+                </motion.div>
+
             </div>
         </div>
     );
