@@ -22,20 +22,6 @@ import T1NewProducts from "./T1NewProducts";
 import T1SecondaryBanner from "./T1SecondaryBanner";
 
 const EStore = ({ Passedstore }) => {
-  const [tasks, setTasks] = useState([
-    { id: 2, component: <T1Navbar /> },
-    { id: 3, component: <AboutPage /> },
-    { id: 4, component: null },
-    { id: 5, component: <T1SubProduct /> },
-    { id: 6, component: <T1ThirdBanner /> },
-    { id: 7, component: <T1NewProducts /> },
-    { id: 8, component: <T1SecondaryBanner /> },
-    { id: 9, component: <T1ProductList /> },
-    { id: 10, component: <OfferBanner /> },
-    { id: 11, component: <Footer /> },
-    { id: 12, component: <ModernReactPlayer /> },
-  ]);
-
   const [currentStep, setCurrentStep] = useState(0);
   const [isOverlayActive, setIsOverlayActive] = useState(true);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -70,8 +56,21 @@ const EStore = ({ Passedstore }) => {
   };
 
   const { store, isLoading } = useStore();
-  const { previewMode } = store;
-  const { fetchedFromBackend } = store;
+  const { fetchedFromBackend, previewMode } = store;
+
+  const [tasks, setTasks] = useState([
+    { id: 2, component: <T1Navbar /> },
+    { id: 3, component: <AboutPage /> },
+    { id: 4, component: null },
+    { id: 5, component: <T1SubProduct /> },
+    { id: 6, component: <T1ThirdBanner /> },
+    { id: 7, component: <T1NewProducts /> },
+    { id: 8, component: <T1SecondaryBanner /> },
+    { id: 9, component: <T1ProductList /> },
+    { id: 10, component: <OfferBanner /> },
+    { id: 11, component: <Footer /> },
+    { id: 12, component: <ModernReactPlayer /> },
+  ]);
 
   const [showColorPicker, setShowColorPicker] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -97,7 +96,7 @@ const EStore = ({ Passedstore }) => {
     localStorage.setItem('instructionsCompleted', instructionsCompleted.toString());
   }, [instructionsCompleted]);
 
-  useEffect(() => {}, [tasks]);
+  useEffect(() => { }, [tasks]);
 
   const handleOverlayClick = () => {
     if (currentStep < 3) {
@@ -168,14 +167,14 @@ const EStore = ({ Passedstore }) => {
     setTasks(prevTasks => {
       return prevTasks.map(task => {
         if (task.id === 4) {
-          return { 
-            ...task, 
-            component: <Editor 
-              handleDesignClick={handleDesignClick} 
+          return {
+            ...task,
+            component: <Editor
+              handleDesignClick={handleDesignClick}
               handleContentClick={handleContentClick}
               currentStep={currentStep}
               instructionsCompleted={instructionsCompleted}
-            /> 
+            />
           };
         }
         return task;
@@ -185,7 +184,7 @@ const EStore = ({ Passedstore }) => {
 
   const renderOverlay = () => {
     if (!showOverlay || instructionsCompleted) return null;
-  
+
     if (currentStep === 0) {
       return (
         <>
@@ -250,8 +249,8 @@ const EStore = ({ Passedstore }) => {
       return null;
     }
   };
-  
-    
+
+
 
   if (window.location.pathname.includes("/store/") && !store.fetchedFromBackend) {
     return (
@@ -273,7 +272,7 @@ const EStore = ({ Passedstore }) => {
               ))}
             </SortableContext>
           </DndContext>
-          
+
           <SaveStoreButton />
         </div>
       )
@@ -282,7 +281,7 @@ const EStore = ({ Passedstore }) => {
 };
 
 const EStoreWithStoreProvider = (passedStore = { passedStore }) => {
-  useEffect(() => {}, [passedStore]);
+  useEffect(() => { }, [passedStore]);
   return (
     <StoreProvider passedStore={passedStore}>
       <EStore />
