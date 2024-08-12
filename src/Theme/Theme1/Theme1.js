@@ -22,6 +22,8 @@ import T1NewProducts from "./T1NewProducts";
 import T1SecondaryBanner from "./T1SecondaryBanner";
 
 const EStore = ({ Passedstore }) => {
+  const { store, isLoading } = useStore();
+  useEffect(()=>{console.log(store,"st")},[store])
   const [tasks, setTasks] = useState([
     { id: 2, component: <T1Navbar /> },
     { id: 3, component: <AboutPage /> },
@@ -33,7 +35,6 @@ const EStore = ({ Passedstore }) => {
     { id: 9, component: <T1ProductList /> },
     { id: 10, component: <OfferBanner /> },
     { id: 11, component: <Footer /> },
-    { id: 12, component: <ModernReactPlayer /> },
   ]);
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -69,7 +70,6 @@ const EStore = ({ Passedstore }) => {
     });
   };
 
-  const { store, isLoading } = useStore();
   const { previewMode } = store;
   const { fetchedFromBackend } = store;
 
@@ -271,6 +271,8 @@ const EStore = ({ Passedstore }) => {
                   <Task id={tasks[index].id} component={tasks[index].component} />
                 </div>
               ))}
+    <ModernReactPlayer store={store}/>
+
             </SortableContext>
           </DndContext>
           

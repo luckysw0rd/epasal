@@ -9,6 +9,7 @@ import Loader from '../Loading/Loading';
 import { GrClear } from "react-icons/gr";
 import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
 import { FaFilter } from "react-icons/fa";
+import ModernReactPlayer from '../../Theme/Theme1/AudioPlayer/ModernReactPlayer';
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -430,6 +431,7 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
+        <ModernReactPlayer store={store}/>
       </div >
     )
   );
