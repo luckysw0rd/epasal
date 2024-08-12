@@ -129,6 +129,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                                         productListProps={productListProps}
                                         handleRemoveProduct={handleRemoveProduct}
                                         store={store}
+                                        handleAddToCartAnalytics={handleAddToCartAnalytics}
 
                                     />
                                 ))}
@@ -150,6 +151,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                                         productListProps={productListProps}
                                         handleRemoveProduct={handleRemoveProduct}
                                         store={store}
+                                        handleAddToCartAnalytics={handleAddToCartAnalytics}
 
                                     />
                                 ))}
@@ -172,6 +174,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                                     productListProps={productListProps}
                                     handleRemoveProduct={handleRemoveProduct}
                                     store={store}
+                                    handleAddToCartAnalytics={handleAddToCartAnalytics}
 
                                 />
                             ))}
