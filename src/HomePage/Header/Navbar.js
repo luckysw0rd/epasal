@@ -31,7 +31,7 @@ const Navbar = ({ navbarImage, setStores }) => {
     const [scrolledFromTop, setScrolledFromTop] = useState(false);
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
-    console.log(auth.token,"this is the token")
+    console.log(auth.token, "this is the token")
 
     const fetchUserInfo = async () => {
         try {
@@ -184,7 +184,7 @@ const Navbar = ({ navbarImage, setStores }) => {
                             {/* <p>Build Your Store</p> */}
 
                             <div className='flex items-center gap-1 text-white hidden md:flex'>
-                                <div className='h-10 relative hidden  rounded-lg w-[120px] bg-[#F38825] xl:flex items-center justify-center text-lg'>
+                                <div className='h-10 relative hidden  rounded-lg w-[120px] bg-[#F38825] xl:flex items-center justify-center text-base'>
                                     <ScrollLink to='pricing-section' smooth={true} duration={500} className=' justify-center flex flex-row gap-2 items-center w-full font-bold text-center cursor-pointer'>
                                         Pricing
                                         <RiPriceTagLine />

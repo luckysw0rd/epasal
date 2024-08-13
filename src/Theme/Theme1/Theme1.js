@@ -97,7 +97,7 @@ const EStore = ({ Passedstore }) => {
     localStorage.setItem('instructionsCompleted', instructionsCompleted.toString());
   }, [instructionsCompleted]);
 
-  useEffect(() => {}, [tasks]);
+  useEffect(() => { }, [tasks]);
 
   const handleOverlayClick = () => {
     if (currentStep < 3) {
@@ -168,14 +168,14 @@ const EStore = ({ Passedstore }) => {
     setTasks(prevTasks => {
       return prevTasks.map(task => {
         if (task.id === 4) {
-          return { 
-            ...task, 
-            component: <Editor 
-              handleDesignClick={handleDesignClick} 
+          return {
+            ...task,
+            component: <Editor
+              handleDesignClick={handleDesignClick}
               handleContentClick={handleContentClick}
               currentStep={currentStep}
               instructionsCompleted={instructionsCompleted}
-            /> 
+            />
           };
         }
         return task;
@@ -185,7 +185,7 @@ const EStore = ({ Passedstore }) => {
 
   const renderOverlay = () => {
     if (!showOverlay || instructionsCompleted) return null;
-  
+
     if (currentStep === 0) {
       return (
         <>
@@ -250,8 +250,8 @@ const EStore = ({ Passedstore }) => {
       return null;
     }
   };
-  
-    
+
+
 
   if (window.location.pathname.includes("/store/") && !store.fetchedFromBackend) {
     return (
@@ -275,7 +275,7 @@ const EStore = ({ Passedstore }) => {
 
             </SortableContext>
           </DndContext>
-          
+
           <SaveStoreButton />
         </div>
       )
@@ -284,7 +284,7 @@ const EStore = ({ Passedstore }) => {
 };
 
 const EStoreWithStoreProvider = (passedStore = { passedStore }) => {
-  useEffect(() => {}, [passedStore]);
+  useEffect(() => { }, [passedStore]);
   return (
     <StoreProvider passedStore={passedStore}>
       <EStore />

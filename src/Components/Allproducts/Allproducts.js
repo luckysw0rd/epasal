@@ -53,6 +53,7 @@ const AllProducts = () => {
         }
       });
       const data = response.data;
+      console.log(data)
       setProducts(data.products);
       setLoading(false);
       setColor(data.color);
@@ -259,7 +260,18 @@ const AllProducts = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
   };
 
+  const [volume, setVolume] = useState(0.5);
+  const [playing, setPlaying] = useState(true);
 
+  const handleVolumeChange = (e) => {
+    setVolume(parseFloat(e.target.value));
+  };
+
+  const togglePlayPause = () => {
+    setPlaying(!playing);
+  };
+
+  console.log(store)
 
   if (loading) {
     return <Loader />
@@ -276,8 +288,8 @@ const AllProducts = () => {
 
 
           {(isFilterVisible || window.innerWidth >= 1260) && ( // Conditionally render the filter section based on visibility state or screen width
-            <div className="relative top-8 lg:left-12  w-full lg:w-1/4 lg:max-w-[250px] p-5 py-0  md:-mt-4 rounded-lg border-2 mb-10 md:mb-16 shadow-xl"
-              style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor }}
+            <div className="relative top-8 lg:left-12  w-full lg:w-1/4 lg:max-w-[250px] p-5 py-0  md:-mt-4 mb-10 md:mb-16 "
+              style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor, borderRight: '1px solid white' }}
             >
               {isFilterVisible && <button
                 onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
@@ -285,18 +297,18 @@ const AllProducts = () => {
               >
                 <FaTimes size={15} />
               </button>}
-              <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10">Filters</h3>
-              <div className="block mb-4">
+              <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10 mr-6">Filters</h3>
+              <div className="block mb-4 mr-8">
                 <label className="block mb-2 font-semibold">Price Range:</label>
                 <div className="flex items-center">
-                  <input
-                    type="number"
-                    name="minPrice"
-                    value={minPrice}
-                    onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
-                    placeholder="Min"
-                    className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
-                  />
+                <input
+  type="number"
+  name="minPrice"
+  value={minPrice}
+  onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
+  placeholder="Min"
+  className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring bg-gray-200"
+/>
                   <span className="">-</span>
                   <input
                     type="number"
@@ -304,7 +316,7 @@ const AllProducts = () => {
                     value={maxPrice}
                     onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
                     placeholder="Max"
-                    className="mt-1 p-2 border rounded w-1/2 ml-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring"
+                    className="mt-1 p-2 border rounded w-1/2 ml-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring bg-gray-200"
                   />
                 </div>
               </div>
@@ -350,7 +362,7 @@ const AllProducts = () => {
               <div className="flex gap-5 ">
                 <button
                   onClick={handleSearch} // Handle click on search button
-                  className="px-4 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2"
+                  className="px-4 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2 "
                   style={
                     { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
                   }
@@ -362,20 +374,20 @@ const AllProducts = () => {
             </div>
           )}
 
-          <div className="lg:ml-16 flex-grow p-4 w-full lg:w-3/4 min-h-screen ">
+          <div className="lg:ml-12 flex-grow p-4 w-full lg:w-3/4 min-h-screen">
             <div className="flex flex-wrap justify-start gap-4">
-              <div className="flex items-center space-x-2 mb-4 ml-0 w-full">
+              <div className="flex items-center space-x-2 mb-4 ml-10 w-full">
                 <input
                   type="text"
                   name="productName"
                   value={name}
                   onChange={handleNameFilterChange} // Handle change for name filter input
                   placeholder="Search..."
-                  className="p-2 border border-gray-300 rounded-sm w-full lg:w-[144px] h-[28px] "
+                  className="p-2 border border-gray-300 rounded-lg w-full lg:w-[230px] h-[32px] "
                 />
                 <button
                   onClick={handleSearch} // Handle click on search button
-                  className="p-2 bg-gray-300 border h-[28px] border-l-0 border-gray-300 rounded-r-lg flex items-center justify-center"
+                  className="p-2 bg-gray-300 border h-[32px] border-gray-300 rounded-lg flex items-center justify-center"
                 >
                   <FaSearch className="text-gray-500" />
                 </button>
