@@ -8,7 +8,7 @@ import useFetch from '../../Hooks/useFetch';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../Hooks/AuthContext';
 const ProductList = ({ productListProps, productListType, storeName }) => {
-    const { products, isEdit, productColor, setStore, store, fetchedFromBackend } = productListProps
+    const { products, isEdit, productColor, setStore, store, fetchedFromBackend,isVisitorAddToCart,setIsVisitorAddToCart } = productListProps
     const navigate = useNavigate()
     const { sendRequest } = useFetch();
     const handleExploreClick = (e) => {
@@ -60,11 +60,37 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
             }));
         }
     };
+    const handleAddToCartAnalytics=async(product)=>{
+        try{
+            if(!isVisitorAddToCart){
+                setIsVisitorAddToCart(true);
+                await sendRequest(
+                    `analytics/visitorCartAdd/${store._id}`,
+                            'POST',
+                            JSON.stringify({}),
+                            {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + auth.token,
+                            }
+                )
+            }
+                const response=await sendRequest(
+                    `analytics/addToCartEvent/${store._id}`,
+                            'POST',
+                            JSON.stringify({productId:product}),
+                            {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + auth.token,
+                            }
+                )
+        }catch(err){
+            toast.error(err.message)
+        }
+    }
 
 
 
-
-
+    console.log(productListType,"prduct list type")
     const renderProductList = () => {
         switch (productListType) {
             case 'default':
@@ -82,6 +108,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                                         handleDeleteProduct={handleDeleteProduct}
                                         setStore={setStore}
                                         index={i}
+                                        handleAddToCartAnalytics={handleAddToCartAnalytics}
                                     />
                                 )
                             ))}
@@ -102,6 +129,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                                         productListProps={productListProps}
                                         handleRemoveProduct={handleRemoveProduct}
                                         store={store}
+                                        handleAddToCartAnalytics={handleAddToCartAnalytics}
 
                                     />
                                 ))}
@@ -123,6 +151,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                                         productListProps={productListProps}
                                         handleRemoveProduct={handleRemoveProduct}
                                         store={store}
+                                        handleAddToCartAnalytics={handleAddToCartAnalytics}
 
                                     />
                                 ))}
@@ -145,6 +174,7 @@ const ProductList = ({ productListProps, productListType, storeName }) => {
                                     productListProps={productListProps}
                                     handleRemoveProduct={handleRemoveProduct}
                                     store={store}
+                                    handleAddToCartAnalytics={handleAddToCartAnalytics}
 
                                 />
                             ))}

@@ -6,7 +6,7 @@ import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 
-const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
+const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store,handleAddToCartAnalytics }) => {
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const { isLoading, error, sendRequest, onCloseError } = useFetch();
@@ -26,8 +26,10 @@ const SubProductCard2 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (store.fetchedFromBackend && !store.isEdit)
+        if (store.fetchedFromBackend && !store.isEdit){
+            handleAddToCartAnalytics(product._id)
             navigate("/productlanding", { state: { product, store } })
+        }
     };
 
     const handleDeleteProduct = async () => {

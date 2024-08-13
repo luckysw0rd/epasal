@@ -3,14 +3,16 @@ import { motion } from 'framer-motion';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import {FaArrowRight} from 'react-icons/fa'
-const SubProductCard4 = ({ product, store }) => {
+const SubProductCard4 = ({ product, store,handleAddToCartAnalytics }) => {
     const navigate = useNavigate();
 
     const handleProductClick = (product) => {
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
-        if (store?.fetchedFromBackend && !store?.isEdit)
+        if (store?.fetchedFromBackend && !store?.isEdit){
+            handleAddToCartAnalytics(product._id)
             navigate("/productlanding", { state: { product, store } });
+        }
     };
 
     return (

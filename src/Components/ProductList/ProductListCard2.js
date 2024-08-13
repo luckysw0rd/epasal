@@ -5,7 +5,7 @@ import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreCont
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store, productListProps }) => {
+const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store, productListProps,handleAddToCartAnalytics }) => {
     const { addToCart } = productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
@@ -17,8 +17,10 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (store.fetchedFromBackend && !store.isEdit)
+        if (store.fetchedFromBackend && !store.isEdit){
             navigate("/productlanding", { state: { product, store } })
+            handleAddToCartAnalytics(product._id)
+        }
     };
 
     useEffect(() => {

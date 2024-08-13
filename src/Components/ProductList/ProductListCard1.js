@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, index ,setStore }) => {
+const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, index ,setStore,handleAddToCartAnalytics }) => {
   
     const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend, } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
@@ -62,12 +62,15 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
         setDisplayedImage(product?.image?.imageUrl);
     };
 
-    const handleProductClick = (product) => {
+    const handleProductClick = (e,product) => {
+        e.preventDefault();
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (fetchedFromBackend && !isEdit)
+        if (fetchedFromBackend && !isEdit){
+            handleAddToCartAnalytics(product._id)
             navigate("/productlanding", { state: { product, store } })
+        }
     };
 
     // const handleDeleteProduct = async () => {
@@ -101,7 +104,7 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
                             </div>
                             <div className="px-5 w-full">
                                 <hr className="border-t-2" style={{ borderColor: borderColor }} />
-                                <div className=" py-2 " onClick={() => handleProductClick(product)}
+                                <div className=" py-2 " onClick={(e) => handleProductClick(e,product)}
                                 // className="prod-title mt-2 flex justify-between items-center"
                                 >
                                     <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
@@ -143,8 +146,8 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
                                             className={`px-3 py-3 mt-2 text-xs transition ease-in duration-200 border-solid border rounded-lg focus:outline-none addToCartBtn w-[100%]`}
                                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
-                                            onClick={() => {
-                                                handleProductClick(product)
+                                            onClick={(e) => {
+                                                handleProductClick(e,product)
                                             }}
                                         >
                                             Add to cart
