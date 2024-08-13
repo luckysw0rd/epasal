@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaClock, FaStar } from 'react-icons/fa';
+import { motion } from "framer-motion";
+
 
 const plans = {
     monthly: [
@@ -174,24 +176,24 @@ const SubscriptionPlans = () => {
                     <h2 className="text-3xl font-bold text-gray-800">Subscription Plans</h2>
                     <p className="text-lg text-gray-600 mt-2">Start Free, Upgrade as You Grow! Choose one that works for you the best.</p>
                     <div className="my-4">
-                        <button
+                        <motion.button whileTap={{ scale: 0.8 }} whileHover={{ scale: 1.1 }}
                             className={`px-4 py-2 mx-2 rounded ${duration === 'monthly' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
                             onClick={() => setDuration('monthly')}
                         >
                             Monthly
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button whileTap={{ scale: 0.8 }} whileHover={{ scale: 1.1 }}
                             className={`px-4 py-2 mx-2 rounded ${duration === 'quarterly' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
                             onClick={() => setDuration('quarterly')}
                         >
                             Quarterly
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button whileTap={{ scale: 0.8 }} whileHover={{ scale: 1.1 }}
                             className={`px-4 py-2 mx-2 rounded ${duration === 'yearly' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
                             onClick={() => setDuration('yearly')}
                         >
                             Yearly
-                        </button>
+                        </motion.button>
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-10 md:gap-6 justify-center">
@@ -204,7 +206,8 @@ const SubscriptionPlans = () => {
                         const fullPrice = monthlyPlan.price * (duration === 'quarterly' ? 3 : 12);
 
                         return (
-                            <div
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
                                 key={index}
                                 className={`flex-1 bg-white max-h-[620px] border rounded-lg shadow-lg overflow-hidden relative ${plan.popular ? 'border-green-500' : 'border-gray-200'}`}
                             >
@@ -279,7 +282,7 @@ const SubscriptionPlans = () => {
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     })}
                 </div>

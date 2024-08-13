@@ -15,32 +15,30 @@ import AllProducts from '../../Components/Allproducts/Allproducts';
 
 const T1ProductCard = () => {
     const { store, setStore } = useStore();
-    const { color,products,subCategories } = store;
-    
-  
-useEffect(()=>{
-    const navbarProps = 
-    {
-     
+    const { color, products, subCategories, fetchedFromBackend } = store;
 
-        setStore,
+    console.log(store)
+    useEffect(() => {
+        const navbarProps =
+        {
+            setStore,
+            color,
+            products,
+            subCategories,
 
-        color,
-        products,
-        subCategories
-      
-   
-    };
-    
-},[])
-        
+        };
+
+    }, [])
+
 
     return (
-        <AllProducts
+        <>        <AllProducts
             allProductsProps={navbarProps}
             productsType="Navbar1" // Change this to "Navbar2" or "Navbar3" to switch navbar types
         />
+        </>
+
     );
 };
 
-export default  T1ProductCard;
+export default T1ProductCard;

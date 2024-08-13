@@ -20,7 +20,7 @@ const SideBar = ({ setDashboardState }) => {
   };
 
   const menus = [
-    // { name: "General", link: "/adminpanelbanau", icon: MdEdit },
+    { name: "General", link: "/adminpanelbanau", icon: MdEdit },
     { name: "Home", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Stores", link: "/adminpanelbanau", icon: MdOutlineDashboard },
     { name: "Logs", link: "/adminpanelbanau", icon: MdOutlineDashboard },

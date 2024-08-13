@@ -52,6 +52,7 @@ const AllProducts = () => {
         }
       });
       const data = response.data;
+      console.log(data)
       setProducts(data.products);
       setLoading(false);
       setColor(data.color);
@@ -258,7 +259,18 @@ const AllProducts = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
   };
 
+  const [volume, setVolume] = useState(0.5);
+  const [playing, setPlaying] = useState(true);
 
+  const handleVolumeChange = (e) => {
+    setVolume(parseFloat(e.target.value));
+  };
+
+  const togglePlayPause = () => {
+    setPlaying(!playing);
+  };
+
+  console.log(store)
 
   if (loading) {
     return <Loader />
@@ -430,6 +442,7 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
+
       </div >
     )
   );
