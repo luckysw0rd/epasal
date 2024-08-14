@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Logo from '../../Assets/banau.png';
+import Logo from '../../Assets/logo.png';
 import { FaSearch } from "react-icons/fa";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -111,11 +111,33 @@ const Navbar = ({ navbarImage, setStores }) => {
     }
 
     return (
-        <div className={`py-3 absolute z-50 top-0 left-0  w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl`} >
+        <div className={`py-3 absolute z-50 top-0 left-0  w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl grid grid-cols-3`} >
+            <div className='flex items-center text-Poppins font-bold text-[#393939] gap-2' onClick={(e)=>{e.preventDefault();navigate('/')}}>
+                <img src={Logo} className='h-[50px]'/>
+                <div>Shop at Banau</div>
+            </div>
+            <div className='w-full'>
+                <ul className='flex justify-between items-center h-full'>
+                    <li className='border-b-4 border-black px-3'>Home</li>
+                    <li className='px-3'>Contact Us</li>
+                    <li className='px-3'>Subscription</li>
+                    <li className='px-3'>FAQ</li>
+                </ul>
+            </div>
+            <div className='flex justify-end gap-5 mr-0 md:mr-10 items-center'>
+                <div className='h-[38px] w-[38px] border-4 border-[#FF9E00] rounded-full flex items-center justify-center shadow-inner-dark'><FaSearch/></div>
+                <Link to='/buildStore' target='_blank' className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex items-center text-white pl-4 gap-2'>Build <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /><path d="M16 19h6" /><path d="M19 16v6" /></svg></Link>
+                {!auth.token && <div onClick={() => { navigate('/login') }} className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex items-center text-white pl-4 gap-2'>
+                                    Login
+                                    <IoIosLogIn/>
+                                </div>}
+                                {auth.token && <div onClick={() => { auth.logout(); }} className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex items-center text-white pl-4 gap-2'>
+                                    Logout
+                                    <IoLogOut/>
+                                </div>}
+            </div>
+            {/* <div className='relative z-20 mx-auto w-full md:w-[90%] flex justify-between'>
 
-
-            <div className='relative z-20 mx-auto w-full md:w-[90%] flex justify-between'>
-                {/* <div><img src={Logo} alt="Logo" /></div> */}
                 <div className='flex items-center gap-10 mt-1 pl-4 md:pl-0'>
                     <svg width="103" height="56" viewBox="0 0 730 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 333.884V63.3499C0 44.5341 23.6191 36.1297 35.5046 50.7164L146.753 187.248C152.791 194.657 152.742 205.303 146.637 212.656L35.3881 346.659C23.4278 361.066 0 352.609 0 333.884Z" fill="#F4BD8A" />
@@ -181,7 +203,7 @@ const Navbar = ({ navbarImage, setStores }) => {
                                     </motion.div>
                                 }
                             </div>
-                            {/* <p>Build Your Store</p> */}
+
 
                             <div className='flex items-center gap-1 text-white hidden md:flex'>
                                 <div className='h-10 relative hidden  rounded-lg w-[120px] bg-[#F38825] xl:flex items-center justify-center text-base'>
@@ -206,9 +228,7 @@ const Navbar = ({ navbarImage, setStores }) => {
                     </div>
 
                     <div className='relative'>
-                        {/* {auth.isLoggedIn && <motion.div onClick={handleClick} className=' px-4 h-10 rounded-lg bg-[#F38825] text-white hidden  flex-col items-center md:flex justify-center'>
-                            My Store
-                        </motion.div>} */}
+
                         <AnimatePresence>
                             {isRotated && (
                                 <motion.div
@@ -252,7 +272,7 @@ const Navbar = ({ navbarImage, setStores }) => {
                                     className='w-32 py-2 pr-4 rounded text-right block md:hidden text-white h-30 absolute top-10 right-0  bg-[#F38825]'
                                 >
                                     <ul>
-                                        {/* <li><button onClick={handleClickStore}>My Store</button></li> */}
+
                                         {isStoreOpen && <motion.div
                                             initial={{ opacity: 0, y: -10 }}
                                             animate={{ opacity: 1, y: 0 }}
@@ -297,7 +317,7 @@ const Navbar = ({ navbarImage, setStores }) => {
                     </div>
 
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
