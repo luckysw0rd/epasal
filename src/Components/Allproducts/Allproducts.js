@@ -8,7 +8,8 @@ import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
 import Loader from '../Loading/Loading';
 import { GrClear } from "react-icons/gr";
 import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
-import { FaFilter } from "react-icons/fa";
+import { FaFilter, FaChevronDown } from "react-icons/fa";
+
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -48,7 +49,8 @@ const AllProducts = () => {
           page,
           limit: 12,
           ...filters,
-          productName: name // Pass the name filter to the backend
+          productName: name, // Pass the name filter to the backend
+          sortByPrice
         }
       });
       const data = response.data;
@@ -262,6 +264,25 @@ const AllProducts = () => {
   const [volume, setVolume] = useState(0.5);
   const [playing, setPlaying] = useState(true);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  // -----------Prajjwol Changes----------------
+  const [selectedOption, setSelectedOption] = useState('All Products');
+
+  const options = ['All Products', 'Featured', 'Offers'];
+  const priceOptions = [
+    { value: '', label: 'None' },
+    { value: 'lowToHigh', label: 'Low to High' },
+    { value: 'highToLow', label: 'High to Low' },
+  ];
+
+  const [sortByPrice, setSortByPrice] = useState('');
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
+
   const handleVolumeChange = (e) => {
     setVolume(parseFloat(e.target.value));
   };
@@ -270,11 +291,13 @@ const AllProducts = () => {
     setPlaying(!playing);
   };
 
-  console.log(store)
+  console.log(products)
 
   if (loading) {
     return <Loader />
   }
+
+
 
   return (
     color && products && store && (
@@ -297,17 +320,74 @@ const AllProducts = () => {
                 <FaTimes size={15} />
               </button>}
               <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10 mr-6">Filters</h3>
+
+
+              {/* ---------------------- PRAJJWOL CHANGES ----------------------- */}
+              <div className="relative inline-block text-left mb-5">
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="inline-flex justify-between items-center w-48 px-4 py-2  font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    {selectedOption}
+                    <FaChevronDown className="ml-2" />
+                  </button>
+                </div>
+
+                {isOpen && (
+                  <div className="absolute right-0 z-10 w-48 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      {options.map((option) => (
+                        <button
+                          key={option}
+                          onClick={() => handleOptionClick(option)}
+                          className={`${selectedOption === option ? 'bg-gray-100' : ''
+                            } w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100`}
+                        >
+                          {option}
+                        </button>
+
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+
+              <h4 className=" mb-2 font-semibold">Sort By Price:</h4>
+              <div className="relative  w-48 mb-5 flex justify-between items-center">
+
+                <select
+                  className="appearance-none w-full px-4 py-2 border bg-white font-medium text-gray-700 border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  value={sortByPrice}
+                  onChange={(e) => setSortByPrice(e.target.value)}
+                >
+                  {priceOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <FaChevronDown className="ml-2" />
+
+                </div>
+              </div>
+
+              {/* ---------------------- ENDS------------------ */}
+
               <div className="block mb-4 mr-8">
                 <label className="block mb-2 font-semibold">Price Range:</label>
                 <div className="flex items-center">
-                <input
-  type="number"
-  name="minPrice"
-  value={minPrice}
-  onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
-  placeholder="Min"
-  className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring bg-gray-200"
-/>
+                  <input
+                    type="number"
+                    name="minPrice"
+                    value={minPrice}
+                    onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
+                    placeholder="Min"
+                    className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring bg-gray-200"
+                  />
                   <span className="">-</span>
                   <input
                     type="number"
@@ -319,7 +399,7 @@ const AllProducts = () => {
                   />
                 </div>
               </div>
-              <label className="block mb-4  font-semibold ">
+              <label className="block font-semibold ">
                 <div className=' mb-2'>
                   Rating:
                 </div>
