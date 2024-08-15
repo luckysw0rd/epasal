@@ -20,6 +20,7 @@ import SliderNavbar from './SliderNavbar';
 import StoreList from './StoreList'; // Import StoreList if it exists
 import { motion, useInView } from "framer-motion";
 import Heading2 from './Header/Heading2';
+import WhyShop from './WhyShop';
 
 
 function HomePage() {
@@ -127,16 +128,18 @@ function HomePage() {
             </div>
             <div className="bg-white h-4 w-screen z-10"></div> */}
             <Heading2/>
+            <WhyShop/>
+
             <div className="w-full flex flex-col gap-2 bg-white">
                 {stores && <StoreList stores={stores} />}
-                <motion.div
+                {/* <motion.div
                     ref={landingRef}
                     initial="hidden"
                     animate={landingAnimated ? "visible" : "hidden"}
                     variants={variants}
                 >
                     <Landingpage />
-                </motion.div>
+                </motion.div> */}
 
                 <motion.div
                     ref={dragDropSecRef}
