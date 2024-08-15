@@ -9,9 +9,11 @@ import Loader from '../Loading/Loading';
 import { GrClear } from "react-icons/gr";
 import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
 import { FaFilter, FaChevronDown } from "react-icons/fa";
+import AllProductCard from './AllProductCard';
 
 
 const AllProducts = () => {
+  const { filter } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { storeName } = useParams();
@@ -30,11 +32,6 @@ const AllProducts = () => {
   const [name, setName] = useState(''); // State for the name filter input
   const [isFilterVisible, setIsFilterVisible] = useState(false); // State for filter visibility
 
-  useEffect(() => {
-    if (storeName) {
-      fetchProducts();
-    }
-  }, [storeName, page]); // Dependency includes storeName and page for initial fetch
 
   useEffect(() => {
     if (store) {
@@ -42,7 +39,10 @@ const AllProducts = () => {
     }
   }, [store?.name, store?.fetchedFromBackend]);
 
+
+
   const fetchProducts = async () => {
+    console.log(store)
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/getStoreProducts/${storeName}`, {
         params: {
@@ -50,11 +50,14 @@ const AllProducts = () => {
           limit: 12,
           ...filters,
           productName: name, // Pass the name filter to the backend
-          sortByPrice
+          sortByPrice,
+          productFilter
         }
       });
       const data = response.data;
-      console.log(data)
+      console.log(data);
+
+
       setProducts(data.products);
       setLoading(false);
       setColor(data.color);
@@ -267,9 +270,13 @@ const AllProducts = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   // -----------Prajjwol Changes----------------
-  const [selectedOption, setSelectedOption] = useState('All Products');
 
-  const options = ['All Products', 'Featured', 'Offers'];
+  const productOptions = [
+    { value: '', label: 'All Products' },
+    { value: 'offers', label: 'Offers' },
+    { value: 'featured', label: 'Featured' }
+  ];
+
   const priceOptions = [
     { value: '', label: 'None' },
     { value: 'lowToHigh', label: 'Low to High' },
@@ -277,10 +284,29 @@ const AllProducts = () => {
   ];
 
   const [sortByPrice, setSortByPrice] = useState('');
+  const [productFilter, setProductFilter] = useState('');
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
+  useEffect(() => {
+    // Set the product filter based on the route parameter
+    if (filter === 'featured') {
+      setProductFilter('featured');
+    } else if (filter === 'offers') {
+      setProductFilter('offers');
+    } else {
+      setProductFilter('');
+    }
+  }, [filter])
+
+
+  useEffect(() => {
+    if (storeName) {
+      fetchProducts();
+    }
+  }, [storeName, page, productFilter]); // Dependency includes storeName and page for initial fetch
+
+  const handleProductFilterChange = (e) => {
+    const selectedValue = e.target.value;
+    setProductFilter(selectedValue);
   };
 
   const handleVolumeChange = (e) => {
@@ -290,8 +316,6 @@ const AllProducts = () => {
   const togglePlayPause = () => {
     setPlaying(!playing);
   };
-
-  console.log(products)
 
   if (loading) {
     return <Loader />
@@ -323,35 +347,23 @@ const AllProducts = () => {
 
 
               {/* ---------------------- PRAJJWOL CHANGES ----------------------- */}
-              <div className="relative inline-block text-left mb-5">
-                <div>
-                  <button
-                    type="button"
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="inline-flex justify-between items-center w-48 px-4 py-2  font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    {selectedOption}
-                    <FaChevronDown className="ml-2" />
-                  </button>
+              <div className="relative  w-48 mb-5 flex justify-between items-center">
+
+                <select
+                  className="appearance-none w-full px-4 py-2 border bg-white font-medium text-gray-700 border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  value={productFilter}
+                  onChange={handleProductFilterChange}
+                >
+                  {productOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <FaChevronDown className="ml-2" />
+
                 </div>
-
-                {isOpen && (
-                  <div className="absolute right-0 z-10 w-48 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {options.map((option) => (
-                        <button
-                          key={option}
-                          onClick={() => handleOptionClick(option)}
-                          className={`${selectedOption === option ? 'bg-gray-100' : ''
-                            } w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100`}
-                        >
-                          {option}
-                        </button>
-
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
 
 
@@ -375,7 +387,7 @@ const AllProducts = () => {
                 </div>
               </div>
 
-              {/* ---------------------- ENDS------------------ */}
+              {/* ---------------------- ENDS HERE------------------ */}
 
               <div className="block mb-4 mr-8">
                 <label className="block mb-2 font-semibold">Price Range:</label>
@@ -481,10 +493,16 @@ const AllProducts = () => {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-x-8 md:gap-y-8 md:w-[900px] rounded-lg 2xl:w-[1500px]">
                 {products.map(product => (
-                  <ProductCard
+                  // <ProductCard
+                  //   key={product.id}
+                  //   product={product}
+                  //   productColor={color.productListColor}
+                  //   addToCart={addToCart}
+                  //   store={store}
+                  // />
+                  <AllProductCard
                     key={product.id}
                     product={product}
-                    productColor={color.productListColor}
                     addToCart={addToCart}
                     store={store}
                   />

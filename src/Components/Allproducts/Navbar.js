@@ -99,13 +99,13 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-8 mr-8">
-                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}`} className="hover:underline">
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}/all`} className="hover:underline">
                         All Products
                     </Link>
-                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}`} className="hover:underline">
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}/featured`} className="hover:underline">
                         Featured
                     </Link>
-                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}`} className="hover:underline">
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}/offers`} className="hover:underline">
                         Offers
                     </Link>
                 </div>
