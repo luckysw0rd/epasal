@@ -62,7 +62,7 @@ function App() {
         <Route path="/location" element={<GetUserLocation />} />
         <Route path="/buildstore" element={<Theme />} />
         <Route path="/adminpanel/:storeName" element={<Dashboard />} />
-        <Route path="/store/products/:storeName/:filter" element={<Allproducts />} />
+        <Route path="/store/products/:storeName" element={<Allproducts />} />
         <Route path="/googleoauth" element={<GoogleOAuth />} />
         <Route path="/store/:storeID" element={<Theme />} />
         <Route path="/store/edit/:storeID" element={<Theme />} />

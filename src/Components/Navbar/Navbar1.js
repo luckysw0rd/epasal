@@ -381,9 +381,9 @@ const Navbar1 = ({
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-8 mr-8">
-                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}/all`} className="hover:underline">All Products</Link>
-                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}/featured`} className="hover:underline">Featured</Link>
-                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}/offers`} className="hover:underline">Offers</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}/?filter=featured`} className="hover:underline">Featured</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}/?filter=offers`} className="hover:underline">Offers</Link>
                     <Link to={!isEdit && previewMode && `/`} className="hover:underline"> Shop At Banau</Link>
                 </div>
                 <div className="relative flex items-center hidden md:flex">

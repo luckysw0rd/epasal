@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ProductCard from './ProductCard';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import StarRating from './StarRating'; // Import the StarRating component
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
@@ -13,7 +12,8 @@ import AllProductCard from './AllProductCard';
 
 
 const AllProducts = () => {
-  const { filter } = useParams();
+  const [searchParams] = useSearchParams();
+  const filter = searchParams.get('filter');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { storeName } = useParams();
