@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaImage } from "react-icons/fa6";
 import { useStore } from '../../../Theme/Theme1/T1Context';
@@ -9,15 +9,13 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import Tooltip from '../../../Theme/Theme1/SubProduct/Tooltip';
 import Loader from '../../../Components/Loading/Loading';
+
 export default function ProductForm({ onClose, store, onProductAdded }) {
     const storeContext = useStore();
     const setStore = storeContext?.setStore;
-    /* const store = storeContext?.store; */
-
-    const { sendRequest, isLoading } = useFetch()
-    const { uploadImage } = useImage()
+    const { sendRequest, isLoading } = useFetch();
+    const { uploadImage } = useImage();
     const [tempLoading, setTempLoading] = useState(false);
-    /* const { setStore, store } = useStore(); */
     const auth = useContext(AuthContext);
 
     const initialState = {
@@ -27,36 +25,17 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
         discount: '',
         inventory: '',
         image: { imageUrl: '' },
-        variant: [
-            // {
-            //     name: '',
-            //     options: [
-            //         { name: '', price: '', discount: '', count: '', image: { imageUrl: '' } }
-            //     ]
-            // }
-        ],
-        category: [], // Change to array
-        subcategories: [store?.subCategories[0]?.name] // Change to array
+        variant: [],
+        category: [],
+        subcategories: [store?.subCategories[0]?.name]
     };
-
-    const [onEditDataUpload, setOnEditDataUpload] = useState(false)
-
 
     const [formState, setFormState] = useState(initialState);
 
-
-
     const handleCategoryChange = (e) => {
         const { value } = e.target;
-
-        // const selectedCategories = Array.from(value)
-        //     .filter(option => option.selected)
-        //     .map(option => option.value);
         setFormState({ ...formState, subcategories: [value] });
     };
-
-
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -136,13 +115,11 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
         document.getElementById('product-image').click();
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
-        const updatedVariants = formState.variant.map((variant, variantIndex) => {
-            const updatedOptions = variant.options.map((option, optionIndex) => ({
+        const updatedVariants = formState.variant.map((variant) => {
+            const updatedOptions = variant.options.map((option) => ({
                 ...option,
                 name: option.name || `default`
             }));
@@ -154,75 +131,38 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
             };
         });
 
-        setFormState(prevFormState => ({
-            ...prevFormState,
+        const newFormState = {
+            ...formState,
             variant: updatedVariants
-        }));
+        };
 
-        if (true) {
-            try {
-                setTempLoading(true);
-                const productImg = await uploadImage(formState?.image?.imageUrl);
-                setFormState(prev => ({
-                    ...prev,
-                    image: {
-                        ...prev.image,
-                        imageUrl: productImg.img,
-                        imageID: productImg.id
-                    }
-                }));
-
-                if (formState.variant.length > 0 && formState.variant[0].options.length > 0) {
-                    for (let i = 0; i < formState.variant[0].options.length; i++) {
-                        const optionImage = await uploadImage(formState.variant[0].options[i].image.imageUrl);
-
-                        setFormState(prev => {
-                            const newFormState = { ...prev };
-                            const variant = { ...newFormState.variant[0] };
-                            const option = { ...variant.options[i] };
-
-                            option.image = {
-                                ...option.image,
-                                imageUrl: optionImage.img,
-                                imageID: optionImage.id
-                            };
-
-                            variant.options[i] = option;
-                            newFormState.variant[0] = variant;
-
-                            return newFormState;
-                        });
-                    }
-                }
-                setTempLoading(false);
-                await new Promise(resolve => setTimeout(resolve, 0));
-                setOnEditDataUpload(prev => !prev);
-                onProductAdded(formState);
-            } catch (err) {
-                toast("error uploading variant images ");
-            }
-        } else {
-            const newProduct = {
-                ...formState,
-                id: Math.random().toString(36).substr(2, 9),
-            };
-            setStore(prevStore => ({
-                ...prevStore,
-                products: [...prevStore.products, newProduct]
-            }));
-            setFormState(initialState);
-            onClose();
-        }
-    };
-
-
-    // Function to upload data
-    const uploadData = async () => {
         try {
+            setTempLoading(true);
+            const productImg = await uploadImage(newFormState.image.imageUrl);
+            newFormState.image = {
+                ...newFormState.image,
+                imageUrl: productImg.img,
+                imageID: productImg.id
+            };
+
+            if (newFormState.variant.length > 0 && newFormState.variant[0].options.length > 0) {
+                for (let i = 0; i < newFormState.variant[0].options.length; i++) {
+                    const optionImage = await uploadImage(newFormState.variant[0].options[i].image.imageUrl);
+
+                    newFormState.variant[0].options[i].image = {
+                        ...newFormState.variant[0].options[i].image,
+                        imageUrl: optionImage.img,
+                        imageID: optionImage.id
+                    };
+                }
+            }
+
+            setTempLoading(false);
+
             const response = await sendRequest(
                 'product/addProduct',
                 'POST',
-                JSON.stringify({ formState, storeID: store._id }),
+                JSON.stringify({ formState: newFormState, storeID: store._id }),
                 {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + auth.token
@@ -232,7 +172,7 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
 
             if (typeof setStore === 'function') {
                 const newProduct = {
-                    ...formState,
+                    ...newFormState,
                     id: Math.random().toString(36).substr(2, 9),
                 };
                 setStore(prevStore => ({
@@ -243,31 +183,12 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
                 console.error('setStore is not a function:', setStore);
             }
 
+            onProductAdded(newFormState);
             onClose();
-            setOnEditDataUpload(false);
         } catch (err) {
-            /*  toast.error(err.message); */
+            toast.error('Error uploading variant images');
         }
     };
-
-
-    useEffect(() => {
-        if (onEditDataUpload) {
-            uploadData();
-            if (typeof setStore === 'function') {
-                const newProduct = {
-                    ...formState,
-                    id: Math.random().toString(36).substr(2, 9),
-                };
-                setStore(prevStore => ({
-                    ...prevStore,
-                    products: [...prevStore.products, newProduct]
-                }));
-            }
-            onClose();
-            setOnEditDataUpload(false);
-        }
-    }, [onEditDataUpload]);
 
     if (isLoading || tempLoading) {
         return <Loader></Loader>
