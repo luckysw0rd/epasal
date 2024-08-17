@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaImage } from "react-icons/fa6";
 import { useStore } from '../../../Theme/Theme1/T1Context';
@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../../Hooks/AuthContext';
 import Tooltip from '../../../Theme/Theme1/SubProduct/Tooltip';
 import Loader from '../../../Components/Loading/Loading';
-
 export default function ProductForm({ onClose, store, onProductAdded }) {
     const storeContext = useStore();
     const setStore = storeContext?.setStore;
@@ -17,7 +16,7 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
     const { uploadImage } = useImage();
     const [tempLoading, setTempLoading] = useState(false);
     const auth = useContext(AuthContext);
-
+    
     const initialState = {
         name: '',
         description: '',
@@ -29,33 +28,34 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
         category: [],
         subcategories: [store?.subCategories[0]?.name]
     };
-
+    
+    const [onEditDataUpload, setOnEditDataUpload] = useState(false);
     const [formState, setFormState] = useState(initialState);
-
+    
     const handleCategoryChange = (e) => {
         const { value } = e.target;
         setFormState({ ...formState, subcategories: [value] });
     };
-
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormState({ ...formState, [name]: value });
     };
-
+    
     const handleVariantChange = (index, e) => {
         const { name, value } = e.target;
         const newVariants = [...formState.variant];
         newVariants[index][name] = value;
         setFormState({ ...formState, variant: newVariants });
     };
-
+    
     const handleOptionChange = (variantIndex, optionIndex, e) => {
         const { name, value } = e.target;
         const newVariants = [...formState.variant];
         newVariants[variantIndex].options[optionIndex][name] = value;
         setFormState({ ...formState, variant: newVariants });
     };
-
+    
     const handleAddVariant = () => {
         setFormState({
             ...formState,
@@ -65,19 +65,19 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
             ]
         });
     };
-
+    
     const handleRemoveVariant = (variantIndex) => {
         const newVariants = [...formState.variant];
         newVariants.splice(variantIndex, 1);
         setFormState({ ...formState, variant: newVariants });
     };
-
+    
     const handleAddOption = (variantIndex) => {
         const newVariants = [...formState.variant];
         newVariants[variantIndex].options.push({ name: '', price: '', discount: '', count: '', image: { imageUrl: '' } });
         setFormState({ ...formState, variant: newVariants });
     };
-
+    
     const handleRemoveOption = (variantIndex, optionIndex) => {
         const newVariants = [...formState.variant];
         newVariants[variantIndex].options.splice(optionIndex, 1);
@@ -86,7 +86,7 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
         }
         setFormState({ ...formState, variant: newVariants });
     };
-
+    
     const handleOptionImageUpload = (variantIndex, optionIndex, files) => {
         const newVariants = [...formState.variant];
         const file = files[0];
@@ -97,11 +97,11 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
         };
         reader.readAsDataURL(file);
     };
-
+    
     const handleUploadImageClick = (variantIndex, optionIndex) => {
         document.getElementById(`option-image-${variantIndex}-${optionIndex}`).click();
     };
-
+    
     const handleProductImageUpload = (files) => {
         const file = files[0];
         const reader = new FileReader();
@@ -110,69 +110,81 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
         };
         reader.readAsDataURL(file);
     };
-
+    
     const handleUploadProductImageClick = () => {
         document.getElementById('product-image').click();
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const updatedVariants = formState.variant.map((variant) => {
-            const updatedOptions = variant.options.map((option) => ({
+    
+        const updatedVariants = formState.variant.map((variant, variantIndex) => {
+            const updatedOptions = variant.options.map((option, optionIndex) => ({
                 ...option,
                 name: option.name || `default`
             }));
-
+    
             return {
                 ...variant,
                 name: variant.name || `default`,
                 options: updatedOptions
             };
         });
-
-        const newFormState = {
-            ...formState,
+    
+        setFormState(prevFormState => ({
+            ...prevFormState,
             variant: updatedVariants
-        };
-
+        }));
+    
         try {
             setTempLoading(true);
-            const productImg = await uploadImage(newFormState.image.imageUrl);
-            newFormState.image = {
-                ...newFormState.image,
-                imageUrl: productImg.img,
-                imageID: productImg.id
+            const productImg = await uploadImage(formState?.image?.imageUrl);
+            const newFormState = {
+                ...formState,
+                image: {
+                    ...formState.image,
+                    imageUrl: productImg.img,
+                    imageID: productImg.id
+                }
             };
-
-            if (newFormState.variant.length > 0 && newFormState.variant[0].options.length > 0) {
-                for (let i = 0; i < newFormState.variant[0].options.length; i++) {
-                    const optionImage = await uploadImage(newFormState.variant[0].options[i].image.imageUrl);
-
+    
+            if (formState.variant.length > 0 && formState.variant[0].options.length > 0) {
+                for (let i = 0; i < formState.variant[0].options.length; i++) {
+                    const optionImage = await uploadImage(formState.variant[0].options[i].image.imageUrl);
+    
                     newFormState.variant[0].options[i].image = {
-                        ...newFormState.variant[0].options[i].image,
                         imageUrl: optionImage.img,
                         imageID: optionImage.id
                     };
                 }
             }
-
+    
+            setFormState(newFormState);
             setTempLoading(false);
-
+            await new Promise(resolve => setTimeout(resolve, 0));
+            setOnEditDataUpload(prev => !prev);
+            onProductAdded(newFormState);
+        } catch (err) {
+            toast("error uploading variant images ");
+        }
+    };
+    
+    const uploadData = async () => {
+        try {
             const response = await sendRequest(
                 'product/addProduct',
                 'POST',
-                JSON.stringify({ formState: newFormState, storeID: store._id }),
+                JSON.stringify({ formState, storeID: store._id }),
                 {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + auth.token
                 }
             );
             toast.success(response.message);
-
+    
             if (typeof setStore === 'function') {
                 const newProduct = {
-                    ...newFormState,
+                    ...formState,
                     id: Math.random().toString(36).substr(2, 9),
                 };
                 setStore(prevStore => ({
@@ -182,14 +194,19 @@ export default function ProductForm({ onClose, store, onProductAdded }) {
             } else {
                 console.error('setStore is not a function:', setStore);
             }
-
-            onProductAdded(newFormState);
+    
             onClose();
+            setOnEditDataUpload(false);
         } catch (err) {
-            toast.error('Error uploading variant images');
+            /*  toast.error(err.message); */
         }
     };
-
+    
+    useEffect(() => {
+        if (onEditDataUpload) {
+            uploadData();
+        }
+    }, [onEditDataUpload]);
     if (isLoading || tempLoading) {
         return <Loader></Loader>
     } else {
