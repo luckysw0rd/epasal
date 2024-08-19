@@ -269,8 +269,6 @@ const AllProducts = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // -----------Prajjwol Changes----------------
-
   const productOptions = [
     { value: '', label: 'All Products' },
     { value: 'offers', label: 'Offers' },
@@ -287,7 +285,6 @@ const AllProducts = () => {
   const [productFilter, setProductFilter] = useState('');
 
   useEffect(() => {
-    // Set the product filter based on the route parameter
     if (filter === 'featured') {
       setProductFilter('featured');
     } else if (filter === 'offers') {
@@ -328,9 +325,26 @@ const AllProducts = () => {
       <div className="flex flex-col mt-16 ">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
+        <div className="relative w-full h-[516px] flex justify-center items-center">
+          <div
+            className="absolute inset-0 bg-center bg-no-repeat bg-cover z-0"
+            style={{
+              backgroundImage:
+                "url('https://www.creativefabrica.com/wp-content/uploads/2021/02/26/Retail-Sale-Web-Ad-Banners-Graphics-8973041-2-580x386.jpg')", // Replace with your image URL
+            }}
+          ></div>
+
+          <div className="relative z-10 text-2xl font-semibold text-white">
+            All Product Page
+          </div>
+        </div>
+
+        {/*-------------- ENDS HERE ------------  */}
         <div className="flex flex-col lg:flex-row px-2 md:px-5 lg:px-0"
           style={{ backgroundColor: color.productListColor.backgroundColor }}
         >
+
+          {/*  ---------------------- PRAJJWOL CHANGES -----------------------  */}
 
 
           {(isFilterVisible || window.innerWidth >= 1260) && ( // Conditionally render the filter section based on visibility state or screen width
