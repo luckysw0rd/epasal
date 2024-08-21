@@ -7,8 +7,9 @@ import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'; // Import the icons
 import Loader from '../Loading/Loading';
 import { GrClear } from "react-icons/gr";
 import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
-import { FaFilter, FaChevronDown } from "react-icons/fa";
+import { FaFilter, FaChevronDown, FaStar } from "react-icons/fa";
 import AllProductCard from './AllProductCard';
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 const AllProducts = () => {
@@ -306,14 +307,6 @@ const AllProducts = () => {
     setProductFilter(selectedValue);
   };
 
-  const handleVolumeChange = (e) => {
-    setVolume(parseFloat(e.target.value));
-  };
-
-  const togglePlayPause = () => {
-    setPlaying(!playing);
-  };
-
   if (loading) {
     return <Loader />
   }
@@ -325,195 +318,202 @@ const AllProducts = () => {
       <div className="flex flex-col mt-16 ">
         <Navbar setColor={setColor} store={store} color={color} addToCart={addToCart} deleteFromCart={deleteFromCart} setStore={setStore} />
 
-        <div className="relative w-full h-[516px] flex justify-center items-center">
+        <div className="relative w-full h-[350px] flex justify-center items-center">
           <div
-            className="absolute inset-0 bg-center bg-no-repeat bg-cover z-0"
+            className="absolute inset-0 bg-center bg-no-repeat bg-cover z-0 opacity-70"
             style={{
               backgroundImage:
-                "url('https://www.creativefabrica.com/wp-content/uploads/2021/02/26/Retail-Sale-Web-Ad-Banners-Graphics-8973041-2-580x386.jpg')", // Replace with your image URL
+                "url('https://zenlayercdn.centuryply.com/blogimage/3-01-24/blog3-3.jpeg')",
+              // Adjusts the image position
             }}
           ></div>
 
-          <div className="relative z-10 text-2xl font-semibold text-white">
+          <div className="relative z-10 text-3xl font-bold text-black">
             All Product Page
           </div>
         </div>
 
-        {/*-------------- ENDS HERE ------------  */}
-        <div className="flex flex-col lg:flex-row px-2 md:px-5 lg:px-0"
-          style={{ backgroundColor: color.productListColor.backgroundColor }}
-        >
 
-          {/*  ---------------------- PRAJJWOL CHANGES -----------------------  */}
-
-
-          {(isFilterVisible || window.innerWidth >= 1260) && ( // Conditionally render the filter section based on visibility state or screen width
-            <div className="relative top-8 lg:left-12  w-full lg:w-1/4 lg:max-w-[250px] p-5 py-0  md:-mt-4 mb-10 md:mb-16 "
-              style={{ backgroundColor: color.productListColor.backgroundColor, color: color.productListColor.textColor, borderColor: color.productListColor.borderColor, borderRight: '1px solid white' }}
-            >
-              {isFilterVisible && <button
-                onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
-                className={`absolute top-1 right-1 lg:hidden p-2 rounded-full bg-red-500 text-white m-2`}
-              >
-                <FaTimes size={15} />
-              </button>}
-              <h3 className="font-bold mb-4 text-xl border-b-2  text-center mt-10 mr-6">Filters</h3>
-
-
-              {/* ---------------------- PRAJJWOL CHANGES ----------------------- */}
-              <div className="relative  w-48 mb-5 flex justify-between items-center">
-
-                <select
-                  className="appearance-none w-full px-4 py-2 border bg-white font-medium text-gray-700 border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  value={productFilter}
-                  onChange={handleProductFilterChange}
-                >
-                  {productOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <FaChevronDown className="ml-2" />
-
-                </div>
-              </div>
-
-
-              <h4 className=" mb-2 font-semibold">Sort By Price:</h4>
-              <div className="relative  w-48 mb-5 flex justify-between items-center">
-
-                <select
-                  className="appearance-none w-full px-4 py-2 border bg-white font-medium text-gray-700 border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  value={sortByPrice}
-                  onChange={(e) => setSortByPrice(e.target.value)}
-                >
-                  {priceOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <FaChevronDown className="ml-2" />
-
-                </div>
-              </div>
-
-              {/* ---------------------- ENDS HERE------------------ */}
-
-              <div className="block mb-4 mr-8">
-                <label className="block mb-2 font-semibold">Price Range:</label>
-                <div className="flex items-center">
-                  <input
-                    type="number"
-                    name="minPrice"
-                    value={minPrice}
-                    onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
-                    placeholder="Min"
-                    className="mt-1 p-2 border rounded w-1/2 mr-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring bg-gray-200"
-                  />
-                  <span className="">-</span>
-                  <input
-                    type="number"
-                    name="maxPrice"
-                    value={maxPrice}
-                    onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
-                    placeholder="Max"
-                    className="mt-1 p-2 border rounded w-1/2 ml-2 border-blue-300 focus:border-blue-500 focus:outline-none focus:ring bg-gray-200"
-                  />
-                </div>
-              </div>
-              <label className="block font-semibold ">
-                <div className=' mb-2'>
-                  Rating:
-                </div>
-              </label>
-              <div className="flex gap-8 mb-5 items-center">
-                <StarRating
-                  className=''
-                  value={parseInt(filters.rating)}
-                  onChange={handleRatingChange}
-                />
-                <Tooltip message="Clear Rating">
-                  <button
-                    onClick={() => handleRatingChange(null)}
-
-                  >
-                    <GrClear className='text-amber-700 mt-2' size={20} />
-                  </button>
-                </Tooltip>
-
-              </div>
-
-              {store?.subCategories && (
-                <div className="mb-4">
-                  <h4 className=" mb-2 font-semibold">Subcategories:</h4>
-                  {store.subCategories.map((subCategory, index) => (
-                    <div key={subCategory._id} className="flex items-center mb-2">
-                      <input
-                        type="checkbox"
-                        id={`subCategory-${index}`}
-                        value={subCategory.name}
-                        onChange={handleFilterChange}
-                        className="mr-2"
-                      />
-                      <label htmlFor={`subCategory-${index}`} className="text-gray-600">{subCategory.name}</label>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div className="flex gap-5 ">
-                <button
-                  onClick={handleSearch} // Handle click on search button
-                  className="px-4 py-1 mb-10 rounded  transition ease-in-out duration-200  border-2 "
-                  style={
-                    { backgroundColor: color.productListColor.buttonBgColor, color: color.productListColor.buttonTextColor, borderColor: color.productListColor.buttonBorderColor }
-                  }
-                >
-                  Search
-                </button>
-
-              </div>
-            </div>
-          )}
-
-          <div className="lg:ml-12 flex-grow p-4 w-full lg:w-3/4 min-h-screen">
+        <div className="flex flex-col lg:flex-row px-2 lg:px-0">
+          <div className="flex-grow p-2 sm:p-4 w-full lg:w-3/4 min-h-screen">
             <div className="flex flex-wrap justify-start gap-4">
-              <div className="flex items-center space-x-2 mb-4 ml-10 w-full">
-                <input
-                  type="text"
-                  name="productName"
-                  value={name}
-                  onChange={handleNameFilterChange} // Handle change for name filter input
-                  placeholder="Search..."
-                  className="p-2 border border-gray-300 rounded-lg w-full lg:w-[230px] h-[32px] "
-                />
-                <button
-                  onClick={handleSearch} // Handle click on search button
-                  className="p-2 bg-gray-300 border h-[32px] border-gray-300 rounded-lg flex items-center justify-center"
-                >
-                  <FaSearch className="text-gray-500" />
-                </button>
-                {!isFilterVisible &&
-                  <button
-                    onClick={toggleFilterVisibility} // Handle click to toggle filter visibility
-                    className={`lg:hidden px-4 py-2 bg-blue-500 text-white rounded m-2`}
+              <div className="w-full bg-white py-2 md:p-3 flex items-center justify-between gap-5 md:gap-16 shadow-md">
+                {/* Left Section: Filter and Results Count */}
+                <div className="flex gap-3 sm:gap-5 items-center">
+                  <div
+                    className="flex text-base sm:text-lg md::text-xl items-center space-x-1 sm:space-x-2 cursor-pointer"
+                    onClick={toggleFilterVisibility}
                   >
-                    <FaFilter size={15} />
-                  </button>
-                }
+                    <FaFilter className="text-gray-600" />
+                    <span className="font-medium text-gray-700">Filter</span>
+                  </div>
+
+                  <div className="text-xs md:text-base text-gray-500">Showing {products.length === 0 ? `0` : `1-${products.length}`} of page {page}</div>
+                </div>
+
+                {/* Right Section: Search and Sort */}
+                <div className="flex gap-10 items-center">
+                  <div className="hidden lg:block relative">
+                    <input
+                      type="text"
+                      name="productName"
+                      value={name}
+                      onChange={handleNameFilterChange} // Handle change for name filter input
+                      placeholder="Search..."
+                      className=" lg:flex-grow lg:min-w-[500px] px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:border-gray-500 "
+                    />
+
+                    <button onClick={handleSearch} className="absolute right-3 top-4 text-base text-gray-500">
+                      <FaSearch />
+                    </button>
+                  </div>
+
+                  {/* Sort Dropdown */}
+                  <div className="text-sm sm:text-base relative w-32 sm:w-36 md:w-48">
+                    <select
+                      className="appearance-none w-full px-4 py-2 border bg-white font-medium text-gray-700 border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      value={productFilter}
+                      onChange={handleProductFilterChange}
+                    >
+                      {productOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      <FaChevronDown className="ml-2" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-x-8 md:gap-y-8 md:w-[900px] rounded-lg 2xl:w-[1500px]">
+
+
+              <AnimatePresence>
+                {isFilterVisible && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.6, ease: 'easeInOut' }}
+                    className='h-[500px] lg:h-[250px] border-b border-gray-300 shadow-md px-6 w-full'>
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6 lg:mt-4">
+                      <div className="lg:hidden relative">
+                        <input
+                          type="text"
+                          name="productName"
+                          value={name}
+                          onChange={handleNameFilterChange} // Handle change for name filter input
+                          placeholder="Search..."
+                          className=" w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 "
+                        />
+
+                        <button onClick={handleSearch} className="absolute right-3 top-4 text-base text-gray-500">
+                          <FaSearch />
+                        </button>
+                      </div>
+                      {/* Price Range */}
+                      <div className="text-sm lg:text-base flex flex-col">
+                        <label className="font-medium text-gray-700 mb-2">Price Range:</label>
+                        <div className="flex gap-3 items-center">
+                          <input
+                            type="number"
+                            name="minPrice"
+                            value={minPrice}
+                            onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
+                            placeholder="Min"
+                            className="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400"
+                          />
+                          <span className="">-</span>
+                          <input
+                            type="number"
+                            name="maxPrice"
+                            value={maxPrice}
+                            onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
+                            placeholder="Max"
+                            className="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400"
+                          />
+                        </div>
+                      </div>
+
+                      <div className='text-sm lg:text-base flex flex-col '>
+                        <h4 className="font-medium text-gray-700 mb-2">Sort By Price:</h4>
+                        <div className="relative  w-48 lg:mb-5 flex justify-between items-center">
+                          <select
+                            className="appearance-none w-full px-4 py-2 border bg-white font-medium text-gray-700 border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            value={sortByPrice}
+                            onChange={(e) => setSortByPrice(e.target.value)}
+                          >
+                            {priceOptions.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <FaChevronDown className="ml-2" />
+
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Rating */}
+                      <div className="flex flex-col text-sm lg:text-base ">
+                        <label className="font-medium text-gray-700 mb-2">Rating:</label>
+                        <div className="flex gap-8 lg:mb-5 items-center">
+                          <StarRating
+                            className=''
+                            value={parseInt(filters.rating)}
+                            onChange={handleRatingChange}
+                          />
+                          <Tooltip message="Clear Rating">
+                            <button
+                              onClick={() => handleRatingChange(null)}
+
+                            >
+                              <GrClear className='text-amber-700 mt-2' size={20} />
+                            </button>
+                          </Tooltip>
+                        </div>
+                      </div>
+
+                      {/* Sub Categories */}
+                      {store?.subCategories && (
+                        <div className="mb-4 text-sm lg:text-base ">
+                          <h4 className=" mb-2 font-medium text-gray-700">Subcategories:</h4>
+                          {store.subCategories.map((subCategory, index) => (
+                            <div key={subCategory._id} className="flex items-center mb-2">
+                              <input
+                                type="checkbox"
+                                id={`subCategory-${index}`}
+                                value={subCategory.name}
+                                onChange={handleFilterChange}
+                                className="mr-2"
+                              />
+                              <label htmlFor={`subCategory-${index}`} className="text-gray-600">{subCategory.name}</label>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                    </div>
+
+                    <div className="mt-2 flex justify-start">
+                      <button onClick={handleSearch} // Handle click on search button
+                        className="w-full lg:w-fit px-28 py-2 bg-gray-600 text-white rounded-lg flex items-center space-x-2 hover:bg-gray-700 focus:outline-none">
+                        <FaSearch />
+                        <span>Search</span>
+                      </button>
+                    </div>
+                  </motion.div>
+
+                )}
+              </AnimatePresence>
+
+
+              <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-x-8 lg:gap-y-8 w-full rounded-lg lg:px-16 ">
                 {products.map(product => (
-                  // <ProductCard
-                  //   key={product.id}
-                  //   product={product}
-                  //   productColor={color.productListColor}
-                  //   addToCart={addToCart}
-                  //   store={store}
-                  // />
+
                   <AllProductCard
                     key={product.id}
                     product={product}
