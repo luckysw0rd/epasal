@@ -2,7 +2,7 @@ import React from 'react'
 import { FaCaretRight } from "react-icons/fa";
 const Heading2 = () => {
   return (
-    <div className='flex flex-col items-center h-[120vh] w-[90%] text-[#112D4E] font-Poppins '>
+    <div className='flex flex-col items-center h-[120vh] w-[90%] text-[#112D4E] font-Poppins justify-center'>
         <h1 className='text-[56px] font-bold mt-[10vh] mb-5'>Build your online presence</h1>
         <h2 className='text-[45px] font-bold text-center mb-[7vh]'>Create your own <br/>e-commerce website</h2>
         <div className='flex justify-around w-full md:w-4/5 lg:w-3/5 items-center mb-[10vh] tracking-wider'>

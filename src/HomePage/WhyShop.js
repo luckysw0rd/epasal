@@ -24,8 +24,8 @@ const WhyShop = () => {
     }]
   return (
     <div className='w-screen flex flex-col items-center'>
-        <h4 className='font-bold text-[40px] w-full md:w-[95%] lg:w-[75%]'>Why Shopatbanau</h4>
-        <div className='flex justify-between w-full md:w-[95%] lg:w-[1300px]'>
+        <h4 className='font-bold text-[40px] w-full md:w-[95%] lg:w-[90%]'>Why Shopatbanau</h4>
+        <div className='flex justify-between w-full md:w-[95%] lg:w-[90%]'>
             {CardData.map((data,index)=><WhyShopCard data={data} index={index}/>)}
         </div>
     </div>

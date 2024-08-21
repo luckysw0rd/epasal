@@ -196,7 +196,7 @@ const Product = ({ store }) => {
         }
       );
 
-      toast.success('Product updated successfully');
+      toast.success(response);
       const updatedProducts = [...products];
       updatedProducts[editProductIndex] = updatedEditProduct;
       setProducts(updatedProducts);
