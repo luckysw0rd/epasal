@@ -511,7 +511,7 @@ const AllProducts = () => {
               </AnimatePresence>
 
 
-              <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-x-8 lg:gap-y-8 w-full rounded-lg lg:px-16 ">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-x-8 lg:gap-y-8 w-full rounded-lg lg:px-16 ">
                 {products.map(product => (
 
                   <AllProductCard
