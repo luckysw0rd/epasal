@@ -14,7 +14,7 @@ const Tooltip = ({ message, children }) => {
                 {children}
             </span>
             {isVisible && (
-                <div className="absolute left-5 mt-2 w-40 p-2 bg-gray-700 text-white text-xs rounded shadow-lg">
+                <div className="absolute  left-5 mt-20 w-40 p-2 bg-gray-700 text-white text-xs rounded shadow-lg">
                     {message}
                 </div>
             )}

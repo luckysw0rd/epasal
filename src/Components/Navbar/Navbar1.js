@@ -411,7 +411,7 @@ const Navbar1 = ({
                             })}
                         </ul>}
                 </div>
-                <button onClick={handleCartClick} className="relative hidden md:flex">
+                <button onClick={handleCartClick} className="relative flex">
                     <FaShoppingCart className="text-2xl" />
                     {cartItems.length > 0 && (
                         <span className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 bg-red-500 rounded-full text-white px-1 py-0.5 text-xs">

@@ -7,6 +7,11 @@ import { toast } from 'react-toastify';
 import { FaDiscord, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
+import image1 from '../Assets/image1.webp';
+import image2 from '../Assets/image2.webp';
+import logoImage from '../Assets/logo.webp'; // Replace with the actual path to your logo
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const SignInPage = () => {
     const [isSignIn, setIsSignIn] = useState(true);
@@ -212,6 +217,24 @@ const SignInPage = () => {
             isSignIn ? handleSignIn() : handleSignUp();
         }
     };
+    const swipeVariants = {
+        initial: (direction) => ({
+          x: direction === "left" ? "-100%" : "100%", // Initial position based on direction
+          opacity: 0,
+        }),
+        animate: {
+          x: 0,
+          opacity: 1,
+          transition: {
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+            duration: 3,
+          },
+        },
+        
+      };
+      const direction = isSignIn ? "left" : "right";      
 
     return (
         <>
@@ -219,98 +242,190 @@ const SignInPage = () => {
                 <>
                     {showOverlay && <Overlay email={formData.email} setShowOverlay={setShowOverlay} />}
 
-                    <div className="flex items-center justify-center lg:min-h-screen bg-[#EEEEEE]">
-                        <div className="relative flex flex-col justify-center gap-16 p-8 md:p-10 m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
-                            {/* left side */}
-                            <div className="flex flex-col justify-center ">
-                                <span className="mb-3 text-3xl lg:text-4xl font-bold">{isSignIn ? 'Welcome back' : 'Create an Account'}</span>
-                                <span className="font-light text-gray-700 mb-4">
-                                    {isSignIn ? 'Welcome back! Please enter your details' : 'Please enter your details to sign up'}
-                                </span>
-                                {!isSignIn && (
-                                    <>
-                                        <div className="py-2">
-                                            <span className="mb-2 text-md">Name</span>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                                                name="name"
-                                                id="name"
-                                                value={formData.name}
-                                                onChange={handleChange}
-                                                onKeyDown={handleKeyDown}
-                                            />
-                                        </div>
-                                    </>
-                                )}
-                                <div className="py-2 ">
-                                    <span className="mb-4 text-md">Email:</span>
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                                        name="email"
-                                        id="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        onKeyDown={handleKeyDown}
-                                    />
-                                </div>
-                                <div className="py-2 ">
-                                    <span className="mb-4 text-md">Password:</span>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        onKeyDown={handleKeyDown}
-                                    />
-                                </div>
-                                {!isSignIn && (
-                                    <>
-                                        <div className="py-2 mb-4">
-                                            <span className="mb-2 text-md">Confirm Password</span>
-                                            <input
-                                                type="password"
-                                                name="confirmPassword"
-                                                id="confirmPassword"
-                                                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                                                value={formData.confirmPassword}
-                                                onChange={handleChange}
-                                                onKeyDown={handleKeyDown}
-                                            />
-                                        </div>
-                                    </>
-                                )}
-                                {isSignIn ? (
-                                    <div className="flex justify-between w-full py-2">
-                                        <span onClick={() => setShowForgotPasswordModal(true)} className="font-semibold text-md cursor-pointer my-2">Forgot password</span>
-                                    </div>
-                                ) : null}
-                                {
-                                    !isSignIn ? (
-                                        <span className='text-gray-600 my-2 ml-2'><input value={isPolicyChecked} onClick={(e) => setIsPolicyChecked(e.target.checked)} type='checkbox' /> Accept <a className='text-blue-600 underline' target='_blank' href='/terms-and-conditions'>Terms and Conditions</a></span>
-                                    ) : null
-                                }
-                                <button
-                                    className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
-                                    onClick={isSignIn ? handleSignIn : handleSignUp}
-                                    disabled={!isSignIn && !isPolicyChecked}
-                                >
-                                    {isSignIn ? 'Sign in' : 'Sign up'}
-                                </button>
-                                <div className="cursor-pointer text-center flex flex-col text-gray-400" onClick={toggleForm}>
-                                    {isSignIn ? "Don't have an account?" : "Already have an account?"}
-                                    <span className="font-bold text-black">
-                                        {isSignIn ? 'Sign up for free' : 'Sign in'}
-                                    </span>
-                                </div>
-                            </div>
-                            {/* right side */}
+                    
 
-                        </div>
+                    <div className="relative h-screen overflow-hidden bg-gray-100">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={isSignIn ? "signInPage" : "signUpPage"}
+          custom={direction}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={swipeVariants}
+          className="absolute inset-0 flex"
+        >
+          <div
+            className={`hidden sm:block w-3/4 ${
+              isSignIn ? "order-2" : "order-1"
+            }`}
+          >
+            <img
+              src={isSignIn ? image1 : image2}
+              alt={isSignIn ? "Sign In" : "Sign Up"}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div
+            className={`w-full sm:w-1/2 flex items-center justify-center bg-pink-50 ${
+              isSignIn ? "order-1" : "order-2"
+            }`}
+          >
+            <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-8">
+              <div className="flex items-center mb-6">
+              <Link to="/" className="flex items-center mb-6">
+  <img src={logoImage} alt="Logo" className="h-10 mr-2" />
+  <span className="text-lg sm:text-xl font-bold">ShopAtBanau</span>
+</Link>
+              </div>
+              <div className="w-full max-w-md">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-3">
+                  {isSignIn ? "Welcome back" : "Create an Account"}
+                </h2>
+                <p className="text-gray-700 mb-6">
+                  {isSignIn
+                    ? "Welcome back! Please enter your details"
+                    : "Please enter your details to sign up"}
+                </p>
+                <form className="space-y-4">
+                  {!isSignIn && (
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3 h-12"
+                      />
                     </div>
+                  )}
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      onKeyDown={handleKeyDown}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3 h-12"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      onKeyDown={handleKeyDown}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3 h-12"
+                    />
+                  </div>
+                  {!isSignIn && (
+                    <div>
+                      <label
+                        htmlFor="confirmPassword"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Confirm Password
+                      </label>
+                      <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3 h-12"
+                      />
+                    </div>
+                  )}
+                  {isSignIn && (
+                    <div className="flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => setShowForgotPasswordModal(true)}
+                        className="text-sm font-semibold text-[#b5651d] hover:text-[#ff7f50]"
+                      >
+                        Forgot password?
+                      </button>
+                    </div>
+                  )}
+                  {!isSignIn && (
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="policyCheck"
+                        checked={isPolicyChecked}
+                        onChange={(e) => setIsPolicyChecked(e.target.checked)}
+                        className="h-4 w-4 text-[#b5651d] focus:ring-[#b5651d] border-gray-300 rounded"
+                      />
+                      <label
+                        htmlFor="policyCheck"
+                        className="ml-2 block text-sm text-gray-900"
+                      >
+                        Accept{" "}
+                        <a
+                          href="/terms-and-conditions"
+                          target="_blank"
+                          className="text-[#b5651d] hover:text-[#ff7f50]"
+                        >
+                          Terms and Conditions
+                        </a>
+                      </label>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={isSignIn ? handleSignIn : handleSignUp}
+                    disabled={!isSignIn && !isPolicyChecked}
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#ffa047] hover:bg-[#ff7f50] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffa047]"
+                  >
+                    {isSignIn ? "Sign in" : "Sign up"}
+                  </button>
+                </form>
+                <div className="mt-6 text-center">
+                  <p className="text-sm text-gray-600">
+                    {isSignIn
+                      ? "Don't have an account?"
+                      : "Already have an account?"}{" "}
+                    <button
+                      onClick={toggleForm}
+                      className="font-medium text-[#b5651d] hover:text-[#ff7f50]"
+                    >
+                      {isSignIn ? "Sign up for free" : "Sign in"}
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+
+
+
 
 
                     {showForgotPasswordModal && (
