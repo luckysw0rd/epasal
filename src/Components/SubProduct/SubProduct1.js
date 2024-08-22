@@ -5,7 +5,7 @@ import { AuthContext } from '../../Hooks/AuthContext';
 
 const SubProduct1 = ({
     products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
-    , addToCart }) => {
+    , addToCart,handleAddToCartAnalytics }) => {
     const ref = useRef();
     const containerRef = useRef(null);
     const { events } = useDraggable(ref);
@@ -103,6 +103,7 @@ const SubProduct1 = ({
                                 handleRemoveProduct={handleRemoveProduct}
                                 store={store}
                                 addToCart={addToCart}
+                                handleAddToCartAnalytics={handleAddToCartAnalytics}
                             />
                         </div>
                     ))}

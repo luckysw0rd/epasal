@@ -15,6 +15,7 @@ import { FaPlus, FaUpload } from 'react-icons/fa';
 import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
 import { CiTextAlignJustify } from "react-icons/ci";
 import { FaDownload } from "react-icons/fa";
+import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
 import 'react-toastify/dist/ReactToastify.css';
 
 // List of fonts from your Tailwind configuration
@@ -1469,6 +1470,9 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                   </div>
                   <div className='font-normal mt-4'>
                     <label className='text-sm font-Poppins mb-2 block'>Shop Name</label>
+                    <Tooltip message="Store names have to be unique">
+                      <span className='  absolute left-20 bottom-[4px] ml-2  flex   text-yellow-600 text-2xl font-bold'>?</span>
+                    </Tooltip>
                     <input
                       type='text'
                       className='border-2 border-gray-300 h-10 rounded-lg px-4 text-sm w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
@@ -1631,6 +1635,9 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                 </li>
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   Add Products<br />
+                  <Tooltip message="Remove the product by clicking the red cross on the product itself">
+                      <span className='  absolute left-[104px] bottom-[0px] ml-2  flex   text-yellow-600 text-2xl font-bold'>?</span>
+                    </Tooltip>
                   <div className='mt-2'>
                     <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddProduct}>Add +</button>
                   </div>

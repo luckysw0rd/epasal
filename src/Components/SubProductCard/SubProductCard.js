@@ -5,7 +5,7 @@ import SubProductCard3 from './SubProductCard3';
 import SubProductCard4 from './SubProductCard4';
 const SubProductCard = ({ categoryType, ...props }) => {
     
-
+    
     switch (categoryType) {
         case 'default':
             return <SubProductCard1 {...props} />;

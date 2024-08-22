@@ -7,6 +7,8 @@ import { useImage } from '../../../Hooks/useImage';
 import { FaDollarSign, FaPercent, FaChartLine, FaBox, FaEdit } from 'react-icons/fa';
 import Loading from "../../Loading/Loading"
 import ProductForm from './ProductForm';
+import { FaFilter, FaTimes } from "react-icons/fa";
+
 
 const Product = ({ store }) => {
   const initialProducts = [];
@@ -30,6 +32,8 @@ const Product = ({ store }) => {
   const [maxPrice, setMaxPrice] = useState(''); // Added state for maxPrice
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [showProductForm, setShowProductForm] = useState(false);
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+
 
   const handleSubCategoryChange = (event) => {
     const { value } = event.target;
@@ -39,12 +43,12 @@ const Product = ({ store }) => {
       subcategories: [value]
     });
   };
-useEffect(()=>{
-  if(editProductIndex){
-    console.log(editProduct.subcategories[0],'subcategory')
-    setSelectedSubCategory(editProduct.subcategories[0])
-  }
-},[editProductIndex])
+  useEffect(() => {
+    if (editProductIndex) {
+      console.log(editProduct.subcategories[0], 'subcategory')
+      setSelectedSubCategory(editProduct.subcategories[0])
+    }
+  }, [editProductIndex])
   const fetchProducts = async (limit = 10, search = '', sortOrder = 'asc') => {
     try {
       const response = await sendRequest(
@@ -58,7 +62,7 @@ useEffect(()=>{
           'Authorization': 'Bearer ' + auth.token
         }
       );
-     
+
       setProducts(response.products);
       setTotalProducts(response.totalProducts);
       setTotalPages(response.totalPages);
@@ -111,6 +115,9 @@ useEffect(()=>{
     }
   };
 
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
+  };
 
   const truncateDescription = (description, wordLimit) => {
     const words = description.split(' ');
@@ -131,9 +138,9 @@ useEffect(()=>{
 
   const handleSaveClick = async () => {
     try {
-      
+
       let updatedEditProduct = { ...editProduct };
-      
+
       // Check if the product image URL is empty and retain the existing image
       if (updatedEditProduct.image.imageUrl) {
         const uploadedProductImage = await uploadImage(updatedEditProduct.image.imageUrl);
@@ -178,7 +185,7 @@ useEffect(()=>{
         revenueGenerated: updatedEditProduct.revenueGenerated,
       };
 
-     
+
       const response = await sendRequest(
         `product/updateProduct?storeID=${store._id}`,
         'PUT',
@@ -293,7 +300,7 @@ useEffect(()=>{
   }
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    
+
   };
 
   const handleSortChange = (event) => {
@@ -306,6 +313,8 @@ useEffect(()=>{
       accept: 'image/*',
       onDrop: (acceptedFiles) => handleImageUpload(acceptedFiles, setImageUrl),
     });
+
+
 
     return (
       <div {...getRootProps()} className="border-2 border-dashed border-gray-300 p-2 rounded-lg hover:border-blue-300 cursor-pointer transition duration-300 ease-in-out">
@@ -324,49 +333,92 @@ useEffect(()=>{
       <div>
         <div className="flex flex-col px-2 justify-between mb-4 gap-2">
           <div className='flex gap-2'>
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(event) => handleSearchChange(event)}
-              className="border p-2 px-3 h-10 flex-grow"
-            />
-            <button onClick={handleSearchButton} className='bg-gray-400 text-white h-10 px-5'>Go</button>
+
+            {/* Prajjwol Changes  */}
+            <div className="flex w-full gap-2 md:gap-3">
+              <input
+                className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(event) => handleSearchChange(event)}
+              />
+              <button
+                className="px-4 md:px-10 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                onClick={handleSearchButton}
+              >
+                Search
+              </button>
+
+              {!isFilterVisible && (
+                <button
+                  onClick={toggleFilterVisibility}
+                  className="px-3 md:px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  <FaFilter size={15} />
+                </button>
+              )}
+
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded w-48"
+                onClick={handleAddProductsClick}
+              >
+                Add Products
+              </button>
+              {showProductForm && <ProductForm onClose={handleCloseProductForm} store={store} onProductAdded={handleAddProduct} />}
+
+
+              {isFilterVisible && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-5 py-0 z-50">
+                  <div className="bg-white w-full md:w-[60%] p-8 py-10 rounded-lg shadow-xl relative">
+                    <button
+                      onClick={toggleFilterVisibility}
+                      className="absolute top-3 right-3 p-2 rounded-full bg-red-500 text-white"
+                    >
+                      <FaTimes size={15} />
+                    </button>
+                    <h3 className="font-bold mb-4 text-xl text-center">Filters</h3>
+                    <label htmlFor="">Price range:</label>
+                    <div className="flex flex-col gap-5">
+                      <div className="flex mt-2">
+                        <input
+                          type="number"
+                          placeholder="Min Price"
+                          value={minPrice}
+                          onChange={(e) => setMinPrice(e.target.value)}
+                          className="border p-2 px-3 mr-2"
+                        />
+                        <input
+                          type="number"
+                          placeholder="Max Price"
+                          value={maxPrice}
+                          onChange={(e) => setMaxPrice(e.target.value)}
+                          className="border p-2 px-3 mr-2"
+                        />
+
+
+                      </div>
+                      <select value={sortOrder} onChange={handleSortChange} className="border p-2 w-56">
+                        <option value="asc">Sort by Revenue (Asc)</option>
+                        <option value="desc">Sort by Revenue (Desc)</option>
+                      </select>
+                      <button
+                        className="bg-blue-500 text-white px-4 py-2 rounded w-56"
+                        onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
+                      >
+                        Apply Filters
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* ENDS HERE  */}
+
+            </div>
+
           </div>
-          <select value={sortOrder} onChange={handleSortChange} className="border p-2">
-            <option value="asc">Sort by Revenue (Asc)</option>
-            <option value="desc">Sort by Revenue (Desc)</option>
-          </select>
-          <div className="flex mt-2">
-            <input
-              type="number"
-              placeholder="Min Price"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-              className="border p-2 px-3 mr-2"
-            />
-            <input
-              type="number"
-              placeholder="Max Price"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-              className="border p-2 px-3 mr-2"
-            />
-            <button
-              className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
-              onClick={() => fetchProducts(currentPage, 10, searchQuery, sortOrder)}
-            >
-              Apply Filters
-            </button>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
-              onClick={handleAddProductsClick}
-            >
-              Add Products
-            </button>
-            {showProductForm && <ProductForm onClose={handleCloseProductForm} store={store} onProductAdded={handleAddProduct} />}
-          </div>
-          
+
+
         </div>
         <div className="flex flex-wrap gap-8 p-4 justify-center">
           {products.map((product, productIndex) => (
@@ -425,7 +477,7 @@ useEffect(()=>{
           <span>Page {page} </span>
           <button
             onClick={() => handlePageChange(page + 1)}
-             disabled={products.length===0}
+            disabled={products.length === 0}
             className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
           >
             Next
@@ -464,7 +516,7 @@ useEffect(()=>{
                   id="subcategory"
                   name="category"
 
-                  value={editProduct.subcategories[0] }
+                  value={editProduct.subcategories[0]}
                   onChange={handleSubCategoryChange}
                   // multiple // Allow multiple selections
                   onWheel={(e) => e.target.blur()}
