@@ -81,15 +81,16 @@ const WhyShopCard = ({data,index}) => {
   useEffect(() => {
     // Use framer-motion's animation control to update the position
     controls.start({
-      y: ((index===0)||(index===3)?(scrollY>-1050)?-1250-scrollY:0:(scrollY>-800)?-900-scrollY:0),
-      x: index===1?(scrollY>-800)?-200:0:index===2?(scrollY>-800)?200:0:0,
-      rotate:index===0?(scrollY>-1050)?-25:0:index===1?(scrollY>-800)?-40:0:index===2?(scrollY>-800)?40:0:index===3?(scrollY>-1050)?25:0:0,
+      y: ((index===0)||(index===3)?(scrollY>-900)?-1250-scrollY:0:(scrollY>-750)?-900-scrollY:0),
+      x: index===1?(scrollY>-750)?-200:0:index===2?(scrollY>-750)?200:0:0,
+      rotate:index===0?(scrollY>-900)?-25:0:index===1?(scrollY>-750)?-40:0:index===2?(scrollY>-750)?40:0:index===3?(scrollY>-900)?25:0:0,
       
       transition: { type: 'tween', stiffness: 500, damping: 25, duration: 0.5 }
     });
   }, [scrollY, controls]);
   return (
-    <motion.div 
+    <div className='mx-auto'>
+      <motion.div 
         // initial={{
           
         // y:((index===0)||(index===3)?-1250:-900),
@@ -105,11 +106,12 @@ const WhyShopCard = ({data,index}) => {
         ref={ref}
         // style={{y: scrollY,}}
         transition={{duration:2}}
-        className='-z-10 bg-white flex flex-col items-center justify-center shrink rounded-2xl shadow-lg my-5 w-[240px] h-[310px] px-4 py-4'>
+        className={`-z-20 bg-white ${scrollY>-800?'blur-sm':'blur-none'} flex flex-col items-center justify-center shrink rounded-2xl shadow-lg  h-[350px] md:w-[240px] md:h-[310px] px-4 py-4 text-center md:text-left`}>
         <h3 className='font-bold'>{data.title}</h3>
         <img src={data.image} className='w-[146px]'/>
-        <p className='text-center'>{data.description}</p>
+        <p className='text-center text-[16px]'>{data.description}</p>
     </motion.div>
+    </div>
   )
 }
 

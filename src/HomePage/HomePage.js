@@ -91,7 +91,7 @@ function HomePage() {
     ]);
 
     return (
-        <div className="flex flex-col relative h-full items-center">
+        <div className="flex flex-col relative h-full items-center overflow-hidden">
             <Navbar setStores={setStores} navbarImage={navbarImage}
                 landingRef={landingRef}
                 dragDropSecRef={dragDropSecRef}
@@ -128,7 +128,9 @@ function HomePage() {
             </div>
             <div className="bg-white h-4 w-screen z-10"></div> */}
             <Heading2/>
+            <div className='-z-10'>
             <WhyShop/>
+            </div>
 
             <div className="w-full flex flex-col gap-2 bg-white">
                 {stores && <StoreList stores={stores} />}

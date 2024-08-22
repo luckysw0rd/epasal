@@ -111,12 +111,12 @@ const Navbar = ({ navbarImage, setStores }) => {
     }
 
     return (
-        <div className={`py-3 absolute z-50 top-0 left-0  w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl grid grid-cols-3`} >
-            <div className='flex items-center text-Poppins font-bold text-[#393939] gap-2' onClick={(e)=>{e.preventDefault();navigate('/')}}>
-                <img src={Logo} className='h-[50px]'/>
+        <div className={`py-3 absolute z-50 top-0 left-0 flex justify-between w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl grid grid-cols-2 lg:grid-cols-3`} >
+            <div className='flex items-center font-bold text-[#393939] gap-1 md:gap-2' onClick={(e)=>{e.preventDefault();navigate('/')}}>
+                <img src={Logo} className='h-[40px] md:h-[50px]'/>
                 <div>Shop at Banau</div>
             </div>
-            <div className='w-full'>
+            <div className='w-full hidden lg:block '>
                 <ul className='flex justify-between items-center h-full'>
                     <li className='border-b-4 border-black px-3'>Home</li>
                     <li className='px-3'>Contact Us</li>
@@ -124,10 +124,11 @@ const Navbar = ({ navbarImage, setStores }) => {
                     <li className='px-3'>FAQ</li>
                 </ul>
             </div>
-            <div className='flex justify-end gap-5 mr-0 md:mr-10 items-center'>
-                <div className='h-[38px] w-[38px] border-4 border-[#FF9E00] rounded-full flex items-center justify-center shadow-inner-dark'><FaSearch/></div>
-                <Link to='/buildStore' target='_blank' className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex items-center text-white pl-4 gap-2'>Build <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /><path d="M16 19h6" /><path d="M19 16v6" /></svg></Link>
-                {!auth.token && <div onClick={() => { navigate('/login') }} className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex items-center text-white pl-4 gap-2'>
+            <div className='flex justify-end gap-2 md:gap-5 mr-0 md:mr-10 items-center'>
+            
+                <div className='h-[38px] w-[38px] border-4 border-[#FF9E00] rounded-full flex items-center justify-center shadow-inner-dark hidden md:flex'><FaSearch/></div>
+                <Link to='/buildStore' target='_blank' className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex items-center justify-center text-white pl-4 gap-2 text-sm md:text-base'>Build <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /><path d="M16 19h6" /><path d="M19 16v6" /></svg></Link>
+                {!auth.token && <div onClick={() => { navigate('/login') }} className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex justify-center items-center text-white pl-4 gap-2 text-sm md:text-base'>
                                     Login
                                     <IoIosLogIn/>
                                 </div>}
