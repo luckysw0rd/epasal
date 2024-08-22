@@ -27,7 +27,7 @@ const fonts = [
 // Handle file import
 
 
-const Editor = ({ handleDesignClick, handleContentClick, currentStep ,instructionsCompleted}) => {
+const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructionsCompleted }) => {
   const { store, setStore } = useStore();
   const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
@@ -1415,45 +1415,43 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep ,instructio
           </div>
 
           <div className='flex justify-between font-Poppins mt-24 font-semibold text-[#6A6A6A] border-t-2 pt-4'>
-          <style>{keyframes}</style>
-      <button
-        id="contentButtonId"
-        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${
-          openType === 1 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
-        }`}
-        style={currentStep === 2 && !instructionsCompleted ? blinkingBorderStyle : {}}
-        onClick={(e) => {
-          e.preventDefault();
-          setOpenType(1);
-          handleContentClick();
-        }}
-      >
-        Content
-      </button>
-      <button
-        id="designButtonId"
-        className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${
-          openType === 2 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
-        }`}
-        style={currentStep === 1 && !instructionsCompleted ? blinkingBorderStyle : {}}
+            <style>{keyframes}</style>
+            <button
+              id="contentButtonId"
+              className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 1 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
+                }`}
+              style={currentStep === 2 && !instructionsCompleted ? blinkingBorderStyle : {}}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenType(1);
+                handleContentClick();
+              }}
+            >
+              Content
+            </button>
+            <button
+              id="designButtonId"
+              className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 2 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
+                }`}
+              style={currentStep === 1 && !instructionsCompleted ? blinkingBorderStyle : {}}
 
-        onClick={(e) => {
-          e.preventDefault();
-          setOpenType(2);
-          handleDesignClick();
-        }}
-      >
-        Design
-      </button>
-  {store.isEdit && (
-    <button
-      className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 3 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
-      onClick={e => { e.preventDefault(); setOpenType(3); }}
-    >
-      Skin
-    </button>
-  )}
-</div>
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenType(2);
+                handleDesignClick();
+              }}
+            >
+              Design
+            </button>
+            {store.isEdit && (
+              <button
+                className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 3 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
+                onClick={e => { e.preventDefault(); setOpenType(3); }}
+              >
+                Skin
+              </button>
+            )}
+          </div>
 
           {openType === 1 && (
             <motion.div
