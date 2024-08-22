@@ -10,7 +10,7 @@ import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
 import { FaFilter, FaChevronDown, FaStar } from "react-icons/fa";
 import AllProductCard from './AllProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import allproductBanner from '../../Assets/allproductBanner.png'
 
 const AllProducts = () => {
   const [searchParams] = useSearchParams();
@@ -43,7 +43,6 @@ const AllProducts = () => {
 
 
   const fetchProducts = async () => {
-    console.log(store)
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/getStoreProducts/${storeName}`, {
         params: {
@@ -73,6 +72,7 @@ const AllProducts = () => {
       setLoading(false);
     }
   };
+
 
   const initializeLocalStorageWithStoreData = () => {
     const storedStore = JSON.parse(localStorage.getItem('store'));
@@ -265,11 +265,6 @@ const AllProducts = () => {
     setIsFilterVisible(!isFilterVisible); // Toggle the visibility state
   };
 
-  const [volume, setVolume] = useState(0.5);
-  const [playing, setPlaying] = useState(true);
-
-  const [isOpen, setIsOpen] = useState(false);
-
   const productOptions = [
     { value: '', label: 'All Products' },
     { value: 'offers', label: 'Offers' },
@@ -323,7 +318,7 @@ const AllProducts = () => {
             className="absolute inset-0 bg-center bg-no-repeat bg-cover z-0 opacity-70"
             style={{
               backgroundImage:
-                "url('https://zenlayercdn.centuryply.com/blogimage/3-01-24/blog3-3.jpeg')",
+                `url(${allproductBanner})`, // Set the background image
               // Adjusts the image position
             }}
           ></div>
@@ -334,7 +329,7 @@ const AllProducts = () => {
         </div>
 
 
-        <div className="flex flex-col lg:flex-row px-2 lg:px-0">
+        <div className="flex flex-col lg:flex-row sm:px-2 lg:px-0">
           <div className="flex-grow p-2 sm:p-4 w-full lg:w-3/4 min-h-screen">
             <div className="flex flex-wrap justify-start gap-4">
               <div className="w-full bg-white py-2 md:p-3 flex items-center justify-between gap-5 md:gap-16 shadow-md">
@@ -358,8 +353,10 @@ const AllProducts = () => {
                       type="text"
                       name="productName"
                       value={name}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Trigger search on Enter key press
                       onChange={handleNameFilterChange} // Handle change for name filter input
                       placeholder="Search..."
+
                       className=" lg:flex-grow lg:min-w-[500px] px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:border-gray-500 "
                     />
 
@@ -396,7 +393,7 @@ const AllProducts = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, ease: 'easeInOut' }}
-                    className='h-[500px] lg:h-[250px] border-b border-gray-300 shadow-md px-6 w-full'>
+                    className='h-[500px] lg:h-[250px] border-b border-gray-300 shadow-md px-6 smm:px-10 w-full'>
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6 lg:mt-4">
                       <div className="lg:hidden relative">
                         <input
@@ -500,7 +497,7 @@ const AllProducts = () => {
 
                     <div className="mt-2 flex justify-start">
                       <button onClick={handleSearch} // Handle click on search button
-                        className="w-full lg:w-fit px-28 py-2 bg-gray-600 text-white rounded-lg flex items-center space-x-2 hover:bg-gray-700 focus:outline-none">
+                        className="w-full md:w-fit px-28 py-2 bg-gray-600 text-white rounded-lg flex items-center space-x-2 hover:bg-gray-700 focus:outline-none">
                         <FaSearch />
                         <span>Search</span>
                       </button>
