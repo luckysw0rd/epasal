@@ -253,18 +253,20 @@ const SignInPage = () => {
           animate="animate"
           exit="exit"
           variants={swipeVariants}
-          className="absolute inset-0 flex"
+          className="absolute inset-0 flex bg-white"
         >
           <div
             className={`hidden sm:block w-3/4 ${
               isSignIn ? "order-2" : "order-1"
             }`}
           >
-            <img
-              src={isSignIn ? image1 : image2}
-              alt={isSignIn ? "Sign In" : "Sign Up"}
-              className="h-full w-full object-cover"
-            />
+            <div className="flex justify-center items-center h-full">
+  <img
+    src={isSignIn ? image1 : image2}
+    alt={isSignIn ? "Sign In" : "Sign Up"}
+    className="h-2/3 w-2/3 object-cover"
+  />
+</div>
           </div>
           <div
             className={`w-full sm:w-1/2 flex items-center justify-center bg-pink-50 ${
@@ -529,3 +531,4 @@ function abc(liveChatSource) {
     s1.setAttribute('crossorigin', '*');
     s0.parentNode.insertBefore(s1, s0);
 }
+  
