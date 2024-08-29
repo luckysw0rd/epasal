@@ -21,15 +21,15 @@ const SaveStoreButton = () => {
     const ImageUpload = async () => {
         try {
             setTempLoading(true);
-            const ImageData = await uploadImage(store.logo.logoUrl)
-            const MobileBannerData = await uploadImage(store.mobileBanner.bannerUrl)
-            const BannerData = await uploadImage(store.banner.bannerUrl)
-            const secondaryBannerData = await uploadImage(store.secondaryBanner.secondaryBannerUrl)
-            const offerBannerData = await uploadImage(store.offerBanner.offerBannerUrl)
-            const thirdBannerData = await uploadImage(store.thirdBanner.thirdBannerUrl)
+            const ImageData = await uploadImage(store?.logo?.logoUrl)
+            const MobileBannerData = await uploadImage(store?.mobileBanner?.bannerUrl)
+            const BannerData = await uploadImage(store?.banner?.bannerUrl)
+            const secondaryBannerData = await uploadImage(store?.secondaryBanner?.secondaryBannerUrl)
+            const offerBannerData = await uploadImage(store?.offerBanner?.offerBannerUrl)
+            const thirdBannerData = await uploadImage(store?.thirdBanner?.thirdBannerUrl)
             for (let i = 0; i < store.products.length; i++) {
                 const product = store.products[i];
-                const productImg = await uploadImage(product.image.imageUrl);
+                const productImg = await uploadImage(product?.image?.imageUrl);
 
                 // Update product image
                 setStore(prev => {
@@ -84,24 +84,24 @@ const SaveStoreButton = () => {
             setStore(prev => (
                 {
                     ...prev, logo: {
-                        logoUrl: ImageData.img,
-                        logoID: ImageData.id
+                        logoUrl: ImageData?.img,
+                        logoID: ImageData?.id
                     }, banner: {
-                        bannerUrl: BannerData.img,
-                        bannerID: BannerData.id
+                        bannerUrl: BannerData?.img,
+                        bannerID: BannerData?.id
                     }, mobileBanner: {
-                        bannerUrl: MobileBannerData.img,
-                        bannerID: MobileBannerData.id
+                        bannerUrl: MobileBannerData?.img,
+                        bannerID: MobileBannerData?.id
                     }
                     , secondaryBanner: {
-                        secondaryBannerUrl: secondaryBannerData.img,
-                        secondaryBannerID: secondaryBannerData.id
+                        secondaryBannerUrl: secondaryBannerData?.img,
+                        secondaryBannerID: secondaryBannerData?.id
                     }, offerBanner: {
-                        offerBannerUrl: offerBannerData.img,
-                        offerBannerID: offerBannerData.id
+                        offerBannerUrl: offerBannerData?.img,
+                        offerBannerID: offerBannerData?.id
                     }, thirdBanner: {
-                        thirdBannerUrl: thirdBannerData.img,
-                        thirdBannerID: thirdBannerData.id
+                        thirdBannerUrl: thirdBannerData?.img,
+                        thirdBannerID: thirdBannerData?.id
                     }
                 }
             ))
