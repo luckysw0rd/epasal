@@ -106,7 +106,7 @@ const WhyShopCard = ({data,index}) => {
         ref={ref}
         // style={{y: scrollY,}}
         transition={{duration:2}}
-        className={`-z-20 bg-white ${scrollY>-800?'blur-sm':'blur-none'} flex flex-col items-center justify-center shrink rounded-2xl shadow-lg  h-[350px] md:w-[240px] md:h-[310px] px-4 py-4 text-center md:text-left`}>
+        className={`-z-20 bg-white ${scrollY>-800?scrollY>-600?"blur-md":'blur-sm':'blur-none'} flex flex-col items-center justify-center shrink rounded-2xl shadow-lg  h-[350px] md:w-[240px] md:h-[310px] px-4 py-4 text-center md:text-left`}>
         <h3 className='font-bold'>{data.title}</h3>
         <img src={data.image} className='w-[146px]'/>
         <p className='text-center text-[16px]'>{data.description}</p>
