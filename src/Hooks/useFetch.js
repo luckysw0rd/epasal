@@ -47,7 +47,7 @@ export const useFetch = () => {
                 setIsLoading(false);
 
             } else {
-                setError(error);
+                // setError(error);
                 console.error('Fetch error:', error);
                 setIsLoading(false);
 
