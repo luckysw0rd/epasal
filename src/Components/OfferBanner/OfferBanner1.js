@@ -86,13 +86,13 @@ const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }
                       className="mt-2 lg:my-4  text-base md:text-2xl lg:text-4xl font-normal font-Sanchez"
                       style={{ color: color.offerBannerColor.textColor }}
                     >
-                      {offerBannerText.para2 || "40% OFF"}
+                      {offerBannerText?.para2 || "40% OFF"}
                     </p>
                     <p
                       className="mt-2  lg:my-4  text-base md:text-xl lg:text-3xl font-normal underline underline-offset-8  font-Sanchez"
                       style={{ color: color.offerBannerColor.textColor }}
                     >
-                      {offerBannerText.para3 || "GET YOURS NOW"}
+                      {offerBannerText?.para3 || "GET YOURS NOW"}
                     </p>
                   </>
                 ) : (
@@ -103,7 +103,7 @@ const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }
                       value={offerBannerText?.para1 || ""}
                       onChange={handleTextChange}
                       className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
-                      style={{ color: color.offerBannerColor.textColor }}
+                      style={{ color: color?.offerBannerColor?.textColor }}
                       placeholder="OUR NISCHE COLLECTION"
                     />
                     <textarea
@@ -111,7 +111,7 @@ const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }
                       value={offerBannerText?.para2 || ""}
                       onChange={handleTextChange}
                       className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
-                      style={{ color: color.offerBannerColor.textColor }}
+                      style={{ color: color?.offerBannerColor?.textColor }}
                       placeholder="40% OFF"
                     />{" "}
                     <textarea
@@ -119,7 +119,7 @@ const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }
                       value={offerBannerText?.para3 || ""}
                       onChange={handleTextChange}
                       className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
-                      style={{ color: color.offerBannerColor.textColor }}
+                      style={{ color: color?.offerBannerColor?.textColor }}
                       placeholder="GET YOURS NOW"
                     />{" "}
                   </>
@@ -133,7 +133,7 @@ const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }
           <input {...getInputPropsBackground()} />
           <div className="w-full h-full ">
             <img
-              src={store.offerBanner.offerBannerUrl}
+              src={store?.offerBanner?.offerBannerUrl}
               alt="Product"
               className="relative rounded-md  md:h-[400px]   w-[400px] sm:w-[600px] md:w-[800px] lg:w-[600px] lg:h-[300px] xl:w-[800px] xl:h-[380px] xl:pr-10 2xl:w-[800px] 2xl:h-[380px]  "
             />
