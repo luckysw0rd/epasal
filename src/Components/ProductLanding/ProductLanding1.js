@@ -209,7 +209,7 @@ const ProjectLanding1 = () => {
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
                                                 onClick={changeDefaultImage}
                                             >
-                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                <img src={selectedProduct?.image?.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                             </div>
                                         )}
                                         {selectedProduct.variant.map((variant, variantIndex) => (
@@ -220,7 +220,7 @@ const ProjectLanding1 = () => {
                                                     className={`cursor-pointer text-sm lg:text-base ${selectedVariants[variantIndex] === optionIndex ? 'font-bold' : ''} rounded-md`}
                                                     onClick={() => handleOptionSelect(variantIndex, optionIndex)}
                                                 >
-                                                    <img src={option.image?.imageUrl || selectedProduct.image.imageUrl} alt={option.name} className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                    <img src={option.image?.imageUrl || selectedProduct?.image?.imageUrl} alt={option.name} className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                                 </div>
                                             ))
                                         ))}

@@ -142,8 +142,8 @@ const Product = ({ store }) => {
       let updatedEditProduct = { ...editProduct };
 
       // Check if the product image URL is empty and retain the existing image
-      if (updatedEditProduct.image.imageUrl) {
-        const uploadedProductImage = await uploadImage(updatedEditProduct.image.imageUrl);
+      if (updatedEditProduct?.image?.imageUrl) {
+        const uploadedProductImage = await uploadImage(updatedEditProduct?.image?.imageUrl);
         updatedEditProduct.image.imageUrl = uploadedProductImage.img;
         updatedEditProduct.image.imageID = uploadedProductImage.id;
       }
@@ -152,9 +152,9 @@ const Product = ({ store }) => {
         updatedEditProduct.variant.map(async (variant) => {
           const updatedOptions = await Promise.all(
             variant.options.map(async (option) => {
-              if (option.image && option.image.imageUrl) {
-                if (option.image.imageUrl) {
-                  const uploadedVariantImage = await uploadImage(option.image.imageUrl);
+              if (option?.image && option?.image?.imageUrl) {
+                if (option?.image?.imageUrl) {
+                  const uploadedVariantImage = await uploadImage(option?.image?.imageUrl);
                   return {
                     ...option,
                     name: option.name || 'Default Option Name', // Set default option name
