@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }) => {
   const { store, setStore } = useStore();
   const { color, offerBannerText } = store;
-  const [bgImage, setBgImage] = useState(store.offerBanner.offerBannerUrl);
+  const [bgImage, setBgImage] = useState(store?.offerBanner?.offerBannerUrl);
 
   const onDropBackground = (acceptedFiles) => {
     const backgroundImage = acceptedFiles[0];
@@ -53,7 +53,7 @@ const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          backgroundColor: color.offerBannerColor.backgroundThemeColor,
+          backgroundColor: color?.offerBannerColor?.backgroundThemeColor,
           fontFamily: store?.fonts?.Banner3,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -65,22 +65,22 @@ const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage }
           <div
             className=" mx-auto w-[300px] sm:w-[500px] md:w-[500px] lg:w-[450px]   xl:w-[500px] 2xl:w-[650px]    mb-8 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0 md:mx-auto  "
             style={{
-              backgroundColor: color.offerBannerColor.backgroundBoxThemeColor1,
+              backgroundColor: color?.offerBannerColor?.backgroundBoxThemeColor1,
             }}
           >
             {" "}
             <div
               className=" border-2 md:h-[270px] lg:h-[200px] 2xl:h-[300px] flex flex-col justify-center items-center   mx-4 my-4 p-4  py-4 text-center"
-              style={{ borderColor: color.offerBannerColor.textColor }}
+              style={{ borderColor: color?.offerBannerColor?.textColor }}
             >
               <Link to={!isEdit && fetchedFromBackend &&  `/store/products/${store.name}`} className="hover:underline">
                 {previewMode ? (
                   <>
                     <p
                       className="my-2 lg:my-4 text-base md:text-base lg:text-2xl font-normal"
-                      style={{ color: color.offerBannerColor.textColor }}
+                      style={{ color: color?.offerBannerColor?.textColor }}
                     >
-                      {offerBannerText.para1 || "OUR NISCHE COLLECTION"}
+                      {offerBannerText?.para1 || "OUR NISCHE COLLECTION"}
                     </p>
                     <p
                       className="mt-2 lg:my-4  text-base md:text-2xl lg:text-4xl font-normal font-Sanchez"
