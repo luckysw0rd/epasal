@@ -77,7 +77,7 @@ const StoreList = ({ stores }) => {
       <h2 className="font-bold text-[20px] md:text-[40px] w-[98%] md:w-[95%] lg:w-[90%] text-center md:text-left z-30">
         {auth.isLoggedIn ? "My Stores" : "Trending Stores"}
       </h2>
-      <div className="flex justify-center flex-wrap -m-4">
+      <div className="flex justify-center flex-wrap -m-4 w-full">
         {stores.length > 0 ? stores.map(store => (
           <StoreCard key={store._id} store={store} auth={auth} />
         )) : <div className='text-center text-gray-400 text-xl my-20'>Store Unavailable</div>}

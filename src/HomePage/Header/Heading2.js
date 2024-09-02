@@ -103,7 +103,7 @@ const Heading2 = () => {
         <div className={` flex-col md:flex-row gap-5 md:gap-0 justify-around w-full md:w-4/5 lg:w-3/5 items-center mb-[10vh] tracking-wider hidden md:flex mt-10 text-xl`}>
             <button className='bg-gradient-to-r from-[#C47A00] to-[#1D0E3E] w-[176px] h-[64px] rounded-full text-white font-bold flex items-center justify-center gap-1 flex' onClick={e=>setWatchVideoPopUp(true)}>Watch Video <FaCaretRight className='text-2xl'/></button>
             <Link to='/buildStore' target='_blank' className='bg-gradient-to-r from-[#C47A00] to-[#1D0E3E] w-[176px] h-[64px] rounded-full text-white font-bold flex items-center justify-center gap-1 flex uppercase'>Build <MdModeEdit /></Link>
-            <a href='#scrollStoreList'><button className='bg-gradient-to-r from-[#C47A00] to-[#1D0E3E] w-[176px] h-[64px] rounded-full text-white font-bold flex items-center justify-center gap-1 flex'>{auth.isLoggedIn?'My Store':'Banau Stores'} <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg></button></a>
+            <a href='#scrollStoreList'><button className='bg-gradient-to-r from-[#C47A00] to-[#1D0E3E] w-[176px] h-[64px] rounded-full text-white font-bold flex items-center justify-center gap-1 flex'>{auth.isLoggedIn?'My Store':'Trending Stores'} <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg></button></a>
         </div>
 
         <div className={` flex-col md:flex-row gap-5 md:gap-0 justify-around w-full md:w-4/5 lg:w-3/5 items-center mb-[10vh] tracking-wider flex md:hidden text-center`}>
@@ -117,7 +117,7 @@ const Heading2 = () => {
             </div>
             <a href='#scrollStoreList'><div className='flex flex-col items-center'>
               <button className='bg-gradient-to-r from-[#C47A00] to-[#1D0E3E] w-[64px] h-[64px] rounded-full text-white font-bold flex items-center justify-center gap-1 flex'><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg></button>
-              <div>{auth.isLoggedIn?'My Store':'Banau Stores '}</div>
+              <div>{auth.isLoggedIn?'My Store':'Trending Stores '}</div>
             </div></a>
         </div>
         
