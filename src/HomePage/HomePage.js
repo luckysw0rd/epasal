@@ -91,7 +91,7 @@ function HomePage() {
     ]);
 
     return (
-        <div className="flex flex-col relative h-full items-center overflow-hidden">
+        <motion.div className="flex flex-col relative h-full items-center overflow-hidden">
             <Navbar setStores={setStores} navbarImage={navbarImage}
                 landingRef={landingRef}
                 dragDropSecRef={dragDropSecRef}
@@ -203,7 +203,7 @@ function HomePage() {
                 </motion.div>
 
             </div>
-        </div>
+        </motion.div>
     );
 }
 

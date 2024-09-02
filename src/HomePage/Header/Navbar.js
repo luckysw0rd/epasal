@@ -116,7 +116,7 @@ const Navbar = ({ navbarImage, setStores }) => {
     }
 
     return (
-        <div className={`py-3 absolute z-50 top-0 left-0 flex justify-between w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl grid grid-cols-2 lg:grid-cols-3`} >
+        <div className={`py-3 absolute z-30 top-0 left-0 flex justify-between w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl grid grid-cols-2 lg:grid-cols-3`} >
             <div className='flex items-center font-bold text-[#393939] gap-1 md:gap-2' onClick={(e)=>{e.preventDefault();navigate('/')}}>
                 <img src={Logo} className='h-[40px] md:h-[50px]'/>
                 <div>Shop at Banau</div>
@@ -130,36 +130,7 @@ const Navbar = ({ navbarImage, setStores }) => {
                 </ul>
             </div>
             <div className='flex justify-end gap-2 md:gap-5 mr-0 md:mr-10 items-center'>
-            <div >
-                        <form onSubmit={searchStore} className={`h-10 ${searchData.length > 0 && searchTerm !== '' ? 'rounded-t-3xl' : 'rounded-3xl'} bg-white items-center px-2 hidden md:flex relative`}>
-
-                            <button className='p-2 rounded-full bg-[#F38825] text-white' type='submit' >
-                                <FaSearch />
-                            </button>
-                            <div className={`absolute top-10 right-0 ${searchHide?'hidden':'block'}`}>
-                            <input onChange={(e) => { setSearchTerm(e.target.value) }} type='text' value={searchTerm} className=' max-w-[160px] appearance-none border border-black rounded pl-2 focus:outline-none focus:border-none' />
-
-                            {searchData.length > 0 && searchTerm !== '' && <div className=' hidden md:flex'>
-                            <div className=' bg-white rounded-b-3xl py-3 pl-3 border border-black w-full'>
-                                {searchData.map((n, i) => {
-                                    return <div className='flex gap-4 py-1 items-center'>
-                                        <Link to={`/store/${n.name}`} target='_blank'>
-                                            <div className=' font-bold flex flex-row gap-4 items-center'
-                                            >
-                                                <img className='h-8 w-8 rounded-full border border-2 border-gray-700' src={n.logo.logoUrl} />
-                                                <div>{n.name}</div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                })}
-
-                            </div>
-                            </div>
-                            }
-                            </div>
-                        </form>
-                        
-                    </div>
+            
                 {/* <div className='h-[38px] w-[38px] border-4 border-[#FF9E00] rounded-full flex items-center justify-center shadow-inner-dark hidden md:flex'><FaSearch/></div> */}
                 <Link to='/buildStore' target='_blank' className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex items-center justify-center text-white pl-4 gap-2 text-sm md:text-base'>Build <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /><path d="M16 19h6" /><path d="M19 16v6" /></svg></Link>
                 {!auth.token && <div onClick={() => { navigate('/login') }} className='bg-[#112D4E] h-[40px] w-[104px] rounded-full flex justify-center items-center text-white pl-4 gap-2 text-sm md:text-base'>
