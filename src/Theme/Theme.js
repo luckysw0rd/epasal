@@ -12,26 +12,48 @@ const Theme = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const [storeName, setStoreName] = useState('');
+  const [storeLogoUrl, setStoreLogoUrl] = useState('');
+ 
 
+
+useEffect(() => {
+  if (storeLogoUrl) {
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/jpeg';
+    link.rel = 'shortcut icon';
+    link.href = storeLogoUrl;
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+}, [storeLogoUrl]);
   useEffect(() => {
-    // Fetch the store name based on the storeID
-    fetchStoreName(storeID).then(name => setStoreName(name));
-  }, [storeID]);
+    const fetchStoreData = async () => {
+      try {
+        const responseData = await sendRequest(`store/get/${storeID}`);
+        console.log(responseData.store.logo.logoUrl);
+        if (responseData && responseData.store) {
+          setStoreName(storeID);
+          // Update this line to access the logo URL correctly
+          setStoreLogoUrl(responseData.store.logo.logoUrl);
+        }
+      } catch (err) {
+        console.error('Error fetching store data:', err);
+        setStoreName(storeID); // Fallback to storeID if fetch fails
+      }
+    };
+    console.log(storeLogoUrl);
+
+    fetchStoreData();
+  }, [storeID, sendRequest]);
 
   return (
     <div className='overflow-x-hidden'>
       <Helmet>
         <title>{storeName}</title>
+       
       </Helmet>
       <Theme1 />
     </div>
   );
 };
-
-// Assume this function fetches the store name from an API or database
-async function fetchStoreName(storeID) {
-  // Replace this with your actual store name fetching logic
-  return `${storeID}`;
-}
 
 export default Theme;

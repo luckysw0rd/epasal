@@ -60,6 +60,8 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
         setIsCartOpen(!isCartOpen);
     };
 
+    console.log(store)
+
     return (
         <motion.nav
             className={`flex absolute top-0 items-center justify-between px-6 py-4 shadow-md fixed w-full z-20 transition-all duration-300 ${scrolling ? 'bg-brown-700' : 'bg-transparent'}`}
@@ -97,15 +99,15 @@ const Navbar = ({ color, store, addToCart, setStore }) => {
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-8 mr-8">
-                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}`} className="hover:underline">
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}/`} className="hover:underline">
                         All Products
                     </Link>
-                    <a href="#" className="hover:underline">
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}/?filter=featured`} className="hover:underline">
                         Featured
-                    </a>
-                    <a href="#" className="hover:underline">
+                    </Link>
+                    <Link to={`${process.env.REACT_APP_BASE_URL}/store/products/${store.name}/?filter=offers`} className="hover:underline">
                         Offers
-                    </a>
+                    </Link>
                 </div>
 
                 <button className="focus:outline-none" onClick={toggleCartDropdown} aria-label="Open Cart">
