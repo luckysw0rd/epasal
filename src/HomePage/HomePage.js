@@ -19,6 +19,8 @@ import SkinSection1 from './SkinSelection1';
 import SliderNavbar from './SliderNavbar';
 import StoreList from './StoreList'; // Import StoreList if it exists
 import { motion, useInView } from "framer-motion";
+import Heading2 from './Header/Heading2';
+import WhyShop from './WhyShop';
 
 
 function HomePage() {
@@ -89,7 +91,7 @@ function HomePage() {
     ]);
 
     return (
-        <div className="flex flex-col relative h-full items-center">
+        <motion.div className="flex flex-col relative h-full items-center overflow-hidden">
             <Navbar setStores={setStores} navbarImage={navbarImage}
                 landingRef={landingRef}
                 dragDropSecRef={dragDropSecRef}
@@ -97,7 +99,7 @@ function HomePage() {
                 skinRef={skinRef}
                 footerRef={footerRef}
             />
-            <Heading setnavbarImage={setnavbarImage} />
+            {/* <Heading setnavbarImage={setnavbarImage} />
             <div className="relative flex justify-center z-40 bg-white w-full">
                 <div className="-mt-[76px] h-[30vh] absolute -z-10">
                     <svg
@@ -124,17 +126,22 @@ function HomePage() {
                     </Link>
                 </div>
             </div>
-            <div className="bg-white h-4 w-screen z-10"></div>
+            <div className="bg-white h-4 w-screen z-10"></div> */}
+            <Heading2/>
+            <div className='-z-10'>
+            <WhyShop/>
+            </div>
+
             <div className="w-full flex flex-col gap-2 bg-white">
                 {stores && <StoreList stores={stores} />}
-                <motion.div
+                {/* <motion.div
                     ref={landingRef}
                     initial="hidden"
                     animate={landingAnimated ? "visible" : "hidden"}
                     variants={variants}
                 >
                     <Landingpage />
-                </motion.div>
+                </motion.div> */}
 
                 <motion.div
                     ref={dragDropSecRef}
@@ -196,7 +203,7 @@ function HomePage() {
                 </motion.div>
 
             </div>
-        </div>
+        </motion.div>
     );
 }
 

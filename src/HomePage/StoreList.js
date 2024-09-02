@@ -73,11 +73,11 @@ const StoreCard = ({ store, auth }) => {
 const StoreList = ({ stores }) => {
   const auth = useContext(AuthContext);
   return (
-    <div className="mb-10 px-4">
-      <h2 className="text-2xl text-center text-[#141414] mb-6 font-bold">
+    <div className="mb-10 px-4 flex flex-col items-center" id='scrollStoreList'>
+      <h2 className="font-bold text-[20px] md:text-[40px] w-[98%] md:w-[95%] lg:w-[90%] text-center md:text-left z-30">
         {auth.isLoggedIn ? "My Stores" : "Trending Stores"}
       </h2>
-      <div className="flex justify-center flex-wrap -m-4">
+      <div className="flex justify-center flex-wrap -m-4 w-full">
         {stores.length > 0 ? stores.map(store => (
           <StoreCard key={store._id} store={store} auth={auth} />
         )) : <div className='text-center text-gray-400 text-xl my-20'>Store Unavailable</div>}

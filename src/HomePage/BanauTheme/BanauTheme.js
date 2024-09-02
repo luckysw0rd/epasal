@@ -25,9 +25,9 @@ const BanauTheme = () => {
                 </div>
                 <div className="hidden lg:flex">
                     <div className="flex items-center h-80 lg:h-96 2xl:h-[500px] space-x-4">
-                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px] md:h-[302px] lg:h-[382px] 2xl:h-[500px] rounded-lg xl:rounded-xl bg-[#E6E6FA] flex card hover:card-flip">
-                            <div className="card-inner ">
-                                <div className="card-front flex items-center justify-center">
+                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px] md:h-[302px] lg:h-[382px] 2xl:h-[500px] rounded-lg xl:rounded-xl  flex card hover:card-flip">
+                            <div className="card-inner">
+                                <div className="card-front flex items-center justify-center bg-[#E6E6FA] rounded-lg xl:rounded-xl">
                                     <span className="text-sm xl:text-base 2xl:text-2xl text-[#575799] font-semibold">Lavender</span>
                                 </div>
                                 <div className="relative card-back p-4 flex flex-col bg-[#E6E6FA] text-[#575799] gap-2 rounded-lg xl:rounded-xl">
@@ -40,9 +40,9 @@ const BanauTheme = () => {
                             </div>
                         </div>
 
-                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px] md:h-[224px] lg:h-[304px] 2xl:h-[384px] rounded-lg xl:rounded-xl bg-[#F6E0B5] flex items-center justify-center card hover:card-flip">
+                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px] md:h-[224px] lg:h-[304px] 2xl:h-[384px] rounded-lg xl:rounded-xl flex items-center justify-center card hover:card-flip">
                             <div className="card-inner">
-                                <div className="card-front flex items-center justify-center">
+                                <div className="card-front flex  bg-[#F6E0B5] items-center justify-center rounded-lg xl:rounded-xl">
                                     <span className="text-sm xl:text-base 2xl:text-2xl text-[#796D55] font-semibold">Wheat Yellow</span>
                                 </div>
                                 <div className="relative card-back p-4 flex flex-col bg-[#F6E0B5] text-[#796D55] gap-2 rounded-lg xl:rounded-xl">
@@ -55,9 +55,9 @@ const BanauTheme = () => {
 
                             </div>
                         </div>
-                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px]  md:h-[150px]  lg:h-[240px] 2xl:h-[320px] rounded-lg xl:rounded-xl bg-gray-200 flex items-center justify-center card hover:card-flip">
+                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px]  md:h-[150px]  lg:h-[240px] 2xl:h-[320px] rounded-lg xl:rounded-xl  flex items-center justify-center card hover:card-flip">
                             <div className="card-inner">
-                                <div className="card-front flex items-center justify-center">
+                                <div className="card-front flex items-center justify-center bg-gray-200 rounded-lg xl:rounded-xl">
                                     <span className="text-sm xl:text-base 2xl:text-2xl text-[#796D55] font-semibold">Ash Beige</span>
                                 </div>
                                 <div className="card-back p-4 flex flex-col bg-gray-200 text-[#796D55] gap-2 rounded-lg xl:rounded-xl">
@@ -67,9 +67,9 @@ const BanauTheme = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px]  md:h-[302px] lg:h-[382px] 2xl:h-[500px] rounded-lg xl:rounded-xl bg-[#AFCBD5] flex items-center justify-center card hover:card-flip">
+                        <div className="w-[130px] lg:w-[160px] xl:w-[210px] 2xl:w-[280px]  md:h-[302px] lg:h-[382px] 2xl:h-[500px] rounded-lg xl:rounded-xl  flex items-center justify-center card hover:card-flip">
                             <div className="card-inner">
-                                <div className="card-front flex items-center justify-center">
+                                <div className="card-front flex items-center justify-center bg-[#AFCBD5] rounded-lg xl:rounded-xl">
                                     <span className="text-sm xl:text-base 2xl:text-2xl text-[#40545B] font-semibold">Fresh Blue</span>
                                 </div>
                                 <div className="relative card-back p-4 flex flex-col bg-[#AFCBD5] text-[#40545B] gap-2 rounded-lg xl:rounded-xl">

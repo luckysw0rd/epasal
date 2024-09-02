@@ -45,7 +45,9 @@ module.exports = {
         Asap: ["Asap", "sans-serif"],
         Ubuntu: ["Ubuntu", "sans-serif"]
       },
-
+      boxShadow: {
+        'inner-dark': 'inset 0 4px 6px rgba(0, 0, 0, 0.3)', // Darker inner shadow
+      },
     },
   },
   plugins: [],
