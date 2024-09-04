@@ -66,7 +66,7 @@ const ProjectLanding1 = () => {
     };
 
     const handleAddToCart = () => {
-        
+
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const selectedVariant = selectedProduct.variant.map((variant, index) => ({
             name: variant.name,
@@ -75,7 +75,7 @@ const ProjectLanding1 = () => {
                 image: variant.options[selectedVariants[index]]?.image?.imageUrl
             }
         }));
-        
+
         const newCartItem = {
             product: selectedProduct._id || product._id,
             productName: selectedProduct.name,
@@ -99,7 +99,7 @@ const ProjectLanding1 = () => {
             return updatedStore;
         });
 
-       
+
 
         toast.success("Product Added To Cart", {
             position: "top-center",
@@ -116,7 +116,7 @@ const ProjectLanding1 = () => {
             // Handle products without variants or unselected variants
             const basePrice = parseFloat(selectedProduct.price) || 0;
             const discount = parseFloat(selectedProduct.discount) || 0;
-           
+
 
             return basePrice - discount;
         } else {
@@ -134,7 +134,7 @@ const ProjectLanding1 = () => {
                     const variantPrice = selectedOption ? parseFloat(selectedOption.price) : 0;
                     const discount = parseFloat(selectedProduct.discount) || 0;
                     const variantDiscount = selectedOption && parseFloat(selectedOption.discount) || 0;
-                   
+
                     // Calculate the effective price for the current variant selection
                     const effectivePrice = variantPrice > 0 ? variantPrice - variantDiscount : basePrice - discount;
 
@@ -192,24 +192,19 @@ const ProjectLanding1 = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar store={store} setStore={setStore} color={store.color} />
-            <div className="px-4 py-8 md:py-16 lg:px-24">
+            <div className="px-4 py-8 md:py-20 lg:px-16">
                 <div className="mt-10 flex flex-col gap-10">
                     <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12">
-                        <div className="w-full md:w-2/3 flex flex-col gap-8 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <div className="flex flex-col md:flex-row gap-6">
-                                <div className="flex flex-col gap-6 md:w-80 lg:w-96">
-                                    <img
-                                        src={displayedImage}
-                                        alt={selectedProduct?.name}
-                                        className="w-full h-auto rounded-lg object-cover shadow-md hover:shadow-lg transition-shadow duration-300"
-                                    />
-                                    <div className="flex gap-3 mt-4">
+                        <div className="w-full h-auto flex flex-col gap-8 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div className="flex flex-col md:flex-row gap-16">
+                                <div className="flex gap-16">
+                                    <div className="flex flex-col gap-3">
                                         {selectedProduct.image && (
                                             <div
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
                                                 onClick={changeDefaultImage}
                                             >
-                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-24 lg:h-24 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                             </div>
                                         )}
                                         {selectedProduct.variant.map((variant, variantIndex) => (
@@ -225,10 +220,17 @@ const ProjectLanding1 = () => {
                                             ))
                                         ))}
                                     </div>
+                                    <div className='md:w-80 lg:w-[400px] h-[450px]'>
+                                        <img
+                                            src={displayedImage}
+                                            alt={selectedProduct?.name}
+                                            className=" rounded-xl object-cover w-full shadow-md hover:shadow-lg transition-shadow duration-300"
+                                        />
+                                    </div>
+
                                 </div>
                                 <div className="flex flex-col gap-4 w-full">
                                     <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">{selectedProduct.name}</h1>
-                                    <p className="text-sm md:text-base text-gray-700">{selectedProduct.description}</p>
                                     <div className="flex mb-4 md:justify-start">
                                         {[...Array(5)].map((_, index) => (
                                             <StarIcon
@@ -237,10 +239,12 @@ const ProjectLanding1 = () => {
                                             />
                                         ))}
                                     </div>
-                                    <div className="flex gap-6 items-center">
+                                    <div className="flex gap-4 items-center">
                                         <span className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900">Rs {totalPrice}</span>
                                         <span className="line-through text-sm md:text-base lg:text-xl text-gray-500">Rs {totalDiscount + totalPrice}</span>
                                     </div>
+                                    <p className="text-sm md:text-base text-gray-700">{selectedProduct.description}</p>
+
                                     {selectedProduct.variant.map((variant, variantIndex) => (
                                         <div className="flex gap-4 items-center" key={variantIndex}>
                                             <label htmlFor={`variant-${variantIndex}`} className="block text-sm lg:text-base text-gray-700">{variant.name}:</label>
@@ -265,32 +269,14 @@ const ProjectLanding1 = () => {
                                             <button className="px-2 md:px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-300" onClick={incrementQuantity}> + </button>
                                         </div>
                                     </div>
-                                    <button onClick={handleAddToCart} className="flex items-center justify-center gap-2 mt-4 md:mt-6 px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
+                                    <button onClick={handleAddToCart} className="w-40 flex items-center justify-center gap-2 mt-4 md:mt-6 px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
                                         <TbShoppingBagPlus className="w-5 h-5" />
-                                        Add to Cart
+                                        Buy Now
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full md:w-1/3 flex flex-col gap-6 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900">Store Details</h2>
-                            <div className="flex items-center gap-3">
-                                <LiaShippingFastSolid className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">{storeDetails.deliveryTime}</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <TbCash className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">COD {storeDetails.COD}</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <FiClock className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">{storeDetails.returnPolicyTime} Return Policy</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <PiCreditCard className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">Secure Payment</span>
-                            </div>
-                        </div>
+
                     </div>
                     <div className="flex flex-col gap-6 mt-12">
                         <ProductReview product={selectedProduct} />
