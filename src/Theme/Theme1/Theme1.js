@@ -22,6 +22,21 @@ import T1NewProducts from "./T1NewProducts";
 import T1SecondaryBanner from "./T1SecondaryBanner";
 
 const EStore = ({ Passedstore }) => {
+  const { store, isLoading } = useStore();
+  useEffect(()=>{console.log(store,"st")},[store])
+  const [tasks, setTasks] = useState([
+    { id: 2, component: <T1Navbar /> },
+    { id: 3, component: <AboutPage /> },
+    { id: 4, component: null },
+    { id: 5, component: <T1SubProduct /> },
+    { id: 6, component: <T1ThirdBanner /> },
+    { id: 7, component: <T1NewProducts /> },
+    { id: 8, component: <T1SecondaryBanner /> },
+    { id: 9, component: <T1ProductList /> },
+    { id: 10, component: <OfferBanner /> },
+    { id: 11, component: <Footer /> },
+  ]);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [isOverlayActive, setIsOverlayActive] = useState(true);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -55,22 +70,8 @@ const EStore = ({ Passedstore }) => {
     });
   };
 
-  const { store, isLoading } = useStore();
-  const { fetchedFromBackend, previewMode } = store;
-
-  const [tasks, setTasks] = useState([
-    { id: 2, component: <T1Navbar /> },
-    { id: 3, component: <AboutPage /> },
-    { id: 4, component: null },
-    { id: 5, component: <T1SubProduct /> },
-    { id: 6, component: <T1ThirdBanner /> },
-    { id: 7, component: <T1NewProducts /> },
-    { id: 8, component: <T1SecondaryBanner /> },
-    { id: 9, component: <T1ProductList /> },
-    { id: 10, component: <OfferBanner /> },
-    { id: 11, component: <Footer /> },
-    { id: 12, component: <ModernReactPlayer /> },
-  ]);
+  const { previewMode } = store;
+  const { fetchedFromBackend } = store;
 
   const [showColorPicker, setShowColorPicker] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -270,6 +271,8 @@ const EStore = ({ Passedstore }) => {
                   <Task id={tasks[index].id} component={tasks[index].component} />
                 </div>
               ))}
+    <ModernReactPlayer store={store}/>
+
             </SortableContext>
           </DndContext>
 

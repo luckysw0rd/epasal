@@ -142,8 +142,8 @@ const Product = ({ store }) => {
       let updatedEditProduct = { ...editProduct };
 
       // Check if the product image URL is empty and retain the existing image
-      if (updatedEditProduct.image.imageUrl) {
-        const uploadedProductImage = await uploadImage(updatedEditProduct.image.imageUrl);
+      if (updatedEditProduct?.image?.imageUrl) {
+        const uploadedProductImage = await uploadImage(updatedEditProduct?.image?.imageUrl);
         updatedEditProduct.image.imageUrl = uploadedProductImage.img;
         updatedEditProduct.image.imageID = uploadedProductImage.id;
       }
@@ -152,9 +152,9 @@ const Product = ({ store }) => {
         updatedEditProduct.variant.map(async (variant) => {
           const updatedOptions = await Promise.all(
             variant.options.map(async (option) => {
-              if (option.image && option.image.imageUrl) {
-                if (option.image.imageUrl) {
-                  const uploadedVariantImage = await uploadImage(option.image.imageUrl);
+              if (option?.image && option?.image?.imageUrl) {
+                if (option?.image?.imageUrl) {
+                  const uploadedVariantImage = await uploadImage(option?.image?.imageUrl);
                   return {
                     ...option,
                     name: option.name || 'Default Option Name', // Set default option name
@@ -196,7 +196,7 @@ const Product = ({ store }) => {
         }
       );
 
-      toast.success('Product updated successfully');
+      toast.success(response);
       const updatedProducts = [...products];
       updatedProducts[editProductIndex] = updatedEditProduct;
       setProducts(updatedProducts);
@@ -427,16 +427,16 @@ const Product = ({ store }) => {
               className="bg-white max-w-[400px] shadow-lg p-5 rounded-lg overflow-hidden transform transition-transform hover:scale-105"
             >
               <div className="text-center border-b pb-4 mb-4">
-                <img className="w-80 h-60 mx-auto mb-4 rounded-md" src={product.image.imageUrl} alt={product.name} />
+                <img className="w-80 h-60 mx-auto mb-4 rounded-md" src={product?.image?.imageUrl} alt={product.name} />
                 <h2 className="text-xl font-bold mb-2">{product.name}</h2>
               </div>
               <p className="text-gray-700 mb-4">
-                {truncateDescription(product.description, 15)}
+                {truncateDescription(product?.description, 15)}
               </p>
               <div className="flex flex-col gap-2 text-sm text-gray-700 mb-4">
                 <div className="flex items-center border-b pb-2">
                   <FaDollarSign className="mr-2 text-blue-500" />
-                  <span>Price: Rs. {product.price}</span>
+                  <span>Price: Rs. {product?.price}</span>
                 </div>
                 <div className="flex items-center border-b pb-2">
                   <FaPercent className="mr-2 text-blue-500" />
@@ -560,7 +560,7 @@ const Product = ({ store }) => {
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
                 <ProductImageDropzone
-                  imageUrl={editProduct.image.imageUrl}
+                  imageUrl={editProduct.image?.imageUrl}
                   setImageUrl={(url) => setEditProduct({ ...editProduct, image: { ...editProduct.image, imageUrl: url } })}
                   className="w-10 h-10"
                 />

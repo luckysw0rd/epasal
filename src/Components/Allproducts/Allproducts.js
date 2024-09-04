@@ -11,7 +11,7 @@ import { FaFilter, FaChevronDown, FaStar } from "react-icons/fa";
 import AllProductCard from './AllProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import allproductBanner from '../../Assets/allproductBanner.png'
-
+import ModernReactPlayer from '../../Theme/Theme1/AudioPlayer/ModernReactPlayer';
 const AllProducts = () => {
   const [searchParams] = useSearchParams();
   const filter = searchParams.get('filter');
@@ -551,7 +551,7 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
-
+        <ModernReactPlayer store={store}/>
       </div >
     )
   );

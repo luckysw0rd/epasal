@@ -1,10 +1,8 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
 export const useFetch = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-
-    const activeHttpRequests = useRef([]);
 
     const sendRequest = useCallback(async (
         url,
@@ -15,21 +13,13 @@ export const useFetch = () => {
         setIsLoading(true);
         setError(null);
 
-        const httpAbortCtrl = new AbortController();
-        activeHttpRequests.current.push(httpAbortCtrl);
-
         try {
             const response = await fetch(process.env.REACT_APP_BACKEND_URL + url, {
                 method,
                 body,
                 headers,
-                signal: httpAbortCtrl.signal
             });
             const responseData = await response.json();
-
-            activeHttpRequests.current = activeHttpRequests.current.filter(
-                abortCtrl => abortCtrl !== httpAbortCtrl
-            );
 
             if (!response.ok) {
                 const error = new Error(responseData.message || 'Request failed');
@@ -41,17 +31,7 @@ export const useFetch = () => {
             setIsLoading(false);
             return responseData;
         } catch (error) {
-            if (error.name === 'AbortError') {
-                // If the error is an abort error, we don't set the error state
-               
-                setIsLoading(false);
-
-            } else {
-                setError(error);
-                console.error('Fetch error:', error);
-                setIsLoading(false);
-
-            }
+            console.error('Fetch error:', error);
             setIsLoading(false);
             throw error;
         }
@@ -60,12 +40,6 @@ export const useFetch = () => {
     const onCloseError = () => {
         setError(null);
     };
-
-    useEffect(() => {
-        return () => {
-            activeHttpRequests.current.forEach(abortCtrl => abortCtrl.abort());
-        };
-    }, []);
 
     return { isLoading, error, sendRequest, onCloseError };
 };
