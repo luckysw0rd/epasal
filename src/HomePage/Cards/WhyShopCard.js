@@ -81,9 +81,9 @@ const WhyShopCard = ({data,index}) => {
   useEffect(() => {
     // Use framer-motion's animation control to update the position
     controls.start({
-      y: ((index===0)||(index===3)?(scrollY>-900)?-1250-scrollY:0:(scrollY>-750)?-900-scrollY:0),
-      x: index===1?(scrollY>-750)?-200:0:index===2?(scrollY>-750)?200:0:0,
-      rotate:index===0?(scrollY>-900)?-25:0:index===1?(scrollY>-750)?-40:0:index===2?(scrollY>-750)?40:0:index===3?(scrollY>-900)?25:0:0,
+      y: ((index===0)||(index===3)?(scrollY>-800)?-1250-scrollY:0:(scrollY>-650)?-800-scrollY:0),
+      x: index===1?(scrollY>-650)?-200:0:index===2?(scrollY>-650)?200:0:0,
+      rotate:index===0?(scrollY>-800)?-25:0:index===1?(scrollY>-650)?-40:0:index===2?(scrollY>-650)?40:0:index===3?(scrollY>-800)?25:0:0,
       
       transition: { type: 'tween', stiffness: 500, damping: 25, duration: 0.5 }
     });
