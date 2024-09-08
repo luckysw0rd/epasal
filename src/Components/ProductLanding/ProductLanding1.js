@@ -195,7 +195,8 @@ const ProjectLanding1 = () => {
             <div className="px-4 py-16 lg:px-14">
                 <div className="mt-4 md:mt-10 flex flex-col gap-10">
                     <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12">
-                        <div className="w-full flex flex-col gap-8 p-6 bg-white rounded-lg shadow-lg shadow-stone-400 transition-shadow duration-300">
+                        {/* shadow-lg shadow-stone-400 removed */}
+                        <div className="w-full flex flex-col gap-8 p-6 bg-white rounded-lg transition-shadow duration-300">
                             <div className="flex flex-col md:flex-row gap-10 lg:gap-16">
                                 <div className="flex flex-col-reverse md:flex-row gap-7 lg:gap-10">
                                     <div className="flex flex-row md:flex-col gap-3">
@@ -244,14 +245,14 @@ const ProjectLanding1 = () => {
                                     </div>
                                     <p className="text-sm md:text-base text-gray-600 2xl:text-lg">{selectedProduct.description}</p>
 
-                                    <div className="flex gap-8 ">
+                                    <div className="flex flex-row md:flex-col gap-4">
 
                                         {selectedProduct.variant.map((variant, variantIndex) => (
                                             <div className="flex flex-col gap-2 2xl:text-xl" key={variantIndex}>
-                                                <label htmlFor={`variant-${variantIndex}`} className="block text-sm lg:text-lg 2xl:text-xl text-[#7A5822]">{variant.name}:</label>
+                                                <label htmlFor={`variant-${variantIndex}`} className="block text-base lg:text-lg 2xl:text-xl text-[#7A5822]">{variant.name}:</label>
                                                 <select
                                                     id={`variant-${variantIndex}`}
-                                                    className="flex items-center justify-between w-32 2xl:w-40 gap-3 border border-gray-500 rounded-xl bg-transparent px-3 2xl:px-4 py-3 "
+                                                    className="flex items-center justify-between w-36 gap-3 border border-gray-500 rounded-xl bg-transparent px-3 2xl:px-4 py-3 "
                                                     value={selectedVariants[variantIndex] === -1 ? "" : variant.options[selectedVariants[variantIndex]].name}
                                                     onChange={(e) => handleVariantChange(variantIndex, e.target.value)}
                                                 >
@@ -263,8 +264,8 @@ const ProjectLanding1 = () => {
                                             </div>
                                         ))}
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="quantity" className="block text-sm lg:text-lg 2xl:text-xl text-[#7A5822]">Quantity:</label>
-                                            <div className="flex items-center justify-between w-32 2xl:w-40 gap-3 border border-gray-500 rounded-xl px-3 2xl:px-4 py-1">
+                                            <label htmlFor="quantity" className="block text-base     lg:text-lg 2xl:text-xl text-[#7A5822]">Quantity:</label>
+                                            <div className="flex items-center justify-between w-36 gap-3 border border-gray-500 rounded-xl px-3 2xl:px-4 py-1">
                                                 <button
                                                     className="text-2xl text-gray-500 focus:outline-none hover:text-gray-700 transition duration-200"
                                                     onClick={decrementQuantity}
@@ -282,7 +283,7 @@ const ProjectLanding1 = () => {
                                         </div>
                                     </div>
 
-                                    <button onClick={handleAddToCart} className="w-full md:w-52 2xl:w-64 font-bold text-lg 2xl:text-xl flex items-center justify-center gap-3 mt-4 2xl:mt-7 px-4 py-2 md:px-6 md:py-2 2xl:py-3 text-[#7A5822] border border-gray-500 rounded-xl hover:bg-[#7A5822] hover:text-white transition duration-300">
+                                    <button onClick={handleAddToCart} className="w-full md:w-60 2xl:w-68 font-bold text-lg 2xl:text-xl flex items-center justify-center gap-3 mt-4 2xl:mt-7 px-4 py-2 md:px-6 md:py-2 2xl:py-3 text-[#7A5822] border border-gray-500 rounded-xl hover:bg-[#7A5822] hover:text-white transition duration-300">
                                         Buy Now
                                         <TbShoppingBagPlus className="w-6 h-6" />
                                     </button>
