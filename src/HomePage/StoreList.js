@@ -70,11 +70,11 @@ const StoreCard = ({ store, auth }) => {
   );
 };
 
-const StoreList = ({ stores }) => {
+const StoreList = ({ stores,storeRef }) => {
   const auth = useContext(AuthContext);
   return (
-    <div className="mb-10 px-4 flex flex-col items-center" id='scrollStoreList'>
-      <h2 className="font-bold text-[20px] md:text-[40px] w-[98%] md:w-[95%] lg:w-[90%] text-center md:text-left z-30">
+    <div className="mb-10 px-4 flex flex-col items-center" id='scrollStoreList' ref={storeRef}>
+      <h2 className="font-bold text-[20px] md:text-[40px] w-[98%] md:w-[95%] lg:w-[90%] text-center md:text-left z-30 my-10">
         {auth.isLoggedIn ? "My Stores" : "Trending Stores"}
       </h2>
       <div className="flex justify-center flex-wrap -m-4 w-full">
