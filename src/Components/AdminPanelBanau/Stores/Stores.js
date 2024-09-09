@@ -7,9 +7,10 @@ import { store } from '../../AdminPanel/Dashboard/Home/homeStore';
 import { IoMedalOutline } from "react-icons/io5";
 import { IoMedalSharp } from "react-icons/io5";
 import { FaFilter, FaTimes } from "react-icons/fa";
-
+import { FaRegUser } from "react-icons/fa";
 // import { FaEye } from 'react-icons/fa';
 import { esewaIcon, fonepayIcon, khaltiIcon } from '../../../Assets/icons';
+import { Link } from 'react-router-dom';
 
 const Stores = () => {
     const [storesArr, setStoresArr] = useState([]);
@@ -501,9 +502,16 @@ const Stores = () => {
                         storesArr.map((store) => (
                             <div key={store._id} className="bg-white p-6 text-sm rounded-xl shadow-lg transform transition duration-500 hover:scale-105 w-full h-full overflow-auto">
                                 <div className="flex justify-between items-center mb-8">
-                                    <h2 className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-2 py-1 rounded">
-                                        {store.name.toUpperCase()}
-                                    </h2>
+                                    <div className="flex gap-5 items-center">
+                                        <Link
+                                            to={`/store/${store?.name}`}
+                                            target="_blank" className="text-sm md:text-xl lg:text-xl font-bold text-indigo-600 bg-indigo-100 px-2 py-1 rounded">
+                                            {store.name.toUpperCase()}
+                                        </Link>
+                                        <Link to={`/adminpanel/${store?.name}`} target="_blank" className='cursor-pointer'>
+                                            <FaRegUser size={22} />
+                                        </Link>
+                                    </div>
                                     <button
                                         className="text-gray-500 hover:text-gray-700 text-xl"
                                         onClick={() => handleEdit(store)}
