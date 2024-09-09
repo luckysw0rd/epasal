@@ -4,9 +4,10 @@ import { useDropzone } from "react-dropzone";
 import { useStore } from "../../Theme/ThemeContext"; // Adjust the path as necessary
 import { Link } from 'react-router-dom';
 
-const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage,store,setStore }) => {
+const OfferBanner1 = ({ previewMode, isEdit,fetchedFromBackend, defaultBgImage,store,setStore}) => {
+
   const { color, offerBannerText } = store;
-  const [bgImage, setBgImage] = useState(store.offerBanner.offerBannerUrl);
+  const [bgImage, setBgImage] = useState(store?.offerBanner?.offerBannerUrl);
 
   const onDropBackground = (acceptedFiles) => {
     const backgroundImage = acceptedFiles[0];
@@ -44,15 +45,16 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage,store,setStore }) => 
 
   return (
     <div className="box-border py-8 mb-16" style={{
-      backgroundColor: color.offerBannerColor.backgroundThemeColor1,}}>
+      backgroundColor: color.offerBannerColor.backgroundThemeColor1,
+    }}>
       <motion.div
         className="box-border relative shadow-lg min-h-[300px] sm:h-[600px] md:h-[800px] lg:h-[400px] lg:min-h-[450px] flex flex-col sm:flex-col sm:space-y-5 lg:space-y-0  lg:flex-row md:justify-center items-center  space-x-0 lg:space-x-20 px-10  py-10 text-black  "
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          backgroundColor: color.offerBannerColor.backgroundThemeColor,
-          fontFamily:store?.fonts?.Banner3,
+          backgroundColor: color?.offerBannerColor?.backgroundThemeColor,
+          fontFamily: store?.fonts?.Banner3,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -63,65 +65,65 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage,store,setStore }) => 
           <div
             className=" mx-auto w-[300px] sm:w-[500px] md:w-[500px] lg:w-[450px]   xl:w-[500px] 2xl:w-[650px]    mb-8 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0 md:mx-auto  "
             style={{
-              backgroundColor: color.offerBannerColor.backgroundBoxThemeColor1,
+              backgroundColor: color?.offerBannerColor?.backgroundBoxThemeColor1,
             }}
           >
             {" "}
             <div
               className=" border-2 md:h-[270px] lg:h-[200px] 2xl:h-[300px] flex flex-col justify-center items-center   mx-4 my-4 p-4  py-4 text-center"
-              style={{ borderColor: color.offerBannerColor.textColor }}
+              style={{ borderColor: color?.offerBannerColor?.textColor }}
             >
-              <Link to={!isEdit && `/store/products/${store.name}`} className="hover:underline">
-              {previewMode ? (
-                <>
-                  <p
-                    className="my-2 lg:my-4 text-base md:text-base lg:text-2xl font-normal"
-                    style={{ color: color.offerBannerColor.textColor }}
-                  >
-                    {offerBannerText.para1 || "OUR NISCHE COLLECTION"}
-                  </p>
-                  <p
-                    className="mt-2 lg:my-4  text-base md:text-2xl lg:text-4xl font-normal font-Sanchez"
-                    style={{ color: color.offerBannerColor.textColor }}
-                  >
-                    {offerBannerText.para2 || "40% OFF"}
-                  </p>
-                  <p
-                    className="mt-2  lg:my-4  text-base md:text-xl lg:text-3xl font-normal underline underline-offset-8  font-Sanchez"
-                    style={{ color: color.offerBannerColor.textColor }}
-                  >
-                    {offerBannerText.para3 || "GET YOURS NOW"}
-                  </p>
-                </>
-              ) : (
-                
-                <>
-                  <textarea
-                    name="para1"
-                    value={offerBannerText?.para1 || ""}
-                    onChange={handleTextChange}
-                    className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
-                    style={{ color: color.offerBannerColor.textColor }}
-                    placeholder="OUR NISCHE COLLECTION"
-                  />
-                  <textarea
-                    name="para2"
-                    value={offerBannerText?.para2 || ""}
-                    onChange={handleTextChange}
-                    className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
-                    style={{ color: color.offerBannerColor.textColor }}
-                    placeholder="40% OFF"
-                  />{" "}
-                  <textarea
-                    name="para3"
-                    value={offerBannerText?.para3 || ""}
-                    onChange={handleTextChange}
-                    className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
-                    style={{ color: color.offerBannerColor.textColor }}
-                    placeholder="GET YOURS NOW"
-                  />{" "}
-                </>
-              )}
+              <Link to={!isEdit && fetchedFromBackend &&  `/store/products/${store.name}`} className="hover:underline">
+                {previewMode ? (
+                  <>
+                    <p
+                      className="my-2 lg:my-4 text-base md:text-base lg:text-2xl font-normal"
+                      style={{ color: color?.offerBannerColor?.textColor }}
+                    >
+                      {offerBannerText?.para1 || "OUR NISCHE COLLECTION"}
+                    </p>
+                    <p
+                      className="mt-2 lg:my-4  text-base md:text-2xl lg:text-4xl font-normal font-Sanchez"
+                      style={{ color: color.offerBannerColor.textColor }}
+                    >
+                      {offerBannerText?.para2 || "40% OFF"}
+                    </p>
+                    <p
+                      className="mt-2  lg:my-4  text-base md:text-xl lg:text-3xl font-normal underline underline-offset-8  font-Sanchez"
+                      style={{ color: color.offerBannerColor.textColor }}
+                    >
+                      {offerBannerText?.para3 || "GET YOURS NOW"}
+                    </p>
+                  </>
+                ) : (
+
+                  <>
+                    <textarea
+                      name="para1"
+                      value={offerBannerText?.para1 || ""}
+                      onChange={handleTextChange}
+                      className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
+                      style={{ color: color?.offerBannerColor?.textColor }}
+                      placeholder="OUR NISCHE COLLECTION"
+                    />
+                    <textarea
+                      name="para2"
+                      value={offerBannerText?.para2 || ""}
+                      onChange={handleTextChange}
+                      className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
+                      style={{ color: color?.offerBannerColor?.textColor }}
+                      placeholder="40% OFF"
+                    />{" "}
+                    <textarea
+                      name="para3"
+                      value={offerBannerText?.para3 || ""}
+                      onChange={handleTextChange}
+                      className="mt-2 text-base md:text-2xl font-normal w-[90%] border border-gray-500"
+                      style={{ color: color?.offerBannerColor?.textColor }}
+                      placeholder="GET YOURS NOW"
+                    />{" "}
+                  </>
+                )}
               </Link>
             </div>
           </div>
@@ -131,12 +133,12 @@ const OfferBanner1 = ({ previewMode,isEdit, defaultBgImage,store,setStore }) => 
           <input {...getInputPropsBackground()} />
           <div className="w-full h-full ">
             <img
-              src={store.offerBanner.offerBannerUrl}
+              src={store?.offerBanner?.offerBannerUrl}
               alt="Product"
               className="relative rounded-md  md:h-[400px]   w-[400px] sm:w-[600px] md:w-[800px] lg:w-[600px] lg:h-[300px] xl:w-[800px] xl:h-[380px] xl:pr-10 2xl:w-[800px] 2xl:h-[380px]  "
             />
           </div>
-        </div> 
+        </div>
 
         {(!previewMode) && (
           <div className="absolute top-0 right-0 mt-2 mr-2">

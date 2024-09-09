@@ -22,7 +22,7 @@ const Navbar1 = ({
     setIsSidebarOpen,
     setSearchInput,
     setLogoFile,
-    isEdit, fetchedFromBackend
+    isEdit, fetchedFromBackend, highlightedButtonId, onClick
 }) => {
 
     const [scrolling, setScrolling] = useState(false);
@@ -85,13 +85,13 @@ const Navbar1 = ({
     };
 
     const loadCartFromLocalStorage = () => {
-       
+
         const savedCart = localStorage.getItem('cart');
         if (savedCart) {
             try {
                 const parsedCart = JSON.parse(savedCart);
                 if (Array.isArray(parsedCart)) {
-                    
+
                     setStore(prevStore => ({ ...prevStore, cart: parsedCart }));
                 } else {
                     console.warn('Invalid cart data in localStorage');
@@ -100,20 +100,25 @@ const Navbar1 = ({
                 console.error('Error parsing cart data from localStorage:', error);
             }
         } else {
-            
+
         }
     };
     useEffect(() => {
         loadCartFromLocalStorage();
-       
+
     }, [setStore]);
+    const handleButtonClick = () => {
+        if (onClick) {
+            onClick();
+        }
+    };
 
     // Save cart to localStorage whenever it changes
     useEffect(() => {
         const saveCartToLocalStorage = () => {
             // Load existing cart data from localStorage
             const savedCart = localStorage.getItem('cart');
-            
+
             // Initialize mergedCart with store.cart
             let mergedCart = [...store.cart];
 
@@ -136,13 +141,14 @@ const Navbar1 = ({
             }
 
             // Save mergedCart to localStorage
-          
+
             localStorage.setItem('cart', JSON.stringify(mergedCart));
         };
 
         saveCartToLocalStorage(); // Invoke the function on mount and whenever store.cart changes
 
     }, [store.cart]);
+
 
 
     useEffect(() => {
@@ -179,7 +185,7 @@ const Navbar1 = ({
         };
     }, [isSidebarOpen]);
 
-  
+
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -288,7 +294,7 @@ const Navbar1 = ({
 
     const handleCartClick = () => {
         setIsCartOpen(!isCartOpen);
-       // Log the cart items to the console
+        // Log the cart items to the console
     };
 
     const handleEditableTextChange = (e) => {
@@ -368,16 +374,16 @@ const Navbar1 = ({
                     </div>
                 )}
                 <span className="text-xl font-bold" onClick={() => navigate('./')}>
-                    {store.name} 2
+                    {store.name} 
                 </span>
-          
+
             </div>
 
             <div className={`flex items-center space-x-4 relative ${isSidebarOpen ? 'mr-10' : 'lg:mr-20'}`}>
                 <div className="hidden md:flex space-x-8 mr-8">
                     <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
-                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
-                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`} className="hover:underline">Offers</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}/?filter=featured`} className="hover:underline">Featured</Link>
+                    <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}/?filter=offers`} className="hover:underline">Offers</Link>
                     <Link to={!isEdit && previewMode && `/`} className="hover:underline"> Shop At Banau</Link>
                 </div>
                 <div className="relative flex items-center hidden md:flex">
@@ -405,7 +411,7 @@ const Navbar1 = ({
                             })}
                         </ul>}
                 </div>
-                <button onClick={handleCartClick} className="relative hidden md:flex">
+                <button onClick={handleCartClick} className="relative flex">
                     <FaShoppingCart className="text-2xl" />
                     {cartItems.length > 0 && (
                         <span className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 bg-red-500 rounded-full text-white px-1 py-0.5 text-xs">
@@ -416,10 +422,13 @@ const Navbar1 = ({
                 {isCartOpen && <CartDropdown cart={store.cart} deleteFromCart={deleteFromCart} backgroundColor={color.navColor.backgroundnavColor} store={store} setStore={setStore} />} {/* Conditionally render the CartDropdown */}
                 {(store.isEdit || !store.fetchedFromBackend) &&
                     <button
+                        id="navbarButtonId"
                         onClick={() => {
                             setStore(prev => ({ ...prev, previewMode: !store.previewMode }));
+                            handleButtonClick();
+
                         }}
-                        className={` bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 text-sm rounded transition duration-200  ${isAnimating ? 'animate-flashy-border border-2' : 'border-2 border-transparent hover:border-black'
+                        className={` bg-black ${highlightedButtonId === 'navbarButtonId' ? 'bg-yellow-300 border-2 border-red-500 animate-pulse z-50' : ''} hover:bg-white text-white hover:text-black font-bold py-2 px-4 text-sm rounded transition duration-200  ${isAnimating ? 'animate-flashy-border border-2' : 'border-2 border-transparent hover:border-black'
                             }`}
                     >
                         {store.previewMode ? 'Preview Mode' : 'Edit'}

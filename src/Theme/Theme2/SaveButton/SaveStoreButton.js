@@ -19,15 +19,15 @@ const SaveStoreButton = ({store,setStore}) => {
     const ImageUpload = async () => {
         try {
             setTempLoading(true);
-            const ImageData = await uploadImage(store.logo.logoUrl)
-            const MobileBannerData = await uploadImage(store.mobileBanner.bannerUrl)
-            const BannerData = await uploadImage(store.banner.bannerUrl)
-            const secondaryBannerData = await uploadImage(store.secondaryBanner.secondaryBannerUrl)
-            const offerBannerData = await uploadImage(store.offerBanner.offerBannerUrl)
-            const thirdBannerData = await uploadImage(store.thirdBanner.thirdBannerUrl)
+            const ImageData = await uploadImage(store?.logo?.logoUrl)
+            const MobileBannerData = await uploadImage(store?.mobileBanner?.bannerUrl)
+            const BannerData = await uploadImage(store?.banner?.bannerUrl)
+            const secondaryBannerData = await uploadImage(store?.secondaryBanner?.secondaryBannerUrl)
+            const offerBannerData = await uploadImage(store?.offerBanner?.offerBannerUrl)
+            const thirdBannerData = await uploadImage(store?.thirdBanner?.thirdBannerUrl)
             for (let i = 0; i < store.products.length; i++) {
                 const product = store.products[i];
-                const productImg = await uploadImage(product.image.imageUrl);
+                const productImg = await uploadImage(product?.image?.imageUrl);
 
                 // Update product image
                 setStore(prev => {
@@ -82,24 +82,24 @@ const SaveStoreButton = ({store,setStore}) => {
             setStore(prev => (
                 {
                     ...prev, logo: {
-                        logoUrl: ImageData.img,
-                        logoID: ImageData.id
+                        logoUrl: ImageData?.img,
+                        logoID: ImageData?.id
                     }, banner: {
-                        bannerUrl: BannerData.img,
-                        bannerID: BannerData.id
+                        bannerUrl: BannerData?.img,
+                        bannerID: BannerData?.id
                     }, mobileBanner: {
-                        bannerUrl: MobileBannerData.img,
-                        bannerID: MobileBannerData.id
+                        bannerUrl: MobileBannerData?.img,
+                        bannerID: MobileBannerData?.id
                     }
                     , secondaryBanner: {
-                        secondaryBannerUrl: secondaryBannerData.img,
-                        secondaryBannerID: secondaryBannerData.id
+                        secondaryBannerUrl: secondaryBannerData?.img,
+                        secondaryBannerID: secondaryBannerData?.id
                     }, offerBanner: {
-                        offerBannerUrl: offerBannerData.img,
-                        offerBannerID: offerBannerData.id
+                        offerBannerUrl: offerBannerData?.img,
+                        offerBannerID: offerBannerData?.id
                     }, thirdBanner: {
-                        thirdBannerUrl: thirdBannerData.img,
-                        thirdBannerID: thirdBannerData.id
+                        thirdBannerUrl: thirdBannerData?.img,
+                        thirdBannerID: thirdBannerData?.id
                     }
                 }
             ))
@@ -139,8 +139,11 @@ const SaveStoreButton = ({store,setStore}) => {
                 setStoreMade(true)
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
+                const storeName = encodeURIComponent(store.name.trim());
+                const url = `${process.env.REACT_APP_BASE_URL}/adminpanel/${storeName}`;
 
-                navigate('/')
+                console.log(url);
+                navigate(url);
             } else {
                 const responseData = await sendRequest(
                     `store/update/${store._id}`, // Replace 'your-api-endpoint' with your actual API endpoint
@@ -153,14 +156,16 @@ const SaveStoreButton = ({store,setStore}) => {
                 );
                 setStoreNew(false)
                 toast.success(responseData.message); // Handle response data as needed
-                navigate('/')
+                const storeName = encodeURIComponent(store.name.trim());
+                const url = `${process.env.REACT_APP_BASE_URL}/adminpanel/${storeName}`;
+                console.log(url);
+                navigate(url);
             }
         } catch (error) {
             console.error('Error saving store data:', error);
-            // Handle response data as needed
-            if (error.message)
+            if (error.message && error.message.includes("Store Name Already Taken")) {
                 toast.error(error.message);
-
+            }
         }
     }
     const saveStore = async () => {

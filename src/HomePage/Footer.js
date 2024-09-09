@@ -58,7 +58,7 @@ const Footer = () => {
                 <div className="flex-1">
                     <h4 className="text-lg xl:text-2xl font-semibold border-b-2 border-[#FF7C1D] pb-2 mb-4 inline-block w-40">Contact Us</h4>
                     <p className="text-sm xl:text-lg">
-                        Phone: (+977) 9702781000<br />
+                        Phone: (+977) 9860111404<br />
                         Email: shopatbanau@gmail.com<br />
                         Address: Imadol, Naya Basti, Mahalaxmi
                     </p>

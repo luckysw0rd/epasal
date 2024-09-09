@@ -34,11 +34,11 @@ const ProjectLanding1 = React.lazy(() => import('./Components/ProductLanding/Pro
 function App() {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
 
-  const { token, login, logout, userID,setStore ,hasOrder,setHasOrder} = useAuth();
+  const { token, login, logout, userID, setStore, hasOrder, setHasOrder } = useAuth();
   const userData = localStorage.getItem('userData');
 
   const auth = useContext(AuthContext);
- 
+
   const RedirectToStore = () => {
     const { storeID } = useParams();
     return <Navigate to={`/store/${storeID}`} />;
@@ -49,7 +49,7 @@ function App() {
 
   let routes;
   if (token || auth.token || (userData && JSON.parse(userData)?.token)) {
- 
+
 
     routes = (
       <React.Fragment>
@@ -78,7 +78,7 @@ function App() {
       </React.Fragment>
     );
   } else {
-   
+
     routes = (
       <React.Fragment>
         <Route path="/" element={<HomePage />} />
@@ -101,22 +101,21 @@ function App() {
 
   return (
     <PrimeReactProvider>
-      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout,setStore:setStore,hasOrder:hasOrder,setHasOrder:setHasOrder }}>
+      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, userID: userID, login: login, logout: logout, setStore: setStore, hasOrder: hasOrder, setHasOrder: setHasOrder }}>
         <div className="App">
-          
-            <Suspense fallback=
-              {
-                <Loading />
-              }>
-    <Router>
+
+          <Suspense fallback=
+            {
+              <Loading />
+            }>
+            <Router>
 
               <Routes>
                 {routes}
               </Routes>
-    </Router>
+            </Router>
 
-            </Suspense>
-          
+          </Suspense>
         </div >
         <ToastContainer />
       </AuthContext.Provider >

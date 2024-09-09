@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { useStore } from "../../Theme/ThemeContext"; // Adjust the path as necessary
 import { useImage } from "../../Hooks/useImage";
 import { Link } from "react-router-dom";
-const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName,store,setStore }) => {
+const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName, fetchedFromBackend,store,setStore }) => {
   const { color, secondaryBannerText, thirdBannerText } = store;
   const { uploadImage } = useImage();
   const navigate = useNavigate()
@@ -26,12 +26,7 @@ const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName,store,set
     };
     reader.readAsDataURL(backgroundImage);
   };
-  const handleExploreClick = (e) => {
-    if (store.fetchedFromBackend && !store.isEdit) {
-      navigate(`${process.env.REACT_APP_BASE_URL}/store/products/:${storeName}`)
 
-    }
-  }
   const handleTextChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -51,7 +46,7 @@ const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName,store,set
   } = useDropzone({ onDrop: onDropBackground });
 
   useEffect(() => {
-   
+
   }, [store])
   return (
     <div className="box-border py-8 mb-16" style={{
@@ -129,7 +124,7 @@ const ThirdBanner1 = ({ previewMode, isEdit, defaultBgImage, storeName,store,set
 
 
           >
-            <Link to={`/store/products/${store.name}`}>
+            <Link to={!isEdit && fetchedFromBackend && `/store/products/${store.name}`}>
               Explore More
             </Link>
             <span className="text-lg ml-3 my-auto">&gt;</span>

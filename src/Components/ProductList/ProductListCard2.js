@@ -5,7 +5,7 @@ import { useStore } from '../../Theme/ThemeContext'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store, productListProps }) => {
+const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, store, productListProps,handleAddToCartAnalytics }) => {
     const { addToCart } = productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
@@ -17,8 +17,10 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (store.fetchedFromBackend && !store.isEdit)
+        if (store.fetchedFromBackend && !store.isEdit){
             navigate("/productlanding", { state: { product, store } })
+            handleAddToCartAnalytics(product._id)
+        }
     };
 
     useEffect(() => {
@@ -37,6 +39,14 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
         }
     };
 
+    const truncateName = (name, charLimit) => {
+        if (name.length > charLimit) {
+            return name.slice(0, charLimit) + '...';
+        }
+        return name;
+    };
+
+
     // Function to limit text to a certain number of words
     const limitDescription = (description, limit = 20) => {
         const words = description.split(' ');
@@ -48,7 +58,7 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
 
     return (
         <motion.div
-            className="product-card w-[280px] rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-6  flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
+            className="product-card w-[280px] rounded-md shadow-xl overflow-hidden cursor-pointer snap-start shrink-0 py-8 px-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: store.color.productListColor.cardBackground, color: store.color.productListColor.textColor, border: `2px solid ${store.color.productListColor.borderColor}` }}
@@ -74,8 +84,8 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                     className="z-10 font-bold text-lg -mb-5 tracking-wider "
                 >
                 </p>
-                <p className="font-bold text-xl tracking-wider ">
-                    {product.name}
+                <p className="font-bold text-xl">
+                    {truncateName(product.name, 15)}
                 </p>
             </div>
             <div
@@ -92,7 +102,7 @@ const ProductListCard2 = ({ product, handleStyleSelect, handleRemoveProduct, sto
                     />
                 </div>
                 <div
-                    className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-10 transition-all duration-300 group-hover:-translate-x-full"
+                    className="tooltips absolute top-0 left-6 -translate-x-[150%] p-2 flex flex-col items-start gap-5 transition-all duration-300 group-hover:-translate-x-full"
                 >
                     <p
                         className=" pl-2 font-semibold text-xl uppercase group-hover:delay-1000 transition-all opacity-0 group-hover:opacity-100 group-hover:transition-all group-hover:duration-500"

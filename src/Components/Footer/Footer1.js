@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
-import ReactPlayer from 'react-player';
 
 import { motion } from "framer-motion"
 const Footer1 = ({
@@ -65,7 +64,7 @@ const Footer1 = ({
         setNewSocialMediaLinks(prevLinks => ({ ...prevLinks, linkedin: e.target.value }));
         setStore(prevState => ({ ...prevState, socialMediaLinks: { ...prevState.socialMediaLinks, linkedin: e.target.value } }));
     };
-   
+
     if (!previewMode) {
         return (
             <footer style={{ backgroundColor: bgColor, color: textColor, fontFamily: store?.fonts?.Footer }} className="px-10 lg:px-16 py-10">
@@ -84,7 +83,7 @@ const Footer1 = ({
                         </div>
                     </div>
                     <div>
-                  
+
                         <div className="flex flex-col md:flex-row gap-5 lg:gap-10">
                             <div className="flex flex-col">
                                 <p style={{ color: linkHeaderColor }} className="mb-2 font-bold text-base lg:text-lg text-center">Edit Contact:</p>
@@ -208,8 +207,8 @@ const Footer1 = ({
                     <div className='text-xs lg:text-sm flex flex-col gap-3 '>
                         <p style={{ color: linkHeaderColor }} className="font-bold text-sm lg:text-lg">Products</p>
                         <div style={{ color: linkColor }} className="flex flex-col items-start gap-2">
-                        <Link to={!isEdit && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
-                        <Link to={!isEdit && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
+                            <Link to={!isEdit && `/store/products/${store.name}`} className="hover:underline">All Products</Link>
+                            <Link to={!isEdit && `/store/products/${store.name}`} className="hover:underline">Featured</Link>
                             {/* <Link to="/" className=" transition-colors duration-300">Perfumes</Link>
                             <Link to="/" className=" transition-colors duration-300">Skin Care</Link>
                             <Link to="/" className=" transition-colors duration-300">Others</Link> */}

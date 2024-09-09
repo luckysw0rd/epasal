@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { FaPlay, FaPause, FaMusic } from 'react-icons/fa';
 import { useStore } from '../../ThemeContext';
 
-const ModernReactPlayer = () => {
+
+const ModernReactPlayer = ({store}) => {
     const [volume, setVolume] = useState(0.5);
     const [playing, setPlaying] = useState(true);
-    const { store } = useStore();
+    const [myStore,setMyStore]=useState({});
+    useEffect(()=>{
+        console.log(store,"storeee")
+        setMyStore(store);
+    },[store])
 
     const handleVolumeChange = (e) => {
         setVolume(parseFloat(e.target.value));
@@ -16,17 +21,17 @@ const ModernReactPlayer = () => {
         setPlaying(!playing);
     };
 
-    if (store?.audioUrl && store?.audioUrl !== '') {
-        return (
+        return myStore.audioUrl? (
             <div>
                 <ReactPlayer
-                    url={store?.audioUrl}
+                    url={myStore?.audioUrl}
                     playing={playing}
                     controls
                     width="0px"
                     height="0px"
                     volume={volume}
                     loop={true}
+                    
                 />
                 <div className="fixed bottom-4 left-4 flex items-center p-1 sm:p-2 hover:bg-gray-900 bg-opacity-0 rounded-full hover:shadow-lg hover:backdrop-blur-lg transition-all duration-300 hover:bg-opacity-75 hover:scale-105 group">
                     <FaMusic className="text-blue-700 text-lg sm:text-xl opacity-80 group-hover:opacity-0 transition-opacity duration-300" />
@@ -54,10 +59,8 @@ const ModernReactPlayer = () => {
                     </div>
                 </div>
             </div>
-        );
-    } else {
-        return null;
-    }
+        ):'';
+   
 };
 
 export default ModernReactPlayer;

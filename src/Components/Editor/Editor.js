@@ -15,6 +15,7 @@ import { FaPlus, FaUpload } from 'react-icons/fa';
 import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
 import { CiTextAlignJustify } from "react-icons/ci";
 import { FaDownload } from "react-icons/fa";
+import Tooltip from '../../Theme/Theme1/SubProduct/Tooltip';
 import 'react-toastify/dist/ReactToastify.css';
 
 // List of fonts from your Tailwind configuration
@@ -27,8 +28,8 @@ const fonts = [
 // Handle file import
 
 
-const Editor = () => {
-  const { store, setStore ,updateFont} = useStore();
+const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructionsCompleted }) => {
+  const { store, setStore,updateFont } = useStore();
   const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
   const { color } = store;
@@ -1378,6 +1379,18 @@ const Editor = () => {
     setStore(prevState => ({ ...prevState, fontFamily: selectedFont }));
   };
 
+  const blinkingBorderStyle = {
+    animation: 'blink 1s linear infinite',
+  };
+
+  const keyframes = `
+    @keyframes blink {
+      0% { border-color: red; }
+      50% { border-color: transparent; }
+      100% { border-color: red; }
+    }
+  `;
+
   return (
     <AnimatePresence>
       {(!store.fetchedFromBackend && !store.previewMode) || store?.isEdit ? navHide ? !previewMode && (
@@ -1402,12 +1415,43 @@ const Editor = () => {
             </div>
           </div>
 
-          <div className='flex justify-between  font-Poppins  mt-24 font-semibold text-[#6A6A6A] border-t-2  pt-4'>
-            <button className={`flex-1   text-lg text-center ${openType === 1 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(1) }}>Content </button>
-            <button className={`flex-1  text-lg text-center ${openType === 2 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(2) }}>Design</button>
-            {store.isEdit &&
-              <button className={`flex-1  text-lg text-center ${openType === 3 ? 'text-black' : ''}`} onClick={e => { e.preventDefault(); setOpenType(3) }}>Skin</button>
-            }
+          <div className='flex justify-between font-Poppins mt-24 font-semibold text-[#6A6A6A] border-t-2 pt-4'>
+            <style>{keyframes}</style>
+            <button
+              id="contentButtonId"
+              className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 1 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
+                }`}
+              style={currentStep === 2 && !instructionsCompleted ? blinkingBorderStyle : {}}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenType(1);
+                handleContentClick();
+              }}
+            >
+              Content
+            </button>
+            <button
+              id="designButtonId"
+              className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 2 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'
+                }`}
+              style={currentStep === 1 && !instructionsCompleted ? blinkingBorderStyle : {}}
+
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenType(2);
+                handleDesignClick();
+              }}
+            >
+              Design
+            </button>
+            {store.isEdit && (
+              <button
+                className={`flex-1 text-lg text-center border border-gray-300 py-2 mx-2 rounded-lg shadow-sm transition-all duration-300 ${openType === 3 ? 'text-black bg-gray-200' : 'bg-white hover:bg-gray-100'}`}
+                onClick={e => { e.preventDefault(); setOpenType(3); }}
+              >
+                Skin
+              </button>
+            )}
           </div>
 
           {openType === 1 && (
@@ -1426,6 +1470,9 @@ const Editor = () => {
                   </div>
                   <div className='font-normal mt-4'>
                     <label className='text-sm font-Poppins mb-2 block'>Shop Name</label>
+                    <Tooltip message="Store names have to be unique">
+                      <span className='  absolute left-20 bottom-[4px] ml-2  flex   text-yellow-600 text-2xl font-bold'>?</span>
+                    </Tooltip>
                     <input
                       type='text'
                       className='border-2 border-gray-300 h-10 rounded-lg px-4 text-sm w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
@@ -1598,6 +1645,9 @@ const Editor = () => {
                 </li>
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   Add Products<br />
+                  <Tooltip message="Remove the product by clicking the red cross on the product itself">
+                      <span className='  absolute left-[104px] bottom-[0px] ml-2  flex   text-yellow-600 text-2xl font-bold'>?</span>
+                    </Tooltip>
                   <div className='mt-2'>
                     <button className='px-2 text-[12px]  font-Ubuntu border-2 border-gray-300' onClick={handleAddProduct}>Add +</button>
                   </div>

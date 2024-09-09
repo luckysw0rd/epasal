@@ -3,7 +3,7 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const SubProductCard3 = ({ product, handleRemoveProduct, store }) => {
+const SubProductCard3 = ({ product, handleRemoveProduct, store,handleAddToCartAnalytics }) => {
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
     const navigate = useNavigate()
@@ -16,8 +16,10 @@ const SubProductCard3 = ({ product, handleRemoveProduct, store }) => {
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (store?.fetchedFromBackend && !store?.isEdit)
+        if (store?.fetchedFromBackend && !store?.isEdit){
+            handleAddToCartAnalytics(product._id);
             navigate("/productlanding", { state: { product, store } })
+        }
     };
 
     const handleAddToCart = () => {

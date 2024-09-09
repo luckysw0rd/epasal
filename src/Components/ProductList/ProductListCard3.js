@@ -3,7 +3,7 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const ProductListcard3 = ({ product, handleRemoveProduct, store, productListProps }) => {
+const ProductListcard3 = ({ product, handleRemoveProduct, store, productListProps,handleAddToCartAnalytics }) => {
     const { addToCart } = productListProps;
     const [addedToCart, setAddedToCart] = useState(false);
     const { previewMode, isEdit } = store;
@@ -13,8 +13,10 @@ const ProductListcard3 = ({ product, handleRemoveProduct, store, productListProp
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (store?.fetchedFromBackend && !store?.isEdit)
+        if (store?.fetchedFromBackend && !store?.isEdit){
+            handleAddToCartAnalytics(product._id)
             navigate("/productlanding", { state: { product, store } })
+        }
     };
     useEffect(() => {
         setAddedToCart(false);

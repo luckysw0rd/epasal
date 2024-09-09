@@ -5,7 +5,7 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Import FaTimes for 
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store }) => {
+const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store,handleAddToCartAnalytics }) => {
     // Component state
     const [selectedStyle, setSelectedStyle] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0)
@@ -53,6 +53,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
     const handleAddToCart = () => {
         // This function should handle adding the product to the cart
         // For demonstration purposes, it just sets the addedToCart state to true
+        //handle add to cart analytics should be done
         setAddedToCart(true);
     };
 
@@ -83,8 +84,10 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (store.fetchedFromBackend && !store.isEdit)
+        if (store.fetchedFromBackend && !store.isEdit){
+            handleAddToCartAnalytics(product._id)
             navigate("/productlanding", { state: { product, store } })
+        }
     };
 
     return (

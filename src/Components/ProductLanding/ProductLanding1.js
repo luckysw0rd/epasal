@@ -47,7 +47,7 @@ const ProjectLanding1 = () => {
         setSelectedProduct(newProduct);
         navigate(location.pathname, { state: { product: newProduct, store } });
         localStorage.setItem('product', JSON.stringify(newProduct));
-        setDisplayedImage(newProduct.image.imageUrl);
+        setDisplayedImage(newProduct?.image?.imageUrl);
     };
 
 
@@ -66,7 +66,7 @@ const ProjectLanding1 = () => {
     };
 
     const handleAddToCart = () => {
-        
+
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const selectedVariant = selectedProduct.variant.map((variant, index) => ({
             name: variant.name,
@@ -75,7 +75,7 @@ const ProjectLanding1 = () => {
                 image: variant.options[selectedVariants[index]]?.image?.imageUrl
             }
         }));
-        
+
         const newCartItem = {
             product: selectedProduct._id || product._id,
             productName: selectedProduct.name,
@@ -99,7 +99,7 @@ const ProjectLanding1 = () => {
             return updatedStore;
         });
 
-       
+
 
         toast.success("Product Added To Cart", {
             position: "top-center",
@@ -116,7 +116,7 @@ const ProjectLanding1 = () => {
             // Handle products without variants or unselected variants
             const basePrice = parseFloat(selectedProduct.price) || 0;
             const discount = parseFloat(selectedProduct.discount) || 0;
-           
+
 
             return basePrice - discount;
         } else {
@@ -134,7 +134,7 @@ const ProjectLanding1 = () => {
                     const variantPrice = selectedOption ? parseFloat(selectedOption.price) : 0;
                     const discount = parseFloat(selectedProduct.discount) || 0;
                     const variantDiscount = selectedOption && parseFloat(selectedOption.discount) || 0;
-                   
+
                     // Calculate the effective price for the current variant selection
                     const effectivePrice = variantPrice > 0 ? variantPrice - variantDiscount : basePrice - discount;
 
@@ -192,24 +192,20 @@ const ProjectLanding1 = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar store={store} setStore={setStore} color={store.color} />
-            <div className="px-4 py-8 md:py-16 lg:px-24">
-                <div className="mt-10 flex flex-col gap-10">
+            <div className="px-4 py-16 lg:px-14">
+                <div className="mt-4 md:mt-10 flex flex-col gap-10">
                     <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12">
-                        <div className="w-full md:w-2/3 flex flex-col gap-8 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <div className="flex flex-col md:flex-row gap-6">
-                                <div className="flex flex-col gap-6 md:w-80 lg:w-96">
-                                    <img
-                                        src={displayedImage}
-                                        alt={selectedProduct?.name}
-                                        className="w-full h-auto rounded-lg object-cover shadow-md hover:shadow-lg transition-shadow duration-300"
-                                    />
-                                    <div className="flex gap-3 mt-4">
+                        {/* shadow-lg shadow-stone-400 removed */}
+                        <div className="w-full flex flex-col gap-8 p-6 bg-white rounded-lg transition-shadow duration-300">
+                            <div className="flex flex-col md:flex-row gap-10 lg:gap-16">
+                                <div className="flex flex-col-reverse md:flex-row gap-7 lg:gap-10">
+                                    <div className="flex flex-row md:flex-col gap-3">
                                         {selectedProduct.image && (
                                             <div
                                                 className={`cursor-pointer text-sm lg:text-base ${selectedVariants.every(index => index === -1) ? 'font-bold' : ''} rounded-md`}
                                                 onClick={changeDefaultImage}
                                             >
-                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                <img src={selectedProduct.image.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-24 lg:h-24 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                             </div>
                                         )}
                                         {selectedProduct.variant.map((variant, variantIndex) => (
@@ -220,77 +216,81 @@ const ProjectLanding1 = () => {
                                                     className={`cursor-pointer text-sm lg:text-base ${selectedVariants[variantIndex] === optionIndex ? 'font-bold' : ''} rounded-md`}
                                                     onClick={() => handleOptionSelect(variantIndex, optionIndex)}
                                                 >
-                                                    <img src={option.image?.imageUrl || selectedProduct.image.imageUrl} alt={option.name} className="w-16 h-16 md:w-14 md:h-14 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                    <img src={option?.image?.imageUrl || selectedProduct?.image?.imageUrl} alt={option.name} className="w-16 h-16 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                                 </div>
                                             ))
                                         ))}
                                     </div>
+                                    <div className='md:w-[350px] h-[400px] lg:w-[450px] lg:h-[450px] 2xl:w-[550px] 2xl:h-[550px] overflow-hidden rounded-xl'>
+                                        <img
+                                            src={displayedImage}
+                                            alt={selectedProduct?.name}
+                                            className="object-cover w-full h-full shadow-md hover:shadow-lg transition-shadow duration-300"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="flex flex-col gap-4 w-full">
-                                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">{selectedProduct.name}</h1>
-                                    <p className="text-sm md:text-base text-gray-700">{selectedProduct.description}</p>
-                                    <div className="flex mb-4 md:justify-start">
+                                    <h1 className="text-xl md:text-2xl lg:text-[26px] 2xl:text-4xl font-bold text-[#4F3100] ">{selectedProduct.name}</h1>
+                                    <div className="flex md:justify-start">
                                         {[...Array(5)].map((_, index) => (
                                             <StarIcon
                                                 key={index}
-                                                className={`w-5 h-5 ${index < Math.ceil(selectedProduct.rating) ? 'text-yellow-500' : 'text-gray-300'} transition-transform duration-300 hover:scale-110`}
+                                                className={`w-5 2xl:w-7 h-5 2xl:h-7 ${index < Math.ceil(selectedProduct.rating) ? 'text-[#dba247]' : 'text-gray-300'} transition-transform duration-300 hover:scale-110`}
                                             />
                                         ))}
                                     </div>
-                                    <div className="flex gap-6 items-center">
-                                        <span className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900">Rs {totalPrice}</span>
-                                        <span className="line-through text-sm md:text-base lg:text-xl text-gray-500">Rs {totalDiscount + totalPrice}</span>
-                                    </div>
-                                    {selectedProduct.variant.map((variant, variantIndex) => (
-                                        <div className="flex gap-4 items-center" key={variantIndex}>
-                                            <label htmlFor={`variant-${variantIndex}`} className="block text-sm lg:text-base text-gray-700">{variant.name}:</label>
-                                            <select
-                                                id={`variant-${variantIndex}`}
-                                                className="md:pr-3 lg:pr-5 pl-2 py-1 w-20 md:w-24 lg:w-28 text-xs md:text-sm lg:text-base border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
-                                                value={selectedVariants[variantIndex] === -1 ? "" : variant.options[selectedVariants[variantIndex]].name}
-                                                onChange={(e) => handleVariantChange(variantIndex, e.target.value)}
-                                            >
-                                                <option value="">Select</option>
-                                                {variant.options.map((option, optionIndex) => (
-                                                    <option key={optionIndex} value={option.name}>{option.name}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    ))}
                                     <div className="flex gap-4 items-center">
-                                        <label htmlFor="quantity" className="block text-sm lg:text-base text-gray-700">Quantity:</label>
-                                        <div className="flex items-center gap-3">
-                                            <button className="px-2 md:px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-300" onClick={decrementQuantity}> - </button>
-                                            <span className="text-sm md:text-base lg:text-xl">{productCount}</span>
-                                            <button className="px-2 md:px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-300" onClick={incrementQuantity}> + </button>
+                                        <span className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-semibold text-[#383737]">Rs {totalPrice}</span>
+                                        <span className="line-through text-sm md:text-base lg:text-xl 2xl:text-xl text-gray-500">Rs {totalDiscount + totalPrice}</span>
+                                    </div>
+                                    <p className="text-sm md:text-base text-gray-600 2xl:text-lg">{selectedProduct.description}</p>
+
+                                    <div className="flex flex-row md:flex-col gap-4">
+
+                                        {selectedProduct.variant.map((variant, variantIndex) => (
+                                            <div className="flex flex-col gap-2 2xl:text-xl" key={variantIndex}>
+                                                <label htmlFor={`variant-${variantIndex}`} className="block text-base lg:text-lg 2xl:text-xl text-[#7A5822]">{variant.name}:</label>
+                                                <select
+                                                    id={`variant-${variantIndex}`}
+                                                    className="flex items-center justify-between w-36 gap-3 border border-gray-500 rounded-xl bg-transparent px-3 2xl:px-4 py-3 "
+                                                    value={selectedVariants[variantIndex] === -1 ? "" : variant.options[selectedVariants[variantIndex]].name}
+                                                    onChange={(e) => handleVariantChange(variantIndex, e.target.value)}
+                                                >
+                                                    <option value="">Select</option>
+                                                    {variant.options.map((option, optionIndex) => (
+                                                        <option key={optionIndex} value={option.name}>{option.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        ))}
+                                        <div className="flex flex-col gap-2">
+                                            <label htmlFor="quantity" className="block text-base     lg:text-lg 2xl:text-xl text-[#7A5822]">Quantity:</label>
+                                            <div className="flex items-center justify-between w-36 gap-3 border border-gray-500 rounded-xl px-3 2xl:px-4 py-1">
+                                                <button
+                                                    className="text-2xl text-gray-500 focus:outline-none hover:text-gray-700 transition duration-200"
+                                                    onClick={decrementQuantity}
+                                                >
+                                                    -
+                                                </button>
+                                                <span className="text-base lg:text-lg 2xl:text-xl font-medium text-gray-800">{productCount}</span>
+                                                <button
+                                                    className="text-2xl 2xl:text-3xl text-gray-700 focus:outline-none hover:text-gray-900 transition duration-200"
+                                                    onClick={incrementQuantity}
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button onClick={handleAddToCart} className="flex items-center justify-center gap-2 mt-4 md:mt-6 px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
-                                        <TbShoppingBagPlus className="w-5 h-5" />
-                                        Add to Cart
+
+                                    <button onClick={handleAddToCart} className="w-full md:w-60 2xl:w-68 font-bold text-lg 2xl:text-xl flex items-center justify-center gap-3 mt-4 2xl:mt-7 px-4 py-2 md:px-6 md:py-2 2xl:py-3 text-[#7A5822] border border-gray-500 rounded-xl hover:bg-[#7A5822] hover:text-white transition duration-300">
+                                        Buy Now
+                                        <TbShoppingBagPlus className="w-6 h-6" />
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full md:w-1/3 flex flex-col gap-6 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900">Store Details</h2>
-                            <div className="flex items-center gap-3">
-                                <LiaShippingFastSolid className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">{storeDetails.deliveryTime}</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <TbCash className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">COD {storeDetails.COD}</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <FiClock className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">{storeDetails.returnPolicyTime} Return Policy</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <PiCreditCard className="w-5 h-5 text-gray-800" />
-                                <span className="text-sm md:text-base text-gray-800">Secure Payment</span>
-                            </div>
-                        </div>
+
                     </div>
                     <div className="flex flex-col gap-6 mt-12">
                         <ProductReview product={selectedProduct} />
@@ -298,6 +298,7 @@ const ProjectLanding1 = () => {
                 </div>
             </div>
         </div>
+
     );
 
 };

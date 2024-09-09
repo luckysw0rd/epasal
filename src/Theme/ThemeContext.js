@@ -29,6 +29,8 @@ export const StoreProvider = ({ children, passedStore }) => {
   const { isLoading, error, sendRequest, onCloseError } = useFetch();
   const { storeID } = useParams(); // Extract storeID using useParams
   const navigate = useNavigate();
+  const [isVisitorBuy, setIsVisitorBuy] = useState(false);
+  const [isVisitorAddToCart, setIsVisitorAddToCart] = useState(false)
   /*   useEffect(() => {
       const savedCart = localStorage.getItem('cart');
       if (savedCart) {
@@ -909,6 +911,10 @@ export const StoreProvider = ({ children, passedStore }) => {
         addToCart,
         deleteFromCart,
         updateFont,
+        isVisitorAddToCart,
+        setIsVisitorAddToCart,
+        isVisitorBuy,
+        setIsVisitorBuy,
         isLoading
       }}
     >
