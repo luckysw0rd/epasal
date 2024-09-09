@@ -11,7 +11,7 @@ import { IoIosLogIn } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import { RiPriceTagLine } from "react-icons/ri";
-const Navbar = ({ navbarImage, setStores }) => {
+const Navbar = ({ navbarImage, setStores,footerRef,subscriptionPlanRef ,storeRef}) => {
     const [isRotated, setIsRotated] = useState(false);
     const [isStoreOpen, setIsStoreOpen] = useState(false)
     const [searchHide,setSearchHide]=useState(true)
@@ -114,7 +114,10 @@ const Navbar = ({ navbarImage, setStores }) => {
 
         }
     }
-
+    const handleClickNavigation=(e,myRef)=>{
+        e.preventDefault();
+        myRef.current.scrollIntoView({behavior:"smooth"})
+    }
     return (
         <div className={`py-3 absolute z-30 top-0 left-0 flex justify-between w-[98%] relative ${scrolledFromTop ? '' : 'bg-transparent'} transition duration-500 rounded-xl grid grid-cols-2 lg:grid-cols-3`} >
             <div className='flex items-center font-bold text-[#393939] gap-1 md:gap-2' onClick={(e)=>{e.preventDefault();navigate('/')}}>
@@ -124,9 +127,9 @@ const Navbar = ({ navbarImage, setStores }) => {
             <div className='w-full hidden lg:block '>
                 <ul className='flex justify-between items-center h-full'>
                     <li className='border-b-4 border-black px-3'>Home</li>
-                    <li className='px-3'>Contact Us</li>
-                    <li className='px-3'>Subscription</li>
-                    <li className='px-3'>FAQ</li>
+                    <li className='px-3' onClick={e=>handleClickNavigation(e,footerRef)}>Contact Us</li>
+                    <li className='px-3' onClick={e=>handleClickNavigation(e,subscriptionPlanRef)}>Subscription</li>
+                    <li className='px-3' onClick={e=>handleClickNavigation(e,storeRef)}>Stores</li>
                 </ul>
             </div>
             <div className='flex justify-end gap-2 md:gap-5 mr-0 md:mr-10 items-center'>
