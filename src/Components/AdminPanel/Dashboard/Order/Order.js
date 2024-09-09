@@ -242,13 +242,13 @@ const Order = ({ store }) => {
                                             <span className="block">{new Date(order.updatedAt).toLocaleTimeString()}</span>
                                         </div> */}
                                         </div>
-                                        <h2 className="text-md font-semibold">Order Number : {order._id}</h2>
-                                        <div className="text-gray-600">{`Address: ${order.address}`}</div>
-                                        <div className="text-gray-600">{`Landmark: ${order.landmark}`}</div>
-                                        <div className="text-gray-600">{`Status: ${order.status}`}</div>
+                                        <h2 className="text-md font-semibold">Order Number : {order?._id}</h2>
+                                        <div className="text-gray-600">{`Address: ${order?.address}`}</div>
+                                        <div className="text-gray-600">{`Landmark: ${order?.landmark}`}</div>
+                                        <div className="text-gray-600">{`Status: ${order?.status}`}</div>
                                         <div className="text-gray-600 flex items-center">
                                             {`Phone Number: `}
-                                            <a href={`tel:${order.phoneNumber}`} className="ml-2 text-blue-500 underline">{order.phoneNumber}</a>
+                                            <a href={`tel:${order.phoneNumber}`} className="ml-2 text-blue-500 underline">{order?.phoneNumber}</a>
                                         </div>
                                     </div>
                                 )}
@@ -256,14 +256,14 @@ const Order = ({ store }) => {
                             <div className=' flex justify-end flex-col space-y-4'>
                                 <div className="text-gray-600  font-semibold">
 
-                                    <span className=" block">{new Date(order.updatedAt).toLocaleDateString(undefined, {
+                                    <span className=" block">{new Date(order?.updatedAt).toLocaleDateString(undefined, {
                                         day: 'numeric',
                                         month: 'short'
                                     })}</span>
-                                    <span className="block">{new Date(order.updatedAt).toLocaleTimeString()}</span>
+                                    <span className="block">{new Date(order?.updatedAt).toLocaleTimeString()}</span>
                                 </div>
                                 <div className="text-gray-500 flex justify-end mx-auto  mb-2 text-2xl" onClick={() => toggleExpand(order._id)}>
-                                    {expandedId === order._id ? <FaChevronUp /> : <FaChevronDown />}
+                                    {expandedId === order?._id ? <FaChevronUp /> : <FaChevronDown />}
                                 </div>
                                 <button
                                     onClick={() => toggleEdit(order)}
@@ -289,17 +289,16 @@ const Order = ({ store }) => {
                                 </div>
                                 <div>
                                     {order.cart.map((item, index) => (
-
                                         <div key={item.product._id} className="mb-4">
-                                            <p className="font-medium">{`Product: ${item.productName || item.product.name}`}</p>
-                                            <p className="text-gray-600">{`Product ID: ${item.product._id}`}</p>
-                                            <p className="text-gray-600">{`Quantity: ${item.count}`}</p>
+                                            <p className="font-medium">{`Product: ${item?.productName || item?.product.name}`}</p>
+                                            <p className="text-gray-600">{`Product ID: ${item?.product?._id}`}</p>
+                                            <p className="text-gray-600">{`Quantity: ${item?.count}`}</p>
                                             {item.selectedVariant.map((variant, idx) => (
                                                 <div key={idx} className="text-gray-600">
-                                                    <p>{`${variant.name}: ${variant.options.name}`}</p>
+                                                    <p>{`${variant?.name}: ${variant?.options?.name}`}</p>
                                                 </div>
                                             ))}
-                                            <p className="text-gray-600">{`Price After Discount: Nrs ${item.price} per unit`}</p>
+                                            <p className="text-gray-600">{`Price After Discount: Nrs ${item?.price} per unit`}</p>
                                             <hr className="w-full border-gray-300 mt-2" />
                                         </div>
                                     ))}
