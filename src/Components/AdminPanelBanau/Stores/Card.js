@@ -5,8 +5,9 @@ const Card = ({ store }) => {
     return (
         <div key={store._id} className="bg-white p-6 text-sm rounded-lg shadow-lg">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-white bg-indigo-600 p-2 rounded">{store.name.toUpperCase()}</h2>
-
+                <Link
+                    to={`/store/${store?.name}`}
+                    target="_blank" className="text-xl font-bold text-white bg-indigo-600 p-2 rounded cursor-pointer">{store.name.toUpperCase()}</Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:md:grid-cols-2 gap-4 mt-5">
                 <div className="text-gray-700 mb-2 flex items-center">
