@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AddCategoryModal from "../../Theme/Theme1/AddCategoryModal";
 
 
-const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, removeSubCategory,isEdit ,addSubCategory}) => {
+const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, removeSubCategory, isEdit, addSubCategory }) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -47,7 +47,7 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
 
     // };
     const handleSelectSubCategory = (subcategory) => {
-       
+
         setSelectedSubCategoryLocally(subcategory); // Update the local state
         setSelectedSubCategory(subcategory.name); // Update the selectedSubCategory in the store
 
@@ -92,8 +92,16 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                         {subCategories.map((subcategory, index) => (
                             <div key={index} className="relative">
                                 <button
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor = color.subcategoryColor.text;
+                                        e.currentTarget.style.color = color.subcategoryColor.background;
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = color.subcategoryColor.background;
+                                        e.currentTarget.style.color = color.subcategoryColor.text;
+                                    }}
                                     onClick={() => handleSelectSubCategory(subcategory)}
-                                    className={`py-2 px-8 hover:bg-gray-100 ${selectedSubCategory === subcategory ? 'font-extrabold ' : ''}`}
+                                    className={`py-2 px-8 ${selectedSubCategory === subcategory ? 'font-extrabold ' : ''}`}
                                     style={{ borderBottom: `${selectedSubCategory === subcategory ? `solid ${color.subcategoryColor.text} 3px` : ''}` }}
                                 >
                                     {subcategory.name}
@@ -120,12 +128,12 @@ const Category1 = ({ subCategories, previewMode, color, setSelectedSubCategory, 
                         {/* <input type='text' placeholder='Search' className='text-center border border-2 border-black rounded' onChange={handleChangeSuggestion} value={inputValue}/>{renderSuggestions()} */}
                         <select name="category" id="category" className='px-5 py-1' onChange={handleChangeCategory}>
                             {subCategories.map((n, i) => (
-                                <option value={n.name}>{n.name}</option>
+                                <option value={n.name}  >{n.name}</option>
                             ))}
                         </select>
                     </div>
                 </div>
-                {showModal && <AddCategoryModal onClose={handleCloseModal} addSubCategory={addSubCategory}/>}
+                {showModal && <AddCategoryModal onClose={handleCloseModal} addSubCategory={addSubCategory} />}
             </div>
         </div>
     );

@@ -28,10 +28,9 @@ const AllProductCard = ({ product, store }) => {
             navigate("/productlanding", { state: { product, store } })
     };
 
-
     return (
         <div
-            className="relative bg-white rounded-lg shadow-lg p-4 w-[200px] sm:w-[250px] md:[285px] max-w-xs h-full"
+            className="relative bg-white rounded-lg shadow-xl p-4 w-[190px] md:w-[240px] lg:w-[285px] xl:w-[300px] border border-gray-200 max-w-xs h-full"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -43,7 +42,7 @@ const AllProductCard = ({ product, store }) => {
                     className="rounded-lg w-[200px] sm:w-[285px] h-[200px] sm:h-[300px] object-cover"
                 />
                 {/* Discount Badge */}
-                {product.discount && (
+                {product.discount > 0 && product.discount && (
                     <div className="absolute top-2 right-2 w-7 lg:w-12 h-7 lg:h-12 flex justify-center items-center bg-red-500 text-white text-xs lg:text-sm px-2 py-2 rounded-full">
                         {calculateDiscountPercentage(product?.price, product?.price - product?.discount)}%
                     </div>
@@ -69,8 +68,8 @@ const AllProductCard = ({ product, store }) => {
                     <p className="text-gray-500 text-sm">{truncateLength(product?.description, 50)}</p>
                 </div>
                 <div className="flex items-end justify-between space-x-2 mt-2">
-                    <span className="text-base lg:text-xl font-bold text-gray-800">Rs. {product?.price - product?.discount}</span>
-                    {product.discount && (
+                    <span className="text-base lg:text-xl font-bold text-gray-800">Rs. {product?.price - product?.discount || 0}</span>
+                    {product.discount > 0 && product.discount && (
                         <span className="text-sm lg:text-base text-gray-500 line-through">Rs. {product?.price}</span>
                     )}
                 </div>

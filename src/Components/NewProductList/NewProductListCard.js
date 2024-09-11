@@ -90,7 +90,7 @@ const NewProductListCard = ({ productListProps, handleRemoveProduct, product }) 
                     <div className="px-2 md:px-5 w-full flex-grow">
                         <hr className="border-t-2" style={{ borderColor: borderColor }} />
                         <div className="py-2 onClick={() => handleProductClick(product)}">
-                            <p className="text-lg md:text-xl font-bold" style={{ color: textColor }}>{truncateName(name, 12)}</p>
+                            <p className="text-lg md:text-xl font-bold" style={{ color: textColor }}>{truncateName(name, 15)}</p>
                             <div className='flex md:flex-row justify-between'>
                                 <p className="md:my-1 font-bold text-sm md:text-base" style={{ color: priceColor }}>Rs. {price - discount}</p>
                                 {discount > 0 &&

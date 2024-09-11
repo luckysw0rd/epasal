@@ -332,7 +332,7 @@ const AllProducts = () => {
         <div className="flex flex-col lg:flex-row sm:px-2 lg:px-0">
           <div className="flex-grow p-2 sm:p-4 w-full lg:w-3/4 min-h-screen">
             <div className="flex flex-wrap justify-start gap-4">
-              <div className="w-full bg-white py-2 md:p-3 flex items-center justify-between gap-5 md:gap-16 shadow-md">
+              <div className="w-full bg-white py-2 md:p-3 flex items-center justify-between gap-5 md:gap-16  lg:px-16 shadow-md">
                 {/* Left Section: Filter and Results Count */}
                 <div className="flex gap-3 sm:gap-5 items-center">
                   <div
@@ -551,7 +551,7 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
-        <ModernReactPlayer store={store}/>
+        <ModernReactPlayer store={store} />
       </div >
     )
   );
