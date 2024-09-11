@@ -5,13 +5,12 @@ import { AuthContext } from '../../Hooks/AuthContext';
 
 const SubProduct1 = ({
     products, categories, subCategories, previewMode, store, CategorySelector, setStore, AddProduct, ProductCard, useDraggable
-    , addToCart,handleAddToCartAnalytics }) => {
+    , addToCart,handleAddToCartAnalytics,setSelectedSubCategory, removeSubCategory }) => {
     const ref = useRef();
     const containerRef = useRef(null);
     const { events } = useDraggable(ref);
     const { sendRequest } = useFetch();
     const auth = useContext(AuthContext);
-
     const selectedSubCategory = store.selectedSubCategory || subCategories[0].name;
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedStyles, setSelectedStyles] = useState({});
@@ -72,8 +71,8 @@ const SubProduct1 = ({
     const subProductColor = store.color.subProductColor;
 
     return (
-        <div className='   mb-16' style={{ fontFamily: store?.fonts?.Categories, backgroundColor: subProductColor.categoryColor }}>
-            <CategorySelector />
+        <div className='   mb-16' style={{ fontFamily: store?.fonts?.Categories ,backgroundColor: subProductColor.categoryColor}}>
+            <CategorySelector store={store} setSelectedSubCategory={setSelectedSubCategory} removeSubCategory={removeSubCategory} />
             <div className="px-10 md:px-20  pb-8 overflow-x-scroll" style={{
                 maxWidth: '100vw',
             }}
@@ -118,7 +117,7 @@ const SubProduct1 = ({
                         </div>
                     )}
                 </div>
-                {showAddProduct && <AddProduct onClose={toggleAddProduct} />}
+                {showAddProduct && <AddProduct onClose={toggleAddProduct} store={store} setStore={setStore}/>}
             </div>
         </div>
     );

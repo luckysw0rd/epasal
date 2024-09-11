@@ -91,7 +91,7 @@ const ProductCard = ({ product, productColor, addToCart, store }) => {
             <div className="px-3 md:px-5  w-full">
               <hr className="border-t-2" style={{ borderColor: borderColor }} />
               <div className="py-2">
-                <p className="text-base md:text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 10)}</p>
+                <p className="text-base md:text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 20)}</p>
                 <div className='flex justify-between'>
                   <p className="my-1 font-bold text-xs md:text-sm" style={{ color: priceColor }}>Rs. {price - discount}</p>
                   {discount > 0 &&

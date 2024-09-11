@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
-import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
+import { useStore } from '../../Theme/ThemeContext'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';

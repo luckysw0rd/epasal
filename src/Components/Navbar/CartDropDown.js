@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Checkout from '../CheckoutPage/CheckOutPage'; // Adjust path as necessary
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useStore } from '../../Theme/Theme1/T1Context';
+import { useStore } from '../../Theme/ThemeContext';
 import { m } from 'framer-motion';
 
 const CartDropdown = ({ backgroundColor }) => {

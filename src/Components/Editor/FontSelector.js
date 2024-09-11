@@ -1,8 +1,6 @@
 import React from "react";
-import { useStore } from "../../Theme/Theme1/T1Context";
 
-const FontSelector = ({ section }) => {
-    const { store, updateFont } = useStore();
+const FontSelector = ({ section,store, updateFont  }) => {
     const fonts = [
 
         "Anta","Saira", "VT323", "Kode Mono","Open Sans", "Open Sans","Sixtyfour", "Oleo Script", "Mansalva","Inter"

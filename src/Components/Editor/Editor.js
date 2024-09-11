@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useStore } from '../../Theme/Theme1/T1Context';
+import { useStore } from '../../Theme/ThemeContext';
 import ProductForm from '../../Theme/Theme1/SubProduct/ProductForm';
 import ImageDrop from './ImageDrop';
 import { RxCrossCircled } from "react-icons/rx";
@@ -29,7 +29,7 @@ const fonts = [
 
 
 const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructionsCompleted }) => {
-  const { store, setStore } = useStore();
+  const { store, setStore,updateFont } = useStore();
   const [openType, setOpenType] = useState(1);
   const [categoryData, setCategoryData] = useState('');
   const { color } = store;
@@ -1466,7 +1466,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                     Navbar
                   </h1>
                   <div>
-                    <FontSelector section="Navbar" />
+                    <FontSelector section="Navbar" store={store} updateFont={updateFont} />
                   </div>
                   <div className='font-normal mt-4'>
                     <label className='text-sm font-Poppins mb-2 block'>Shop Name</label>
@@ -1516,7 +1516,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                 <li className='font-bold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   <h1 className='text-2xl font-Poppins mb-4'>Categories</h1>
                   <div className="font-VT323 text-sm mb-4">
-                    <FontSelector section="Categories" />
+                    <FontSelector section="Categories" store={store} updateFont={updateFont} />
                   </div>
                   <div className='font-normal mt-4'>
                     <label className='text-sm font-Poppins mb-2 block'>Title</label>
@@ -1553,7 +1553,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   <h1 className='text-2xl font-Poppins mb-4'>Banner #1</h1>
                   <div className='mt-4'>
-                    <FontSelector section="Banner1" />
+                    <FontSelector section="Banner1" store={store} updateFont={updateFont} />
                   </div>
                   <div className='font-normal mt-4'>
                     <label className='text-sm font-Poppins mb-2 block'>Title</label>
@@ -1581,7 +1581,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   <h1 className='text-2xl font-Poppins mb-4'>Banner #2</h1>
                   <div className='mt-4'>
-                    <FontSelector section="Banner2" />
+                    <FontSelector section="Banner2" store={store} updateFont={updateFont} />
                   </div>
                   <div className='font-normal mt-4'>
                     <label className='text-sm font-Poppins mb-2 block'>Title</label>
@@ -1609,10 +1609,10 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   <h1 className='text-2xl font-Poppins mb-4'>Banner #3</h1>
                   <div className='mt-4'>
-                    <FontSelector section="Banner3" />
+                    <FontSelector section="Banner3" store={store} updateFont={updateFont} />
                   </div>
                   <div className='font-normal mt-4'>
-                    <label className='text-sm font-Poppins mb-2 block'>Title</label>
+                    <label className='text-sm font-Poppins mb-2 block'>Head</label>
                     <input
                       type='text'
                       className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
@@ -1621,11 +1621,21 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                     />
                   </div>
                   <div className='font-normal mt-4'>
-                    <label className='text-sm font-Poppins mb-2 block'>Description</label>
-                    <textarea
-                      className='border-2 border-gray-300 rounded-lg px-4 h-24 w-full transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
-                      value={store.offerBannerText.heading}
-                      onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, heading: e.target.value } })) }}
+                    <label className='text-sm font-Poppins mb-2 block'>Body</label>
+                    <input
+                      type='text'
+                      className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.offerBannerText.para2}
+                      onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para2: e.target.value } })) }}
+                    />
+                  </div>
+                  <div className='font-normal mt-4'>
+                    <label className='text-sm font-Poppins mb-2 block'>Foot</label>
+                    <input
+                      type='text'
+                      className='border-2 border-gray-300 rounded-lg px-4 w-full h-10 transition duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
+                      value={store.offerBannerText.para3}
+                      onChange={(e) => { setStore(prev => ({ ...prev, offerBannerText: { ...prev.offerBannerText, para3: e.target.value } })) }}
                     />
                   </div>
                   <div className='font-normal mt-4'>
@@ -1645,10 +1655,10 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   Featured Products<br />
                   <div>
-                    <FontSelector section="Featured" />
+                    <FontSelector section="Featured" store={store} updateFont={updateFont} />
                   </div>
                   <div>
-                    <FontSelector section="NewProduct" />
+                    <FontSelector section="NewProduct" store={store} updateFont={updateFont} />
                   </div>
                   <div className='mt-2 flex '>
                     <select name='featured' className='w-1/2 mr-2' id='featured' onChange={handleFeaturedChange}>
@@ -1661,7 +1671,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
                 <li className='font-semibold border-b-2 border-gray-200 pb-5 font-Poppins hover:bg-gray-50 p-4 rounded-lg shadow-md transition duration-300'>
                   Footer<br />
                   <div>
-                    <FontSelector section="Footer " />
+                    <FontSelector section="Footer " store={store} updateFont={updateFont} />
                   </div>
                   <label className='text-[12px]  font-Ubuntu'>Location</label><br />
                   <input value={store.location} type='text' className='border-2 border-gray-300 rounded px-2 ' placeholder='Your Store Location' onChange={(e) => { setStore(prevState => ({ ...prevState, location: e.target.value })); }} ></input><br />
@@ -1681,7 +1691,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
 
                 </li>
               </ul>
-              {addProductForm && <ProductForm onClose={() => setAddProductForm(!addProductForm)} />}
+              {addProductForm && <ProductForm onClose={() => setAddProductForm(!addProductForm)} store={store} setStore={setStore}/>}
             </motion.div>
           )}
 
@@ -1782,7 +1792,7 @@ const Editor = ({ handleDesignClick, handleContentClick, currentStep, instructio
             </div>
           )}
           <div className='flex justify-center my-3'>
-            <SaveStoreButton />
+            <SaveStoreButton store={store} setStore={setStore}/>
           </div>
         </motion.div>
       ) : (

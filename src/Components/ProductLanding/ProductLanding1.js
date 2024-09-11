@@ -216,7 +216,7 @@ const ProjectLanding1 = () => {
                                                     className={`cursor-pointer text-sm lg:text-base ${selectedVariants[variantIndex] === optionIndex ? 'font-bold' : ''} rounded-md`}
                                                     onClick={() => handleOptionSelect(variantIndex, optionIndex)}
                                                 >
-                                                    <img src={option?.image?.imageUrl || selectedProduct?.image?.imageUrl} alt={option.name} className="w-16 h-16 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
+                                                    {option?.image?.imageUrl && <img src={option?.image?.imageUrl} alt={option.name} className="w-16 h-16 lg:w-20 lg:h-20 rounded-md object-cover transition-transform duration-300 hover:scale-105" />}
                                                 </div>
                                             ))
                                         ))}

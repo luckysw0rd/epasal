@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import useFetch from '../Hooks/useFetch';
 import { AuthContext } from '../Hooks/AuthContext';
-import Theme1 from './Theme1/Theme1';
-
-const Theme = () => {
+import { StoreProvider, useStore } from "./ThemeContext";
+import Theme1 from './Theme2/Theme1';
+const Theme = (passedStore = { passedStore }) => {
   const [activeTheme, setActiveTheme] = useState(1);
   const [themeNumber, setThemeNumber] = useState(1);
   const { storeID } = useParams();
@@ -47,11 +47,13 @@ useEffect(() => {
 
   return (
     <div className='overflow-x-hidden'>
+      <StoreProvider passedStore={passedStore} >
       <Helmet>
         <title>{storeName}</title>
        
       </Helmet>
-      <Theme1 />
+      <Theme1 useStore={useStore}/>
+      </StoreProvider>
     </div>
   );
 };

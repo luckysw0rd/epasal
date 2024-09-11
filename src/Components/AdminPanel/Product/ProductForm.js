@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaImage } from "react-icons/fa6";
-import { useStore } from '../../../Theme/Theme1/T1Context';
+import { useStore } from '../../../Theme/ThemeContext';
 import ImageDrop from '../../../Components/Editor/ImageDrop';
 import useFetch from '../../../Hooks/useFetch';
 import { useImage } from '../../../Hooks/useImage';

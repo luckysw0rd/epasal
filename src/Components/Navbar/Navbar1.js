@@ -374,7 +374,7 @@ const Navbar1 = ({
                     </div>
                 )}
                 <span className="text-xl font-bold" onClick={() => navigate('./')}>
-                    {store.name}
+                    {store.name} 
                 </span>
 
             </div>

@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, index ,setStore,handleAddToCartAnalytics }) => {
-  
+const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, index, setStore, handleAddToCartAnalytics }) => {
+
     const { store, productColor, previewMode, addToCart, isEdit, fetchedFromBackend, } = productListProps;
     const { cardBackground, textColor, priceColor, borderColor, buttonTextColor, buttonBgColor, buttonBgColorOnHover, heartColor, buttonBorderColor } = productColor;
     const navigate = useNavigate()
@@ -19,7 +19,7 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
     const [displayedImage, setDisplayedImage] = useState(product?.image?.imageUrl);
 
     const handleDeleteProduct = (productIndex) => {
-        
+
         setStore(prevStore => ({
             ...prevStore,
             featuredProducts: prevStore.featuredProducts.filter((_, index) => index !== productIndex)
@@ -41,9 +41,13 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const truncateName = (name) => {
-        return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
+    const truncateName = (name, charLimit) => {
+        if (name.length > charLimit) {
+            return name.slice(0, charLimit) + '...';
+        }
+        return name;
     };
+
     if (!product) return null;
 
     const { id, name, image, variant, rating } = product;
@@ -62,12 +66,12 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
         setDisplayedImage(product?.image?.imageUrl);
     };
 
-    const handleProductClick = (e,product) => {
+    const handleProductClick = (e, product) => {
         e.preventDefault();
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (fetchedFromBackend && !isEdit){
+        if (fetchedFromBackend && !isEdit) {
             handleAddToCartAnalytics(product._id)
             navigate("/productlanding", { state: { product, store } })
         }
@@ -104,10 +108,10 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
                             </div>
                             <div className="px-5 w-full">
                                 <hr className="border-t-2" style={{ borderColor: borderColor }} />
-                                <div className=" py-2 " onClick={(e) => handleProductClick(e,product)}
+                                <div className=" py-2 " onClick={(e) => handleProductClick(e, product)}
                                 // className="prod-title mt-2 flex justify-between items-center"
                                 >
-                                    <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 22)}</p>
+                                    <p className="text-xl  font-bold" style={{ color: textColor }}>{truncateName(name, 15)}</p>
                                     <div className=' flex flex-row space-x-2'>
                                         <p className="my-1 font-bold text-md" style={{ color: priceColor }}>Rs. {price - discount}</p>
                                         {discount > 0 &&
@@ -147,7 +151,7 @@ const ProductListCard1 = ({ productListProps, handleRemoveProduct, product, inde
                                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonBgColorOnHover}
                                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonBgColor}
                                             onClick={(e) => {
-                                                handleProductClick(e,product)
+                                                handleProductClick(e, product)
                                             }}
                                         >
                                             Add to cart

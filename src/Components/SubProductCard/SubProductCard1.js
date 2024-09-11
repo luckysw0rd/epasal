@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Import FaTimes for the remove icon
-import { useStore } from '../../Theme/Theme1/T1Context'; // Import the StoreContext
 import { StarIcon } from '@heroicons/react/16/solid';
 import useFetch from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store,handleAddToCartAnalytics }) => {
+const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, store, handleAddToCartAnalytics }) => {
     // Component state
-    const { addToCart } = useStore();
     const [selectedStyle, setSelectedStyle] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0)
     const [addedToCart, setAddedToCart] = useState(false);
@@ -38,8 +36,11 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    const truncateName = (name) => {
-        return name.length > truncateLength ? name.slice(0, truncateLength) + '...' : name;
+    const truncateName = (name, charLimit) => {
+        if (name.length > charLimit) {
+            return name.slice(0, charLimit) + '...';
+        }
+        return name;
     };
     const truncateName1 = (detail) => {
         return detail.length > truncateLength1 ? detail.slice(0, truncateLength1) + '...' : detail;
@@ -49,7 +50,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         // This logic should be replaced with your actual implementation for checking the cart
         // For demonstration purposes, it's set to false by default
         setAddedToCart(false);
-       
+
     }, [product.id]);
 
     const handleAddToCart = () => {
@@ -86,7 +87,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
         localStorage.setItem('product', JSON.stringify(product));
         localStorage.setItem('store', JSON.stringify(store));
 
-        if (store.fetchedFromBackend && !store.isEdit){
+        if (store.fetchedFromBackend && !store.isEdit) {
             handleAddToCartAnalytics(product._id)
             navigate("/productlanding", { state: { product, store } })
         }
@@ -123,7 +124,7 @@ const SubProductCard1 = ({ product, handleStyleSelect, handleRemoveProduct, stor
             </div>
 
             <div className="px-10 md:py-4 w-[280px]" >
-                <div className="font-bold text-base mt-2 md:mt-3">{truncateName(product.name)}</div>
+                <div className="font-bold text-base mt-2 md:mt-3">{truncateName(product.name, 15)}</div>
                 <div className='flex mb-1 md:mb-2 justify-center md:justify-start'>
                     {[...Array(5)].map((_, index) => {
                         if (index < product.rating)
