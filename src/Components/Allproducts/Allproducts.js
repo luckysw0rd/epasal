@@ -393,7 +393,7 @@ const AllProducts = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, ease: 'easeInOut' }}
-                    className='h-[500px] lg:h-[250px] border-b border-gray-300 shadow-md px-6 smm:px-10 w-full'>
+                    className='h-auto py-8 border-b border-gray-300 shadow-md px-6 sm:px-10 w-full'>
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6 lg:mt-4">
                       <div className="lg:hidden relative">
                         <input
