@@ -26,6 +26,7 @@ import WhyShop from './WhyShop';
 function HomePage() {
 
     const landingRef = useRef(null);
+    const storeRef=useRef(null);
     const dragDropSecRef = useRef(null);
     const cardRef = useRef(null);
     const themeRef = useRef(null);
@@ -98,7 +99,8 @@ function HomePage() {
                 cardRef={cardRef}
                 skinRef={skinRef}
                 footerRef={footerRef}
-                subscriptionPlanRefInView={subscriptionPlanRefInView}
+                subscriptionPlanRef={subscriptionPlanRef}
+                storeRef={storeRef}
             />
             {/* <Heading setnavbarImage={setnavbarImage} />
             <div className="relative flex justify-center z-40 bg-white w-full">
@@ -134,7 +136,7 @@ function HomePage() {
             </div>
 
             <div className="w-full flex flex-col gap-2 bg-white">
-                {stores && <StoreList stores={stores} />}
+                {stores && <StoreList stores={stores} storeRef={storeRef}/>}
                 {/* <motion.div
                     ref={landingRef}
                     initial="hidden"
@@ -195,7 +197,7 @@ function HomePage() {
                 </div>
 
                 <motion.div
-                    useRef={footerRef}
+                    ref={footerRef}
                     initial="hidden"
                     animate={footerAnimated ? "visible" : "hidden"}
                     variants={variants}
