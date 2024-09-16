@@ -98,6 +98,7 @@ function HomePage() {
                 cardRef={cardRef}
                 skinRef={skinRef}
                 footerRef={footerRef}
+                subscriptionPlanRefInView={subscriptionPlanRefInView}
             />
             {/* <Heading setnavbarImage={setnavbarImage} />
             <div className="relative flex justify-center z-40 bg-white w-full">
@@ -194,7 +195,7 @@ function HomePage() {
                 </div>
 
                 <motion.div
-                    ref={footerRef}
+                    useRef={footerRef}
                     initial="hidden"
                     animate={footerAnimated ? "visible" : "hidden"}
                     variants={variants}
