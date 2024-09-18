@@ -289,7 +289,7 @@ const Order = ({ store }) => {
                                 </div>
                                 <div>
                                     {order.cart.map((item, index) => (
-                                        <div key={item.product._id} className="mb-4">
+                                        <div key={item?.product?._id} className="mb-4">
                                             <p className="font-medium">{`Product: ${item?.productName || item?.product.name}`}</p>
                                             <p className="text-gray-600">{`Product ID: ${item?.product?._id}`}</p>
                                             <p className="text-gray-600">{`Quantity: ${item?.count}`}</p>
