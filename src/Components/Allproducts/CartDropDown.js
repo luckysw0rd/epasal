@@ -85,7 +85,7 @@ const CartDropdown = ({ cart, addToCart, deleteFromCart, setStore, backgroundCol
     };
 
     return (
-        <div className="absolute text-gray-900 font-Roboto top-8 right-0 mt-2 w-[400px] md:w-[500px] bg-[#FFFFFF] border border-gray-300 rounded-lg shadow-xl z-50">
+        <div className="absolute text-gray-900 font-Roboto top-8 -right-8 mt-2 w-[400px] md:w-[500px] bg-[#FFFFFF] border border-gray-300 rounded-lg shadow-xl z-50">
             <div className="p-4">
                 <h1 className='flex justify-center font-bold mb-10 items-center gap-2 text-gray-900 text-xl'> Your Shopping Cart
                     <FaShoppingCart />

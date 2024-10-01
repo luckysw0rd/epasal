@@ -208,6 +208,7 @@ const ProjectLanding1 = () => {
                                                 <img src={selectedProduct.image.imageUrl} alt="Default" className="w-16 h-16 md:w-14 md:h-14 lg:w-24 lg:h-24 rounded-md object-cover transition-transform duration-300 hover:scale-105" />
                                             </div>
                                         )}
+                                        <div className=' flex flex-col'>
                                         {selectedProduct.variant.map((variant, variantIndex) => (
                                             variantIndex === 0 &&
                                             selectedProduct.variant[0].options.map((option, optionIndex) => (
@@ -220,6 +221,7 @@ const ProjectLanding1 = () => {
                                                 </div>
                                             ))
                                         ))}
+                                        </div>
                                     </div>
                                     <div className='md:w-[350px] h-[400px] lg:w-[450px] lg:h-[450px] 2xl:w-[550px] 2xl:h-[550px] overflow-hidden rounded-xl'>
                                         <img
@@ -245,7 +247,7 @@ const ProjectLanding1 = () => {
                                     </div>
                                     <p className="text-sm md:text-base text-gray-600 2xl:text-lg">{selectedProduct.description}</p>
 
-                                    <div className="flex flex-row md:flex-col gap-4">
+                                    <div className="flex flex-col md:flex-col gap-4">
 
                                         {selectedProduct.variant.map((variant, variantIndex) => (
                                             <div className="flex flex-col gap-2 2xl:text-xl" key={variantIndex}>
