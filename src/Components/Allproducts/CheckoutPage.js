@@ -172,52 +172,61 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
 
     return (
         isLoading ? <Loading /> :
-            <div className="fixed font-Poppins overflow-y-scroll  inset-0 flex items-center justify-center bg-gray-400 bg-opacity-75 w-full h-full z-50 overflow-auto">
-                <div className="relative w-[1200px]   flex flex-col justify-center items-center lg:flex-row gap-4 bg-white  rounded-md max-h-full overflow-auto ">
+            <div className="fixed   font-Poppins overflow-y-scroll  inset-0 flex items-center justify-center bg-gray-400 bg-opacity-75 w-full h-full z-50 overflow-auto">
+                <div className="relative w-[1300px]    flex flex-col justify-center items-center lg:flex-row gap-4 bg-white  rounded-md max-h-full overflow-auto ">
                     <IoCloseCircleOutline
                         size={24}
                         className="absolute top-2 right-2 cursor-pointer text-gray-600 hover:text-gray-900"
                         onClick={onClose}
                     />
 
-                    <div className="max-w-[452px] w-full p-8 bg-white border-2 border-gray-300 rounded-md h-full min-h-[650px] overflow-auto">
+                    <div className="   lg:max-w-[452px] w-full p-8 bg-white border-2 border-gray-300 rounded-md mt-[800px] lg:mt-0  ">
 
                         <h1 className=" font-Saira text-xl text-start font-bold mb-2 py-2 rounded-lg border-b-2 border-r-0 pl-2">Checkout</h1>
-                        <div className="flex flex-col h-full overflow-auto p-4 border-b-0">
-                            <div className="border-b-2 border-gray-500 mb-4">
+                        <div className="flex flex-col h-full overflow-auto p-4   border-b-0">
+                            <div className="border-b-2 border-gray-500 mb-4 max-h-[280px] overflow-y-scroll">
                                 <h2 className="text-lg text-[#767676] font-bold mb-4">Items</h2>
                                 {cart.length > 0 ? (
-                                    cart.map((item, index) => (
-                                        <div
-                                            className="flex items-center justify-between mb-4 p-4 bg-white shadow-md rounded-lg"
-                                            key={index}
-                                        >
-                                            <div className="flex items-center space-x-4">
-                                                <img
-                                                    src={item?.selectedVariant[0]?.options?.image || item?.productImage}
-                                                    alt={item.productName}
-                                                    className="w-16 h-16 object-cover rounded-md"
-                                                />
-                                                <div className="flex flex-col">
-                                                    <p className="font-semibold text-[10px] sm:text-lg">{item.productName}</p>
-                                                    {item.selectedVariant?.length > 0 && (
-                                                        <p><strong className='  text-[8px] '>Selected Variants:</strong>
-
-
-                                                            <p className=' text-[10px]'> {item.selectedVariant.map(variant => `${variant.name}: ${variant.options.name}`).join(', ')}</p></p>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center space-x-4">
-                                                <span className="text-gray-500 pr-6"> x {item.count}</span>
-                                                <span className="text-gray-800 font-semibold">रु {item.price}</span>
-                                                {/* Remove button */}
-                                                {/* <button onClick={() => handleDeleteFromCart(index)}>
-                                                    <span className="text-gray-500 hover:text-red-500">×</span>
-                                                </button> */}
+                                 cart.map((item, index) => (
+                                    <div
+                                        className="flex justify-between items-center mb-4 p-4 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                                        key={index}
+                                    >
+                                        <div className="flex items-center space-x-4">
+                                            <img
+                                                src={item?.selectedVariant[0]?.options?.image || item?.productImage}
+                                                alt={item.productName}
+                                                className="w-16 h-16 object-cover rounded-md"
+                                            />
+                                            <div className="flex flex-col">
+                                                <p className="font-semibold text-[10px] sm:text-lg">
+                                                    {item.productName.length > 20
+                                                        ? `${item.productName.slice(0, 20)}...`
+                                                        : item.productName}
+                                                </p>
+                                                {item.selectedVariant?.length > 0 && (
+                                                    <p>
+                                                        <strong className="text-[8px]">Selected Variants:</strong>
+                                                        <p className="text-[10px]">
+                                                            {item.selectedVariant
+                                                                .map(variant => `${variant.name}: ${variant.options.name}`)
+                                                                .join(', ')}
+                                                        </p>
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
-                                    ))
+                                        <div className="flex items-center space-x-4">
+                                            <span className="text-gray-500 pl-4"> x {item.count}</span>
+                                            <span className="text-gray-800 font-semibold">रु {item.price}</span>
+                                            {/* Remove button */}
+                                            {/* <button onClick={() => handleDeleteFromCart(index)}>
+                                                <span className="text-gray-500 hover:text-red-500">×</span>
+                                            </button> */}
+                                        </div>
+                                    </div>
+                                ))
+                                
                                 ) : (
                                     <p>No items in the cart.</p>
                                 )}
@@ -262,7 +271,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
 
 
                     </div>
-                    <div className="lg:w-3/5 w-full p-8 bg-white border-2 my-10 border-gray-300 rounded-md h-full  overflow-auto">
+                    <div className="lg:w-3/5 w-full p-[28px] bg-white border-2 my-10 border-gray-300 rounded-md h-full  ">
                         <h2 className="text-[16px] font-bold mb-4">Contact Information</h2>
                         <form className="space-y-4 ">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -373,7 +382,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
 
                             <button
                                 onClick={handleSubmitOrder}
-                                className="w-full bg-[#4D4D4D] text-white rounded-md px-6 py-2 mt-4"
+                                className="w-full  relative top-10 bg-[#4D4D4D] text-white rounded-md px-6 py-2 mt-4"
                             >
                                 Submit Order
                             </button>
@@ -381,7 +390,7 @@ const CheckoutPage = ({ cart, onClose, deleteItem, store, setStore }) => {
                         </form>
                         <div className="mt-16 text-sm font-semibold text-center text-gray-600">
                             <p>
-                                &copy; Brought To You By <a href="/" target="_blank" className=" underline hover:text-orange-200">Shop At Banau</a>, By <a href="https://www.saikanepal.com" target="_blank" className=" underline hover:text-blue-300">Saika Nepal</a> @ {new Date().getFullYear()}
+                                &copy; Brought To You By <a href="/" target="_blank" className=" underline hover:text-orange-200 ">Shop At Banau</a>, By <a href="https://www.saikanepal.com" target="_blank" className=" text-blue-700 underline hover:text-blue-300">Saika Nepal</a> @ {new Date().getFullYear()}
                             </p>
                         </div>
                     </div>
