@@ -663,11 +663,11 @@ export const StoreProvider = ({ children, passedStore }) => {
         setStore({
           ...response.store,
           fetchedFromBackend: true,
-          selectedSubCategory: response.store.subCategories[0].name,
+          selectedSubCategory: response?.store?.subCategories[0]?.name,
           previewMode: true,
           isEdit,
           cart: [],
-          fonts: response.store.fonts || {}
+          fonts: response?.store?.fonts || {}
         });
 
       } catch (error) {
